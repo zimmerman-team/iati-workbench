@@ -33,7 +33,7 @@ order within the file.
 
 An example of such a template with rules:
 
-```xml
+``` xml
 <xsl:template match="iati-activity" mode="rules" priority="3.1">
 
   <xsl:if test="count(recipient-country|recipient-region) > 1">
@@ -145,9 +145,7 @@ multiple sources for a rule.*
 ```xml
 <xsl:template match="iati-activities" mode="rules" priority="100.1">
 
-  <xsl:if test="not(//transaction[transaction-type/@code='11'
-    and provider-org/@ref='XM-DAC-7'
-    and provider-org/@provider-activity-id])">
+  <xsl:if test="not(//transaction[transaction-type/@code='11' and provider-org/@ref='XM-DAC-7' and provider-org/@provider-activity-id])">
 
     <iati-me:feedback type="warning" class="traceability" src="minbuza">
       <iati-me:message>
