@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<meta xmlns="http://iati.me">
+  <categories>
+    <category class="identifiers">
+      <title>Identifiers</title>
+    </category>
+    <category class="sectors">
+      <title>Sector classifications</title>
+    </category>
+    <category class="geo">
+      <title>Geographical information</title>
+    </category>
+    <category class="language">
+      <title>Language and text</title>
+    </category>
+    <category class="financial">
+      <title>Financial information</title>
+    </category>
+    <category class="traceability">
+      <title>Traceability</title>
+    </category>
+  </categories>
+
+  <severities>
+    <severity type="danger">Error</severity>
+    <severity type="warning">Improvement</severity>
+    <severity type="info">Refinement</severity>
+    <severity type="success">Compliment</severity>
+  </severities>
+
+  <sources>
+    <source src="iati" logo="pix/iati.png">IATI</source>
+    <source src="minbuza" logo="pix/minbuza.svg">Ministry of Foreign Affairs, The Netherlands</source>
+    <source>not specified</source>
+  </sources>
+</meta>

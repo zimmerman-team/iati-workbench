@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <description>
+    IATI Workbench
+  </description>
+
+  <!--
+    Many build targets will be included from separate build files in their own
+    folders. Only targets in this build file will benefit from command-line
+    autocompletion.
+  -->
+  <import file="lib/build.xml"/>
+  <import file="augment/build.xml"/>
+  <import file="transform/build.xml"/>
+
+  <available file="build.properties" property="build.properties.available"/>
+
+  <target name="setup-build-properties" unless="build.properties.available">
+    <propertyfile file="build.properties">
+      <entry key="workspace" default="workspace"/>
+      <entry key="project" default="demo"/>
+    </propertyfile>
+  </target>
+
+  <target name="init"
+    depends="setup-build-properties"
+    description="Set up the project environment.">
+
+    <property file="build.properties"/>
+    <property name="workDir">${workspace}/${project}</property>
+
+    <mkdir dir="${workDir}/src"/>
+    <mkdir dir="${workDir}/tmp"/>
+    <mkdir dir="${workDir}/output"/>
+    <mkdir dir="${workDir}/reports"/>
+  </target>
+
+  <target name="clean"
+    depends="init"
+    description="Clean intermediary results.">
+    <delete dir="${workDir}/tmp"/>
+    <echo>
+      Intermediate results have been deleted.
+      You will need to manually remove sources and outputs:
+      - ${workDir}/src
+      - ${workDir}/output
+    </echo>
+  </target>
+
+  <target name="yed"
+    description="Generate GraphML graphs for use in yEd."
+    depends="graphml">
+    <echo level="info">Generate yEd-enriched files from GraphML sources.</echo>
+    <dependset>
+      <sources>
+        <file file="output/graphml-yed.xslt"/>
+      </sources>
+      <targetfileset dir="${workDir}/output" includes="*.graphml"/>
+    </dependset>
+    <xslt
+      basedir="${workDir}/tmp/"
+      includes="*.graphml"
+      destdir="${workDir}/output/"
+      extension=".graphml"
+      style="output/graphml-yed.xslt"
+     />
+  </target>
+
+  <target name="feedback"
+    description="Generate a data quality feedback report."
+    depends="rules, htdocs-skeleton">
+    <echo level="info">Provide a feedback report.</echo>
+    <dependset>
+      <sources>
+        <fileset dir="lib/iati.me" />
+      </sources>
+      <targetfileset dir="${workDir}/reports/htdocs" includes="*.html" />
+    </dependset>
+    <xslt
+      basedir="${workDir}/tmp/"
+      includes="*.augmented.xml"
+      destdir="${workDir}/reports/htdocs"
+      extension=".html"
+      style="output/feedback.xslt"
+     />
+  </target>
+
+</project>

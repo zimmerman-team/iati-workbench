@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <description>
+    Targets to augment data.
+  </description>
+
+  <target name="filtered" depends="init">
+    <dependset>
+      <srcfileset dir="map" includes="*.xqm"/>
+      <targetfileset dir="${workDir}/tmp" includes="*.filtered.xml"/>
+    </dependset>
+    <basexpipe xquery="augment/organisations" src="${workDir}/src" from="*.xml" to="*.filtered.xml"/>
+  </target>
+
+  <target name="rules"
+    description="Check the source data against an IATI ruleset."
+    depends="init">
+    <echo level="info">Check the source data against a generic IATI ruleset.</echo>
+    <dependset>
+      <sources>
+        <file file="augment/rules/iati.xslt"/>
+        <fileset dir="augment/rules/iati" />
+        <fileset dir="augment/rules/minbuza" />
+      </sources>
+      <targetfileset dir="${workDir}/tmp" includes="*.augmented.xml" />
+    </dependset>
+    <xslt
+      basedir="${workDir}/src/"
+      includes="*.xml"
+      destdir="${workDir}/tmp"
+      extension=".augmented.xml"
+      style="augment/rules/iati.xslt"
+     />
+  </target>
+
+</project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <description>
+    Targets to transform data in other formats.
+  </description>
+
+  <target name="graphml" depends="filtered">
+    <echo level="info">Generate GraphML files from filtered IATI sources.</echo>
+    <basexpipe xquery="transform/organisation-graph" from="*.filtered.xml" to="*.graphml"/>
+  </target>
+</project>

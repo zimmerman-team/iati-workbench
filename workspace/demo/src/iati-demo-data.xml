@@ -1,0 +1,85 @@
+<iati-activities>
+  <iati-activity xml:lang="en">
+    <iati-identifier>XX-TEST-12345-Testcase-0</iati-identifier>
+    <reporting-org type="21" ref="XX-TEST-12345">
+      <narrative>Some Organisation</narrative>
+    </reporting-org>
+    <title>
+      <narrative>Activity Test Case #0</narrative>
+    </title>
+    <description>
+      There should be no issues with this activity.
+    </description>
+    <related-activity ref="XX-TEST-12345-Testcase-1" type="1"/>
+  </iati-activity>
+
+  <iati-activity>
+    <iati-identifier>XX-TEST-12345-Testcase-1</iati-identifier>
+    <reporting-org type="21" ref="XX-Test-12345">
+      <narrative>Some Organisation</narrative>
+    </reporting-org>
+    <title>
+      <narrative>Activity Test Case #1</narrative>
+    </title>
+    <description>
+      Issues with this activity:
+      - Reporting organisation identifier has lowercase in registration agency code.
+      - One participating organisation has whitespace at the end of its identifier.
+      - Percentages in sectors for vocabulary 1 don't add up to 100%.
+    </description>
+    <participating-org ref="XX-TEST-2345678 " type="22" role="4">
+      <narrative>Organisation With Space In Identifier</narrative>
+    </participating-org>
+
+    <sector code="12345" vocabulary="1"/>
+    <sector code="23456" percentage="50" vocabulary="1"/>
+
+    <sector code="abc" percentage="25" vocabulary="2"/>
+    <sector code="def" percentage="75" vocabulary="2"/>
+  </iati-activity>
+
+  <iati-activity>
+    <iati-identifier>XX-TEST-12345-Testcase-2</iati-identifier>
+    <reporting-org type="21" ref="XX-TEST-12345">
+      <narrative>Some Organisation</narrative>
+    </reporting-org>
+    <title>
+      <narrative>Activity Test Case #2</narrative>
+    </title>
+    <description>
+      Issues with this activity:
+      - Percentages in sectors for vocabulary 2 don't add up to 100%.
+    </description>
+    <participating-org ref="NL-1" type="22" role="4"/>
+    <participating-org ref="42001" type="22" role="4"/>
+
+    <sector code="12345" percentage="50" vocabulary="1"/>
+    <sector code="23456" percentage="50"/>
+
+    <sector code="abc" percentage="25" vocabulary="2"/>
+    <sector code="def" percentage="50" vocabulary="2"/>
+  </iati-activity>
+
+  <iati-activity>
+    <iati-identifier>XX-TEST-12345-Testcase-3</iati-identifier>
+    <reporting-org type="21" ref="XX-TEST-12345">
+      <narrative>Some Organisation</narrative>
+    </reporting-org>
+    <title>
+      <narrative>Activity Test Case #3</narrative>
+    </title>
+    <description>
+      Issues with this activity:
+      - One provider-org organisation has whitespace at the end of its identifier.
+    </description>
+    <participating-org ref="NL-1" type="22" role="4"/>
+    <participating-org ref="42001" type="22" role="4"/>
+
+    <transaction>
+      <transaction-type code="2"/>
+      <transaction-date iso-date="2015-02-17"/>
+      <provider-org ref="XX-TEST-2345678 "/>
+    </transaction>
+
+  </iati-activity>
+</iati-activities>

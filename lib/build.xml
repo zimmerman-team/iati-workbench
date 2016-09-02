@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <description>
+    Library of build information.
+  </description>
+
+  <!--
+    Pattern to work with BaseX as XQuery processor.
+  -->
+  <macrodef name="basexpipe">
+    <attribute name="xquery"/>
+    <attribute name="src" default="${workDir}/tmp"/>
+    <attribute name="from"/>
+    <attribute name="fromP" default="@from"/>
+    <attribute name="dest" default="${workDir}/tmp"/>
+    <attribute name="to"/>
+    <attribute name="toP" default="@to"/>
+    <sequential>
+      <dependset>
+        <sources>
+          <file file="@{xquery}"/>
+        </sources>
+        <targetfileset dir="@{dest}">
+          <patternset>
+            <include name="@{to}"/>
+          </patternset>
+        </targetfileset>
+      </dependset>
+      <apply executable="basex" dest="@{dest}" verbose="true">
+        <arg value="-i"/>
+        <srcfile/>
+        <arg value="-o"/>
+        <targetfile/>
+        <arg value="@{xquery}"/>
+        <fileset dir="@{src}" includes="@{from}"/>
+        <mapper type="glob" from="@{from}" to="@{to}"/>
+      </apply>
+    </sequential>
+  </macrodef>
+
+  <target name="htdocs-skeleton"
+    depends="init">
+    <copy todir="${workDir}/reports/htdocs">
+      <fileset dir="share/htdocs"/>
+    </copy>
+  </target>
+
+</project>

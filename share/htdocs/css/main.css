@@ -1,0 +1,48 @@
+body {
+  margin: 1em;
+}
+
+.activity:hover {
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  border: 0;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.activity .header:hover {
+  cursor: pointer;
+}
+
+.badge-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+.badge-info {
+  color: #31708f;
+  background-color: #d9edf7;
+}
+
+.badge-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+}
+
+.badge-danger {
+  color: #a94442;
+  background-color: #f2dede;
+}
+
+.logo {
+  float: right;
+  margin: 0 0.5em;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.bookmark {
+  float: left;
+  margin-right: 0.5em;
+}

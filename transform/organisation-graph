@@ -1,0 +1,297 @@
+xquery version "3.1";
+(:~
+: <h1>Create an organisation graph in GraphML from IATI data.</h1>
+:
+: <p>Creates a hierarchical graph where nodes can be organisations,
+: or activities within an organisation.</p>
+:
+: <p>Uses data within nodes and edges to store information.</p>
+:)
+
+declare namespace g = "http://graphml.graphdrawing.org/xmlns";
+declare namespace i = "http://iati.me";
+import module namespace functx = "http://www.functx.com" at "../lib/functx.xqm";
+
+declare function local:label($name as xs:string) as xs:string {
+  normalize-space($name)=>
+  replace('(.{50,75}) .*','$1...')=> (: stop after a space in this range of characters :)
+  concat(' ')=> (: leave the last word on the same line in the next step :)
+  replace('(.{0,30}) ','$1&#xA;')=> (: line breaks after up to 25 characters:)
+  functx:trim()
+};
+
+declare function local:ref($ref as xs:string) as xs:string {
+  if (string-length($ref)>38)
+  then
+    substring($ref,1,16) || '...' || substring($ref,string-length($ref)-18)
+  else
+    $ref
+};
+
+element g:graphml {
+  (: hack to include namespace in root element :)
+  attribute i:dummy {'dummy'},
+
+  (: declare the attributes we want to include in nodes and edges :)
+  <g:key for="node" id="ref" attr.name="i:ref" attr.type="string"/>,
+  <g:key for="node" id="name" attr.name="i:name" attr.type="string"/>,
+  <g:key for="node" id="label" attr.name="i:label" attr.type="string"/>,
+  <g:key for="node" id="iati-id" attr.name="i:iati-id" attr.type="string"/>,
+  <g:key for="node" id="type" attr.name="i:type" attr.type="string"/>,
+  <g:key for="node" id="url" attr.name="i:url" attr.type="string"/>,
+  <g:key for="node" id="description" attr.name="i:description" attr.type="string"/>,
+
+  <g:key for="edge" id="type" attr.name='i:type' attr.type="string"/>,
+  <g:key for="edge" id="source-org" attr.name='i:source-org' attr.type="string"/>,
+  <g:key for="edge" id="target-org" attr.name='i:target-org' attr.type="string"/>,
+
+  element g:graph {
+    attribute edgedefault {'directed'},
+
+    (: find all organisations in the data :)
+    let $refs := distinct-values((
+      //reporting-org/@i:ref,
+      //participating-org/@i:ref,
+      //transaction/provider-org/@i:ref,
+      //transaction/receiver-org/@i:ref
+    ))
+
+    for $ref in $refs
+
+    let $iati-id := string(if (substring($ref,1,3)!='XX-')
+      then $ref
+      else ()
+    )
+
+    (: TODO: for now we'll pick a random occurrence of a narrative as name :)
+    let $name := (//(reporting-org|participating-org|provider-org|receiver-org)[@i:ref=$ref]/i:narrative)[1]=>string()
+
+    let $ourActivities := (//iati-activity[reporting-org[@i:ref=$ref]])
+
+    let $relatedActivities := (
+      for $l in //related-activity
+      return
+        if (starts-with($l/@ref, $ref)) (: only within our organisation :)
+        then $l/@ref
+        else ()
+    )
+
+    (: TODO: add activties reported by other organisations :)
+    (: find activity id's that others mention about us but we don't have :)
+    let $attributedActivities :=
+      distinct-values((
+        $relatedActivities,
+        //participating-org[@i:ref=$ref]/@activity-id, (: references in participating-org :)
+        //provider-org[@i:ref=$ref]/@provider-activity-id, (: references in transactions :)
+        //receiver-org[@i:ref=$ref]/@receiver-activity-id (: references in transactions :)
+      ))
+      [not(. = distinct-values($ourActivities/iati-identifier))]
+
+    return (
+      element g:node {
+        attribute id {$ref},
+        <g:data key='ref'>{$iati-id}</g:data>,
+        <g:data key='name'>{$name}</g:data>,
+        <g:data key='label'>{local:label($name)}</g:data>,
+        <g:data key='iati-id'>{local:ref($iati-id)}</g:data>,
+        <g:data key='type'>organisation</g:data>,
+
+        if (count(($ourActivities, $attributedActivities))>0)
+        then
+          element g:graph {
+            attribute id {$ref || ':'},
+            attribute edgedefault {'directed'},
+
+            for $a in $ourActivities
+            let $t := if ($a/title/narrative)
+              then $a/title/narrative[1]
+              else $a/title[1]
+            return
+              element g:node {
+                attribute id {$ref || '::' || string($a/iati-identifier)},
+                <g:data key='ref'>{normalize-space($a/iati-identifier)}</g:data>,
+                <g:data key='name'>{string($t)}</g:data>,
+                <g:data key='label'>{local:label(string($t))}</g:data>,
+                <g:data key='iati-id'>{local:ref(string($a/iati-identifier))}</g:data>,
+                <g:data key='type'>activity</g:data>
+              },
+
+            for $a in $attributedActivities
+            return
+              element g:node {
+                attribute id {$ref || '::' || $a},
+                <g:data key='ref'>{normalize-space($a)}</g:data>,
+                <g:data key='name'></g:data>,
+                <g:data key='label'>{"activity referenced but not in dataset"}</g:data>,
+                <g:data key='iati-id'>{local:ref($a)}</g:data>,
+                <g:data key='type'>activity-reference</g:data>
+              }
+          }
+        else
+          ()
+      }
+    ),
+
+    (: gather all relations :)
+    let $links := functx:distinct-deep((
+
+      (: Find related activities :)
+
+      for $l in //related-activity[@type="1"] (: parent activities :)
+      let $ref := data($l/../reporting-org/@i:ref)
+      return
+        if (starts-with($l/@ref, $ref)) (: only within the same organisation :)
+        then element g:edge {
+          attribute source {$ref || '::' || normalize-space($l/@ref)},
+          attribute target {$ref || '::' || normalize-space($l/../iati-identifier)},
+          <g:data key="type">parent-child</g:data>,
+          <g:data key="source-org">{$ref}</g:data>,
+          <g:data key="target-org">{$ref}</g:data>
+        }
+        else (),
+
+      for $l in //related-activity[@type="2"] (: child activities :)
+      let $ref := data($l/../reporting-org/@i:ref)
+      return
+        if (starts-with($l/@ref, $ref)) (: only within the same organisation :)
+        then element g:edge {
+          attribute source {$ref || '::' || normalize-space($l/../iati-identifier)},
+          attribute target {$ref || '::' || normalize-space($l/@ref)},
+          <g:data key="type">parent-child</g:data>,
+          <g:data key="source-org">{$ref}</g:data>,
+          <g:data key="target-org">{$ref}</g:data>
+        }
+        else (),
+
+      (: Find participating activities and organisations :)
+
+      for $l in //participating-org[lower-case(@role)=("funding","1")] (: funding :)
+      let $ref := data($l/../reporting-org/@i:ref)
+      let $linkref := if ($l/@activity-id)
+        then
+          $l/@i:ref || '::' || data($l/@activity-id)
+        else
+          $l/@i:ref
+
+      return
+        if ($l/@i:ref!=$ref) (: not within the same organisation :)
+        then element g:edge {
+          attribute source {$linkref},
+          attribute target {$ref || '::' || $l/../iati-identifier},
+          <g:data key="type">1</g:data>,
+          <g:data key="source-org">{data($l/@i:ref)}</g:data>,
+          <g:data key="target-org">{$ref}</g:data>
+        }
+        else (),
+
+      for $l in //participating-org[not(lower-case(@role)=('1','funding'))] (: all except funding :)
+      let $ref := data($l/../reporting-org/@i:ref)
+      let $linkref := if ($l/@activity-id)
+        then
+          $l/@i:ref || '::' || data($l/@activity-id)
+        else
+          $l/@i:ref
+
+      let $role := switch(lower-case($l/@role))
+        case "accountable" return "2"
+        case "extending" return "3"
+        case "implementing" return "4"
+        default return data($l/@role)
+
+      return
+        if ($l/@i:ref!=$ref) (: not within the same organisation :)
+        then element g:edge {
+          attribute source {$ref || '::' || $l/../iati-identifier},
+          attribute target {$linkref},
+          <g:data key="type">{$role}</g:data>,
+          <g:data key="source-org">{$ref}</g:data>,
+          <g:data key="target-org">{data($l/@i:ref)}</g:data>
+        }
+        else (),
+
+      (: Find transaction flows :)
+
+      for $l in (  (: incoming :)
+        //transaction[lower-case(transaction-type/@code)=('1','if','7','11')],
+        //transaction[lower-case(transaction-type/@code)=('2','c') (: commitment towards this activity :)
+          and (receiver-org/@receiver-activity-id=../iati-identifier
+              or not(exists(receiver-org/@receiver-activity-id))
+              )]
+        )
+      let $ref := data($l/../reporting-org/@i:ref)
+      where ($l/provider-org/@i:ref!=$ref or
+        $l/provider-org/@provider-activity-id!=../iati-identifier)
+      let $linkref := if ($l/provider-org/@provider-activity-id)
+        then
+          $l/provider-org/@i:ref || '::' || data($l/provider-org/@provider-activity-id)
+        else
+          $l/provider-org/@i:ref
+      return
+        if ($l/provider-org/@i:ref!=$ref) (: not within the same organisation :)
+        then element g:edge {
+          attribute source {$linkref},
+          attribute target {$ref || '::' || $l/../iati-identifier},
+          <g:data key="type">1</g:data>,
+          <g:data key="source-org">{data($l/provider-org/@i:ref)}</g:data>,
+          <g:data key="target-org">{$ref}</g:data>
+        }
+        else (),
+
+      for $l in (  (: outgoing :)
+        //transaction[lower-case(transaction-type/@code)=('3','d','7','r')]
+        //transaction[lower-case(transaction-type/@code)=('2','c') (: commitment from this activity :)
+          and (provider-org/@provider-activity-id=../iati-identifier
+              or not(exists(provider-org/@provider-activity-id))
+              )]
+        )
+      let $ref := data($l/../reporting-org/@i:ref)
+      where ($l/receiver-org/@i:ref!=$ref or $l/receiver-org/@receiver-activity-id)
+      let $linkref := if ($l/receiver-org/@receiver-activity-id)
+        then
+          $l/receiver-org/@i:ref || '::' || data($l/receiver-org/@receiver-activity-id)
+        else
+          $l/receiver-org/@i:ref
+      return
+        if ($l/receiver-org/@i:ref!=$ref) (: not within the same organisation :)
+        then element g:edge {
+          attribute source {$ref || '::' || $l/../iati-identifier},
+          attribute target {$linkref},
+          <g:data key="type">1</g:data>,
+          <g:data key="source-org">{$ref}</g:data>,
+          <g:data key="target-org">{data($l/receiver-org/@i:ref)}</g:data>
+        }
+        else ()
+    ))
+
+    (: Only keep links at organisation-level if there are no relevant
+        links to a more specific activity-id :)
+        (: TODO check type of relation! :)
+    return (
+      (: case 1: both ends refer to an activity (not the organisation) :)
+      $links[@source!=g:data[@key='source-org']
+        and @target!=g:data[@key='target-org']],
+
+      (: case 2: source refers to org and no link exists to an activity :)
+      for $l in $links[@source=g:data[@key='source-org']
+        and @target!=g:data[@key='target-org']]
+      where not(exists($links[
+        @target=$l/@target
+        and g:data[@key='type']=$l/g:data[@key='type']
+        and g:data[@key='source-org']=$l/@source
+        and @source!=$l/@source
+        ]))
+      return $l,
+
+      (: case 3: target refers to org and no link exists to an activity :)
+      for $l in $links[@source!=g:data[@key='source-org']
+        and @target=g:data[@key='target-org']]
+      where not(exists($links[
+        @source=$l/@source
+        and g:data[@key='type']=$l/g:data[@key='type']
+        and g:data[@key='target-org']=$l/@target
+        and @target!=$l/@target
+        ]))
+      return $l
+    )
+  }
+}
