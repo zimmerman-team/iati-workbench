@@ -39,10 +39,8 @@ An example of such a template with rules:
   <xsl:if test="count(recipient-country|recipient-region) > 1">
     <xsl:if test="sum((recipient-country|recipient-region)/@percentage) != 100">
       <iati-me:feedback type="danger" class="geo">
-        <iati-me:message>
-          Percentages for recipient-country and recipient-region don't add up
-          to 100%.
-        </iati-me:message>
+        Percentages for recipient-country and recipient-region don't add up
+        to 100%.
       </iati-me:feedback>
     </xsl:if>
   </xsl:if>
@@ -101,19 +99,15 @@ a reference to a page with more information: the `href` attribute.
 
       <xsl:if test="count(current-group()[not(@percentage)]) > 0">
         <iati-me:feedback type="danger" class="sectors">
-          <iati-me:message>
-            One or more sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
-            have no percentage: <xsl:value-of select="string-join(current-group()[not(@percentage)]/@code, ', ')"/>
-          </iati-me:message>
+          One or more sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
+          have no percentage: <xsl:value-of select="string-join(current-group()[not(@percentage)]/@code, ', ')"/>
         </iati-me:feedback>
       </xsl:if>
 
       <xsl:if test="sum(current-group()/@percentage) != 100">
         <iati-me:feedback type="danger" class="sectors">
-          <iati-me:message>
-            Percentages for sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
-            don't add up to 100%.
-          </iati-me:message>
+          Percentages for sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
+          don't add up to 100%.
         </iati-me:feedback>
       </xsl:if>
 
@@ -123,10 +117,8 @@ a reference to a page with more information: the `href` attribute.
   <xsl:if test="count(sector)>0 and count(transaction/sector)>0">
     <iati-me:feedback type="info" class="sectors"
       href="http://iatistandard.org/202/activity-standard/iati-activities/iati-activity/sector/#definition">
-      <iati-me:message>
-        You are using sectors in both the activity and transactions in the
-        activity. You should only use them in one place.
-      </iati-me:message>
+      You are using sectors in both the activity and transactions in the
+      activity. You should only use them in one place.
     </iati-me:feedback>
   </xsl:if>
 
@@ -148,12 +140,10 @@ multiple sources for a rule.*
   <xsl:if test="not(//transaction[transaction-type/@code='11' and provider-org/@ref='XM-DAC-7' and provider-org/@provider-activity-id])">
 
     <iati-me:feedback type="warning" class="traceability" src="minbuza">
-      <iati-me:message>
-        Include at least one activity with a transaction
-        of type <code>11</code> (incoming commitment) that refers to the
-        Ministry (<code>XM-DAC-7</code>) as the provider, and that refers to
-        a specific activity identifier of the Ministry.
-      </iati-me:message>
+      Include at least one activity with a transaction
+      of type <code>11</code> (incoming commitment) that refers to the
+      Ministry (<code>XM-DAC-7</code>) as the provider, and that refers to
+      a specific activity identifier of the Ministry.
     </iati-me:feedback>
   </xsl:if>
 

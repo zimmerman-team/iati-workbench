@@ -13,10 +13,8 @@
   <xsl:if test="not(./@xml:lang) and descendant::narrative[not(@xml:lang)]">
     <iati-me:feedback type="warning" class="language" src="iati"
       href="http://iatistandard.org/202/activity-standard/iati-activities/iati-activity/#iati-activities-iati-activity-xml-lang">
-      <iati-me:message>
-        Specify a default language for the activity OR specify the language for
-        each narrative element.
-      </iati-me:message>
+      Specify a default language for the activity OR specify the language for
+      each narrative element.
     </iati-me:feedback>
   </xsl:if>
 
@@ -27,9 +25,7 @@
 
   <xsl:if test="count((narrative|text()) = $activity-titles) > 1">
     <iati-me:feedback type="info" class="language">
-      <iati-me:message>
-        The same activity title is occurring more than once in the data set.
-      </iati-me:message>
+      The same activity title is occurring more than once in the data set.
     </iati-me:feedback>
   </xsl:if>
 

@@ -13,19 +13,15 @@
 
       <xsl:if test="count(current-group()[not(@percentage)]) > 0">
         <iati-me:feedback type="danger" class="sectors">
-          <iati-me:message>
-            One or more sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
-            have no percentage: <xsl:value-of select="string-join(current-group()[not(@percentage)]/@code, ', ')"/>
-          </iati-me:message>
+          One or more sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
+          have no percentage: <xsl:value-of select="string-join(current-group()[not(@percentage)]/@code, ', ')"/>
         </iati-me:feedback>
       </xsl:if>
 
       <xsl:if test="sum(current-group()/@percentage) != 100">
         <iati-me:feedback type="danger" class="sectors">
-          <iati-me:message>
-            Percentages for sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
-            don't add up to 100%.
-          </iati-me:message>
+          Percentages for sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
+          don't add up to 100%.
         </iati-me:feedback>
       </xsl:if>
 
@@ -35,10 +31,8 @@
   <xsl:if test="count(sector)>0 and count(transaction/sector)>0">
     <iati-me:feedback type="info" class="sectors"
       href="http://iatistandard.org/202/activity-standard/iati-activities/iati-activity/sector/#definition">
-      <iati-me:message>
-        You are using sectors in both the activity and transactions in the
-        activity. You should only use them in one place.
-      </iati-me:message>
+      You are using sectors in both the activity and transactions in the
+      activity. You should only use them in one place.
     </iati-me:feedback>
   </xsl:if>
 

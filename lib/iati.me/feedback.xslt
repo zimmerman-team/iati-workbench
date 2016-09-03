@@ -14,13 +14,13 @@
     <div role="alert">
       <xsl:attribute name="class">alert alert-dismissable
         alert-<xsl:value-of select="@type"/>
-        src-<xsl:value-of select="@src"/>
+        <xsl:if test="@src"> src-<xsl:value-of select="@src"/></xsl:if>
       </xsl:attribute>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
       <xsl:apply-templates select="$feedback-meta/iati-me:sources/iati-me:source[@src=$src]/@logo"/>
       <xsl:apply-templates select="@href"/>
       <div class="context"><xsl:apply-templates select="." mode="context"/></div>
-      <xsl:copy-of select="iati-me:message"/>
+      <xsl:copy-of select="*|text()"/>
     </div>
   </xsl:template>
 

@@ -9,10 +9,8 @@
 
   <xsl:if test="not(starts-with(string(iati-identifier), reporting-org/@ref))">
     <iati-me:feedback type="warning" class="identifiers">
-      <iati-me:message>
-        The activity identifier usually begins with the organisation identifier
-        of the reporting organisation.
-      </iati-me:message>
+      The activity identifier usually begins with the organisation identifier
+      of the reporting organisation.
     </iati-me:feedback>
   </xsl:if>
 
@@ -23,10 +21,8 @@
 
   <xsl:if test="@ref != functx:trim(@ref)">
     <iati-me:feedback type="warning" class="identifiers">
-      <iati-me:message>
-        An organisation identifier should not start or end with spaces or
-        newlines.
-      </iati-me:message>
+      An organisation identifier should not start or end with spaces or
+      newlines.
     </iati-me:feedback>
   </xsl:if>
 
@@ -34,10 +30,8 @@
 
   <xsl:if test="matches($RegistrationAgency, '[a-z]')">
     <iati-me:feedback type="warning" class="identifiers">
-      <iati-me:message>
-        The organisation registration agency part in an organisation identifier
-        should be in uppercase.
-      </iati-me:message>
+      The organisation registration agency part in an organisation identifier
+      should be in uppercase.
     </iati-me:feedback>
   </xsl:if>
 
