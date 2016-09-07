@@ -4,6 +4,7 @@
 -->
 
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  xmlns:functx="http://www.functx.com"
   xmlns:iati-me="http://iati.me"
   exclude-result-prefixes="">
 
@@ -25,15 +26,11 @@
   </xsl:template>
 
   <xsl:template match="@logo">
-    <img class="logo">
-      <xsl:attribute name="src"><xsl:value-of select="."/></xsl:attribute>
-    </img>
+    <img class="logo" src="{.}"/>
   </xsl:template>
 
   <xsl:template match="@href">
-    <a target="_blank" class="bookmark glyphicon glyphicon-new-window">
-      <xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>
-    </a>
+    <a target="_blank" class="bookmark glyphicon glyphicon-new-window" href="{.}"/>
   </xsl:template>
 
   <xsl:template name="feedback-list">
@@ -108,19 +105,33 @@
     </div>
   </xsl:template>
 
+  <xsl:template name="show-organisation">
+    <xsl:choose>
+      <xsl:when test="../@ref"><code><xsl:value-of select="../@ref"/></code></xsl:when>
+      <xsl:otherwise>"<xsl:value-of select="functx:trim(string-join((../text(),../narrative[1]/.),''))"/>"</xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!-- Context information for reporting-org -->
   <xsl:template match="reporting-org/iati-me:feedback" mode="context">
-    In <xsl:value-of select="name(..)"/> <code><xsl:value-of select="../@ref"/></code>:
+    <xsl:variable name="ref">
+    </xsl:variable>
+    In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/>:
   </xsl:template>
 
   <!-- Context information for participating-org -->
   <xsl:template match="participating-org/iati-me:feedback" mode="context">
-    In <xsl:value-of select="name(..)"/> <code><xsl:value-of select="../@ref"/></code> (role <code><xsl:value-of select="../@role"/></code>):
+    In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/> (role <code><xsl:value-of select="../@role"/></code>):
   </xsl:template>
 
   <!-- Context information for provider-org and receiver-org in transactions -->
   <xsl:template match="provider-org/iati-me:feedback|receiver-org/iati-me:feedback" mode="context">
-    In <xsl:value-of select="name(..)"/> <code><xsl:value-of select="../@ref"/></code> in transaction of <xsl:value-of select="../../transaction-date/@iso-date"/>:
+    In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/> in transaction of <xsl:value-of select="../../transaction-date/@iso-date"/>:
+  </xsl:template>
+
+  <!-- Context information for participating-org -->
+  <xsl:template match="document-link/iati-me:feedback" mode="context">
+    For the document <a href="{../@url}"><xsl:value-of select="functx:trim(../title/.)"/></a>:
   </xsl:template>
 
   <xsl:template match="@*|node()" mode="context">
