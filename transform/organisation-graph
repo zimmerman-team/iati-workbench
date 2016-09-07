@@ -69,7 +69,7 @@ element g:graphml {
     let $ourActivities := (//iati-activity[reporting-org[@i:ref=$ref]])
 
     let $relatedActivities := (
-      for $l in //related-activity
+      for $l in //related-activity[@type=("1","2")]
       return
         if (starts-with($l/@ref, $ref)) (: only within our organisation :)
         then $l/@ref
@@ -82,8 +82,8 @@ element g:graphml {
       distinct-values((
         $relatedActivities,
         //participating-org[@i:ref=$ref]/@activity-id, (: references in participating-org :)
-        //provider-org[@i:ref=$ref]/@provider-activity-id, (: references in transactions :)
-        //receiver-org[@i:ref=$ref]/@receiver-activity-id (: references in transactions :)
+        //transaction[lower-case(transaction-type/@code)=('1','if','7','11','2','c','3','d','7','r')]/provider-org[@i:ref=$ref]/@provider-activity-id, (: references in transactions :)
+        //transaction[lower-case(transaction-type/@code)=('1','if','7','11','2','c','3','d','7','r')]/receiver-org[@i:ref=$ref]/@receiver-activity-id (: references in transactions :)
       ))
       [not(. = distinct-values($ourActivities/iati-identifier))]
 
