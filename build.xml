@@ -85,4 +85,23 @@
      />
   </target>
 
+  <target name="transactions-flow"
+    description="Generate an overview of transactions."
+    depends="filtered">
+    <echo level="info">Generate an overview of transactions.</echo>
+    <dependset>
+      <sources>
+        <file file="output/transactions.xslt" />
+      </sources>
+      <targetfileset dir="${workDir}/output" includes="*.csv" />
+    </dependset>
+    <xslt
+      basedir="${workDir}/tmp/"
+      includes="*.filtered.xml"
+      destdir="${workDir}/output"
+      extension=".csv"
+      style="output/transactions.xslt"
+     />
+  </target>
+
 </project>
