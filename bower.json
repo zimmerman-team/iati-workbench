@@ -1,0 +1,22 @@
+{
+  "name": "iati-workbench",
+  "homepage": "https://github.com/rolfkleef/iati-workbench",
+  "authors": [
+    "Rolf Kleef <rolf@drostan.org>"
+  ],
+  "description": "IATI Workbench front-end",
+  "main": "",
+  "license": "AGPL-3.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "fuelux": "^3.15.7"
+  }
+}
