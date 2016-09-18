@@ -40,8 +40,26 @@
 
   <target name="htdocs-skeleton"
     depends="init">
+    <apply executable="bower" verbose="true" force="true">
+      <arg value="install"/>
+      <file file="bower.json"/>
+    </apply>
+
     <copy todir="${workDir}/reports/htdocs">
       <fileset dir="share/htdocs"/>
+    </copy>
+
+    <copy todir="${workDir}/reports/htdocs/lib/css">
+      <fileset dir="bower_components/bootstrap/dist/css"/>
+      <fileset dir="bower_components/fuelux/dist/css"/>
+    </copy>
+    <copy todir="${workDir}/reports/htdocs/lib/fonts">
+      <fileset dir="bower_components/bootstrap/dist/fonts"/>
+      <fileset dir="bower_components/fuelux/dist/fonts"/>
+    </copy>
+    <copy todir="${workDir}/reports/htdocs/lib/js">
+      <fileset dir="bower_components/jquery/dist"/>
+      <fileset dir="bower_components/bootstrap/dist/js"/>
     </copy>
   </target>
 
