@@ -51,5 +51,6 @@ declare variable $org-name-to-ref:map := map {
   "ministry of foreign affairs dtz": "XM-DAC-7",
   "plan nederland office": "NL-KVK-41198890", (: errors in PlanNL/DTZ :)
   "defence for children international netherlands - ecpat netherlands": "NL-KVK-41208813", (: errors in Defence for Children/DTZ :)
-  "netherlands enterprise agency": "NL-KVK-27378529" (: RVO.nl :)
+  "netherlands enterprise agency": "NL-KVK-27378529", (: RVO.nl :)
+  "stichting woord en daad": "NL-KVK-41118168" (: Woord en Daad w-d :)
 };
