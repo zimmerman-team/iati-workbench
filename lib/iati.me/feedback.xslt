@@ -124,6 +124,11 @@
     In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/> (role <code><xsl:value-of select="../@role"/></code>):
   </xsl:template>
 
+  <!-- Context information for transactions -->
+  <xsl:template match="transaction/iati-me:feedback" mode="context">
+    In transaction of <xsl:value-of select="../transaction-date/@iso-date"/>:
+  </xsl:template>
+
   <!-- Context information for provider-org and receiver-org in transactions -->
   <xsl:template match="provider-org/iati-me:feedback|receiver-org/iati-me:feedback" mode="context">
     In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/> in transaction of <xsl:value-of select="../../transaction-date/@iso-date"/>:

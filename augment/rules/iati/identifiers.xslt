@@ -32,6 +32,13 @@
     </iati-me:feedback>
   </xsl:if>
 
+  <xsl:if test="not(@ref) and (activity-id or receiver-activity-id or provider-activity-id)">
+    <iati-me:feedback type="info" class="identifiers">
+      An activity identifier is given, but the identifier for the organisation
+      is missing.
+    </iati-me:feedback>
+  </xsl:if>
+
   <xsl:if test="@ref and not(
       matches(@ref, '^[0-9]{5}$') or
       matches(@ref, '^[A-Z]{2}(-.+)*$'))">
