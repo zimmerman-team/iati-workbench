@@ -238,7 +238,7 @@ element g:graphml {
         else (),
 
       for $l in (  (: outgoing :)
-        //transaction[lower-case(transaction-type/@code)=('3','d','7','r')]
+        //transaction[lower-case(transaction-type/@code)=('3','d','7','r')],
         //transaction[lower-case(transaction-type/@code)=('2','c') (: commitment from this activity :)
           and (provider-org/@provider-activity-id=../iati-identifier
               or not(exists(provider-org/@provider-activity-id))
