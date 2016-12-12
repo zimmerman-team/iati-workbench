@@ -66,7 +66,9 @@
 
       <xsl:choose>
         <xsl:when test="g:data[@key='type' and text()='parent-child']">
-          <xsl:call-template name="edge"/>
+          <xsl:call-template name="edge">
+            <xsl:with-param name="lineWidth">3.0</xsl:with-param>
+          </xsl:call-template>
         </xsl:when>
         <xsl:when test="g:data[@key='type' and text()='1']">
           <xsl:call-template name="edge">

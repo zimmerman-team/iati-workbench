@@ -199,7 +199,8 @@ element g:graphml {
         default return data($l/@role)
 
       return
-        if ($l/@i:ref!=$ref) (: not within the same organisation :)
+        (: if ($l/@i:ref!=$ref or ($l/@activity-id and ($l/activity-id!=data($l/../iati-identifier)))) (: not within the same organisation :) :)
+        if ($l/@i:ref!=$ref or $l/@activity-id!=$l/../iati-identifier) (: not within the same organisation :)
         then element g:edge {
           attribute source {$ref || '::' || $l/../iati-identifier},
           attribute target {$linkref},
