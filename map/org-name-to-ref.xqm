@@ -19,7 +19,7 @@ declare variable $org-name-to-ref:map := map {
   "uk department for international development": "GB-1",
   "department for international development": "GB-1",
   "danida": "DK-1",
-  "icco": "NL-KVK-41177206",
+  "icco": "NL-KVK-56484038",
   "phase nepal": "NP-DAO-531/062/063",
   "save the children - uk": "GB-COH-213890",
   "uk government, department for international development": "GB-1",
