@@ -15,6 +15,35 @@
     </iati-me:feedback>
   </xsl:if>
 
+  <xsl:if test="upper-case(transaction-type/@code)=('2','C')
+    and provider-org/@provider-activity-id
+    and not(receiver-org/@receiver-activity-id)">
+    <iati-me:feedback type="warning" class="financial">
+      The transaction is a commitment from the activity,
+      and has a <code>provider-activity-id</code>
+      but no <code>receiver-activity-id</code>.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="upper-case(transaction-type/@code)=('3','D')
+    and provider-org/@provider-activity-id
+    and not(receiver-org/@receiver-activity-id)">
+    <iati-me:feedback type="warning" class="financial">
+      The transaction is a disbursement from the activity,
+      and has a <code>provider-activity-id</code>
+      but no <code>receiver-activity-id</code>.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="upper-case(transaction-type/@code)=('4','E')
+    and receiver-org/@receiver-activity-id">
+    <iati-me:feedback type="warning" class="financial">
+      The transaction is an expenditure from the activity,
+      but has a <code>receiver-activity-id</code>
+      suggesting it may be a disbursement.
+    </iati-me:feedback>
+  </xsl:if>
+
   <xsl:next-match/>
 </xsl:template>
 
