@@ -104,4 +104,34 @@
      />
   </target>
 
+  <target name="excel2csv"
+    description="Convert spreadsheets to CSV files for further processing."
+    depends="init">
+    <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
+
+    <mapper id="out" type="glob" from="*.xlsx" to="${workDir}/tmp/*.xls.csv"/>
+
+    <apply executable="in2csv" verbose="true">
+      <fileset dir="${workDir}/input" includes="*.xls*"/>
+      <!-- <mapper refid="out"/> -->
+      <srcfile/>
+      <redirector logError="true">
+        <outputmapper refid="out"/>
+      </redirector>
+    </apply>
+  </target>
+
+  <target name="merge"
+    description="Merge activities within one file."
+    depends="init">
+    <xslt
+      basedir="${workDir}/tmp/"
+      includes="generated.xml"
+      destdir="${workDir}/src/"
+      extension=".xml"
+      style="output/merge.xslt"
+     />
+
+  </target>
+
 </project>
