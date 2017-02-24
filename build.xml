@@ -13,37 +13,24 @@
   <import file="augment/build.xml"/>
   <import file="transform/build.xml"/>
 
-  <available file="build.properties" property="build.properties.available"/>
-
-  <target name="setup-build-properties" unless="build.properties.available">
-    <propertyfile file="build.properties">
-      <entry key="workspace" default="workspace"/>
-      <entry key="project" default="demo"/>
-    </propertyfile>
-  </target>
-
   <target name="init"
-    depends="setup-build-properties"
     description="Set up the project environment.">
 
-    <property file="build.properties"/>
-    <property name="workDir">${workspace}/${project}</property>
-
-    <mkdir dir="${workDir}/src"/>
-    <mkdir dir="${workDir}/tmp"/>
-    <mkdir dir="${workDir}/output"/>
-    <mkdir dir="${workDir}/reports"/>
+    <mkdir dir="/workspace/src"/>
+    <mkdir dir="/workspace/tmp"/>
+    <mkdir dir="/workspace/output"/>
+    <mkdir dir="/workspace/reports"/>
   </target>
 
   <target name="clean"
     depends="init"
     description="Clean intermediary results.">
-    <delete dir="${workDir}/tmp"/>
+    <delete dir="/workspace/tmp"/>
     <echo>
       Intermediate results have been deleted.
       You will need to manually remove sources and outputs:
-      - ${workDir}/src
-      - ${workDir}/output
+      - /workspace/src
+      - /workspace/output
     </echo>
   </target>
 
@@ -55,12 +42,12 @@
       <sources>
         <file file="output/graphml-yed.xslt"/>
       </sources>
-      <targetfileset dir="${workDir}/output" includes="*.graphml"/>
+      <targetfileset dir="/workspace/output" includes="*.graphml"/>
     </dependset>
     <xslt
-      basedir="${workDir}/tmp/"
+      basedir="/workspace/tmp/"
       includes="*.graphml"
-      destdir="${workDir}/output/"
+      destdir="/workspace/output/"
       extension=".graphml"
       style="output/graphml-yed.xslt"
      />
@@ -74,12 +61,12 @@
       <sources>
         <fileset dir="lib/iati.me" />
       </sources>
-      <targetfileset dir="${workDir}/reports/htdocs" includes="*.html" />
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.html" />
     </dependset>
     <xslt
-      basedir="${workDir}/tmp/"
+      basedir="/workspace/tmp/"
       includes="*.augmented.xml"
-      destdir="${workDir}/reports/htdocs"
+      destdir="/workspace/reports/htdocs"
       extension=".html"
       style="output/feedback.xslt"
      />
@@ -93,12 +80,12 @@
       <sources>
         <file file="output/transactions.xslt" />
       </sources>
-      <targetfileset dir="${workDir}/output" includes="*.csv" />
+      <targetfileset dir="/workspace/output" includes="*.csv" />
     </dependset>
     <xslt
-      basedir="${workDir}/tmp/"
+      basedir="/workspace/tmp/"
       includes="*.filtered.xml"
-      destdir="${workDir}/output"
+      destdir="/workspace/output"
       extension=".csv"
       style="output/transactions.xslt"
      />

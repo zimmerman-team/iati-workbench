@@ -27,17 +27,22 @@ philosophy: do one thing, as part of a processing pipeline.
 
 ## Required
 
-You will need a couple of tools to make things work:
+You will need [Docker](http://docker.io/), a container management tool.
+All tools for the IATI Engine are packaged in a container that you can run as a command.
 
- *  [Ant](http://ant.apache.org/): a build process manager to perform the steps
-    for various tasks.
+For now, you can build your own local version of the container using the
+Dockerfile provided:
 
- *  [BaseX](http://basex.org): an XML database, and XQuery and XPath processor
-    (version 8 or higher, with Xquery 3.1 support)
+`docker build -t iati-engine:latest docker/iati-engine`
 
- *  [Saxon HE](https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/):
-    XLST 2.0 processing library, to be added to BaseX and used in Ant.
-    Put `saxon9he.jar` for instance in `~/.ant/lib`.
+Next, you can put the `iati-engine` script in your path,
+for instance as a symlink:
+
+`ln -s iati-engine ~/bin/iati-engine`
+
+Then, verify everything is running:
+
+`iati-engine -p`
 
 ## Recommended
 
@@ -48,41 +53,47 @@ Additionally, some tools are useful to have:
     [web application](http://www.yworks.com/products/yed-live). This editor is
     used to layout the graphs, and finetune them.
 
-## Directories
+## The engine
 
-In `workspace` you can make folders for each data project.
+Some background: the engine uses Ant, a software build manager, and every
+task is written as an Ant target, depending on internal targets for
+intermediary steps. Since several intermediary steps are used for multiple
+tasks, and intermediary results are kept, the engine can use these to
+speed up its operation.
 
-Once you run any of the tasks for a project, it will create the necessary
-folders for the source of your data, the intermediary files, and the output
+Basically, when you run the engine, it runs Ant: all your command line
+parameters are passed to Ant. If you run `iati-engine -?` you will get
+the Ant help information.
+
+Core tools:
+
+*  [Ant](http://ant.apache.org/): a build process manager.
+*  [BaseX](http://basex.org): an XML database, and XQuery and XPath processor.
+*  [Saxon HE](http://www.saxonica.com/download/opensource.xml):
+ XLST 2.0 processing library.
+
+
+## Workspaces
+
+You run the engine in a folder that will function as the 'workspace'.
+You specify the task you want performed, and the engine will take all steps
+needed to transform the source data into the desired output formats.
+
+Once you run any of the tasks, it will create the necessary folders
+for the source of your data, the intermediary files, and the output
 files generated.
 
-You can also run `ant init -Dproject=my-project` to create those folders (if
-needed) for a project in `workspace/my-project`.
+You can run `iati-engine init` to create those folders yourself.
 
-The `demo` project contains example data files to illustrate various tasks.
+The `workspace` folder contains example data files to illustrate various tasks.
 
 # Operation
 
-Basically, everything is driven by _buid files_ for Ant.
+Typing `iati-engine -p` will show information about the main tasks you can do.
 
-Typing `ant -p` will show information about the main tasks you can do.
-
-Typing something like `ant yed` will perform all the steps needed to transform
+Typing `iati-engine yed` will perform all the steps needed to transform
 the source data in your project into GraphML files that you can edit in yEd.
-
-If it doesn't exist, a file `build.properties` will be created, with the default
-project `demo` as active project. To run on another project, you have two
-options:
-
- *  Change the line `project` in `build.properties`
- *  Specify the project on the command line: `ant -Dproject=myproject task`
 
 ## Acknowledgements
 
-This product includes:
-
-*  A modified version of [DOTML developed by Martin Loetzsch](http://www.martin-loetzsch.de/DOTML).
-*  A modified version of [xquerydoc](https://github.com/xquery/xquerydoc):
-    using an adapted version of the xlst stylesheet to transfor xqDoc into HTML
-
-Inspiration from [Kit Wallace's Aidview DB (working with eXist)](https://github.com/KitWallace/AIDVIEW-DB)
+First inspiration came from [Kit Wallace's Aidview DB (working with eXist)](https://github.com/KitWallace/AIDVIEW-DB)

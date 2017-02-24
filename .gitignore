@@ -1,4 +1,4 @@
 /workspace/*/*
-!/workspace/demo/src/
+!/workspace/src/*
 build.properties
 bower_components/

@@ -7,9 +7,9 @@
   <target name="filtered" depends="init">
     <dependset>
       <srcfileset dir="map" includes="*.xqm"/>
-      <targetfileset dir="${workDir}/tmp" includes="*.filtered.xml"/>
+      <targetfileset dir="/workspace/tmp" includes="*.filtered.xml"/>
     </dependset>
-    <basexpipe xquery="augment/organisations" src="${workDir}/src" from="*.xml" to="*.filtered.xml"/>
+    <basexpipe xquery="augment/organisations" src="/workspace/src" from="*.xml" to="*.filtered.xml"/>
   </target>
 
   <target name="rules"
@@ -22,12 +22,12 @@
         <fileset dir="augment/rules/iati" />
         <fileset dir="augment/rules/minbuza" />
       </sources>
-      <targetfileset dir="${workDir}/tmp" includes="*.augmented.xml" />
+      <targetfileset dir="/workspace/tmp" includes="*.augmented.xml" />
     </dependset>
     <xslt
-      basedir="${workDir}/src/"
+      basedir="/workspace/src/"
       includes="*.xml"
-      destdir="${workDir}/tmp"
+      destdir="/workspace/tmp"
       extension=".augmented.xml"
       style="augment/rules/iati.xslt"
      />
