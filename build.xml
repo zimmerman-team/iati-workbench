@@ -121,17 +121,4 @@
     </apply>
   </target>
 
-  <target name="merge"
-    description="Merge activities within one file."
-    depends="init">
-    <xslt
-      basedir="${workDir}/tmp/"
-      includes="generated.xml"
-      destdir="${workDir}/src/"
-      extension=".xml"
-      style="output/merge.xslt"
-     />
-
-  </target>
-
 </project>
