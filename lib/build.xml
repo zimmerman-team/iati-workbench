@@ -50,16 +50,16 @@
     </copy>
 
     <copy todir="/workspace/reports/htdocs/lib/css">
-      <fileset dir="bower_components/bootstrap/dist/css"/>
-      <fileset dir="bower_components/fuelux/dist/css"/>
+      <fileset dir=".bower/components/bootstrap/dist/css"/>
+      <fileset dir=".bower/components/fuelux/dist/css"/>
     </copy>
     <copy todir="/workspace/reports/htdocs/lib/fonts">
-      <fileset dir="bower_components/bootstrap/dist/fonts"/>
-      <fileset dir="bower_components/fuelux/dist/fonts"/>
+      <fileset dir=".bower/components/bootstrap/dist/fonts"/>
+      <fileset dir=".bower/components/fuelux/dist/fonts"/>
     </copy>
     <copy todir="/workspace/reports/htdocs/lib/js">
-      <fileset dir="bower_components/jquery/dist"/>
-      <fileset dir="bower_components/bootstrap/dist/js"/>
+      <fileset dir=".bower/components/jquery/dist"/>
+      <fileset dir=".bower/components/bootstrap/dist/js"/>
     </copy>
   </target>
 
