@@ -1,4 +1,6 @@
 /workspace/*/*
 !/workspace/src/*
 build.properties
-.bower/
+\.bower/
+\.basexhistory
+\.bash_history

@@ -8,4 +8,8 @@ WORKSPACE=`pwd`
 USER=`id -u`:`id -g`
 
 # local version of the engine for now...
-docker run -it --rm -u=${USER} -v ${ENGINE_PATH}:/root -v ${WORKSPACE}:/workspace iati-engine $@
+docker run -it --rm -u=${USER} \
+  -v ${ENGINE_PATH}:/root \
+  -v ${WORKSPACE}:/workspace \
+  -v iati-data:/iati-data \
+  iati-engine $@
