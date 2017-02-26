@@ -38,6 +38,37 @@
     </sequential>
   </macrodef>
 
+  <!-- Using BaseX on the IATI XML database -->
+  <macrodef name="iati-query">
+    <attribute name="xquery"/>
+    <attribute name="src" default="/workspace/tmp"/>
+    <attribute name="dest" default="/workspace/tmp"/>
+    <attribute name="from"/>
+    <attribute name="to"/>
+    <sequential>
+      <dependset>
+        <sources>
+          <file file="@{xquery}"/>
+          <file file="identifiers.xqm"/>
+        </sources>
+        <targetfileset dir="@{dest}">
+          <patternset>
+            <include name="@{to}"/>
+          </patternset>
+        </targetfileset>
+      </dependset>
+      <apply executable="basex" dest="@{dest}" verbose="true">
+        <fileset dir="@{src}" includes="@{from}"/>
+        <arg value="-iIATI"/>
+        <srcfile prefix="-bfile="/>
+        <arg value="-o"/>
+        <targetfile/>
+        <arg value="@{xquery}"/>
+        <mapper type="glob" from="@{from}" to="@{to}"/>
+      </apply>
+    </sequential>
+  </macrodef>
+
   <target name="htdocs-skeleton"
     depends="init">
     <apply executable="bower" verbose="true" force="true">

@@ -91,4 +91,12 @@
      />
   </target>
 
+  <target name="more-up-down-stream" depends="init">
+    <iati-query xquery="basex-queries/find-links-upstream-downstream.xq" src="/workspace/src" from="*.ids" to="*.extra"/>
+  </target>
+
+  <target name="get-activities" depends="init">
+    <iati-query xquery="basex-queries/get-activities.xq" src="/workspace/src" from="*.ids" dest="/workspace/src" to="*.xml"/>
+  </target>
+
 </project>
