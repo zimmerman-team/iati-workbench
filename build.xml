@@ -99,4 +99,21 @@
     <iati-query xquery="basex-queries/get-activities.xq" src="/workspace/src" from="*.ids" dest="/workspace/src" to="*.xml"/>
   </target>
 
+  <target name="excel2csv"
+    description="Convert spreadsheets to CSV files for further processing."
+    depends="init">
+    <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
+
+    <mapper id="out" type="glob" from="*.xlsx" to="/workspace/tmp/*.xls.csv"/>
+
+    <apply executable="in2csv" verbose="true">
+      <fileset dir="/workspace/input" includes="*.xls*"/>
+      <!-- <mapper refid="out"/> -->
+      <srcfile/>
+      <redirector logError="true">
+        <outputmapper refid="out"/>
+      </redirector>
+    </apply>
+  </target>
+
 </project>

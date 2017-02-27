@@ -94,4 +94,22 @@
     </copy>
   </target>
 
+  <target name="merge-activities"
+    description="Merge activities within one file."
+    depends="init">
+    <attribute name="srcDir" default="/workspace/tmp"/>
+    <attribute name="srcFiles" default="*.generated.xml"/>
+    <attribute name="targetDir" default="/workspace/tmp"/>
+    <attribute name="target" default=".merged.xml"/>
+
+    <xslt
+      basedir="${srcDir}"
+      includes="${srcFiles}"
+      destdir="${targetDir}"
+      extension="${target}"
+      style="iati.me/merge-activities.xslt"
+     />
+
+  </target>
+
 </project>
