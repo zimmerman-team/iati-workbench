@@ -46,17 +46,6 @@
     <attribute name="from"/>
     <attribute name="to"/>
     <sequential>
-      <dependset>
-        <sources>
-          <file file="@{xquery}"/>
-          <file file="identifiers.xqm"/>
-        </sources>
-        <targetfileset dir="@{dest}">
-          <patternset>
-            <include name="@{to}"/>
-          </patternset>
-        </targetfileset>
-      </dependset>
       <apply executable="basex" dest="@{dest}" verbose="true">
         <fileset dir="@{src}" includes="@{from}"/>
         <arg value="-iIATI"/>

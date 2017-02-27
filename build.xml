@@ -95,6 +95,14 @@
     <iati-query xquery="basex-queries/find-links-upstream-downstream.xq" src="/workspace/src" from="*.ids" to="*.extra"/>
   </target>
 
+  <target name="find-links-upstream" depends="init">
+    <iati-query xquery="basex-queries/find-links-upstream.xq" src="/workspace/src" from="*.ids" to="*.ids.up"/>
+  </target>
+
+  <target name="find-links-downstream" depends="init">
+    <iati-query xquery="basex-queries/find-links-downstream.xq" src="/workspace/src" from="*.ids" to="*.ids.down"/>
+  </target>
+
   <target name="get-activities" depends="init">
     <iati-query xquery="basex-queries/get-activities.xq" src="/workspace/src" from="*.ids" dest="/workspace/src" to="*.xml"/>
   </target>
@@ -114,6 +122,10 @@
         <outputmapper refid="out"/>
       </redirector>
     </apply>
+  </target>
+
+  <target name="show-ids" depends="init">
+    <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
 
 </project>
