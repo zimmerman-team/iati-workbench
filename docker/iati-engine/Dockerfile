@@ -42,7 +42,8 @@ ENV PATH ${PATH}:/opt/ant/bin:/opt/basex/bin:/opt/node/bin
 
 RUN npm install -g bower && \
   # running bower as non-root user without home dir insists on having a config folder in root...
-  mkdir /.config && chmod ugo+rwx /.config
+  mkdir /.config && chmod ugo+rwx /.config && \
+  mkdir /.local && chmod ugo+rwx /.local
 
 WORKDIR /root
 ENTRYPOINT ["ant"]
