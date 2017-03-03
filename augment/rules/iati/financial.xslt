@@ -47,4 +47,13 @@
   <xsl:next-match/>
 </xsl:template>
 
+<xsl:template match="transaction[provider-org/@provider-activity-id and receiver-org/@receiver-activity-id]" mode="rules" priority="7.2">
+  <xsl:if test="provider-org/@provider-activity-id = receiver-org/@receiver-activity-id">
+    <iati-me:feedback type="warning" class="financial">
+      The provider and receiver activity identifiers in the transaction should
+      not be the same.
+    </iati-me:feedback>
+  </xsl:if>
+</xsl:template>
+
 </xsl:stylesheet>

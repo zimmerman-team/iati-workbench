@@ -7,10 +7,18 @@
 
 <xsl:template match="iati-activity" mode="rules" priority="1.1">
 
-  <xsl:if test="not(starts-with(string(iati-identifier), reporting-org/@ref))">
+  <xsl:variable name="id" select="string(iati-identifier)"/>
+
+  <xsl:if test="not(starts-with($id, reporting-org/@ref))">
     <iati-me:feedback type="warning" class="identifiers">
       The activity identifier usually begins with the organisation identifier
       of the reporting organisation.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="count(//iati-activity[iati-identifier=$id])>1">
+    <iati-me:feedback type="warning" class="identifiers">
+      There are multiple copies of an activity with this identifier.
     </iati-me:feedback>
   </xsl:if>
 
