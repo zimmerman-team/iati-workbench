@@ -80,13 +80,13 @@
       <sources>
         <file file="output/transactions.xslt" />
       </sources>
-      <targetfileset dir="/workspace/output" includes="*.csv" />
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.flows.html" />
     </dependset>
     <xslt
       basedir="/workspace/tmp/"
       includes="*.filtered.xml"
-      destdir="/workspace/output"
-      extension=".csv"
+      destdir="/workspace/reports/htdocs"
+      extension=".flows.html"
       style="output/transactions.xslt"
      />
   </target>
