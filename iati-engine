@@ -6,10 +6,18 @@ ENGINE_PATH=$(dirname `readlink -f "$0"`)
 WORKSPACE=`pwd`
 # Run the engine using our own user and group id's so we can manage the results
 USER=`id -u`:`id -g`
+# The target 'bash' will instead jump into a bash shell
+if [ "$1." = "bash." ]; then
+  ENTRY="--entrypoint=bash"
+  LINE=${@:2}
+else
+  LINE=$@
+fi
 
 # local version of the engine for now...
 docker run -it --rm -u=${USER} \
   -v ${ENGINE_PATH}:/root \
   -v ${WORKSPACE}:/workspace \
   -v iati-data:/iati-data \
-  iati-engine $@
+  $ENTRY \
+  iati-engine $LINE
