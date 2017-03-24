@@ -11,7 +11,7 @@
     and provider-org/@ref='XM-DAC-7'
     and provider-org/@provider-activity-id])">
 
-    <iati-me:feedback type="warning" class="traceability" src="minbuza">
+    <iati-me:feedback type="warning" class="traceability" src="minbuza" id="100.1.1">
       Include at least one activity with a transaction
       of type <code>11</code> (incoming commitment) that refers to the
       Ministry (<code>XM-DAC-7</code>) as the provider, and that refers to
@@ -28,7 +28,7 @@
     or //@receiver-org-activity
     or participating-org/@activity-id
     or related-activity/@ref)">
-    <iati-me:feedback type="info" class="traceability" src="minbuza">
+    <iati-me:feedback type="info" class="traceability" src="minbuza" id="100.2.1">
       An activity should contain links to other activities,
       for instance to indicate where funding comes from or goes to, or how it
       relates to overarching programmes or underlying projects.

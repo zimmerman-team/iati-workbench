@@ -10,14 +10,14 @@
   <xsl:variable name="id" select="string(iati-identifier)"/>
 
   <xsl:if test="not(starts-with($id, reporting-org/@ref))">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.1.1">
       The activity identifier usually begins with the organisation identifier
       of the reporting organisation.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="count(//iati-activity[iati-identifier=$id])>1">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.1.2">
       There are multiple copies of an activity with this identifier.
     </iati-me:feedback>
   </xsl:if>
@@ -28,20 +28,20 @@
 <xsl:template match="reporting-org|participating-org|provider-org|receiver-org" mode="rules" priority="1.2">
 
   <xsl:if test="@ref != functx:trim(@ref)">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.2.1">
       An organisation identifier should not start or end with spaces or
       newlines.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="not(@ref)">
-    <iati-me:feedback type="info" class="identifiers">
+    <iati-me:feedback type="info" class="identifiers" id="1.2.2">
       No organisation identifier is given.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="not(@ref) and (activity-id or receiver-activity-id or provider-activity-id)">
-    <iati-me:feedback type="info" class="identifiers">
+    <iati-me:feedback type="info" class="identifiers" id="1.2.3">
       An activity identifier is given, but the identifier for the organisation
       is missing.
     </iati-me:feedback>
@@ -50,7 +50,7 @@
   <xsl:if test="@ref and not(
       matches(@ref, '^[0-9]{5}$') or
       matches(@ref, '^[A-Z]{2}(-.+)*$'))">
-    <iati-me:feedback type="danger" class="identifiers" src="iati"
+    <iati-me:feedback type="danger" class="identifiers" src="iati" id="1.2.4"
       href="http://iatistandard.org/202/organisation-identifiers/">
       The identifier does not conform to the organisation identifier standard.
     </iati-me:feedback>
@@ -60,21 +60,21 @@
 
   <xsl:if test="matches(@ref, '^.+-.+-') and
     matches($RegistrationAgency, '[a-z]')">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.2.5">
       The registration agency part in an organisation identifier
       should be in uppercase.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="@provider-activity-id=''">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.2.6">
       The <code>provider-activity-id</code> attribute should not be empty but
       omitted if you don't have the activity identifier.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="@receiver-activity-id=''">
-    <iati-me:feedback type="warning" class="identifiers">
+    <iati-me:feedback type="warning" class="identifiers" id="1.2.7">
       The <code>receiver-activity-id</code> attribute should not be empty but
       omitted if you don't have the activity identifier.
     </iati-me:feedback>

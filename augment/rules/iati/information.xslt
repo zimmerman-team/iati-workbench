@@ -11,7 +11,7 @@
     )"/>
 
   <xsl:if test="@format=$unlikelyformats">
-    <iati-me:feedback type="info" class="information">
+    <iati-me:feedback type="info" class="information" id="6.1.1">
       The type is specified as <code><xsl:value-of select="@format"/></code>.
       This is an unlikely format for a document.
     </iati-me:feedback>

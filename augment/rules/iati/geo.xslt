@@ -9,7 +9,7 @@
 
   <xsl:if test="count(recipient-country|recipient-region) > 1">
     <xsl:if test="sum((recipient-country|recipient-region)/@percentage) != 100">
-      <iati-me:feedback type="danger" class="geo">
+      <iati-me:feedback type="danger" class="geo" id="3.1.1">
           Percentages for recipient-country and recipient-region don't add up
           to 100%.
       </iati-me:feedback>

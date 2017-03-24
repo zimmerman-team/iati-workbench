@@ -8,7 +8,7 @@
 <xsl:template match="transaction[provider-org and receiver-org]" mode="rules" priority="7.1">
 
   <xsl:if test="provider-org/@provider-activity-id eq receiver-org/@receiver-activity-id">
-    <iati-me:feedback type="warning" class="financial">
+    <iati-me:feedback type="warning" class="financial" id="7.1.1">
       The <code>provider-activity-id</code> and
       <code>receiver-activity-id</code> are the same: financial flows should be between
       different activities.
@@ -18,7 +18,7 @@
   <xsl:if test="upper-case(transaction-type/@code)=('2','C')
     and provider-org/@provider-activity-id
     and not(receiver-org/@receiver-activity-id)">
-    <iati-me:feedback type="warning" class="financial">
+    <iati-me:feedback type="warning" class="financial" id="7.1.2">
       The transaction is a commitment from the activity,
       and has a <code>provider-activity-id</code>
       but no <code>receiver-activity-id</code>.
@@ -28,7 +28,7 @@
   <xsl:if test="upper-case(transaction-type/@code)=('3','D')
     and provider-org/@provider-activity-id
     and not(receiver-org/@receiver-activity-id)">
-    <iati-me:feedback type="warning" class="financial">
+    <iati-me:feedback type="warning" class="financial" id="7.1.3">
       The transaction is a disbursement from the activity,
       and has a <code>provider-activity-id</code>
       but no <code>receiver-activity-id</code>.
@@ -37,7 +37,7 @@
 
   <xsl:if test="upper-case(transaction-type/@code)=('4','E')
     and receiver-org/@receiver-activity-id">
-    <iati-me:feedback type="warning" class="financial">
+    <iati-me:feedback type="warning" class="financial" id="7.1.4">
       The transaction is an expenditure from the activity,
       but has a <code>receiver-activity-id</code>
       suggesting it may be a disbursement.
@@ -49,7 +49,7 @@
 
 <xsl:template match="transaction[provider-org/@provider-activity-id and receiver-org/@receiver-activity-id]" mode="rules" priority="7.2">
   <xsl:if test="provider-org/@provider-activity-id = receiver-org/@receiver-activity-id">
-    <iati-me:feedback type="warning" class="financial">
+    <iati-me:feedback type="warning" class="financial" id="7.2.1">
       The provider and receiver activity identifiers in the transaction should
       not be the same.
     </iati-me:feedback>
