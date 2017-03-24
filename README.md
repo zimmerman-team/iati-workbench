@@ -44,14 +44,26 @@ Then, verify everything is running:
 
 `iati-engine -p`
 
+The engine will run Ant by default, but it is also possible to access a shell:
+
+* `iati-engine bash` will start a bash shell as the current user on the host system
+* `iati-engine root` will start a bash shell as root
+
 ## Recommended
 
-Additionally, some tools are useful to have:
+### Named volume `iati-data` for BaseX database
 
- *  [yEd](http://www.yworks.com/products/yed): Graph editor, available as free
-    download, and also available as
-    [web application](http://www.yworks.com/products/yed-live). This editor is
-    used to layout the graphs, and finetune them.
+The engine contains BaseX, an XML database platform. The Docker container will
+bind a named volume called `iati-data` to the container. If this volume contains
+a folder `IATI` with the BaseX database files, you can use the engine to run
+queries against that database.
+
+### Editing graphs with yEd
+
+[yEd](http://www.yworks.com/products/yed): Graph editor, available as free
+download, and also available as
+[web application](http://www.yworks.com/products/yed-live). This editor is
+used to layout the graphs, and finetune them.
 
 ## The engine
 

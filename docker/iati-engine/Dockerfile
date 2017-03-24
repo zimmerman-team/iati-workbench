@@ -2,7 +2,11 @@ FROM openjdk:9-jre
 
 MAINTAINER Rolf Kleef <rolf@drostan.org>
 
-# Ant XML/XSLT engine
+# IATI Engine:
+# Ant XML/XSLT
+# BaseX
+# csvkit
+# node, bower
 #
 # docker run -it --rm=true -v /home/...your project path.../:/root antxml-engine ...target...
 
@@ -31,6 +35,9 @@ RUN cd && \
   cp *.jar /opt/basex/lib && \
   mv *.jar /opt/ant/lib
 
+RUN cd /opt/ant/lib &&\
+  wget -q https://github.com/Ant-Grand/Grand/releases/download/1.9.5/grand-1.9.5.jar
+
 RUN cd && \
   wget -q https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz &&\
   tar -xvf node-v${NODE_VERSION}-linux-x64.tar.xz && \
@@ -44,6 +51,13 @@ RUN npm install -g bower && \
   # running bower as non-root user without home dir insists on having a config folder in root...
   mkdir /.config && chmod ugo+rwx /.config && \
   mkdir /.local && chmod ugo+rwx /.local
+
+RUN apt-get update && \
+  apt-get -y install --no-install-recommends git python3 graphviz &&\
+  wget -q https://bootstrap.pypa.io/get-pip.py &&\
+  python3 get-pip.py &&\
+  rm get-pip.py &&\
+  pip install csvkit
 
 WORKDIR /root
 ENTRYPOINT ["ant"]
