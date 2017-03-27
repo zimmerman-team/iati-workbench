@@ -61,15 +61,41 @@
       <sources>
         <fileset dir="lib/iati.me" />
       </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.html" />
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.report.html" />
     </dependset>
     <xslt
       basedir="/workspace/tmp/"
       includes="*.augmented.xml"
       destdir="/workspace/reports/htdocs"
-      extension=".html"
+      extension=".report.html"
       style="output/feedback.xslt"
      />
+  </target>
+
+  <target name="feedback-summary"
+    description="Generate a summary data quality feedback report."
+    depends="rules, htdocs-skeleton">
+    <echo level="info">Provide a summary feedback report.</echo>
+    <dependset>
+      <sources>
+        <fileset dir="lib/iati.me" />
+      </sources>
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.summary.html" />
+    </dependset>
+    <xslt
+      basedir="/workspace/tmp/"
+      includes="*.all.xml"
+      destdir="/workspace/reports/htdocs"
+      extension=".html"
+      style="output/feedback-summary.xslt"
+     />
+     <xslt
+       basedir="/workspace/tmp/"
+       includes="*.augmented.xml"
+       destdir="/workspace/reports/htdocs"
+       extension=".summary.html"
+       style="output/feedback-summary.xslt"
+      />
   </target>
 
   <target name="transactions-flow"
