@@ -5,9 +5,7 @@ $activities = new SimpleXMLElement('<iati-activities/>');
 $activities->addAttribute('version', '2.02');
 $activities->addAttribute('generated-datetime', date('c'));
 
-$files = array('20170125 Customers.xls.csv', '20170125 results.xls.csv',
-  '20170125 transactions.xls.csv', '20170125 projects.xls.csv', '20170125 sector.xls.csv',
-  '20170125 projects-countries.xls.csv');
+$files = glob('*.csv');
 
 /**
  * Process data, return as string

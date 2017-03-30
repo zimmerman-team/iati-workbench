@@ -1,8 +1,6 @@
 <?php
 
-$files = array('20170125 Customers.xls.csv', '20170125 results.xls.csv',
-  '20170125 transactions.xls.csv', '20170125 projects.xls.csv', '20170125 sector.xls.csv',
-  '20170125 projects-countries.xls.csv');
+$files = glob('*.csv');
 $header = array();
 
 foreach ($files as $file) {
