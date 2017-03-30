@@ -53,7 +53,7 @@ RUN npm install -g bower && \
   mkdir /.local && chmod ugo+rwx /.local
 
 RUN apt-get update && \
-  apt-get -y install --no-install-recommends git python3 graphviz &&\
+  apt-get -y install --no-install-recommends git python3 graphviz xmlstarlet &&\
   wget -q https://bootstrap.pypa.io/get-pip.py &&\
   python3 get-pip.py &&\
   rm get-pip.py &&\

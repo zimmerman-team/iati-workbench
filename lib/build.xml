@@ -86,7 +86,7 @@
   <target name="merge-activities"
     description="Merge activities within one file."
     depends="init">
-    <attribute name="srcDir" default="/workspace/tmp"/>
+    <!-- <attribute name="srcDir" default="/workspace/tmp"/>
     <attribute name="srcFiles" default="*.generated.xml"/>
     <attribute name="targetDir" default="/workspace/tmp"/>
     <attribute name="target" default=".merged.xml"/>
@@ -97,7 +97,38 @@
       destdir="${targetDir}"
       extension="${target}"
       style="iati.me/merge-activities.xslt"
-     />
+     /> -->
+     <xslt
+       basedir="/workspace/tmp"
+       includes="ls.xml"
+       destdir="/workspace/tmp"
+       extension=".merged.xml"
+       style="lib/iati.me/merge-activities.xslt"
+      />
+
+  </target>
+
+  <target name="csv-xml">
+  </target>
+
+  <target name="merge-files"
+    description="Merge activities into one file."
+    depends="init">
+    <attribute name="srcDir" default="/workspace/tmp"/>
+    <attribute name="srcFiles" default="*.generated.xml"/>
+    <attribute name="targetDir" default="/workspace/tmp"/>
+    <attribute name="target" default=".mergedfile.xml"/>
+
+    <xslt
+      basedir="${srcDir}"
+      includes="${srcFiles}"
+      destdir="${targetDir}"
+      extension="${target}"
+      style="iati.me/merge-files.xslt">
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+        <attribute name="http://saxon.sf.net/feature/initialTemplate" value="filemerge"/>
+      </factory>
+    </xslt>
 
   </target>
 
@@ -119,4 +150,10 @@
     </echo>
   </target>
 
+  <target name="ls-tmp" depends="init">
+    <exec executable="xmlstarlet" output="/workspace/tmp/ls.xml">
+      <arg line="ls /workspace/tmp"/>
+      <!-- <arg line="ls /workspace/tmp > /workspace/tmp/ls.xml"/> -->
+    </exec>
+  </target>
 </project>

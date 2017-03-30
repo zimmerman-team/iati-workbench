@@ -8,4 +8,35 @@
     <echo level="info">Generate GraphML files from filtered IATI sources.</echo>
     <basexpipe xquery="transform/organisation-graph" from="*.filtered.xml" to="*.graphml"/>
   </target>
+
+  <target name="csv-iati" depends="">
+    <xslt
+      basedir="/workspace/tmp"
+      includes="Indicators.csv.xml"
+      destdir="/workspace/tmp"
+      extension=".generated.xml"
+      style="/workspace/tmp/Indicators.xslt"
+     />
+     <xslt
+       basedir="/workspace/tmp"
+       includes="Indicatorperiods.csv.xml"
+       destdir="/workspace/tmp"
+       extension=".generated.xml"
+       style="/workspace/tmp/Indicator periods.xslt"
+      />
+      <xslt
+        basedir="/workspace/tmp"
+        includes="Results.csv.xml"
+        destdir="/workspace/tmp"
+        extension=".generated.xml"
+        style="/workspace/tmp/Results.xslt"
+       />
+       <xslt
+         basedir="/workspace/tmp"
+         includes="Activities.csv.xml"
+         destdir="/workspace/tmp"
+         extension=".generated.xml"
+         style="/workspace/tmp/Activities.xslt"
+        />
+  </target>
 </project>
