@@ -46,3 +46,12 @@ body {
   float: right;
   margin-right: 0.5em;
 }
+
+.languageSet {
+}
+.languageDefault {
+  color: #333;
+}
+.languageNA {
+  color: #800;
+}

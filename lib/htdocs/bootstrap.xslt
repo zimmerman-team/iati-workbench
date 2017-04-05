@@ -14,7 +14,46 @@
 
   <xsl:output method="html" encoding="UTF-8" indent="yes"/>
 
+  <xsl:character-map name="latin1">
+    <xsl:output-character character="&#128;" string="&amp;euro;" />
+    <xsl:output-character character="&#129;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#130;" string="&amp;sbquo;" />
+    <xsl:output-character character="&#131;" string="&amp;fnof;" />
+    <xsl:output-character character="&#132;" string="&amp;bdquo;" />
+    <xsl:output-character character="&#133;" string="&amp;hellip;" />
+    <xsl:output-character character="&#134;" string="&amp;dagger;" />
+    <xsl:output-character character="&#135;" string="&amp;Dagger;" />
+    <xsl:output-character character="&#136;" string="&amp;circ;" />
+    <xsl:output-character character="&#137;" string="&amp;permil;" />
+    <xsl:output-character character="&#138;" string="&amp;Scaron;" />
+    <xsl:output-character character="&#139;" string="&amp;lsaquo;" />
+    <xsl:output-character character="&#140;" string="&amp;OElig;" />
+    <xsl:output-character character="&#141;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#142;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#143;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#144;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#145;" string="&amp;lsquo;" />
+    <xsl:output-character character="&#146;" string="&amp;rsquo;" />
+    <xsl:output-character character="&#147;" string="&amp;ldquo;" />
+    <xsl:output-character character="&#148;" string="&amp;rdquo;" />
+    <xsl:output-character character="&#149;" string="&amp;bull;" />
+    <xsl:output-character character="&#150;" string="&amp;ndash;" />
+    <xsl:output-character character="&#151;" string="&amp;mdash;" />
+    <xsl:output-character character="&#152;" string="&amp;tilde;" />
+    <xsl:output-character character="&#153;" string="&amp;trade;" />
+    <xsl:output-character character="&#154;" string="&amp;scaron;" />
+    <xsl:output-character character="&#155;" string="&amp;rsaquo;" />
+    <xsl:output-character character="&#156;" string="&amp;oelig;" />
+    <xsl:output-character character="&#157;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#158;" string="&amp;nbsp;" />
+    <xsl:output-character character="&#159;" string="&amp;Yuml;" />
+  </xsl:character-map>
+
   <xsl:template match="/">
+    <xsl:call-template name="bootstrap-file"/>
+  </xsl:template>
+
+  <xsl:template name="bootstrap-file">
     <html lang="en">
       <head>
         <meta charset="utf-8"/>
