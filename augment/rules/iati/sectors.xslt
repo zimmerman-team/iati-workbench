@@ -14,7 +14,7 @@
       <xsl:if test="count(current-group()[not(@percentage)]) > 0">
         <iati-me:feedback type="danger" class="sectors" id="2.1.1">
           One or more sectors in vocabulary <code><xsl:value-of select="current-grouping-key()"/></code>
-          have no percentage: <xsl:value-of select="string-join(current-group()[not(@percentage)]/@code, ', ')"/>
+          have no percentage: <xsl:value-of select="current-group()[not(@percentage)]/@code" separator=", "/>
         </iati-me:feedback>
       </xsl:if>
 
