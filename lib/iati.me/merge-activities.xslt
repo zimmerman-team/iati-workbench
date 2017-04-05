@@ -7,7 +7,7 @@
 
 <xsl:template match="/dir">
   <iati-activities>
-    <!-- add generated-datetime etc -->
+    <!-- TODO: add generated-datetime etc -->
     <xsl:for-each-group select="document(f[ends-with(@n,'.generated.xml')]/@n)//iati-activity" group-by="@merge:id">
       <iati-activity>
         <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" />

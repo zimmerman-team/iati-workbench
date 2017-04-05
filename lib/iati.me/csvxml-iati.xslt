@@ -13,6 +13,10 @@
   </xsl:template>
 
   <xsl:template match="record">
+    <!-- This is a fallback for any file not mentioned in the /workspace/config/csvxml-iati.xslt file -->
+  </xsl:template>
+
+  <xsl:template match="record2">
     <iati-activity default-currency="EUR" hierarchy="1" humanitarian="false" last-updated-datetime="2017-01-01T00:00:00"
       merge:id="{entry[@name='IATI Identifier']}">
         <iati-identifier><xsl:value-of select="entry[@name='IATI Identifier']"/></iati-identifier>

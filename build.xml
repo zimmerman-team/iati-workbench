@@ -140,17 +140,41 @@
     depends="init">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
-    <mapper id="out" type="glob" from="*.xlsx" to="/workspace/tmp/*.xls.csv"/>
+    <apply executable="in2csv" dest="/workspace/tmp" verbose="true">
+      <fileset dir="/workspace/input" includes="*.xlsx"/>
+      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.xlsx.csv"/>
 
-    <apply executable="in2csv" verbose="true">
-      <fileset dir="/workspace/input" includes="*.xls*"/>
-      <!-- <mapper refid="out"/> -->
       <arg line="--no-inference"/>
       <srcfile/>
       <redirector logError="true">
-        <outputmapper refid="out"/>
+        <outputmapper refid="csv-out"/>
       </redirector>
     </apply>
+  </target>
+
+  <target name="make-iati"
+    description="Merge activities within one file."
+    depends="csvxml-iati, ls-tmp">
+    <xslt
+      basedir="/workspace/tmp"
+      destdir="/workspace/tmp"
+      in="/workspace/tmp/ls.xml"
+      out="/workspace/src/iati.alpha.xml"
+      style="lib/iati.me/merge-activities.xslt"
+    />
+  </target>
+
+  <target name="csv-csvxml" depends="excel-csv">
+    <sequential>
+      <apply executable="basex" dest="/workspace/tmp" verbose="true">
+        <fileset dir="/workspace/tmp" includes="*.csv"/>
+        <srcfile prefix="-bfile="/>
+        <arg value="-o"/>
+        <targetfile/>
+        <arg value="basex-queries/csv-csvxml.xq"/>
+        <mapper type="glob" from="*.csv" to="*.csv.xml"/>
+      </apply>
+    </sequential>
   </target>
 
   <target name="show-ids" depends="init">
@@ -168,4 +192,5 @@
      />
   </target>
 
+  <target name="make-outputs" depends="yed,activities,feedback-summary"/>
 </project>

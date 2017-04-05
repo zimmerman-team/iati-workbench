@@ -12,7 +12,7 @@
     <basexpipe xquery="transform/organisation-graph" from="*.filtered.xml" to="*.graphml"/>
   </target>
 
-  <target name="csvxml-iati" depends="csv-xml">
+  <target name="csvxml-iati" depends="csv-csvxml">
     <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.

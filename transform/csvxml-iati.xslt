@@ -5,11 +5,11 @@
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="iati-me functx">
 
-  <xsl:import href="../lib/iati.me/csv-iati.xslt"/>
+  <xsl:import href="../lib/iati.me/csvxml-iati.xslt"/>
   <xsl:import href="/workspace/config/csvxml-iati.xslt"/>
 
   <xsl:param name="filename"/>
-  <xsl:variable name="file" select="functx:substring-before-last($filename,'.xls.csv.xml')"/>
+  <xsl:variable name="file" select="functx:substring-before-last($filename,'.xlsx.csv.xml')"/>
 
   <xsl:template match="/csv">
     <iati-activities>
