@@ -15,6 +15,9 @@ elif [ "$1." = "root." ]; then
   ENTRY="--entrypoint=bash"
   USER="0:0"
   LINE=${@:2}
+elif [ "$1." = "show." ]; then
+  ENTRY="--entrypoint=show"
+  LINE=${@:2}
 else
   LINE=$@
 fi

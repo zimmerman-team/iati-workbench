@@ -1,0 +1,7 @@
+#!/bin/bash
+# Format an XML file and show it
+# A bit of a hack: pygmentize returns an error if piped directly into less
+# if the user does not browse to the end of the file. So we redirect all
+# into a file, then cat that file so less does not show xml.xml as the filename.
+xmlstarlet fo /workspace/$1 | pygmentize -l xml > /tmp/xml.xml
+cat /tmp/xml.xml | less -R
