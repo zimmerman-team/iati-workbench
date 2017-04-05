@@ -83,53 +83,30 @@
     </copy>
   </target>
 
-  <target name="merge-activities"
+  <target name="make-iati"
     description="Merge activities within one file."
-    depends="init">
-    <!-- <attribute name="srcDir" default="/workspace/tmp"/>
-    <attribute name="srcFiles" default="*.generated.xml"/>
-    <attribute name="targetDir" default="/workspace/tmp"/>
-    <attribute name="target" default=".merged.xml"/>
-
+    depends="csvxml-iati, ls-tmp">
     <xslt
-      basedir="${srcDir}"
-      includes="${srcFiles}"
-      destdir="${targetDir}"
-      extension="${target}"
-      style="iati.me/merge-activities.xslt"
-     /> -->
-     <xslt
-       basedir="/workspace/tmp"
-       includes="ls.xml"
-       destdir="/workspace/tmp"
-       extension=".merged.xml"
-       style="lib/iati.me/merge-activities.xslt"
-      />
+      basedir="/workspace/tmp"
+      destdir="/workspace/tmp"
+      in="/workspace/tmp/ls.xml"
+      out="/workspace/src/iati.alpha.xml"
+      style="lib/iati.me/merge-activities.xslt"
+    />
 
   </target>
 
-  <target name="csv-xml">
-  </target>
-
-  <target name="merge-files"
-    description="Merge activities into one file."
-    depends="init">
-    <attribute name="srcDir" default="/workspace/tmp"/>
-    <attribute name="srcFiles" default="*.generated.xml"/>
-    <attribute name="targetDir" default="/workspace/tmp"/>
-    <attribute name="target" default=".mergedfile.xml"/>
-
-    <xslt
-      basedir="${srcDir}"
-      includes="${srcFiles}"
-      destdir="${targetDir}"
-      extension="${target}"
-      style="iati.me/merge-files.xslt">
-      <factory name="net.sf.saxon.TransformerFactoryImpl">
-        <attribute name="http://saxon.sf.net/feature/initialTemplate" value="filemerge"/>
-      </factory>
-    </xslt>
-
+  <target name="csv-xml" depends="excel-csv">
+    <sequential>
+      <apply executable="basex" dest="/workspace/tmp" verbose="true">
+        <fileset dir="/workspace/tmp" includes="*.csv"/>
+        <srcfile prefix="-bfile="/>
+        <arg value="-o"/>
+        <targetfile/>
+        <arg value="basex-queries/csv-csvxml.xq"/>
+        <mapper type="glob" from="*.csv" to="*.csv.xml"/>
+      </apply>
+    </sequential>
   </target>
 
   <typedef resource="net/ggtools/grand/antlib.xml" classpath="/opt/ant/lib/grand-1.9.5.jar"/>
@@ -153,7 +130,6 @@
   <target name="ls-tmp" depends="init">
     <exec executable="xmlstarlet" output="/workspace/tmp/ls.xml">
       <arg line="ls /workspace/tmp"/>
-      <!-- <arg line="ls /workspace/tmp > /workspace/tmp/ls.xml"/> -->
     </exec>
   </target>
 </project>

@@ -13,9 +13,9 @@
   </xsl:template>
 
   <xsl:template match="record">
-    <iati-activity default-currency="EUR" hierarchy="1" humanitarian="false" last-updated-datetime="2017-01-01T00:00:00">
-        <xsl:attribute name="merge:id"></xsl:attribute>
-        <iati-identifier></iati-identifier>
+    <iati-activity default-currency="EUR" hierarchy="1" humanitarian="false" last-updated-datetime="2017-01-01T00:00:00"
+      merge:id="{entry[@name='IATI Identifier']}">
+        <iati-identifier><xsl:value-of select="entry[@name='IATI Identifier']"/></iati-identifier>
         <reporting-org ref="" type="">
             <narrative></narrative>
         </reporting-org>

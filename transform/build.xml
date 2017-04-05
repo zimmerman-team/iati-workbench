@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+
   <description>
     Targets to transform data in other formats.
   </description>
@@ -9,34 +12,22 @@
     <basexpipe xquery="transform/organisation-graph" from="*.filtered.xml" to="*.graphml"/>
   </target>
 
-  <target name="csv-iati" depends="">
-    <xslt
+  <target name="csvxml-iati" depends="csv-xml">
+    <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
+    <echo level="error" unless:set="config-present">
+      There is no configuration how to transform these spreadsheets into IATI.
+    </echo>
+    <dependset>
+      <srcfilelist dir="/workspace/config" files="csvxml-iati.xslt"/>
+      <targetfileset dir="/workspace/tmp" includes="*.generated.xml"/>
+    </dependset>
+    <xslt if:set="config-present"
       basedir="/workspace/tmp"
-      includes="Indicators.csv.xml"
+      includes="*.csv.xml"
       destdir="/workspace/tmp"
       extension=".generated.xml"
-      style="/workspace/tmp/Indicators.xslt"
+      filenameparameter="filename"
+      style="transform/csvxml-iati.xslt"
      />
-     <xslt
-       basedir="/workspace/tmp"
-       includes="Indicatorperiods.csv.xml"
-       destdir="/workspace/tmp"
-       extension=".generated.xml"
-       style="/workspace/tmp/Indicator periods.xslt"
-      />
-      <xslt
-        basedir="/workspace/tmp"
-        includes="Results.csv.xml"
-        destdir="/workspace/tmp"
-        extension=".generated.xml"
-        style="/workspace/tmp/Results.xslt"
-       />
-       <xslt
-         basedir="/workspace/tmp"
-         includes="Activities.csv.xml"
-         destdir="/workspace/tmp"
-         extension=".generated.xml"
-         style="/workspace/tmp/Activities.xslt"
-        />
   </target>
 </project>

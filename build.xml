@@ -17,7 +17,9 @@
     description="Set up the project environment.">
 
     <mkdir dir="/workspace/src"/>
+    <mkdir dir="/workspace/config"/>
     <mkdir dir="/workspace/tmp"/>
+    <mkdir dir="/workspace/input"/>
     <mkdir dir="/workspace/output"/>
     <mkdir dir="/workspace/reports"/>
   </target>
@@ -133,7 +135,7 @@
     <iati-query xquery="basex-queries/get-activities.xq" src="/workspace/src" from="*.ids" dest="/workspace/src" to="*.xml"/>
   </target>
 
-  <target name="excel2csv"
+  <target name="excel-csv"
     description="Convert spreadsheets to CSV files for further processing."
     depends="init">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
@@ -143,6 +145,7 @@
     <apply executable="in2csv" verbose="true">
       <fileset dir="/workspace/input" includes="*.xls*"/>
       <!-- <mapper refid="out"/> -->
+      <arg line="--no-inference"/>
       <srcfile/>
       <redirector logError="true">
         <outputmapper refid="out"/>
