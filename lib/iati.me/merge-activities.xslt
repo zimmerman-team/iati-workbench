@@ -6,11 +6,11 @@
   exclude-result-prefixes="functx merge">
 
 <xsl:template match="/dir">
-  <iati-activities>
+  <iati-activities version="2.02">
     <!-- TODO: add generated-datetime etc -->
     <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="@merge:id">
       <iati-activity>
-        <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" />
+        <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
         <!-- <xsl:for-each-group select="current-group()/@*" group-by="name(.)">
           <xsl:copy-of select=".[1]" />
         </xsl:for-each-group> -->
@@ -42,21 +42,37 @@
         <xsl:apply-templates select="current-group()/transaction"/>
         <xsl:apply-templates select="current-group()/document-link"/>
         <xsl:apply-templates select="current-group()/related-activity[@ref!='']"/>
-        <xsl:apply-templates select="current-group()/conditions"/>
+        <xsl:if test="current-group()/conditions/condition">
+          <conditions attached="1">
+            <xsl:for-each-group select="current-group()/conditions/condition" group-by="@type">
+              <xsl:variable name="ctype" select="current-grouping-key()"/>
+              <xsl:for-each-group select="current-group()" group-by="narrative">
+                  <condition type="{$ctype}">
+                    <narrative>
+                      <!-- TODO: add language -->
+                      <xsl:value-of select="current-grouping-key()"/>
+                    </narrative>
+                  </condition>
+              </xsl:for-each-group>
+            </xsl:for-each-group>
+          </conditions>
+        </xsl:if>
         <!-- <xsl:apply-templates select="current-group()/result"/> -->
         <xsl:for-each-group select="current-group()/result" group-by="@merge:id">
-          <result>
-            <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" />
-            <xsl:apply-templates select="current-group()/*[name(.)!='indicator']"/>
-            <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
-              <indicator>
-                <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
-                <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
-                <xsl:copy-of select="current-group()/*" copy-namespaces="no"/>
-                <!-- <xsl:apply-templates select="current-group()/*"/> -->
-              </indicator>
-            </xsl:for-each-group>
-          </result>
+          <xsl:if test="current-group()/indicator/title and current-group()/@type">
+            <result>
+              <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
+              <xsl:apply-templates select="current-group()/*[name(.)!='indicator']"/>
+              <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
+                <indicator>
+                  <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
+                  <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
+                  <xsl:copy-of select="current-group()/*" copy-namespaces="no"/>
+                  <!-- <xsl:apply-templates select="current-group()/*"/> -->
+                </indicator>
+              </xsl:for-each-group>
+            </result>
+          </xsl:if>
         </xsl:for-each-group>
         <xsl:apply-templates select="current-group()/resultcrs-add"/>
         <xsl:apply-templates select="current-group()/fss"/>
