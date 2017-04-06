@@ -3,12 +3,12 @@
 <xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="functx">
+  exclude-result-prefixes="functx merge">
 
 <xsl:template match="/dir">
   <iati-activities>
     <!-- TODO: add generated-datetime etc -->
-    <xsl:for-each-group select="document(f[ends-with(@n,'.generated.xml')]/@n)//iati-activity" group-by="@merge:id">
+    <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="@merge:id">
       <iati-activity>
         <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" />
         <!-- <xsl:for-each-group select="current-group()/@*" group-by="name(.)">
@@ -21,7 +21,6 @@
         <xsl:apply-templates select="current-group()/participating-org"/>
         <xsl:apply-templates select="current-group()/other-identifier"/>
         <xsl:apply-templates select="current-group()/activity-status"/>
-        <xsl:apply-templates select="current-group()/activity-date"/>
         <xsl:apply-templates select="current-group()/activity-date"/>
         <xsl:apply-templates select="current-group()/contact-info"/>
         <xsl:apply-templates select="current-group()/activity-scope"/>
@@ -51,8 +50,10 @@
             <xsl:apply-templates select="current-group()/*[name(.)!='indicator']"/>
             <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
               <indicator>
-                <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" />
-                <xsl:apply-templates select="current-group()/*"/>
+                <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
+                <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
+                <xsl:copy-of select="current-group()/*" copy-namespaces="no"/>
+                <!-- <xsl:apply-templates select="current-group()/*"/> -->
               </indicator>
             </xsl:for-each-group>
           </result>
@@ -69,8 +70,8 @@
 
 <!-- copy the rest -->
 <xsl:template match="*">
-  <xsl:copy>
-    <xsl:copy-of select="@*[.!='']" />
+  <xsl:copy copy-namespaces="no">
+    <xsl:copy-of select="@*[.!='']"/>
     <xsl:apply-templates/>
   </xsl:copy>
 </xsl:template>

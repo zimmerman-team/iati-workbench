@@ -14,6 +14,7 @@
 
   <xsl:template match="record">
     <!-- This is a fallback for any file not mentioned in the /workspace/config/csvxml-iati.xslt file -->
+    <merge:not-processed><xsl:value-of select="$file"/></merge:not-processed>
   </xsl:template>
 
   <xsl:template match="record2">
