@@ -2,11 +2,13 @@
 
 <xsl:stylesheet version='2.0'
   xmlns:functx="http://www.functx.com"
+  xmlns:htmllib="http://www.iati.me/htmllib"
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs='http://www.w3.org/2001/XMLSchema'>
 
   <xsl:import href="../functx.xslt"/>
   <xsl:import href="bootstrap.xslt"/>
+  <xsl:import href="../iati.me/htmllib.xslt"/>
   <xsl:output method="html" encoding="UTF-8" indent="yes" use-character-maps="latin1"/>
 
   <xsl:template match="/" mode="html-body">
@@ -373,13 +375,13 @@
     <xsl:param name="default-lang" tunnel="yes"/>
     <xsl:choose>
       <xsl:when test="narrative[lower-case(@xml:lang)=$lang]">
-        <span class="languageSet"><xsl:value-of select="narrative[lower-case(@xml:lang)=$lang]"/></span>
+        <span class="languageSet"><xsl:value-of select="htmllib:toHtml(narrative[lower-case(@xml:lang)=$lang])"/></span>
       </xsl:when>
       <xsl:when test="narrative[not(@xml:lang)] and $lang=$default-lang">
-        <span class="languageDefault"><xsl:value-of select="narrative[not(@xml:lang)]"/></span>
+        <span class="languageDefault"><xsl:value-of select="htmllib:toHtml(narrative[not(@xml:lang)])"/></span>
       </xsl:when>
       <xsl:otherwise>
-        <span class="languageNA" title="Not available in this language"><xsl:value-of select="(narrative[not(@xml:lang)],name(.))[1]"/></span>
+        <span class="languageNA" title="Not available in this language"><xsl:value-of select="htmllib:toHtml((narrative[not(@xml:lang)],name(.))[1])"/></span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -390,6 +392,5 @@
       <xsl:value-of select="format-date(@iso-date, '[D1o] [MNn], [Y]', $lang, (), ())"/>
     </span>
   </xsl:template>
-
 
 </xsl:stylesheet>
