@@ -159,9 +159,12 @@
       basedir="/workspace/tmp"
       destdir="/workspace/tmp"
       in="/workspace/tmp/ls.xml"
-      out="/workspace/src/iati.alpha.xml"
+      out="/workspace/tmp/iati.alpha.xml"
       style="lib/iati.me/merge-activities.xslt"
     />
+    <exec executable="xmlstarlet" output="/workspace/src/iati.alpha.xml">
+      <arg line="fo /workspace/tmp/iati.alpha.xml"/>
+    </exec>
   </target>
 
   <target name="csv-csvxml" depends="excel-csv">
