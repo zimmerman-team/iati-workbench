@@ -6,12 +6,11 @@
   exclude-result-prefixes="functx merge">
 
 <xsl:template match="/dir">
-  <iati-activities version="2.02">
-    <!-- TODO: add generated-datetime etc -->
+  <iati-activities version="2.02" generated-datetime="{current-dateTime()}">
     <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="@merge:id">
       <iati-activity>
         <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
-        <!-- <xsl:for-each-group select="current-group()/@*" group-by="name(.)">
+        <!-- <xsl:for-each-group select="current-group()/@*[.!='' and name(.)!='merge:id']" group-by="name(.)">
           <xsl:copy-of select=".[1]" />
         </xsl:for-each-group> -->
         <iati-identifier><xsl:copy-of select="current-grouping-key()"/></iati-identifier>
