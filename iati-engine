@@ -6,18 +6,21 @@ ENGINE_PATH=$(dirname `readlink -f "$0"`)
 WORKSPACE=`pwd`
 # Run the engine using our own user and group id's so we can manage the results
 USER=`id -u`:`id -g`
-# The target 'bash' will instead jump into a bash shell
-# The target 'root' will instead jump into a bash shell as root
-if [ "$1." = "bash." ]; then
-  ENTRY="--entrypoint=bash"
-  LINE=${@:2}
-elif [ "$1." = "root." ]; then
-  ENTRY="--entrypoint=bash"
+
+# The parameter 'root' will run a bash shell as root with the rest as command
+# The parameter 'bash' will run a bash shell as the current user with the rest as command
+# With no parameters will jump into a bash shell as the current user
+# With other parameters will run Ant as the current user
+if [ "$1." = "root." ]; then
   USER="0:0"
   LINE=${@:2}
-elif [ "$1." = "show." ]; then
-  ENTRY="--entrypoint=show"
+elif [ "$1." = "bash." ]; then
   LINE=${@:2}
+elif [ "$1." = "show." ]; then
+  LINE=${@:1}
+elif [ "$1." != "." ]; then
+  ENTRY="--entrypoint=ant"
+  LINE=$@
 else
   LINE=$@
 fi

@@ -1,0 +1,26 @@
+# add command line autocompletion for iati-engine:
+# include executable files from home/bin as well as Ant targets
+
+_iati_engine_opts="\
+  `find $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/docker/iati-engine/bin/ -executable -type f -printf "%f "` \
+  `iati-engine ant -p -q | grep ^\  | cut -f 2 -d \ `"
+
+_iati-engine()
+{
+  local cur opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case "${prev}" in
+      show)
+          _filedir
+          return 0
+          ;;
+      *)
+      ;;
+  esac
+
+  COMPREPLY=( $(compgen -W "${_iati_engine_opts}" -- ${cur}) )
+}
+complete -F _iati-engine iati-engine

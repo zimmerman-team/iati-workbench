@@ -1,0 +1,9 @@
+#!/bin/bash
+# Format an XML file and show it
+if [ -f $1 ]
+then
+  FILE=$1
+else
+  FILE="/workspace/$1"
+fi
+xmlstarlet fo $FILE | source-highlight -s xml -f esc | less -R

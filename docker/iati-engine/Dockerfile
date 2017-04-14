@@ -5,8 +5,9 @@ MAINTAINER Rolf Kleef <rolf@drostan.org>
 # IATI Engine:
 # Ant XML/XSLT
 # BaseX
-# csvkit
+# xmlstarlet, source-highlight
 # node, bower
+# LibreOffice
 #
 # docker run -it --rm=true -v /home/...your project path.../:/root antxml-engine ...target...
 
@@ -42,21 +43,19 @@ RUN wget -q https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux
 RUN wget -q https://github.com/Ant-Grand/Grand/releases/download/1.9.5/grand-1.9.5.jar -O /opt/ant/lib/grand-1.9.5.jar
 
 ENV ANT_HOME /opt/ant
-ENV PATH ${PATH}:/opt/ant/bin:/opt/basex/bin:/opt/node/bin:/root/bin
+ENV PATH $PATH:/opt/ant/bin:/opt/basex/bin:/opt/node/bin:/root/docker/iati-engine/bin
 
-RUN npm install -g bower && \
-  # running bower as non-root user without home dir insists on having a config folder in root...
-  mkdir /.config && chmod ugo+rwx /.config && \
-  mkdir /.local && chmod ugo+rwx /.local
+# Adding a user with the same uid as on the host system, to make managing created files easier
+# It's also possible to run everything as root or another user: in that case, creating the init directories
+# is better done on the host system, to make sure the normal user can add and remove files from them.
+# We apparently need to have a user known to the system to run LibreOffice in headless mode.
+# TODO Improve this, it works for my own situation right now.
+RUN useradd -u 1001 -U -ms /bin/bash iatiuser
+ENV HOME /home/iatiuser
+COPY . $HOME
 
 RUN apt-get update && \
-  apt-get -y install --no-install-recommends less git python3 graphviz xmlstarlet
+  apt-get -y install --no-install-recommends \
+    less git graphviz xmlstarlet libreoffice-calc libreoffice-java-common source-highlight
 
-RUN wget -q https://bootstrap.pypa.io/get-pip.py &&\
-  python3 get-pip.py &&\
-  rm get-pip.py &&\
-  pip install csvkit &&\
-  pip install Pygments
-
-WORKDIR /root
-ENTRYPOINT ["ant"]
+RUN npm install -g bower

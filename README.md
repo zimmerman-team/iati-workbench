@@ -46,10 +46,18 @@ Then, verify everything is running:
 
 The engine will run Ant by default, but it is also possible to access a shell:
 
-* `iati-engine bash` will start a bash shell as the current user on the host system
-* `iati-engine root` will start a bash shell as root
+* `iati-engine` without parameters will start a bash shell as the current user on the host system.
+* `iati-engine root [command]` will run the shell or the given command in a shell as root.
+* `iati-engine bash [command]` will run the shell or the given command in a shell as the current user.
+* `iati-engine <target/option>*` will run Ant with the given target or option(s).
 
 ## Recommended
+
+### Bash command line autocompletion
+
+If you want to use Bash command line autocompletion, include `iati-engine_completion`,
+for instance in your `~/.bashrc` file. If you upgrade the IATI Engine, you may need
+to re-run `iati-engine_completion` to have new build targets available for autocompletion.
 
 ### Named volume `iati-data` for BaseX database
 

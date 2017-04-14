@@ -140,15 +140,14 @@
     depends="init">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
-    <apply executable="in2csv" dest="/workspace/tmp" verbose="true">
+    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
       <fileset dir="/workspace/input" includes="*.xlsx"/>
-      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.xlsx.csv"/>
+      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.csv"/>
 
-      <arg line="--no-inference"/>
+      <arg line="--headless"/>
+      <arg line="--convert-to csv"/>
+      <arg line="--outdir /workspace/tmp"/>
       <srcfile/>
-      <redirector logError="true">
-        <outputmapper refid="csv-out"/>
-      </redirector>
     </apply>
   </target>
 
