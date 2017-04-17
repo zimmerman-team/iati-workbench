@@ -7,6 +7,12 @@ WORKSPACE=`pwd`
 # Run the engine using our own user and group id's so we can manage the results
 USER=`id -u`:`id -g`
 
+if [ "${_iati_engine_commands}." = "." ]; then
+  echo "TIP: Run '. ${ENGINE_PATH}/iati-engine_completion'"
+  echo "for command-line autocompletion of $(basename $0) in your shell."
+  echo ""
+fi
+
 # The parameter 'root' will run a bash shell as root with the rest as command
 # The parameter 'bash' will run a bash shell as the current user with the rest as command
 # With no parameters will jump into a bash shell as the current user
@@ -16,7 +22,7 @@ if [ "$1." = "root." ]; then
   LINE=${@:2}
 elif [ "$1." = "bash." ]; then
   LINE=${@:2}
-elif [ "$1." = "show." ]; then
+elif [[ "${_iati_engine_commands}" =~ " $1 " ]]; then
   LINE=${@:1}
 elif [ "$1." != "." ]; then
   ENTRY="--entrypoint=ant"

@@ -1,9 +1,37 @@
 #!/bin/bash
-# Format an XML file and show it
-if [ -f $1 ]
-then
-  FILE=$1
+if [ "$1." = "-?." ]; then
+  cat <<EOT
+
+$(basename $0) <file>
+
+Show the given file. Based on the filename extension, an attempt is made to do
+formatting and/or syntax highlighting of the contents. For known spreadsheet
+file extensions, the file is first converted to CSV.
+
+  $(basename $0) src/iati.xml
+    Format the file iati.xml and show it with XML syntax highlighting.
+
+  $(basename $0) input/data.xlsx
+    Convert the spreadsheet to CSV and show the output of that.
+
+EOT
+# a hack: if the file doesn't exist, then we assume we're running in the container
 else
-  FILE="/workspace/$1"
+  if [ -f $1 ]; then
+    FILE=$1
+  else
+    FILE="/workspace/$1"
+  fi
+  B=$(basename $FILE)
+  # recognised file extensions for syntax highlighting
+  SH=`source-highlight --lang-list | cut -d \  -f 1`
+  if [[ "xml graphml" =~ ${B##*.} ]]; then
+    xmlstarlet fo $FILE | source-highlight -s xml -f esc | less -R
+  elif [[ $SH =~ ${B##*.} ]]; then
+    source-highlight -f esc -i $FILE | less -R
+  elif [[ "csv ods xls xlsx" =~ ${B##*.} ]]; then
+    soffice --convert-to csv --outdir /tmp $FILE && less -R /tmp/${B%.*}.csv
+  else
+    less $FILE
+  fi
 fi
-xmlstarlet fo $FILE | source-highlight -s xml -f esc | less -R
