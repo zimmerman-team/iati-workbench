@@ -179,6 +179,26 @@
     </sequential>
   </target>
 
+  <target name="iati-office"
+    description="Create LibreOffice spreadsheets from IATI."
+    depends="init">
+    <dependset>
+      <sources>
+        <file file="lib/office/spreadsheet.xslt" />
+        <file file="/workspace/config/iati-office.xslt" />
+      </sources>
+      <targetfileset dir="/workspace/tmp" includes="*.ods.xml" />
+    </dependset>
+    <xslt
+      basedir="/workspace/src"
+      includes="*.xml"
+      destdir="/workspace/tmp"
+      extension=".ods.xml"
+      filenameparameter="filename"
+      style="lib/iati.me/iati-office.xslt"
+    />
+  </target>
+
   <target name="show-ids" depends="init">
     <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
