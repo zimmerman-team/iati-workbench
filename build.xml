@@ -145,7 +145,8 @@
       <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.csv"/>
 
       <arg line="--headless"/>
-      <arg line="--convert-to csv"/>
+      <!-- convert-to: explicitly save as UTF-8 (code=76) -->
+      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,1'"/>
       <arg line="--outdir /workspace/tmp"/>
       <srcfile/>
     </apply>
