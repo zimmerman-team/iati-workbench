@@ -9,12 +9,6 @@
   <xsl:import href="/workspace/config/csvxml-iati.xslt"/>
 
   <xsl:param name="filename"/>
-  <xsl:variable name="file" select="functx:substring-before-last($filename,'.xlsx.csv.xml')"/>
-
-  <xsl:template match="/csv">
-    <iati-activities>
-      <xsl:apply-templates select="record"/>
-    </iati-activities>
-  </xsl:template>
+  <xsl:variable name="file" select="functx:substring-before-last($filename,'.csv.xml')"/>
 
 </xsl:stylesheet>
