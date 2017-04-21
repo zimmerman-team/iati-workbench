@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:functx="http://www.functx.com"
   xmlns:iwb="http://iati.me/office"
 
@@ -236,26 +237,28 @@
                 <number:text>%</number:text>
             </number:percentage-style>
             <number:date-style style:name="N37" number:automatic-order="true">
-                <number:day number:style="long"/>
-                <number:text>/</number:text>
-                <number:month number:style="long"/>
-                <number:text>/</number:text>
-                <number:year/>
+              <number:year number:style="long"/>
+              <number:text>-</number:text>
+              <number:month number:style="long"/>
+              <number:text>-</number:text>
+              <number:day number:style="long"/>
             </number:date-style>
             <style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N37"/>
             <style:style style:name="ce2" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N11"/>
-            <style:style style:name="ce5" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N37"/>
-            <style:style style:name="ce6" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N11"/>
         </office:automatic-styles>
         <office:body>
+            <xsl:variable name="table">
+              <xsl:apply-templates select="$dataset" mode="office-spreadsheet-row"/>
+            </xsl:variable>
+
             <office:spreadsheet>
                 <table:calculation-settings table:automatic-find-labels="false" table:use-regular-expressions="false" table:use-wildcards="true"/>
                 <table:table table:name="{name(.)}" table:style-name="ta1">
-                  <xsl:apply-templates select="$dataset" mode="office-spreadsheet-row"/>
-              </table:table>
+                  <xsl:copy-of select="$table"/>
+                </table:table>
               <table:named-expressions/>
               <table:database-ranges>
-                <table:database-range table:name="__Anonymous_Sheet_DB__0" table:target-range-address="Sheet1.A1:Sheet1.ZZ{count($dataset)+1}" table:display-filter-buttons="true"/>
+                <table:database-range table:name="__Anonymous_Sheet_DB__0" table:target-range-address="Sheet1.A1:Sheet1.{iwb:columnName(count($table[1]/table:table-column))}{count($dataset)+1}" table:display-filter-buttons="true"/>
               </table:database-ranges>
             </office:spreadsheet>
         </office:body>
@@ -290,13 +293,30 @@
     <xsl:param name="value"/>
     <xsl:choose>
       <xsl:when test="name($value)=('iso-date','value-date')">
-        <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce5"/>
+        <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce1"/>
       </xsl:when>
+      <!-- TODO: CHECK the format
+      <xsl:when test="name($value)=('percentage')">
+        <table:table-cell office:value-type="number" calcext:value-type="number" office:date-value="{$value}" table:style-name="ce2">
+          <text:p><xsl:value-of select="$value"/></text:p>
+        </table:table-cell>
+      </xsl:when> -->
       <xsl:otherwise>
         <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p><xsl:value-of select="functx:trim($value)"/></text:p>
         </table:table-cell>
       </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="iwb:columnName" as="xs:string">
+    <xsl:param name="i" as="xs:integer"/>
+    <xsl:choose>
+      <xsl:when test="$i>0">
+        <xsl:value-of select="concat(iwb:columnName($i idiv 26),
+          ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')[$i mod 26])"/>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="''"/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 

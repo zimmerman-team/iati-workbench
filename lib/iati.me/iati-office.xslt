@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:export="http://iati.me/export"
   xmlns:functx="http://www.functx.com">
 
@@ -22,4 +23,18 @@
     </xsl:result-document>
   </xsl:template>
 
+  <xsl:function name="export:narrative" as="item()">
+    <xsl:param name="item" as="item()?"/>
+    <xsl:choose>
+      <xsl:when test="$item/narrative">
+        <xsl:copy-of select="$item/narrative"/>
+      </xsl:when>
+      <xsl:when test="string($item)=''">
+        <narrative/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$item"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>
