@@ -17,7 +17,7 @@ _iati-engine()
   prev2="${COMP_WORDS[COMP_CWORD-2]}"
 
   case "${prev}" in
-      show)
+      show|val-act|val-org)
         _filedir
         return 0
         ;;

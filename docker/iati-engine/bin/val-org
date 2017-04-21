@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ "$1." = "-?." ]; then
+  cat <<EOT
+
+$(basename $0) <file>
+
+Validate the given file against the IATI activities standard.
+
+EOT
+# a hack: if the file doesn't exist, then we assume we're running in the container
+else
+  if [ -f $1 ]; then
+    FILE=$1
+  else
+    FILE="/workspace/$1"
+  fi
+  B=$(basename $FILE)
+  xmlstarlet val -e -s /root/lib/schemata/2.02/iati-organisations-schema.xsd $FILE
+fi

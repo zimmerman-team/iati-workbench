@@ -162,9 +162,16 @@
       out="/workspace/tmp/iati.alpha.xml"
       style="lib/iati.me/merge-activities.xslt"
     />
-    <exec executable="xmlstarlet" output="/workspace/src/iati.alpha.xml">
+
+    <exec executable="xmlstarlet" output="/workspace/tmp/iati-activities.xml">
       <arg line="fo /workspace/tmp/iati.alpha.xml"/>
     </exec>
+
+    <schemavalidate
+      file="/workspace/tmp/iati-activities.xml"
+      noNamespaceFile="lib/schemata/2.02/iati-activities-schema.xsd"/>
+    <echo level="info">Generated file passes validation, is copied to src/ directory.</echo>
+    <copy file="/workspace/tmp/iati-activities.xml" todir="/workspace/src"/>
   </target>
 
   <target name="csv-csvxml" depends="excel-csv">
