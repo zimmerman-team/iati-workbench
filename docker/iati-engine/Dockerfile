@@ -17,6 +17,11 @@ ENV SAXON_VERSION  9-7-0-15J
 ENV BASEX_VERSION  8.6
 ENV NODE_VERSION   6.10.0
 
+RUN apt-get update && \
+  apt-get -y install --no-install-recommends \
+    less git graphviz xmlstarlet libreoffice-calc libreoffice-java-common source-highlight && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /root
 
 RUN wget -q http://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz && \
@@ -50,12 +55,10 @@ ENV PATH $PATH:/opt/ant/bin:/opt/basex/bin:/opt/node/bin:/root/docker/iati-engin
 # is better done on the host system, to make sure the normal user can add and remove files from them.
 # We apparently need to have a user known to the system to run LibreOffice in headless mode.
 # TODO Improve this, it works for my own situation right now.
-RUN useradd -u 1001 -U -ms /bin/bash iatiuser
-ENV HOME /home/iatiuser
-COPY . $HOME
-
-RUN apt-get update && \
-  apt-get -y install --no-install-recommends \
-    less git graphviz xmlstarlet libreoffice-calc libreoffice-java-common source-highlight
+RUN useradd -u 1001 -U -ms /bin/bash iati-engine && \
+  echo "iati-engine ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 RUN npm install -g bower
+
+ENV HOME /home/iati-engine
+COPY . $HOME

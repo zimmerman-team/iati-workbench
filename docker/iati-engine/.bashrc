@@ -1,8 +1,8 @@
 if [ $UID -ne 0 ]
 then
-  PS1='(IATI Engine)$ '
+  PS1='\u:\w\$ '
 else
-  PS1='(IATI Engine)# '
+  PS1='iati-engine \u:\w# '
 fi
 
 LESS=' -R '
