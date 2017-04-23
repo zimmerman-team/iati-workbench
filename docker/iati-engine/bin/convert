@@ -15,5 +15,6 @@ Uses LibreOffice to convert the files to the format specified. Typical examples:
 EOT
 else
   cd /workspace
+  # TODO: deal with filenames with spaces
   soffice --headless --convert-to $1 $2
 fi

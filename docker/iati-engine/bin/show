@@ -16,22 +16,24 @@ file extensions, the file is first converted to CSV.
 
 EOT
 # a hack: if the file doesn't exist, then we assume we're running in the container
+# also: we assume the rest of the command line is a single filename, possibly with spaces
 else
-  if [ -f $1 ]; then
-    FILE=$1
+  if [ -f "$@" ]; then
+    FILE="$@"
   else
-    FILE="/workspace/$1"
+    FILE="/workspace/$@"
   fi
-  B=$(basename $FILE)
+
+  B=$(basename "$FILE")
   # recognised file extensions for syntax highlighting
   SH=`source-highlight --lang-list | cut -d \  -f 1`
   if [[ "xml graphml" =~ ${B##*.} ]]; then
-    xmlstarlet fo $FILE | source-highlight -s xml -f esc | less -R
+    xmlstarlet fo "$FILE" | source-highlight -s xml -f esc | less -R
   elif [[ $SH =~ ${B##*.} ]]; then
-    source-highlight -f esc -i $FILE | less -R
+    source-highlight -f esc -i "$FILE" | less -R
   elif [[ "csv ods xls xlsx" =~ ${B##*.} ]]; then
-    soffice --convert-to csv --outdir /tmp $FILE && less -R /tmp/${B%.*}.csv
+    soffice --convert-to csv --outdir /tmp "$FILE" && less -R /tmp/${B%.*}.csv
   else
-    less $FILE
+    less "$FILE"
   fi
 fi
