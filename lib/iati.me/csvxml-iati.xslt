@@ -22,7 +22,7 @@
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
       <xsl:choose>
-        <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar')">true</xsl:when>
+        <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:if>
