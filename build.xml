@@ -152,9 +152,21 @@
     </apply>
   </target>
 
+  <target name="iati-iati"
+    description="Transform an IATI file into a version with merge ids."
+    depends="init">
+    <xslt
+      basedir="/workspace/input/"
+      includes="*.xml"
+      destdir="/workspace/tmp"
+      extension=".generated.xml"
+      style="transform/add-merge-ids.xslt"
+     />
+  </target>
+
   <target name="make-iati"
     description="Merge activities within one file."
-    depends="csvxml-iati, ls-tmp">
+    depends="csvxml-iati, iati-iati, ls-tmp">
     <xslt
       basedir="/workspace/tmp"
       destdir="/workspace/tmp"

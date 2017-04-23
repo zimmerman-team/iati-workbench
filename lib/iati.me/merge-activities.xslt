@@ -5,6 +5,8 @@
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="functx merge">
 
+<xsl:import href="../functx.xslt"/>
+
 <xsl:template match="/dir">
   <iati-activities version="2.02" generated-datetime="{current-dateTime()}">
     <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="@merge:id">
@@ -62,7 +64,10 @@
             <xsl:if test="current-group()/indicator/title and current-group()/@type">
               <result>
                 <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
-                <xsl:apply-templates select="current-group()/*[name(.)!='indicator']"/>
+                <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions -->
+                <xsl:apply-templates select="(current-group()/title)[1]"/>
+                <xsl:apply-templates select="(current-group()/description)[1]"/>
+                <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'indicator'))]"/>
                 <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
                   <indicator>
                     <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
@@ -86,6 +91,7 @@
 <xsl:template match="*[not(@*[.!='']) and not(data(.)) and not(*[data(.)!=''])]" />
 
 <!-- copy the rest -->
+<!-- <xsl:template match="*[not(functx:is-node-in-sequence-deep-equal(.,preceding-sibling::*)) and not(name()='dir')]"> -->
 <xsl:template match="*">
   <xsl:copy copy-namespaces="no">
     <xsl:copy-of select="@*[.!='']"/>
