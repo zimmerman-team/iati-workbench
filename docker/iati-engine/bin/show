@@ -28,7 +28,7 @@ else
   # recognised file extensions for syntax highlighting
   SH=`source-highlight --lang-list | cut -d \  -f 1`
   if [[ "xml graphml" =~ ${B##*.} ]]; then
-    xmlstarlet fo "$FILE" | source-highlight -s xml -f esc | less -R
+    xmlstarlet fo "$FILE" | source-highlight -n -s xml -f esc | less -R
   elif [[ $SH =~ ${B##*.} ]]; then
     source-highlight -f esc -i "$FILE" | less -R
   elif [[ "csv ods xls xlsx" =~ ${B##*.} ]]; then
