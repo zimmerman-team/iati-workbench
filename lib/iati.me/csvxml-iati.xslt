@@ -3,6 +3,7 @@
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
+  xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="">
 
   <xsl:import href="codelists.xslt"/>
@@ -26,6 +27,87 @@
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+  </xsl:function>
+
+  <xsl:function name="merge:decimal" as="xs:decimal?">
+    <xsl:param name="item" as="xs:string"/>
+    <xsl:if test="$item!=''">
+      <!-- TODO: add a number string to number convertor to deal with , and . -->
+    </xsl:if>
+  </xsl:function>
+
+  <xsl:function name="merge:date" as="xs:date?">
+    <!-- date function without format: recognise the format -->
+    <xsl:param name="item" as="xs:string"/>
+
+    <!-- DD-MM-YYYY, DD/MM/YYYY, DD.MM.YYYY -->
+    <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="functx:date(regex-group(3), regex-group(2), regex-group(1))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+
+    <!-- DD-MM-YY, DD.MM.YY, DD/MM/YY -->
+    <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d\d)$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="functx:date(merge:year(regex-group(3)), regex-group(2), regex-group(1))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+
+    <!-- YYYY-MM-DD -->
+    <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d)$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="functx:date(regex-group(1), regex-group(2), regex-group(3))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+
+  </xsl:function>
+
+  <xsl:function name="merge:date" as="xs:date?">
+    <!-- date function with format: return as proper date if possible -->
+    <xsl:param name="item" as="xs:string"/>
+    <xsl:param name="format" as="xs:string"/>
+    <xsl:variable name="i" select="normalize-space($item)"/>
+    <xsl:choose>
+
+      <!-- MM-DD-YYYY, MM/DD/YYYY -->
+      <xsl:when test="matches($format, 'MM.DD.YYYY', 'i')">
+        <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
+          <xsl:matching-substring>
+            <xsl:value-of select="functx:date(regex-group(3), regex-group(1), regex-group(2))"/>
+          </xsl:matching-substring>
+          <xsl:non-matching-substring>
+            <xsl:value-of select="merge:date($item)"/>
+          </xsl:non-matching-substring>
+        </xsl:analyze-string>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="merge:date($item)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="merge:year" as="xs:decimal">
+    <xsl:param name="year" as="xs:string"/>
+    <xsl:variable name="yy" select="xs:decimal($year)"/>
+    <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY -->
+    <xsl:choose>
+      <xsl:when test="$yy >= 70"><xsl:value-of select="1900+$yy"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="2000+$yy"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="merge:tokenize" as="xs:string*">
+    <xsl:param name="item" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="matches($item, '\W+')">
+        <xsl:sequence select="functx:substring-before-match($item,'\W+')"/>
+        <xsl:sequence select="merge:tokenize(functx:substring-after-match($item,'\W+'))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$item"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
 </xsl:stylesheet>
