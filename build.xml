@@ -178,6 +178,18 @@
     <exec executable="xmlstarlet" output="/workspace/tmp/iati-activities.xml">
       <arg line="fo /workspace/tmp/iati.alpha.xml"/>
     </exec>
+  </target>
+
+  <target name="validate-iati"
+    description="Validate generated IATI file and generate source-highlighted HTML page."
+    depends="make-iati">
+
+    <exec executable="source-highlight">
+      <arg line="-n"/>
+      <arg line="-f html5"/>
+      <arg line="-i /workspace/tmp/iati-activities.xml"/>
+      <arg line="-o /workspace/tmp/iati-activities.html"/>
+    </exec>
 
     <schemavalidate
       file="/workspace/tmp/iati-activities.xml"
