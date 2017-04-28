@@ -5,7 +5,7 @@
   xmlns:merge="http://iati.me/merge"
   exclude-result-prefixes="">
 
-  <xsl:import href="../functx.xslt"/>
+  <xsl:import href="codelists.xslt"/>
 
   <xsl:template match="csv">
     <iati-activities version="2.02" generated-datetime="{current-dateTime()}" xml:lang="en">
