@@ -48,6 +48,10 @@ RUN wget -q https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux
 RUN wget -q https://github.com/Ant-Grand/Grand/releases/download/1.9.5/grand-1.9.5.jar -O /opt/ant/lib/grand-1.9.5.jar
 
 ENV ANT_HOME /opt/ant
+
+# for Xspec:
+ENV SAXON_HOME /opt/ant/lib
+
 ENV PATH $PATH:/opt/ant/bin:/opt/basex/bin:/opt/node/bin:/root/docker/iati-engine/bin
 
 # Adding a user with the same uid as on the host system, to make managing created files easier
