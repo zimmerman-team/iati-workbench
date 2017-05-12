@@ -126,7 +126,16 @@
 
   <!-- Context information for transactions -->
   <xsl:template match="transaction/iati-me:feedback" mode="context">
-    In transaction of <xsl:value-of select="../transaction-date/@iso-date"/>:
+    In
+    <xsl:choose>
+      <xsl:when test="../transaction-type/@code='1'">incoming funds</xsl:when>
+      <xsl:when test="../transaction-type/@code='2'">(outgoing) commitment</xsl:when>
+      <xsl:when test="../transaction-type/@code='3'">disbursement</xsl:when>
+      <xsl:when test="../transaction-type/@code='4'">expenditure</xsl:when>
+      <xsl:when test="../transaction-type/@code='11'">incoming commitment</xsl:when>
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
+    transaction of <xsl:value-of select="../transaction-date/@iso-date"/>:
   </xsl:template>
 
   <!-- Context information for provider-org and receiver-org in transactions -->
@@ -137,6 +146,11 @@
   <!-- Context information for participating-org -->
   <xsl:template match="document-link/iati-me:feedback" mode="context">
     For the document <a href="{../@url}"><xsl:value-of select="functx:trim(../title/.)"/></a>:
+  </xsl:template>
+
+  <!-- Context information for result indicator -->
+  <xsl:template match="indicator/iati-me:feedback" mode="context">
+    For the indicator <xsl:value-of select="functx:trim(../title/narrative[1])"/>:
   </xsl:template>
 
   <xsl:template match="@*|node()" mode="context">

@@ -56,4 +56,20 @@
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="transaction[transaction-type/@code=('1','11')]" mode="rules" priority="7.3">
+  <xsl:if test="not(provider-org/@ref!='') and not(provider-org/narrative!='')">
+    <iati-me:feedback type="warning" class="financial" id="7.3.1">
+      The incoming transaction has no provider organisation identifier or name.
+    </iati-me:feedback>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="transaction[transaction-type/@code=('2','3')]" mode="rules" priority="7.4">
+  <xsl:if test="not(receiver-org/@ref!='') and not(receiver-org/narrative!='')">
+    <iati-me:feedback type="warning" class="financial" id="7.4.1">
+      The outgoing transaction has no receiver organisation identifier or name.
+    </iati-me:feedback>
+  </xsl:if>
+</xsl:template>
+
 </xsl:stylesheet>
