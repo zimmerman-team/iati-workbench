@@ -81,6 +81,16 @@
           </xsl:non-matching-substring>
         </xsl:analyze-string>
       </xsl:when>
+      <xsl:when test="matches($format, 'YYYY.DD.MM', 'i')">
+        <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d?)$" select="normalize-space($item)">
+          <xsl:matching-substring>
+            <xsl:value-of select="functx:date(regex-group(1), regex-group(3), regex-group(2))"/>
+          </xsl:matching-substring>
+          <xsl:non-matching-substring>
+            <xsl:value-of select="merge:date($item)"/>
+          </xsl:non-matching-substring>
+        </xsl:analyze-string>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="merge:date($item)"/>
       </xsl:otherwise>
