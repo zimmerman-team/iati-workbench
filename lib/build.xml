@@ -103,8 +103,9 @@
 
   <!-- Create a listing of the tmp directory for further XSLT processing -->
   <target name="ls-tmp" depends="init">
-    <exec executable="xmlstarlet" output="/workspace/tmp/ls.xml">
-      <arg line="ls /workspace/tmp"/>
-    </exec>
+    <apply executable="xmlstarlet" output="/workspace/tmp/ls.xml">
+      <arg line="ls"/>
+      <dirset dir="/workspace/tmp" excludes="ls.xml"/>
+    </apply>
   </target>
 </project>

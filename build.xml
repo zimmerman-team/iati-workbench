@@ -27,18 +27,18 @@
     <mkdir dir="/workspace/tmp"/>
     <mkdir dir="/workspace/input"/>
     <mkdir dir="/workspace/output"/>
+    <mkdir dir="/workspace/remote"/>
     <mkdir dir="/workspace/reports"/>
   </target>
 
   <target name="clean"
     depends="init"
     description="Clean intermediary results.">
-    <delete dir="/workspace/tmp"/>
+    <delete>
+      <fileset dir="/workspace/tmp" includes="*"/>
+    </delete>
     <echo>
-      Intermediate results have been deleted.
-      You will need to manually remove sources and outputs:
-      - /workspace/src
-      - /workspace/output
+      Intermediate results have been deleted from tmp directory.
     </echo>
   </target>
 
@@ -241,8 +241,9 @@
     <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
 
-  <target name="activities" depends="htdocs-skeleton">
-    <!-- <mkdir dir="/workspace/reports/htdocs/a"/> -->
+  <target name="activities"
+    description="Generate an overview page per activity"
+    depends="htdocs-skeleton">
     <xslt
       basedir="/workspace/src/"
       includes="*.xml"
