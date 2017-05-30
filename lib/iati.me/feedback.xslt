@@ -140,7 +140,7 @@
 
   <!-- Context information for provider-org and receiver-org in transactions -->
   <xsl:template match="provider-org/iati-me:feedback|receiver-org/iati-me:feedback" mode="context">
-    In <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/> in transaction of <xsl:value-of select="../../transaction-date/@iso-date"/>:
+    In transaction of <xsl:value-of select="../../transaction-date/@iso-date"/> for <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/>:
   </xsl:template>
 
   <!-- Context information for participating-org -->
@@ -150,7 +150,7 @@
 
   <!-- Context information for result indicator -->
   <xsl:template match="indicator/iati-me:feedback" mode="context">
-    For the indicator <xsl:value-of select="functx:trim(../title/narrative[1])"/>:
+    For the indicator "<em><xsl:value-of select="functx:trim(../title/narrative[1])"/></em>":
   </xsl:template>
 
   <xsl:template match="@*|node()" mode="context">

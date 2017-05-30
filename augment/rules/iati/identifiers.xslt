@@ -47,7 +47,7 @@
     </iati-me:feedback>
   </xsl:if>
 
-  <xsl:if test="@ref and not(
+  <xsl:if test="@ref!='' and not(
       matches(@ref, '^[0-9]{5}$') or
       matches(@ref, '^[A-Z]{2}(-.+)*$'))">
     <iati-me:feedback type="danger" class="identifiers" src="iati" id="1.2.4"
