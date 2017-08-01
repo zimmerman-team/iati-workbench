@@ -50,7 +50,7 @@
   <xsl:if test="@ref!='' and not(
       matches(@ref, '^[0-9]{5}$') or
       matches(@ref, '^[A-Z]{2}(-.+)*$'))">
-    <iati-me:feedback type="danger" class="identifiers" src="iati" id="1.2.4"
+    <iati-me:feedback type="warning" class="identifiers" src="iati" id="1.2.4"
       href="http://iatistandard.org/202/organisation-identifiers/">
       The identifier does not conform to the organisation identifier standard.
     </iati-me:feedback>

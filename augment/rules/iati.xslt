@@ -17,6 +17,7 @@
   <xsl:include href="iati/results.xslt"/>
   <xsl:include href="minbuza/traceability.xslt"/>
   <xsl:include href="minbuza/results.xslt"/>
+  <xsl:include href="exclusions/organisations.xslt"/>
   <xsl:output indent="yes"/>
 
   <xsl:template match="iati-activity">

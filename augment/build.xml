@@ -21,6 +21,7 @@
         <file file="augment/rules/iati.xslt"/>
         <fileset dir="augment/rules/iati" />
         <fileset dir="augment/rules/minbuza" />
+        <fileset dir="augment/rules/exclusions" />
       </sources>
       <targetfileset dir="/workspace/tmp" includes="*.augmented.xml" />
     </dependset>

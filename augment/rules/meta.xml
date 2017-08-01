@@ -2,6 +2,12 @@
 
 <meta xmlns="http://iati.me">
   <categories>
+    <category class="exclusions">
+      <title>Exclusions</title>
+    </category>
+    <category class="inclusions">
+      <title>Inclusions</title>
+    </category>
     <category class="identifiers">
       <title>Identifiers</title>
     </category>
@@ -30,14 +36,16 @@
 
   <severities>
     <severity type="danger">Error</severity>
-    <severity type="warning">Improvement</severity>
-    <severity type="info">Refinement</severity>
-    <severity type="success">Compliment</severity>
+    <severity type="warning">Warning</severity>
+    <severity type="info">Improvement</severity>
+    <severity type="success">Approval</severity>
   </severities>
 
   <sources>
     <source src="iati" logo="pix/iati.png">IATI</source>
     <source src="minbuza" logo="pix/minbuza.svg">Ministry of Foreign Affairs, The Netherlands</source>
+    <source src="exclusions" logo="pix/stop.svg">Your exclusion policy</source>
+    <source src="inclusions" logo="pix/ok.svg">Your inclusion policy</source>
     <source>not specified</source>
   </sources>
 </meta>

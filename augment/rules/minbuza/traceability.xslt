@@ -25,7 +25,7 @@
 <xsl:template match="iati-activity" mode="rules" priority="100.2">
 
   <xsl:if test="not(//@provider-activity-id
-    or //@receiver-org-activity
+    or //@receiver-activity-id
     or participating-org/@activity-id
     or related-activity/@ref)">
     <iati-me:feedback type="info" class="traceability" src="minbuza" id="100.2.1">
@@ -34,6 +34,19 @@
       relates to overarching programmes or underlying projects.
       This helps understand the complete flow, and prevent double
       counting.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="(
+    (participating-org[@ref='XM-DAC-7' and @role='1']) or
+    (transaction[provider-org/@ref='XM-DAC-7' and transaction-type/@code='1'])
+    ) and not (
+      transaction[provider-org/@ref='XM-DAC-7' and transaction-type/@code='11']
+    )">
+    <iati-me:feedback type="danger" class="traceability" src="minbuza" id="100.2.2">
+      If the Ministry (<code>XM-DAC-7</code>) is a donor or provider of
+      incoming funds, the activity must have a transaction of type
+      <code>11</code> (incoming commitment)
     </iati-me:feedback>
   </xsl:if>
 
