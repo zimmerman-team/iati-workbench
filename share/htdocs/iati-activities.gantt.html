@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Activity results</title>
+        <link rel="stylesheet" type="text/css" href="lib/jsgantt-improved-1.7.5.2/jsgantt.css" />
+        <script language="javascript" src="lib/jsgantt-improved-1.7.5.2/jsgantt.js"></script>
+    </head>
+    <body>
+      <div style="position:relative" class="gantt" id="GanttChartDIV"></div>
+      <script type="text/javascript">
+        var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'quarter');
+        g.setShowRes(false);
+        g.setShowDur(false);
+        g.setShowComp(false);
+        g.setShowStartDate(false);
+        g.setShowEndDate(false);
+        g.setShowTaskInfoRes(false);
+        g.setQuarterColWidth(36);
+        g.setShowTaskInfoLink(true);
+
+        JSGantt.parseXML("iati-activities.gantt.xml",g);
+        g.Draw();
+      </script>
+    </body>
+</html>

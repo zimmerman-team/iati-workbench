@@ -260,6 +260,24 @@
     <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
 
+  <target name="gantt-results"
+    description="Generate a gantt view of the results."
+    depends="htdocs-skeleton">
+    <echo level="info">Generate a gantt view of the results.</echo>
+    <dependset>
+      <sources>
+        <file file="output/gantt-results.xslt" />
+      </sources>
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.gantt.xml" />
+    </dependset>
+    <xslt
+      basedir="/workspace/src/"
+      includes="*.xml"
+      destdir="/workspace/reports/htdocs"
+      extension=".gantt.xml"
+      style="output/gantt-results.xslt"
+     />
+  </target>
   <target name="activities"
     description="Generate an overview page per activity"
     depends="htdocs-skeleton">
