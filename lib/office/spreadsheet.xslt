@@ -292,6 +292,13 @@
   <xsl:function name="iwb:cell" as="node()*">
     <xsl:param name="value"/>
     <xsl:choose>
+      <xsl:when test="$value instance of xs:anyAtomicType">
+        <table:table-cell office:value-type="string" calcext:value-type="string">
+          <xsl:if test="$value != 0">
+            <text:p><xsl:value-of select="$value"/></text:p>
+          </xsl:if>          
+        </table:table-cell>
+      </xsl:when>
       <xsl:when test="name($value)=('iso-date','value-date')">
         <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce1"/>
       </xsl:when>
