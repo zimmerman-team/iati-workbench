@@ -81,7 +81,7 @@
 
             <xsl:apply-templates select="current-group()/planned-disbursement"/>
             <xsl:apply-templates select="current-group()/capital-spend"/>
-            <xsl:apply-templates select="current-group()/transaction"/>
+            <xsl:apply-templates select="current-group()/transaction[transaction-type/@code!='']"/>
             <xsl:apply-templates select="current-group()/document-link"/>
             <xsl:apply-templates select="current-group()/related-activity[@ref!='']"/>
 
