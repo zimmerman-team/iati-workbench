@@ -10,99 +10,12 @@
 
   <xsl:variable name="feedback-meta" select="document('../../augment/rules/meta.xml')/iati-me:meta"/>
 
-  <xsl:template match="iati-me:feedback">
-    <xsl:variable name="src" select="@src"/>
-    <div role="alert">
-      <xsl:attribute name="class">alert alert-dismissable
-        alert-<xsl:value-of select="@type"/>
-        <xsl:if test="@src"> src-<xsl:value-of select="@src"/></xsl:if>
-      </xsl:attribute>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-      <xsl:apply-templates select="$feedback-meta/iati-me:sources/iati-me:source[@src=$src]/@logo"/>
-      <xsl:apply-templates select="@href"/>
-      <div class="context"><xsl:apply-templates select="." mode="context"/></div>
-      <xsl:copy-of select="*|text()"/>
-    </div>
-  </xsl:template>
-
   <xsl:template match="@logo">
-    <img class="logo" src="{.}"/>
+    <img class="icon" src="{.}"/>
   </xsl:template>
 
   <xsl:template match="@href">
-    <a target="_blank" class="bookmark glyphicon glyphicon-new-window" href="{.}"/>
-  </xsl:template>
-
-  <xsl:template name="feedback-list">
-    <xsl:param name="list"/>
-    <div class="feedback-list">
-      <xsl:choose>
-        <xsl:when test="$list">
-          <xsl:apply-templates select="$list"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <div role="alert" class="alert alert-dismissable alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
-            No issues reported.
-          </div>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
-
-  <xsl:template name="feedback-list-type">
-    <xsl:param name="feedback"/>
-
-      <h3>Issue severity:</h3>
-      <div class="list-group">
-        <xsl:for-each select="$feedback-meta/iati-me:severities/iati-me:severity">
-          <xsl:variable name="type" select="@type"/>
-          <div>
-            <xsl:attribute name="class">checkbox list-group-item list-group-item-<xsl:value-of select="$type"/></xsl:attribute>
-            <label class="checkbox-custom" data-initialize="checkbox">
-              <input class="sr-only" type="checkbox" checked="checked">
-                <xsl:attribute name="data-toggle">.feedback-list .alert-<xsl:value-of select="$type"/></xsl:attribute>
-              </input>
-              <xsl:value-of select="."/>
-            </label>
-            <xsl:if test="count($feedback[@type=$type]) > 0">
-              <span class="badge"><xsl:value-of select="count($feedback[@type=$type])"/></span>
-            </xsl:if>
-          </div>
-        </xsl:for-each>
-      </div>
-
-  </xsl:template>
-
-  <xsl:template name="feedback-list-src">
-    <xsl:param name="feedback"/>
-
-    <h3>Rules and guidelines by:</h3>
-
-    <div class="list-group">
-      <xsl:for-each select="$feedback-meta/iati-me:sources/iati-me:source">
-        <xsl:variable name="src" select="@src"/>
-        <div class="checkbox list-group-item">
-          <label class="checkbox-custom" data-initialize="checkbox">
-            <input class="sr-only" type="checkbox" checked="checked">
-              <xsl:attribute name="data-toggle">.feedback-list .src-<xsl:value-of select="$src"/></xsl:attribute>
-            </input>
-            <xsl:value-of select="."/>
-          </label>
-          <xsl:choose>
-            <xsl:when test="@src">
-              <xsl:if test="count($feedback[@src=$src]) > 0">
-                <span class="badge"><xsl:value-of select="count($feedback[@src=$src])"/></span>
-              </xsl:if>
-            </xsl:when>
-            <xsl:otherwise>
-              <span class="badge"><xsl:value-of select="count($feedback[not(@src)])"/></span>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:apply-templates select="@logo"/>
-        </div>
-      </xsl:for-each>
-    </div>
+    <a target="_blank" class="icon glyphicon glyphicon-info-sign" href="{.}"/>
   </xsl:template>
 
   <xsl:template name="show-organisation">

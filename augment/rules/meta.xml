@@ -46,6 +46,6 @@
     <source src="minbuza" logo="pix/minbuza.svg">Ministry of Foreign Affairs, The Netherlands</source>
     <source src="exclusions" logo="pix/stop.svg">Your exclusion policy</source>
     <source src="inclusions" logo="pix/ok.svg">Your inclusion policy</source>
-    <source>not specified</source>
+    <source src="n/a">Not specified</source>
   </sources>
 </meta>

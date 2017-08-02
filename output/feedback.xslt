@@ -12,135 +12,201 @@
 
   <xsl:template match="/" mode="html-body">
     <h1>IATI Data Quality Feedback</h1>
-    <p>Overview of the activities, reporting possible issues in the data.</p>
-    <p>This page is intended to help you fix the issues:</p>
-    <ul>
-      <li>Filter the view to focus on issues.</li>
-      <li>You can 'close' an issue to have it disappear.</li>
-      <li>Reload the page to show all issues again.</li>
-    </ul>
-    <p><strong>This is mostly a front-end demo for now. It shows a very limited number of checks. Contact rolf@drostan.org if you want to sponsor further development and get a report on your data :-)</strong></p>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">Show or hide reported issues</div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-md-6">
-            <xsl:call-template name="feedback-list-type">
-              <xsl:with-param name="feedback" select="//iati-me:feedback"/>
-            </xsl:call-template>
-          </div>
+    <xsl:for-each-group select="//iati-activity" group-by="reporting-org/@ref">
+      <!-- <xsl:sort order="descending" select="count(current-group()//iati-me:feedback[@type='danger'])"/>
+      <xsl:sort order="descending" select="count(current-group()//iati-me:feedback[@type='warning'])"/>
+      <xsl:sort order="descending" select="count(current-group()//iati-me:feedback[@type='info'])"/>
+      <xsl:sort order="ascending" select="count(current-group()//iati-me:feedback[@type='success'])"/> -->
+      <xsl:sort select="lower-case((current-group()/reporting-org/(narrative,.)[1])[1])"/>
 
-          <div class="col-md-6">
-            <xsl:call-template name="feedback-list-src">
-              <xsl:with-param name="feedback" select="//iati-me:feedback"/>
-            </xsl:call-template>
-          </div>
+      <xsl:variable name="orgName" select="(current-group()/reporting-org/(narrative,.)[1])[1]"/>
+      <xsl:variable name="feedback" select="current-group()//iati-me:feedback"/>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3><xsl:value-of select="$orgName"/></h3>
         </div>
 
-        <button type="button" class="btn btn-default" data-toggle="collapse" data-target=".activity .collapse.in">Show only activity titles</button>
-        <button type="button" class="btn btn-default" data-toggle="collapse" data-target=".activity .collapse[aria-expanded=false]">Show all activity details</button>
-        <button type="button" class="btn btn-default" data-toggle="collapse" data-target=".activity.collapse.in[issues=false]">
-          Show only activities with issues
-          <span class="badge"><xsl:value-of select="count(//iati-activity[count(descendant::iati-me:feedback)>0])"/></span>
-        </button>
-        <button type="button" class="btn btn-default" data-toggle="collapse" data-target=".activity.collapse[aria-expanded=false]">
-          Show all activities
-          <span class="badge"><xsl:value-of select="count(//iati-activity)"/></span>
-        </button>
-      </div>
-    </div>
-
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="iati-activities">
-    <div class="container-fluid activity collapse in">
-      <xsl:attribute name="issues" select="count(iati-me:feedback)>0"/>
-      <xsl:attribute name="id">activities</xsl:attribute>
-      <div class="header" data-toggle="collapse" aria-label="Collapse">
-        <xsl:attribute name="data-target">#activities-details</xsl:attribute>
-        <h2>
-          About the complete dataset
-          <xsl:if test="count(iati-me:feedback[@type='info'])>0">
-            <span class="badge badge-info"><xsl:value-of select="count(iati-me:feedback[@type='info'])"/></span>
-          </xsl:if>
-          <xsl:if test="count(iati-me:feedback[@type='warning'])>0">
-            <span class="badge badge-warning"><xsl:value-of select="count(iati-me:feedback[@type='warning'])"/></span>
-          </xsl:if>
-          <xsl:if test="count(iati-me:feedback[@type='danger'])>0">
-            <span class="badge badge-danger"><xsl:value-of select="count(iati-me:feedback[@type='danger'])"/></span>
-          </xsl:if>
-        </h2>
-      </div>
-      <div class="details collapse in">
-        <xsl:attribute name="id">activities-details</xsl:attribute>
-        <p>Issues and feedback over the dataset as a whole.</p>
-
-        <xsl:variable name="activity" select="."/>
-
-        <xsl:for-each-group select="$categories" group-by="(position() -1) idiv 4">
+        <div class="panel-body collapse-group">
           <div class="row">
-            <xsl:for-each select="current-group()">
-              <div class="col-md-3">
-                <h3><xsl:value-of select="iati-me:title"/></h3>
-                <xsl:variable name="class" select="string(@class)"/>
-                <xsl:call-template name="feedback-list">
-                  <xsl:with-param name="list" select="$activity/iati-me:feedback[@class=$class]"/>
-                </xsl:call-template>
+            <div class="col-md-3">
+              <h4>Number of comments per severity  <span class="badge"># activities</span></h4>
+              <p>Click on a severity to hide/show comments</p>
+              <ul class="list-group">
+                <xsl:for-each select="$feedback-meta/iati-me:severities/iati-me:severity">
+                  <xsl:variable name="type" select="@type"/>
+                  <xsl:variable name="activities" select="count(current-group()[.//iati-me:feedback[@type=$type]])"/>
+                  <xsl:variable name="comments" select="count($feedback[@type=$type])"/>
+
+                  <xsl:if test="$comments > 0">
+                    <li data-toggle="collapse" aria-label="Collapse">
+                      <xsl:attribute name="class">list-group-item list-group-item-<xsl:value-of select="$type"/></xsl:attribute>
+                      <xsl:attribute name="data-target">.toggle-<xsl:value-of select="$type"/></xsl:attribute>
+
+                      <span class="badge"><xsl:value-of select="$activities"/></span>
+
+                      <span>
+                        <xsl:attribute name="class">label label-<xsl:value-of select="$type"/></xsl:attribute>
+                        <xsl:value-of select="$comments"/>
+                      </span>
+                      <xsl:text> </xsl:text>
+                      <xsl:choose>
+                        <xsl:when test="$comments = 1"> <xsl:value-of select="."/></xsl:when>
+                        <xsl:otherwise> <xsl:value-of select="."/>s</xsl:otherwise>
+                      </xsl:choose>
+                    </li>
+                  </xsl:if>
+                </xsl:for-each>
+
+                <xsl:variable name="nocomments" select="count(current-group()[not(.//iati-me:feedback)])"/>
+                <xsl:if test="$nocomments > 0">
+                  <li class="list-group-item list-group-item-success">
+                    <span class="badge"><xsl:value-of select="$nocomments"/></span>
+                    <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"/></span>
+                    <xsl:text> </xsl:text>
+                    No comments
+                  </li>
+                </xsl:if>
+
+                <xsl:variable name="nocomments" select="count(current-group()[not(.//iati-me:feedback)])"/>
+                <xsl:if test="$nocomments > 0">
+                  <li class="list-group-item">
+                    <span class="badge"><xsl:value-of select="count(current-group())"/></span>
+
+                    <span class="label label-primary">
+                      <xsl:value-of select="count($feedback)"/>
+                    </span>
+                    <xsl:choose>
+                      <xsl:when test="count($feedback) = 1"> Comment</xsl:when>
+                      <xsl:otherwise> Comments in total</xsl:otherwise>
+                    </xsl:choose>
+                  </li>
+                </xsl:if>
+              </ul>
+
+              <h4>Number of comments per type</h4>
+              <ul class="list-group">
+                <xsl:for-each-group select="$feedback" group-by="@id">
+                  <xsl:sort select="count(current-group())" order="descending"/>
+                  <xsl:variable name="type" select="@type[1]"/>
+                  <li>
+                    <xsl:attribute name="class">list-group-item list-group-item-<xsl:value-of select="$type"/></xsl:attribute>
+                    <span class="label label-primary pull-right">
+                      <xsl:value-of select="count(current-group())"/>
+                    </span>
+                    <strong><xsl:value-of select="@class[1]"/>: </strong>
+                    <xsl:value-of select="data(current-group()[1])"/>
+                  </li>
+                </xsl:for-each-group>
+              </ul>
+
+              <h4>Number of comments per category</h4>
+              <ul class="list-group">
+                <xsl:for-each-group select="$feedback" group-by="(@src,'n/a')[1]">
+                  <xsl:sort select="count(current-group())" order="descending"/>
+                  <xsl:variable name="src" select="(@src,'n/a')[1]"/>
+                  <li class="list-group-item">
+                    <span class="label label-primary pull-right">
+                      <xsl:value-of select="count(current-group())"/>
+                    </span>
+                    <xsl:value-of select="$feedback-meta/iati-me:sources/iati-me:source[@src=$src]"/>
+                    <xsl:apply-templates select="$feedback-meta/iati-me:sources/iati-me:source[@src=$src]/@logo"/>
+                  </li>
+                </xsl:for-each-group>
+              </ul>
+            </div>
+
+            <div class="col-md-9">
+              <button type="button" class="btn btn-default showdetails" data-toggle="collapse">
+                <xsl:attribute name="data-target">#<xsl:value-of select="current-grouping-key()"/></xsl:attribute>
+                Show/hide activities with comments
+              </button>
+
+              <div class="panel panel-default collapse in">
+                <xsl:attribute name="id"><xsl:value-of select="current-grouping-key()"/></xsl:attribute>
+                <div class="panel-body">
+                  <table class="table table-condensed details feedback-list">
+                    <xsl:apply-templates select="current-group()[//iati-me:feedback]"/>
+                  </table>
+                  <button type="button" class="btn btn-default" data-toggle="collapse">
+                    <xsl:attribute name="data-target">#<xsl:value-of select="current-grouping-key()"/></xsl:attribute>
+                    Hide activities
+                  </button>
+                </div>
               </div>
-            </xsl:for-each>
+            </div>
           </div>
-        </xsl:for-each-group>
 
+        </div>
       </div>
-    </div>
 
-    <xsl:apply-templates select="iati-activity"/>
+    </xsl:for-each-group>
+
   </xsl:template>
 
   <xsl:template match="iati-activity">
-    <div class="container-fluid activity collapse in">
-      <xsl:attribute name="issues" select="count(descendant::iati-me:feedback)>0"/>
-      <xsl:attribute name="id">activity-<xsl:value-of select="position()"/></xsl:attribute>
-      <div class="header" data-toggle="collapse" aria-label="Collapse">
-        <xsl:attribute name="data-target">#activity-<xsl:value-of select="position()"/>-details</xsl:attribute>
-        <h2>
-          <xsl:value-of select="title[1]"/>
-          <xsl:if test="count(descendant::iati-me:feedback[@type='info'])>0">
-            <span class="badge badge-info"><xsl:value-of select="count(descendant::iati-me:feedback[@type='info'])"/></span>
-          </xsl:if>
-          <xsl:if test="count(descendant::iati-me:feedback[@type='warning'])>0">
-            <span class="badge badge-warning"><xsl:value-of select="count(descendant::iati-me:feedback[@type='warning'])"/></span>
-          </xsl:if>
-          <xsl:if test="count(descendant::iati-me:feedback[@type='danger'])>0">
-            <span class="badge badge-danger"><xsl:value-of select="count(descendant::iati-me:feedback[@type='danger'])"/></span>
-          </xsl:if>
-        </h2>
-      </div>
-      <div class="details collapse in">
-        <xsl:attribute name="id">activity-<xsl:value-of select="position()"/>-details</xsl:attribute>
-        <p>Activity <code><xsl:value-of select="functx:trim(string-join(iati-identifier/text(),''))"/></code>
-        reported by <xsl:value-of select="reporting-org/(narrative|text())"/></p>
+      <thead>
+        <tr>
+          <th>
+            <h3>
+              <xsl:if test="count(descendant::iati-me:feedback[@type='danger'])>0">
+                <span class="label label-danger"><xsl:value-of select="count(descendant::iati-me:feedback[@type='danger'])"/> </span>
+              </xsl:if>
+              <xsl:if test="count(descendant::iati-me:feedback[@type='warning'])>0">
+                <span class="label label-warning"><xsl:value-of select="count(descendant::iati-me:feedback[@type='warning'])"/> </span>
+              </xsl:if>
+              <xsl:if test="count(.//iati-me:feedback[@type='info'])>0">
+                <span class="label label-info"><xsl:value-of select="count(.//iati-me:feedback[@type='info'])"/> </span>
+              </xsl:if>
+              <xsl:if test="count(.//iati-me:feedback[@type='success'])>0">
+                <span class="label label-success"><xsl:value-of select="count(.//iati-me:feedback[@type='success'])"/> </span>
+              </xsl:if>
+              <xsl:if test="count(.//iati-me:feedback) = 0">
+                <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"/> </span>
+              </xsl:if>
+              <xsl:value-of select="title[1]"/>
+              <small>
+                <a target="_blank">
+                  <xsl:attribute name="href" select="concat(encode-for-uri(iati-identifier[1]), '.html')"/><code><xsl:value-of select="functx:trim(string-join(iati-identifier/text(),''))"/></code>
+                </a>
+              </small>
+            </h3>
+          </th>
+        </tr>
+      </thead>
+      <xsl:for-each-group select="descendant::iati-me:feedback" group-by="@class">
+        <xsl:sort select="count(current-group())" order="descending"/>
+        <xsl:for-each-group select="current-group()" group-by="@type">
+          <tbody>
+            <xsl:attribute name="class">
+              toggle-<xsl:value-of select="@type"/> collapse in
+            </xsl:attribute>
+            <xsl:apply-templates select="current-group()"/>
+          </tbody>
+        </xsl:for-each-group>
+      </xsl:for-each-group>
+  </xsl:template>
 
-        <xsl:variable name="activity" select="."/>
-
-        <xsl:for-each-group select="$categories" group-by="(position() -1) idiv 4">
-          <div class="row">
-            <xsl:for-each select="current-group()">
-              <div class="col-md-3">
-                <h3><xsl:value-of select="iati-me:title"/></h3>
-                <xsl:variable name="class" select="string(@class)"/>
-                <xsl:call-template name="feedback-list">
-                  <xsl:with-param name="list" select="$activity/descendant::iati-me:feedback[@class=$class]"/>
-                </xsl:call-template>
-              </div>
-            </xsl:for-each>
-          </div>
-       </xsl:for-each-group>
-
-      </div>
-    </div>
+  <xsl:template match="iati-me:feedback">
+    <xsl:variable name="src" select="@src"/>
+    <xsl:variable name="class" select="@class"/>
+    <tr>
+      <xsl:attribute name="class"><xsl:value-of select="@type"/></xsl:attribute>
+      <td>
+        <div class="context">
+          <span class="pull-right">
+            <xsl:apply-templates select="@href"/>
+            <xsl:apply-templates select="$feedback-meta/iati-me:sources/iati-me:source[@src=$src]/@logo"/>
+          </span>
+          <span class="feedback-class">
+            <xsl:value-of select="$feedback-meta/iati-me:categories/iati-me:category[@class=$class]/iati-me:title"/>:
+          </span>
+          <xsl:apply-templates select="." mode="context"/>
+          <xsl:copy-of select="*|text()"/>
+        </div>
+      </td>
+    </tr>
   </xsl:template>
 
 </xsl:stylesheet>

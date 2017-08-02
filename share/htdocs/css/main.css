@@ -35,16 +35,19 @@ body {
   background-color: #f2dede;
 }
 
-.logo {
-  float: right;
-  margin: 0 0.5em;
-  height: 1.5em;
-  width: 1.5em;
+.badge-primary {
+  background-color: #337ab7;
 }
 
-.bookmark {
-  float: right;
-  margin-right: 0.5em;
+.icon {
+  margin: 0 0.2em;
+  height: 1.5em;
+  width: 1.5em;
+  vertical-align: middle;
+}
+
+a.icon:hover {
+  text-decoration: none;
 }
 
 .languageSet {
