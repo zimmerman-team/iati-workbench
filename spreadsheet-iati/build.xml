@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="spreadsheet-iati">
+  <description>
+    Spreadsheet to IATI Engine
+  </description>
+
+  <target name="spreadsheet-iati"
+    description="Create IATI XML file from spreadsheet and IATI input files."
+    depends="csvxml-iati, iati-iati, merge-iati">
+  </target>
+
+  <target name="merge-iati"
+    description="Merge activities from *.generated.xml into one file."
+    depends="ls-tmp">
+    <xslt
+      basedir="/workspace/tmp"
+      destdir="/workspace/tmp"
+      in="/workspace/tmp/ls.xml"
+      out="/workspace/src/iati-activities.xml"
+      style="lib/iati.me/merge-activities.xslt"
+    />
+  </target>
+
+  <target name="excel-csv"
+    description="Convert spreadsheets to CSV files for further processing."
+    depends="init">
+    <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
+
+    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
+      <fileset dir="/workspace/input" includes="*.xlsx"/>
+      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.csv"/>
+
+      <arg line="--headless"/>
+      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
+      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,1'"/>
+      <arg line="--outdir /workspace/tmp"/>
+      <srcfile/>
+    </apply>
+  </target>
+
+  <target name="iati-iati"
+    description="Transform existing IATI input files into a version with merge ids."
+    depends="init">
+    <xslt
+      basedir="/workspace/input/"
+      includes="*.xml"
+      destdir="/workspace/tmp"
+      extension=".generated.xml"
+      style="transform/add-merge-ids.xslt"
+     />
+  </target>
+
+  <target name="csv-csvxml" depends="excel-csv">
+    <sequential>
+      <apply executable="basex" dest="/workspace/tmp" verbose="true">
+        <fileset dir="/workspace/tmp" includes="*.csv"/>
+        <srcfile prefix="-bfile="/>
+        <arg value="-o"/>
+        <targetfile/>
+        <arg value="basex-queries/csv-csvxml.xq"/>
+        <globmapper from="*.csv" to="*.csv.xml"/>
+      </apply>
+    </sequential>
+  </target>
+
+  <target name="iati-office"
+    description="Create LibreOffice spreadsheets from IATI."
+    depends="init">
+    <dependset>
+      <sources>
+        <file file="lib/office/spreadsheet.xslt" />
+        <file file="/workspace/config/iati-office.xslt" />
+      </sources>
+      <targetfileset dir="/workspace/output" includes="*.fods" />
+    </dependset>
+    <xslt
+      basedir="/workspace/src"
+      includes="*.xml"
+      destdir="/workspace/output"
+      extension=".fods"
+      filenameparameter="filename"
+      style="lib/iati.me/iati-office.xslt"
+    />
+  </target>
+
+</project>

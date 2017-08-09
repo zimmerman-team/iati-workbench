@@ -12,6 +12,9 @@
   <import file="lib/build.xml"/>
   <import file="augment/build.xml"/>
   <import file="transform/build.xml"/>
+  <import file="spreadsheet-iati/build.xml"/>
+  <import file="data-quality/build.xml"/>
+  <import file="visualisations/build.xml"/>
 
   <!-- Xspec tests -->
   <property environment="env"/>
@@ -42,63 +45,6 @@
     </echo>
   </target>
 
-  <target name="yed"
-    description="Generate GraphML graphs for use in yEd."
-    depends="graphml">
-    <echo level="info">Generate yEd-enriched files from GraphML sources.</echo>
-    <dependset>
-      <sources>
-        <file file="output/graphml-yed.xslt"/>
-      </sources>
-      <targetfileset dir="/workspace/output" includes="*.graphml"/>
-    </dependset>
-    <xslt
-      basedir="/workspace/tmp/"
-      includes="*.graphml"
-      destdir="/workspace/output/"
-      extension=".graphml"
-      style="output/graphml-yed.xslt"
-     />
-  </target>
-
-  <target name="feedback"
-    description="Generate a summary data quality feedback report."
-    depends="rules, htdocs-skeleton">
-    <echo level="info">Provide a summary feedback report.</echo>
-    <dependset>
-      <sources>
-        <fileset dir="lib/iati.me" />
-      </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.summary.html" />
-    </dependset>
-    <xslt
-      basedir="/workspace/tmp/"
-      includes="*.augmented.xml"
-      destdir="/workspace/reports/htdocs"
-      extension=".summary.html"
-      style="output/feedback.xslt"
-    />
-  </target>
-
-  <target name="transactions-flow"
-    description="Generate an overview of transactions."
-    depends="filtered">
-    <echo level="info">Generate an overview of transactions.</echo>
-    <dependset>
-      <sources>
-        <file file="output/transactions.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.flows.html" />
-    </dependset>
-    <xslt
-      basedir="/workspace/tmp/"
-      includes="*.filtered.xml"
-      destdir="/workspace/reports/htdocs"
-      extension=".flows.html"
-      style="output/transactions.xslt"
-     />
-  </target>
-
   <target name="more-up-down-stream" depends="init">
     <iati-query xquery="basex-queries/find-links-upstream-downstream.xq" src="/workspace/src" from="*.ids" to="*.extra"/>
   </target>
@@ -115,154 +61,35 @@
     <iati-query xquery="basex-queries/get-activities.xq" src="/workspace/src" from="*.ids" dest="/workspace/src" to="*.xml"/>
   </target>
 
-  <target name="excel-csv"
-    description="Convert spreadsheets to CSV files for further processing."
-    depends="init">
-    <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
-
-    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
-      <fileset dir="/workspace/input" includes="*.xlsx"/>
-      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.csv"/>
-
-      <arg line="--headless"/>
-      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
-      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,1'"/>
-      <arg line="--outdir /workspace/tmp"/>
-      <srcfile/>
-    </apply>
-  </target>
-
-  <target name="iati-iati"
-    description="Transform an IATI file into a version with merge ids."
-    depends="init">
-    <xslt
-      basedir="/workspace/input/"
-      includes="*.xml"
-      destdir="/workspace/tmp"
-      extension=".generated.xml"
-      style="transform/add-merge-ids.xslt"
-     />
-  </target>
-
-  <target name="make-iati"
-    description="Merge activities within one file."
-    depends="csvxml-iati, iati-iati, ls-tmp">
-    <xslt
-      basedir="/workspace/tmp"
-      destdir="/workspace/tmp"
-      in="/workspace/tmp/ls.xml"
-      out="/workspace/tmp/iati.alpha.xml"
-      style="lib/iati.me/merge-activities.xslt"
-    />
-
-    <exec executable="xmlstarlet" output="/workspace/tmp/iati-activities.xml">
-      <arg line="fo /workspace/tmp/iati.alpha.xml"/>
-    </exec>
-  </target>
-
-  <target name="validate-iati"
-    description="Validate generated IATI file and generate source-highlighted HTML page."
-    depends="make-iati">
-
-    <exec executable="source-highlight">
-      <arg line="-n"/>
-      <arg line="-f html5"/>
-      <arg line="-i /workspace/tmp/iati-activities.xml"/>
-      <arg line="-o /workspace/tmp/iati-activities.html"/>
-    </exec>
-
-    <schemavalidate
-      file="/workspace/tmp/iati-activities.xml"
-      noNamespaceFile="lib/schemata/2.02/iati-activities-schema.xsd"/>
-    <echo level="info">Generated file passes validation, is copied to src/ directory.</echo>
-    <copy file="/workspace/tmp/iati-activities.xml" todir="/workspace/src"/>
-  </target>
-
-  <target name="csv-csvxml" depends="excel-csv">
-    <sequential>
-      <apply executable="basex" dest="/workspace/tmp" verbose="true">
-        <fileset dir="/workspace/tmp" includes="*.csv"/>
-        <srcfile prefix="-bfile="/>
-        <arg value="-o"/>
-        <targetfile/>
-        <arg value="basex-queries/csv-csvxml.xq"/>
-        <mapper type="glob" from="*.csv" to="*.csv.xml"/>
-      </apply>
-    </sequential>
-  </target>
-
-  <target name="iati-office"
-    description="Create LibreOffice spreadsheets from IATI."
-    depends="init">
-    <dependset>
-      <sources>
-        <file file="lib/office/spreadsheet.xslt" />
-        <file file="/workspace/config/iati-office.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/tmp" includes="*.ods.xml" />
-    </dependset>
-    <xslt
-      basedir="/workspace/src"
-      includes="*.xml"
-      destdir="/workspace/tmp"
-      extension=".ods.xml"
-      filenameparameter="filename"
-      style="lib/iati.me/iati-office.xslt"
-    />
-  </target>
-
-  <target name="iati-summary"
-    description="Create LibreOffice spreadsheet with a summary of an IATI file."
-    depends="init">
-    <dependset>
-      <sources>
-        <file file="lib/office/spreadsheet.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/tmp" includes="*.fods" />
-    </dependset>
-    <xslt
-      basedir="/workspace/src"
-      includes="*.xml"
-      destdir="/workspace/tmp"
-      extension=".fods"
-      filenameparameter="filename"
-      style="lib/iati.me/iati-summary.xslt"
-    />
-  </target>
-
   <target name="show-ids" depends="init">
     <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
 
-  <target name="gantt-results"
-    description="Generate a gantt view of the results."
-    depends="htdocs-skeleton">
-    <echo level="info">Generate a gantt view of the results.</echo>
-    <dependset>
-      <sources>
-        <file file="output/gantt-results.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.gantt.xml" />
-    </dependset>
-    <xslt
-      basedir="/workspace/src/"
-      includes="*.xml"
-      destdir="/workspace/reports/htdocs"
-      extension=".gantt.xml"
-      style="output/gantt-results.xslt"
-     />
-  </target>
-  <target name="activities"
-    description="Generate an overview page per activity"
-    depends="htdocs-skeleton">
-    <xslt
-      basedir="/workspace/src/"
-      includes="*.xml"
-      destdir="/workspace/reports/htdocs"
-      extension=".act.xml"
-      style="lib/htdocs/iati-activity.xslt"
-     />
-  </target>
+  <target name="spreadsheets-plus" depends="spreadsheet-iati,data-quality,all-visualisations"/>
 
-  <target name="make-outputs" depends="yed,activities,feedback-summary"/>
+  <target name="report"
+    description="Creates an index page for the available report pages."
+    depends="htdocs-skeleton">
+
+    <copy todir="/workspace/reports/htdocs">
+      <fileset dir="/workspace/src"/>
+      <fileset dir="/workspace/output" includes="*.fods"/>
+    </copy>
+
+    <apply executable="xmlstarlet" output="/workspace/tmp/reports.xml">
+      <arg line="ls"/>
+      <dirset dir="/workspace/reports" includes="htdocs"/>
+    </apply>
+
+    <xslt
+      basedir="/workspace/tmp"
+      destdir="/workspace/reports/htdocs"
+      in="/workspace/tmp/reports.xml"
+      out="/workspace/reports/htdocs/index.html"
+      style="lib/htdocs/index.xslt"
+    />
+
+    <!-- <delete file="/workspace/tmp/reports.xml"/> -->
+
+  </target>
 </project>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="visualisations">
+  <description>
+    Visualisations of IATI data
+  </description>
+
+  <target name="all-visualisations" depends="yed,activities,gantt-results,transactions-flow"/>
+
+  <target name="yed"
+    description="Generate GraphML graphs for use in yEd."
+    depends="graphml">
+    <echo level="info">Generate yEd-enriched files from GraphML sources.</echo>
+    <dependset>
+      <sources>
+        <file file="output/graphml-yed.xslt"/>
+      </sources>
+      <targetfileset dir="/workspace/output" includes="*.graphml"/>
+    </dependset>
+    <xslt
+      basedir="/workspace/tmp/"
+      includes="*.graphml"
+      destdir="/workspace/output/"
+      extension=".graphml"
+      style="output/graphml-yed.xslt"
+     />
+  </target>
+
+  <target name="transactions-flow"
+    description="Generate an overview of transactions."
+    depends="filtered">
+    <echo level="info">Generate an overview of transactions.</echo>
+    <dependset>
+      <sources>
+        <file file="output/transactions.xslt" />
+      </sources>
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.flows.html" />
+    </dependset>
+    <xslt
+      basedir="/workspace/tmp/"
+      includes="*.filtered.xml"
+      destdir="/workspace/reports/htdocs"
+      style="output/transactions.xslt">
+      <globmapper from="*.filtered.xml" to="*.flows.html"/>
+    </xslt>
+  </target>
+
+  <target name="gantt-results"
+    description="Generate a gantt view of the results."
+    depends="htdocs-skeleton">
+    <echo level="info">Generate a gantt view of the results.</echo>
+    <dependset>
+      <sources>
+        <file file="output/gantt-results.xslt" />
+      </sources>
+      <targetfileset dir="/workspace/reports/htdocs" includes="*.gantt.xml" />
+    </dependset>
+    <xslt
+      basedir="/workspace/src/"
+      includes="*.xml"
+      destdir="/workspace/reports/htdocs"
+      extension=".gantt.xml"
+      style="output/gantt-results.xslt"
+     />
+  </target>
+
+  <target name="activities"
+    description="Generate an overview page per activity"
+    depends="htdocs-skeleton">
+    <xslt
+      basedir="/workspace/src/"
+      includes="*.xml"
+      destdir="/workspace/reports/htdocs"
+      extension=".act.xml"
+      style="lib/htdocs/iati-activity.xslt"
+     />
+  </target>
+
+</project>

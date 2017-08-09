@@ -6,6 +6,7 @@
   exclude-result-prefixes="functx merge">
 
   <xsl:import href="../functx.xslt"/>
+  <xsl:output indent="yes"/>
 
   <xsl:template match="/dir">
     <iati-activities version="2.02" generated-datetime="{current-dateTime()}">

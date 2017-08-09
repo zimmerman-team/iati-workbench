@@ -106,6 +106,7 @@
     <apply executable="xmlstarlet" output="/workspace/tmp/ls.xml">
       <arg line="ls"/>
       <dirset dir="/workspace/tmp" excludes="ls.xml"/>
+      <!-- TODO: test this, should be dir=workspace, includes=tmp? -->
     </apply>
   </target>
 </project>
