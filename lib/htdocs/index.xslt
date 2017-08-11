@@ -19,7 +19,7 @@
     <table class="table table-hover table-bordered">
       <tr>
         <th>Page or file</th>
-        <th>Modified</th>
+        <th>Modified (UTC time)</th>
       </tr>
       <xsl:apply-templates select="dir/f[@s!='0']">
         <xsl:sort select="@m"/>
@@ -34,6 +34,11 @@
         <xsl:when test="@n='iati-activities.html'">IATI Activities as viewable XML with line numbers</xsl:when>
         <xsl:when test="@n='iati-activities.summary.html'">Data quality feedback summary</xsl:when>
         <xsl:when test="@n='iati-activities.summary.fods'">Spreadsheet with summary of elements used per activity</xsl:when>
+        <xsl:when test="@n='iati-activities.gantt.html'">
+          <xsl:if test="../f[@n='iati-activities.gantt.xml' and (@s cast as xs:integer)>0]">
+            Gantt-style overview of results
+          </xsl:if>
+        </xsl:when>
         <xsl:otherwise></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -43,7 +48,7 @@
           <a href="{@n}" target="_blank"><xsl:value-of select="$title"/></a>
         </td>
         <td>
-          <xsl:value-of select="format-dateTime(replace(@m,'(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(.)','$1-$2-$3T$4:$5:$6$7') cast as xs:dateTime, '[D]-[M]-[Y] [H]:[m]:[s]')"/>
+          <xsl:value-of select="format-dateTime(replace(@m,'(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(.)','$1-$2-$3T$4:$5:$6$7') cast as xs:dateTime, '[D]-[M]-[Y] [H01]:[m]:[s]')"/>
         </td>
       </tr>
     </xsl:if>

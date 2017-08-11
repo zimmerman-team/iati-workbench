@@ -61,6 +61,7 @@
       extension=".gantt.xml"
       style="output/gantt-results.xslt"
      />
+     <touch file="/workspace/reports/htdocs/iati-activities.gantt.html"/>
   </target>
 
   <target name="activities"
