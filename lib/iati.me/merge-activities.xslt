@@ -40,7 +40,7 @@
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/other-identifier"/>
-            <xsl:for-each-group select="current-group()/activity-status" group-by="@code">
+            <xsl:for-each-group select="current-group()/activity-status[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
 
@@ -50,7 +50,7 @@
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/contact-info"/>
-            <xsl:apply-templates select="current-group()/activity-scope"/>
+            <xsl:apply-templates select="current-group()/activity-scope[@code!='']"/>
             <xsl:apply-templates select="current-group()/recipient-country[@code!='']"/>
             <xsl:apply-templates select="current-group()/recipient-region[@code!='']"/>
             <xsl:apply-templates select="current-group()/location"/>
@@ -59,19 +59,19 @@
             <xsl:apply-templates select="current-group()/humanitarian-scope"/>
             <xsl:apply-templates select="current-group()/policy-marker"/>
 
-            <xsl:for-each-group select="current-group()/collaboration-type" group-by="@code">
+            <xsl:for-each-group select="current-group()/collaboration-type[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
-            <xsl:for-each-group select="current-group()/default-flow-type" group-by="@code">
+            <xsl:for-each-group select="current-group()/default-flow-type[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
-            <xsl:for-each-group select="current-group()/default-finance-type" group-by="@code">
+            <xsl:for-each-group select="current-group()/default-finance-type[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
-            <xsl:for-each-group select="current-group()/default-aid-type" group-by="@code">
+            <xsl:for-each-group select="current-group()/default-aid-type[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
-            <xsl:for-each-group select="current-group()/default-tied-status" group-by="@code">
+            <xsl:for-each-group select="current-group()/default-tied-status[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
 
