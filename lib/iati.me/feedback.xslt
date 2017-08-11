@@ -51,6 +51,11 @@
     transaction of <xsl:value-of select="../transaction-date/@iso-date"/>:
   </xsl:template>
 
+  <!-- Context information for budget -->
+  <xsl:template match="budget/iati-me:feedback" mode="context">
+    In the budget of <xsl:value-of select="period-start/@iso-date"/> to <xsl:value-of select="period-end/@iso-date"/>:
+  </xsl:template>
+
   <!-- Context information for provider-org and receiver-org in transactions -->
   <xsl:template match="provider-org/iati-me:feedback|receiver-org/iati-me:feedback" mode="context">
     In transaction of <xsl:value-of select="../../transaction-date/@iso-date"/> for <xsl:value-of select="name(..)"/>&#160;<xsl:call-template name="show-organisation"/>:

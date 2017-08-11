@@ -17,20 +17,24 @@
 
   <xsl:if test="upper-case(transaction-type/@code)=('2','C')
     and provider-org/@provider-activity-id
+    and provider-org/@provider-activity-id != ../iati-identifier
     and not(receiver-org/@receiver-activity-id)">
     <iati-me:feedback type="warning" class="financial" id="7.1.2">
       The transaction is a commitment from the activity,
       and has a <code>provider-activity-id</code>
+      that is different from the activity identifier
       but no <code>receiver-activity-id</code>.
     </iati-me:feedback>
   </xsl:if>
 
   <xsl:if test="upper-case(transaction-type/@code)=('3','D')
     and provider-org/@provider-activity-id
+    and provider-org/@provider-activity-id != ../iati-identifier
     and not(receiver-org/@receiver-activity-id)">
     <iati-me:feedback type="warning" class="financial" id="7.1.3">
       The transaction is a disbursement from the activity,
       and has a <code>provider-activity-id</code>
+      that is different from the activity identifier
       but no <code>receiver-activity-id</code>.
     </iati-me:feedback>
   </xsl:if>
@@ -54,6 +58,7 @@
       not be the same.
     </iati-me:feedback>
   </xsl:if>
+  <xsl:next-match/>
 </xsl:template>
 
 <xsl:template match="transaction[transaction-type/@code=('1','11')]" mode="rules" priority="7.3">
@@ -62,6 +67,7 @@
       The incoming transaction has no provider organisation identifier or name.
     </iati-me:feedback>
   </xsl:if>
+  <xsl:next-match/>
 </xsl:template>
 
 <xsl:template match="transaction[transaction-type/@code=('2','3')]" mode="rules" priority="7.4">
@@ -70,6 +76,23 @@
       The outgoing transaction has no receiver organisation identifier or name.
     </iati-me:feedback>
   </xsl:if>
+  <xsl:next-match/>
+</xsl:template>
+
+<xsl:template match="budget">
+  <xsl:if test="value=0 or value='0'">
+    <iati-me:feedback type="warning" class="financial" id="7.5.1">
+      The budget has a value of 0.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="not(value/@value-date)">
+    <iati-me:feedback type="danger" class="financial" id="7.5.2">
+      The budget value has no value date.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:next-match/>
 </xsl:template>
 
 </xsl:stylesheet>

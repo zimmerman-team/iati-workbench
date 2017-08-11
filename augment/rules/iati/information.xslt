@@ -20,4 +20,28 @@
   <xsl:next-match/>
 </xsl:template>
 
+<xsl:template match="iati-activity" mode="rules" priority="6.2">
+  <xsl:if test="not(activity-status)">
+    <iati-me:feedback type="danger" class="information" id="6.2.1">
+      The activity has no activity status code.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="not(sector) and not(transaction/sector)">
+    <iati-me:feedback type="warning" class="information" id="6.2.2">
+      The activity has no sector classification information for either
+      the activity or the transactions.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:if test="sector and not(sector/@vocabulary='1' or not(sector/@vocabulary))">
+    <iati-me:feedback type="info" class="information" id="6.2.2">
+      The activity has no sector classification information for the OECD DAC
+      sector vocabulary.
+    </iati-me:feedback>
+  </xsl:if>
+
+  <xsl:next-match/>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -43,7 +43,7 @@
     ) and not (
       transaction[provider-org/@ref='XM-DAC-7' and transaction-type/@code='11']
     )">
-    <iati-me:feedback type="danger" class="traceability" src="minbuza" id="100.2.2">
+    <iati-me:feedback type="warning" class="traceability" src="minbuza" id="100.2.2">
       If the Ministry (<code>XM-DAC-7</code>) is a donor or provider of
       incoming funds, the activity must have a transaction of type
       <code>11</code> (incoming commitment)

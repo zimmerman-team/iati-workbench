@@ -22,6 +22,7 @@
 
       <xsl:variable name="orgName" select="(current-group()/reporting-org/(narrative,.)[1])[1]"/>
       <xsl:variable name="feedback" select="current-group()//iati-me:feedback"/>
+      <xsl:variable name="orgActivities" select="current-group()"/>
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -87,18 +88,31 @@
 
               <h4>Number of comments per type</h4>
               <ul class="list-group">
-                <xsl:for-each-group select="$feedback" group-by="@id">
-                  <xsl:sort select="count(current-group())" order="descending"/>
-                  <xsl:variable name="type" select="@type[1]"/>
-                  <li>
-                    <xsl:attribute name="class">list-group-item list-group-item-<xsl:value-of select="$type"/></xsl:attribute>
-                    <span class="label label-primary pull-right">
-                      <xsl:value-of select="count(current-group())"/>
-                    </span>
-                    <strong><xsl:value-of select="@class[1]"/>: </strong>
-                    <xsl:value-of select="data(current-group()[1])"/>
-                  </li>
-                </xsl:for-each-group>
+                <xsl:for-each select="$feedback-meta/iati-me:severities/iati-me:severity">
+                  <xsl:variable name="type" select="@type"/>
+
+                  <xsl:for-each-group select="$feedback[@type=$type]" group-by="@id">
+                    <xsl:sort select="count(current-group())" order="descending"/>
+
+                    <xsl:variable name="id" select="current-group()/@id[1]"/>
+                    <xsl:variable name="activities" select="count($orgActivities[.//iati-me:feedback[@id=$id]])"/>
+
+                    <li>
+                      <xsl:attribute name="class">list-group-item list-group-item-<xsl:value-of select="$type"/></xsl:attribute>
+
+                      <span class="badge"><xsl:value-of select="$activities"/></span>
+
+                      <span>
+                        <xsl:attribute name="class">label label-<xsl:value-of select="$type"/></xsl:attribute>
+                        <xsl:value-of select="count(current-group())"/>
+                      </span>
+                      <xsl:text> </xsl:text>
+
+                      <strong><xsl:value-of select="@class[1]"/>: </strong>
+                      <xsl:value-of select="data(current-group()[1])"/>
+                    </li>
+                  </xsl:for-each-group>
+                </xsl:for-each>
               </ul>
 
               <h4>Number of comments per category</h4>
