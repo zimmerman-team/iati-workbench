@@ -4,12 +4,12 @@
   xmlns:functx="http://www.functx.com"
   xmlns:htmllib="http://www.iati.me/htmllib"
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  exclude-result-prefixes="functx htmllib xs">
 
   <xsl:import href="../functx.xslt"/>
   <xsl:import href="bootstrap.xslt"/>
   <xsl:import href="../iati.me/htmllib.xslt"/>
-  <xsl:output method="html" encoding="UTF-8" indent="yes" use-character-maps="latin1"/>
 
   <xsl:template match="/" mode="html-body">
     <xsl:apply-templates select="//iati-activity">
@@ -18,7 +18,7 @@
   </xsl:template>
 
   <xsl:template match="iati-activity">
-    <xsl:result-document method="html" href="{encode-for-uri(iati-identifier)}.html">
+    <xsl:result-document method="xhtml" href="{encode-for-uri(iati-identifier)}.html">
       <!-- <xsl:apply-templates select="." mode="file"/> -->
       <xsl:call-template name="bootstrap-file"/>
     </xsl:result-document>
