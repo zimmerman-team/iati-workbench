@@ -69,14 +69,15 @@
 
   <target name="activities"
     description="Generate an overview page per activity"
-    depends="htdocs-skeleton">
+    depends="">
     <xslt
       basedir="/workspace/src/"
       includes="*.xml"
-      destdir="/workspace/reports/htdocs"
+      destdir="/workspace/reports"
       extension=".act.xml"
       style="lib/htdocs/iati-activity.xslt"
      />
+     <delete dir="/workspace/reports" includes="*.act.xml"/>
   </target>
 
 </project>

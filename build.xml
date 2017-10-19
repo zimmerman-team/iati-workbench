@@ -49,10 +49,16 @@
 
   <target name="find-links-upstream" depends="init" description="Find more upstream activities">
     <iati-query xquery="basex-queries/find-links-upstream.xq" src="/workspace/src" from="*.ids" to="*.ids.up"/>
+    <concat>
+      <fileset dir="tmp" includes="*.ids.up"/>
+    </concat>
   </target>
 
   <target name="find-links-downstream" depends="init" description="Find more downstream activities">
     <iati-query xquery="basex-queries/find-links-downstream.xq" src="/workspace/src" from="*.ids" to="*.ids.down"/>
+    <concat>
+      <fileset dir="tmp" includes="*.ids.down"/>
+    </concat>
   </target>
 
   <target name="get-activities" depends="init" description="Get the activities for each set of ids">
@@ -75,6 +81,7 @@
     <copy todir="/workspace/reports/htdocs">
       <fileset dir="/workspace/src"/>
       <fileset dir="/workspace/output" includes="*.fods"/>
+      <fileset dir="/workspace/output" includes="*.svg"/>
     </copy>
 
     <apply executable="xmlstarlet" output="/workspace/tmp/reports.xml">
@@ -93,4 +100,24 @@
     <!-- <delete file="/workspace/tmp/reports.xml"/> -->
 
   </target>
+  <target name="test-tree"
+    description="Test: render hierarchical list of projects">
+
+    <copy todir="/workspace/reports/htdocs/css">
+      <fileset dir="share/htdocs/css" includes="*.css"/>
+    </copy>
+
+    <delete>
+      <fileset dir="/workspace/reports/htdocs" includes="*.list.html"/>
+    </delete>
+    <xslt
+      basedir="/workspace/src"
+      includes="*.xml"
+      destdir="/workspace/reports"
+      extension=".list.html"
+      style="iati/tree.xslt"
+     />
+
+  </target>
+
 </project>

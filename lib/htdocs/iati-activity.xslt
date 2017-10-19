@@ -12,9 +12,12 @@
   <xsl:import href="../iati.me/htmllib.xslt"/>
 
   <xsl:template match="/" mode="html-body">
-    <xsl:apply-templates select="//iati-activity">
-      <xsl:with-param name="iati-activities" select="//iati-activity" tunnel="yes"/>
-    </xsl:apply-templates>
+    <xsl:variable name="iati-activities" select="//iati-activity"/>
+    <xsl:for-each-group select="//iati-activity" group-by="iati-identifier">
+      <xsl:apply-templates select="current-group()[1]">
+        <xsl:with-param name="iati-activities" select="$iati-activities" tunnel="yes"/>
+      </xsl:apply-templates>
+    </xsl:for-each-group>
   </xsl:template>
 
   <xsl:template match="iati-activity">
@@ -145,7 +148,7 @@
 
     [{
       v:'<xsl:value-of select="iati-identifier"/>',
-      f:'<a href="{encode-for-uri(iati-identifier)}.html"><xsl:apply-templates select="title" mode="narrative"/></a>'
+      f:'<xsl:value-of select="normalize-space((title/narrative,title/text())[1])"/>'
     }, '<xsl:value-of select="$parent"/>', ''],
 
     <!-- add the parent to the data -->
@@ -182,7 +185,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
+            <li><a href="iati-activities.list.html">Home</a></li>
             <xsl:if test="./preceding-sibling::iati-activity[1]">
               <li><a href="{encode-for-uri(./preceding-sibling::iati-activity[1]/iati-identifier)}.html"
                 title="{./preceding-sibling::iati-activity[1]/title/narrative[1]}">Previous activity</a></li>
@@ -191,12 +194,14 @@
               <li><a href="{encode-for-uri(./following-sibling::iati-activity[1]/iati-identifier)}.html"
                 title="{./following-sibling::iati-activity[1]/title/narrative[1]}">Next activity</a></li>
             </xsl:if>
+            <li><a href="iati-activities.gantt.html">Results overview</a></li>
+            <li><a href="iati-activities.summary.html">Quality feedback</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="container" role="main">
+    <div class="container container-fluid" role="main">
       <!-- create tabs for different language versions -->
       <xsl:variable name="languagesRaw" select="distinct-values((@xml:lang,//@xml:lang[.!='']))"/>
       <xsl:variable name="languages" as="xs:string*">
@@ -205,16 +210,6 @@
         </xsl:for-each>
       </xsl:variable>
 
-      <ul class="nav nav-tabs">
-        <xsl:for-each select="$languages">
-          <li>
-            <xsl:if test="position()=1">
-              <xsl:attribute name="class" select="'active'"/>
-            </xsl:if>
-            <a data-toggle="tab" href="#{.}"><xsl:value-of select="."/></a>
-          </li>
-        </xsl:for-each>
-      </ul>
       <div class="tab-content">
         <xsl:apply-templates select="." mode="language-versions">
           <xsl:with-param name="languages" select="$languages"/>

@@ -31,6 +31,7 @@
     <xsl:variable name="title">
       <xsl:choose>
         <xsl:when test="@n='iati-activities.xml'">IATI Activities as raw XML file for publication</xsl:when>
+        <xsl:when test="@n='iati-activities.svg'">Structure diagram of IATI activities</xsl:when>
         <xsl:when test="@n='iati-activities.html'">IATI Activities as viewable XML with line numbers</xsl:when>
         <xsl:when test="@n='iati-activities.summary.html'">Data quality feedback summary</xsl:when>
         <xsl:when test="@n='iati-activities.summary.fods'">Spreadsheet with summary of elements used per activity</xsl:when>

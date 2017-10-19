@@ -11,6 +11,29 @@
   <xsl:variable name="categories" select="$feedback-meta/iati-me:categories/iati-me:category"/>
 
   <xsl:template match="/" mode="html-body">
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-top"> -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="iati-activities.list.html">Home</a></li>
+            <li><a href="iati-activities.gantt.html">Results overview</a></li>
+            <li><a href="iati-activities.summary.html">Quality feedback</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid" role="main">
+
     <h1>IATI Data Quality Feedback</h1>
 
     <xsl:for-each-group select="//iati-activity" group-by="reporting-org/@ref">
@@ -156,7 +179,7 @@
       </div>
 
     </xsl:for-each-group>
-
+    </div>
   </xsl:template>
 
   <xsl:template match="iati-activity">
