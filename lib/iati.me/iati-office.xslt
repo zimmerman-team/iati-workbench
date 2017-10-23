@@ -15,7 +15,7 @@
   <xsl:template name="create-file">
     <xsl:param name="filepart" tunnel="yes"/>
     <xsl:param name="dataset" tunnel="yes"/>
-    <xsl:result-document method="xml" href="{$filebase}.{$filepart}.ods.xml">
+    <xsl:result-document method="xml" href="{$filebase}.{$filepart}.fods">
       <xsl:call-template name="office-spreadsheet-file">
         <xsl:with-param name="fileconfig" select="doc('/workspace/config/iati-office.xslt')//xsl:template[@export:export!='']" tunnel="yes"/>
         <xsl:with-param name="date-elements" select="('iso-date','value-date')" tunnel="yes"/>
