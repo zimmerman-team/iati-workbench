@@ -12,26 +12,4 @@
     <basexpipe xquery="augment/organisations" src="/workspace/src" from="*.xml" to="*.filtered.xml"/>
   </target>
 
-  <target name="rules"
-    description="Check the source data against an IATI ruleset."
-    depends="init">
-    <echo level="info">Check the source data against a generic IATI ruleset.</echo>
-    <dependset>
-      <sources>
-        <file file="augment/rules/iati.xslt"/>
-        <fileset dir="augment/rules/iati" />
-        <fileset dir="augment/rules/minbuza" />
-        <fileset dir="augment/rules/exclusions" />
-      </sources>
-      <targetfileset dir="/workspace/tmp" includes="*.augmented.xml" />
-    </dependset>
-    <xslt
-      basedir="/workspace/src/"
-      includes="*.xml"
-      destdir="/workspace/tmp"
-      extension=".augmented.xml"
-      style="augment/rules/iati.xslt"
-     />
-  </target>
-
 </project>

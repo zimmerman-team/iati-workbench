@@ -4,45 +4,23 @@
     IATI Data Quality Engine
   </description>
 
-  <target name="data-quality"
-    description="Generate all data quality feedback items"
-    depends="validate-iati, feedback, iati-summary">
-  </target>
-
-  <target name="feedback"
-    description="Generate a summary data quality feedback report."
-    depends="rules, htdocs-skeleton">
-    <echo level="info">Provide a summary feedback report.</echo>
-    <dependset>
-      <sources>
-        <fileset dir="lib/iati.me" />
-      </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.summary.html" />
-    </dependset>
-    <xslt
-      basedir="/workspace/tmp/"
-      includes="*.augmented.xml"
-      destdir="/workspace/reports/htdocs"
-      style="output/feedback.xslt">
-      <globmapper from="*.augmented.xml" to="*.summary.html"/>
-    </xslt>
-  </target>
-
   <target name="validate-iati"
     description="Validate generated IATI file and generate source-highlighted HTML page.">
 
-    <exec executable="source-highlight">
+    <!-- <exec executable="source-highlight">
       <arg line="-n"/>
       <arg line="-f html5"/>
       <arg line="-i /workspace/src/iati-activities.xml"/>
       <arg line="-o /workspace/reports/htdocs/iati-activities.html"/>
-    </exec>
+    </exec> -->
 
     <schemavalidate
       file="/workspace/src/iati-activities.xml"
       noNamespaceFile="lib/schemata/2.02/iati-activities-schema.xsd"
       warn="true"
-      failonerror="false"/>
+      failonerror="false">
+      <fileset dir="/workspace/src" includes="**/*.xml"/>
+    </schemavalidate>
   </target>
 
   <target name="iati-summary"

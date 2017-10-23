@@ -71,7 +71,7 @@
 
   <target name="spreadsheets-plus"
     description="Creates spreadsheets, data quality report and visualisations"
-    depends="spreadsheet-iati,data-quality,all-visualisations, report"
+    depends="spreadsheet-iati,all-visualisations, report"
     />
 
   <target name="report"
