@@ -21,7 +21,10 @@
   </xsl:template>
 
   <xsl:template match="iati-activity">
-    <xsl:result-document method="xhtml" href="{encode-for-uri(iati-identifier)}.html">
+<!--    todo: add extra function to encode identifiers, to make sure we replace '/' with something else, for instance &#x2215; (unicode division slash)-->
+<!--    only /, which is U+002F SOLIDUS, is forbidden. There are plenty of other suitable candidates: ⁄ is U+2044 FRACTION SLASH; ∕ is U+2215 DIVISION SLASH; ⧸ is U+29F8 BIG SOLIDUS; ／ is U+FF0F FULLWIDTH SOLIDUS
+    https://stackoverflow.com/questions/9847288/is-it-possible-to-use-in-a-filename-->
+    <xsl:result-document method="xhtml" href="act/{encode-for-uri(iati-identifier)}.html">
       <!-- <xsl:apply-templates select="." mode="file"/> -->
       <xsl:call-template name="bootstrap-file"/>
     </xsl:result-document>

@@ -51,25 +51,26 @@
     description="Generate a gantt view of the results."
     depends="htdocs-skeleton">
     <echo level="info">Generate a gantt view of the results.</echo>
-    <dependset>
-      <sources>
-        <file file="output/gantt-results.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.gantt.xml" />
-    </dependset>
     <xslt
       basedir="/workspace/src/"
       includes="*.xml"
-      destdir="/workspace/reports/htdocs"
+      destdir="/workspace/reports"
       extension=".gantt.xml"
       style="output/gantt-results.xslt"
      />
-     <touch file="/workspace/reports/htdocs/iati-activities.gantt.html"/>
+    <xslt
+      basedir="/workspace/src/"
+      includes="*.xml"
+      destdir="/workspace/reports"
+      extension=".gantt.html"
+      style="lib/htdocs/gantt-results.xslt"
+     />
   </target>
 
   <target name="activities"
     description="Generate an overview page per activity"
     depends="">
+    <mkdir dir="/workspace/reports/act"/>
     <xslt
       basedir="/workspace/src/"
       includes="*.xml"
