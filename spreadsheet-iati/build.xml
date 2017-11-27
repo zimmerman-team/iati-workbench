@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="spreadsheet-iati">
+<project name="spreadsheet-iati"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
   <description>
     Spreadsheet to IATI Engine
   </description>
@@ -21,6 +23,13 @@
     />
   </target>
 
+  <target name="csv-csv"
+    description="Copy CSV files for further processing">
+    <copy todir="/workspace/tmp">
+      <fileset dir="/workspace/input" includes="*.csv"/>
+    </copy>
+  </target>
+
   <target name="excel-csv"
     description="Convert spreadsheets to CSV files for further processing."
     depends="init">
@@ -38,6 +47,25 @@
     </apply>
   </target>
 
+  <target name="csvxml-iati" depends="csv-csvxml">
+    <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
+    <echo level="error" unless:set="config-present">
+      There is no configuration how to transform these spreadsheets into IATI.
+    </echo>
+    <dependset>
+      <srcfilelist dir="/workspace/config" files="csvxml-iati.xslt"/>
+      <targetfileset dir="/workspace/tmp" includes="*.generated.xml"/>
+    </dependset>
+    <xslt if:set="config-present"
+      basedir="/workspace/tmp"
+      includes="*.csv.xml"
+      destdir="/workspace/tmp"
+      extension=".generated.xml"
+      filenameparameter="filename"
+      style="transform/csvxml-iati.xslt"
+     />
+  </target>
+
   <target name="iati-iati"
     description="Transform existing IATI input files into a version with merge ids."
     depends="init">
@@ -50,7 +78,7 @@
      />
   </target>
 
-  <target name="csv-csvxml" depends="excel-csv">
+  <target name="csv-csvxml" depends="excel-csv, csv-csv">
     <sequential>
       <apply executable="basex" dest="/workspace/tmp" verbose="true">
         <fileset dir="/workspace/tmp" includes="*.csv"/>
@@ -83,4 +111,12 @@
     />
   </target>
 
+  <target name="spreadsheet-map" depends="csv-csvxml, ls-tmp" description="Create a map of the input files">
+    <xslt basedir="tmp"
+      destdir="output"
+      in="/workspace/tmp/ls.xml"
+      out="/workspace/output/csv-map.csv"
+      style="lib/iati.me/csvxml-map.xslt"
+    />
+  </target>
 </project>

@@ -10,7 +10,7 @@
 
   <xsl:template match="/dir">
     <iati-activities version="2.02" generated-datetime="{current-dateTime()}">
-      <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="@merge:id">
+      <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="functx:trim(@merge:id)">
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>
             <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude'))]" />
@@ -35,7 +35,7 @@
               </xsl:for-each-group>
               <!-- all orgs without refs -->
               <xsl:for-each-group select="current-group()[not(@ref) or @ref='']" group-by="narrative[1]">
-                <xsl:apply-templates select="current-group()[1]"/>
+                <xsl:apply-templates select="current-group()"/>
               </xsl:for-each-group>
             </xsl:for-each-group>
 
@@ -50,7 +50,9 @@
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/contact-info"/>
-            <xsl:apply-templates select="current-group()/activity-scope[@code!='']"/>
+            <xsl:for-each-group select="current-group()/activity-scope[@code!='']" group-by="@code">
+              <xsl:apply-templates select="current-group()[1]"/>
+            </xsl:for-each-group>
             <xsl:apply-templates select="current-group()/recipient-country[@code!='']"/>
             <xsl:apply-templates select="current-group()/recipient-region[@code!='']"/>
             <xsl:apply-templates select="current-group()/location"/>
@@ -117,8 +119,9 @@
                       <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                       <xsl:apply-templates select="(current-group()/title)[1]"/>
                       <xsl:apply-templates select="(current-group()/description)[1]"/>
+                      <xsl:apply-templates select="current-group()/reference"/>
                       <xsl:apply-templates select="(current-group()/baseline[@value!=''])[1]"/>
-                      <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline'))]"/>
+                      <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]"/>
                       <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
                       <!-- <xsl:apply-templates select="current-group()/*"/> -->
                     </indicator>
