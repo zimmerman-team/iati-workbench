@@ -82,25 +82,6 @@
     </copy>
   </target>
 
-  <!-- Document all the Ant targets and their dependencies -->
-  <typedef resource="net/ggtools/grand/antlib.xml" classpath="/opt/ant/lib/grand-1.9.5.jar"/>
-  <target name="ant-graph"
-    description="Create a graph of the iati-engine targets.">
-    <property name="dot.node.attributes" value="shape='box',fontname='sans-serif',fontsize='10',fillcolor='lightyellow',style='filled'"/>
-    <property name="dot.link.attributes" value="fontname='sans-serif',fontsize='8',arrowsize='0.5',color='grey'"/>
-    <property name="dot.mainnode.attributes" value="fillcolor='lightgreen'"/>
-    <grand output="build.dot" outputconfigprefix="dot" showgraphname="true">
-      <filter name="prefixed"/>
-    </grand>
-
-    <exec executable="dot">
-      <arg line="-Tsvg -o build.svg build.dot"/>
-    </exec>
-    <echo>
-      Ant target graph available as build.svg
-    </echo>
-  </target>
-
   <!-- Create a listing of the tmp directory for further XSLT processing -->
   <target name="ls-tmp" depends="init">
     <apply executable="xmlstarlet" output="/workspace/tmp/ls.xml">

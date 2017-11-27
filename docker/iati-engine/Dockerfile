@@ -20,7 +20,7 @@ ENV NODE_VERSION   6.10.0
 
 RUN apt-get update && \
   apt-get -y install --no-install-recommends \
-    wget less git graphviz xmlstarlet libreoffice-calc libreoffice-java-common source-highlight && \
+    wget less git xmlstarlet libreoffice-calc libreoffice-java-common source-highlight && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
@@ -45,8 +45,6 @@ RUN wget -q https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux
   tar -xvf node-v${NODE_VERSION}-linux-x64.tar.xz && \
   rm node-v${NODE_VERSION}-linux-x64.tar.xz && \
   mv node-v${NODE_VERSION}-linux-x64 /opt/node
-
-RUN wget -q https://github.com/Ant-Grand/Grand/releases/download/1.9.5/grand-1.9.5.jar -O /opt/ant/lib/grand-1.9.5.jar
 
 ENV ANT_HOME /opt/ant
 

@@ -20,7 +20,7 @@
   <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
   <property name="saxon.jar" location="${env.SAXON_HOME}/saxon9he.jar"/>
-  <import file="dev/xspec/build.xml"/>
+  <import file="develop/lib/xspec/build.xml"/>
 
   <target name="init"
     description="Set up the project environment.">
