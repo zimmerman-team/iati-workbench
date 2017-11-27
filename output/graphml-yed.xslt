@@ -34,16 +34,25 @@
             <y:GroupNode>
               <y:Shape type="roundrectangle"/>
               <y:Geometry height="80.0" width="220.0"/>
-              <y:Fill color="#F6F6FF" transparent="false"/>
-              <y:BorderStyle color="#0000FF" type="dashed" width="1.0"/>
+              <y:Fill color="#ecf0f1" transparent="false"/>
+              <y:BorderStyle color="#ecf0f1" width="0"/>
               <y:State closed="false" closedHeight="80.0" closedWidth="200.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="25" bottomF="25.0" left="15" leftF="15.0" right="15" rightF="15.0" top="25" topF="25.0"/>
-              <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="t" fontFamily="Alegreya Sans" fontSize="12" textColor="#000000">
+              <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="t" fontSize="12" textColor="#2c3e50">
                 <xsl:value-of select="g:data[@key='label']"/>
               </y:NodeLabel>
-              <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="br" fontFamily="Alegreya Sans" fontSize="10" textColor="#000000">
-                <xsl:value-of select="g:data[@key='iati-id']"/>
-              </y:NodeLabel>
+              <xsl:choose>
+                <xsl:when test="g:data[@key='ref']=''">
+                  <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="br" fontSize="10" textColor="#f39c12">
+                    <xsl:text>no identifier</xsl:text>
+                  </y:NodeLabel>
+                </xsl:when>
+                <xsl:otherwise>
+                  <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="br" fontSize="10" textColor="#18bc9c">
+                    <xsl:value-of select="g:data[@key='iati-id']"/>
+                  </y:NodeLabel>
+                </xsl:otherwise>
+              </xsl:choose>
             </y:GroupNode>
           </y:Realizers>
         </y:ProxyAutoBoundsNode>
@@ -58,7 +67,7 @@
 
   <xsl:template match="g:node[g:data[@key='type' and text()='activity-reference']]">
     <xsl:call-template name="activity">
-      <xsl:with-param name="titleStyle">italic</xsl:with-param>
+      <xsl:with-param name="titleColor">#f39c12</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -72,23 +81,23 @@
         </xsl:when>
         <xsl:when test="g:data[@key='type' and text()='1']">
           <xsl:call-template name="edge">
-            <xsl:with-param name="color">#ff0000</xsl:with-param>
+            <xsl:with-param name="color">#e74c3c</xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:when test="g:data[@key='type' and text()='2']">
           <xsl:call-template name="edge">
-            <xsl:with-param name="color">#00AA00</xsl:with-param>
+            <xsl:with-param name="color">#18bc9c</xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:when test="g:data[@key='type' and text()='3']">
           <xsl:call-template name="edge">
-            <xsl:with-param name="color">#00AA00</xsl:with-param>
+            <xsl:with-param name="color">#18bc9c</xsl:with-param>
             <xsl:with-param name="lineStyle">dashed</xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:when test="g:data[@key='type' and text()='4']">
           <xsl:call-template name="edge">
-            <xsl:with-param name="color">#0000FF</xsl:with-param>
+            <xsl:with-param name="color">#3498db</xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -110,7 +119,7 @@
 
   <!-- yEd edge template -->
   <xsl:template name="edge">
-    <xsl:param name="color">#000000</xsl:param>
+    <xsl:param name="color">#2c3e50</xsl:param>
     <xsl:param name="arrowSource">none</xsl:param>
     <xsl:param name="arrowTarget">standard</xsl:param>
     <xsl:param name="lineStyle">line</xsl:param>
@@ -130,28 +139,31 @@
 
   <!-- yEd node template for activity -->
   <xsl:template name="activity">
-    <xsl:param name="color">#0000FF</xsl:param>
+    <xsl:param name="color">#2c3e50</xsl:param>
     <xsl:param name="titleColor">#FFFFFF</xsl:param>
-    <xsl:param name="titleFont">Alegreya Sans</xsl:param>
-    <xsl:param name="titleStyle">plain</xsl:param>
-    <xsl:param name="refColor">#BBBBFF</xsl:param>
-    <xsl:param name="refFont">Alegreya Sans</xsl:param>
-    <xsl:param name="refStyle">plain</xsl:param>
+    <xsl:param name="refColor">#18bc9c</xsl:param>
 
     <g:node>
       <xsl:apply-templates select="@*" mode="copy"/>
       <xsl:apply-templates select="g:data" mode="copy"/>
-      <g:data key="url">http://d-portal.org/ctrack.html?publisher=<xsl:value-of select="../../g:data[@key='ref']"/>#view=act&amp;aid=<xsl:value-of select="g:data[@key='ref']"/></g:data>
+      <xsl:choose>
+        <xsl:when test="g:data[@key='label']='no title in this dataset'">
+          <g:data key="url">http://d-portal.org/ctrack.html?publisher=<xsl:value-of select="../../g:data[@key='ref']"/>#view=act&amp;aid=<xsl:value-of select="g:data[@key='ref']"/></g:data>
+        </xsl:when>
+        <xsl:otherwise>
+          <g:data key="url"><xsl:value-of select="g:data[@key='ref']"/></g:data>
+        </xsl:otherwise>
+      </xsl:choose>
       <g:data key="ynode">
         <y:ShapeNode>
           <y:Shape type="rectangle"/>
           <y:Geometry height="80.0" width="220.0"/>
           <y:Fill color="{$color}" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="t" fontFamily="{$titleFont}" fontStyle="{$titleStyle}" fontSize="14" textColor="{$titleColor}">
+          <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="t" fontSize="13" textColor="{$titleColor}">
             <xsl:value-of select="g:data[@key='label']"/>
           </y:NodeLabel>
-          <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="br" fontFamily="{$refFont}" fontStyle="{$refStyle}" fontSize="12" textColor="{$refColor}">
+          <y:NodeLabel autoSizePolicy="content" modelName="internal" modelPosition="br" fontSize="10" textColor="{$refColor}">
             <xsl:value-of select="g:data[@key='iati-id']"/>
           </y:NodeLabel>
         </y:ShapeNode>

@@ -122,7 +122,7 @@ element g:graphml {
                 attribute id {$ref || '::' || $a},
                 <g:data key='ref'>{normalize-space($a)}</g:data>,
                 <g:data key='name'></g:data>,
-                <g:data key='label'>{"activity referenced but not in dataset"}</g:data>,
+                <g:data key='label'>{"no title in this dataset"}</g:data>,
                 <g:data key='iati-id'>{local:ref($a)}</g:data>,
                 <g:data key='type'>activity-reference</g:data>
               }
