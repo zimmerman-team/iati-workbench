@@ -7,15 +7,18 @@
   <target name="validate-iati"
     description="Validate generated IATI file and generate source-highlighted HTML page.">
 
-    <!-- <exec executable="source-highlight">
+    <apply executable="source-highlight" dest="/workspace/reports">
       <arg line="-n"/>
       <arg line="-f html5"/>
-      <arg line="-i /workspace/src/iati-activities.xml"/>
-      <arg line="-o /workspace/reports/htdocs/iati-activities.html"/>
-    </exec> -->
+      <arg value="-i"/>
+      <srcfile/>
+      <arg value="-o"/>
+      <targetfile/>
+      <fileset dir="/workspace/src" includes="*.xml"/>
+      <globmapper from="*.xml" to="*.xml.html"/>
+    </apply>
 
     <schemavalidate
-      file="/workspace/src/iati-activities.xml"
       noNamespaceFile="lib/schemata/2.02/iati-activities-schema.xsd"
       warn="true"
       failonerror="false">
