@@ -53,7 +53,7 @@
             <xsl:for-each-group select="current-group()/activity-scope[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
-            <xsl:apply-templates select="current-group()/recipient-country[@code!='']"/>
+            <xsl:apply-templates select="current-group()/recipient-country[@code!='' and (@percentage!='0' or not(@percentage))]"/>
             <xsl:apply-templates select="current-group()/recipient-region[@code!='']"/>
             <xsl:apply-templates select="current-group()/location"/>
             <xsl:apply-templates select="current-group()/sector"/>
@@ -79,7 +79,7 @@
 
             <xsl:for-each-group select="current-group()/budget" group-by="@type">
               <!-- TODO: split by @status as well -->
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()"/>
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/planned-disbursement"/>
@@ -119,7 +119,12 @@
                       <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                       <xsl:apply-templates select="(current-group()/title)[1]"/>
                       <xsl:apply-templates select="(current-group()/description)[1]"/>
-                      <xsl:apply-templates select="current-group()/reference"/>
+                      <xsl:for-each-group select="current-group()/reference" group-by="@vocabulary">
+                        <xsl:for-each-group select="." group-by="@code">
+                          <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xsl:for-each-group>
+                      </xsl:for-each-group>
+                      <!-- <xsl:apply-templates select="current-group()/reference"/> -->
                       <xsl:apply-templates select="(current-group()/baseline[@value!=''])[1]"/>
                       <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]"/>
                       <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
@@ -154,6 +159,8 @@
   <xsl:template match="name                 [not(narrative!='')]"/>
   <xsl:template match="activity-description [not(narrative!='')]"/>
 
+  <xsl:template match="telephone[.='']"/>
+  
   <xsl:template match="provider-org[not(@*[.!='']) and not(narrative!='')]"/>
   <xsl:template match="receiver-org[not(@*[.!='']) and not(narrative!='')]"/>
 

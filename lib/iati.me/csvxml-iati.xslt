@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="">
+  exclude-result-prefixes=""
+  expand-text="yes">
 
   <xsl:import href="codelists.xslt"/>
 
@@ -19,20 +20,20 @@
     <merge:not-processed>file <xsl:value-of select="$file"/> row <xsl:value-of select="position()"/></merge:not-processed>
   </xsl:template>
 
-  <xsl:function name="merge:boolean" as="xs:string?">
-    <xsl:param name="item" as="xs:string"/>
-    <xsl:if test="$item!=''">
-      <xsl:choose>
-        <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
-        <xsl:otherwise>false</xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
+  <xsl:function name="merge:boolean" as="xs:boolean">
+    <xsl:param name="item" as="xs:string?"/>
+  
+    <xsl:choose>
+      <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
+      <xsl:otherwise>false</xsl:otherwise>
+    </xsl:choose>  
   </xsl:function>
 
   <xsl:function name="merge:decimal" as="xs:decimal?">
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
-      <!-- TODO: add a number string to number convertor to deal with , and . -->
+      <!-- remove '%' and ',' -->
+      {replace($item,'[%,]','')}
     </xsl:if>
   </xsl:function>
 
