@@ -7,7 +7,8 @@
 
   <xsl:import href="../functx.xslt"/>
   <xsl:import href="../office/spreadsheet.xslt"/>
-  <xsl:import href="/workspace/config/iati-office.xslt"/>
+  <xsl:import href="../../spreadsheet-iati/default-iati-office.xslt"/>
+  <xsl:import href="/workspace/config/iati-office.xslt" />
 
   <xsl:param name="filename"/>
   <xsl:variable name="filebase" select="functx:substring-before-last($filename,'.xml')"/>
@@ -15,7 +16,7 @@
   <xsl:template name="create-file">
     <xsl:param name="filepart" tunnel="yes"/>
     <xsl:param name="dataset" tunnel="yes"/>
-    <xsl:result-document method="xml" href="{$filebase}.{$filepart}.fods">
+    <xsl:result-document method="xml" href="{$filepart}.{$filebase}.fods">
       <xsl:call-template name="office-spreadsheet-file">
         <xsl:with-param name="fileconfig" select="doc('/workspace/config/iati-office.xslt')//xsl:template[@export:export!='']" tunnel="yes"/>
         <xsl:with-param name="date-elements" select="('iso-date','value-date')" tunnel="yes"/>
