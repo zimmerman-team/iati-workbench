@@ -37,6 +37,47 @@
     </xsl:if>
   </xsl:function>
 
+  <xsl:function name="merge:decimal2" as="xs:decimal?">
+    <xsl:param name="item" as="xs:string"/>
+    <xsl:if test="$item!=''">
+      <!-- remove '%' and '.', replace comma by period as decimal-separator -->
+      {replace(replace($item,'[%.]',''), ',', '.')}
+    </xsl:if>
+  </xsl:function>
+  
+  <xsl:function name="merge:currency-value" as="xs:decimal?">
+    <xsl:param name="item" as="xs:string"/>
+    
+    <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([0-9.,]+)$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="merge:decimal(regex-group(1))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+  </xsl:function>
+
+  <xsl:function name="merge:currency-symbol" as="xs:string?">
+    <xsl:param name="item" as="xs:string"/>
+    
+    <xsl:analyze-string regex="^([a-zA-Z]+)\s?[0-9.,]+$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="regex-group(1)"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+
+    <xsl:analyze-string regex="^€\s?[0-9.,]+$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="'EUR'"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+
+    <xsl:analyze-string regex="^$\s?[0-9.,]+$" select="normalize-space($item)">
+      <xsl:matching-substring>
+        <xsl:value-of select="'USD'"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+    
+  </xsl:function>
+  
   <xsl:function name="merge:date" as="xs:date?">
     <!-- date function without format: recognise the format -->
     <xsl:param name="item" as="xs:string"/>

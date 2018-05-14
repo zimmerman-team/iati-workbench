@@ -131,7 +131,7 @@
         <transaction ref="{entry[@name='Reference']}">
           <transaction-type code="{entry[@name='Type']}"/>
           <transaction-date iso-date="{merge:date(entry[@name='Date'])}" />
-          <value value-date="{merge:date(entry[@name='Value date'])}" currency="{entry[@name='Currency']}">{merge:decimal(entry[@name='Amount'])}</value>
+          <value value-date="{(merge:date(entry[@name='Value date']), merge:date(entry[@name='Date']))[1]}" currency="{entry[@name='Currency']}">{merge:decimal(entry[@name=' Amount '])}</value>
           <description>
             <narrative>{entry[@name='Description']}</narrative>
           </description>
@@ -176,10 +176,14 @@
             <title>
               <narrative>{entry[@name='Indicator title']}</narrative>
             </title>
+            <description>
+              <narrative>{entry[@name='Indicator description']}</narrative>
+            </description>
+            
             <xsl:if test="entry[@name='Baseline year']!=''">
               <baseline year="{entry[@name='Baseline year']}" value="{merge:decimal(entry[@name='Baseline'])}">
                 <comment>
-                  <narrative><xsl:value-of select="entry[@name='Baseline comment']"/></narrative>
+                  <narrative>{entry[@name='Baseline comment']}</narrative>
                 </comment>
               </baseline>
             </xsl:if>
@@ -191,7 +195,7 @@
                 <xsl:if test="entry[@name='Target']!=''">
                   <target value="{merge:decimal(entry[@name='Target'])}">
                     <comment>
-                      <narrative><xsl:value-of select="entry[@name='Target comment']"/></narrative>
+                      <narrative>{entry[@name="Target comment"]}</narrative>
                     </comment>
                   </target>
                 </xsl:if>
