@@ -10,7 +10,7 @@
   <xsl:import href="codelists.xslt"/>
 
   <xsl:template match="csv">
-    <iati-activities version="2.02" generated-datetime="{current-dateTime()}" xml:lang="en">
+    <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
       <xsl:apply-templates select="record"/>
     </iati-activities>
   </xsl:template>

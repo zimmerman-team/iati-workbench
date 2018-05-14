@@ -19,7 +19,7 @@
     </apply>
 
     <schemavalidate
-      noNamespaceFile="lib/schemata/2.02/iati-activities-schema.xsd"
+      noNamespaceFile="lib/schemata/2.03/iati-activities-schema.xsd"
       warn="true"
       failonerror="false">
       <fileset dir="/workspace/src" includes="**/*.xml"/>
