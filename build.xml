@@ -20,10 +20,10 @@
   <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
   <property name="saxon.jar" location="${env.SAXON_HOME}/saxon9he.jar"/>
-  <import file="develop/lib/xspec/build.xml"/>
+<!--  <import file="develop/lib/xspec/build.xml"/>-->
 
-  <target name="init"
-    description="Set up the project environment.">
+  <!--Set up the project environment.-->
+  <target name="init">
 
     <mkdir dir="/workspace/src"/>
     <mkdir dir="/workspace/config"/>
@@ -68,11 +68,6 @@
   <target name="show-ids" depends="init">
     <iati-query xquery="basex-queries/show-ids.xq" src="/workspace/src" from="*.ids" to="*.txt"/>
   </target>
-
-  <target name="spreadsheets-plus"
-    description="Creates spreadsheets, data quality report and visualisations"
-    depends="spreadsheet-iati,all-visualisations, report"
-    />
 
   <target name="report"
     description="Creates an index page for the available report pages."
@@ -120,4 +115,9 @@
 
   </target>
 
+  <target name="artefacts" description="Create all artefacts"
+    depends="spreadsheet-iati,activities,gantt-results">
+    
+  </target>
+  
 </project>

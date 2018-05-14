@@ -4,11 +4,6 @@
     Visualisations of IATI data
   </description>
 
-  <target name="all-visualisations"
-    description="Create all visualisations for data in src/"
-    depends="yed,activities,gantt-results"/>
-  <!-- <target name="all-visualisations" depends="yed,activities,gantt-results,transactions-flow"/> -->
-
   <target name="yed"
     description="Generate GraphML graphs for use in yEd."
     depends="graphml">

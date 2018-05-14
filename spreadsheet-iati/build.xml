@@ -7,12 +7,12 @@
   </description>
 
   <target name="spreadsheet-iati"
-    description="Create IATI XML file from spreadsheet and IATI input files."
-    depends="csvxml-iati, iati-iati, merge-iati">
+    description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
+    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati, iati-summary">
   </target>
 
+  <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
-    description="Merge activities from *.generated.xml into one file."
     depends="ls-tmp">
     <xslt
       basedir="/workspace/tmp"
@@ -23,15 +23,15 @@
     />
   </target>
 
-  <target name="csv-csv"
-    description="Copy CSV files for further processing">
+  <!--Copy CSV files for further processing-->
+  <target name="csv-csv">
     <copy todir="/workspace/tmp">
       <fileset dir="/workspace/input" includes="*.csv"/>
     </copy>
   </target>
 
+  <!--Convert spreadsheets to CSV files for further processing.-->
   <target name="excel-csv"
-    description="Convert spreadsheets to CSV files for further processing."
     depends="init">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
@@ -47,7 +47,7 @@
     </apply>
   </target>
 
-  <target name="csvxml-iati" depends="csv-csvxml">
+  <target name="csvxml-iati">
     <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.
@@ -66,8 +66,8 @@
      />
   </target>
 
+  <!--Transform existing IATI input files into a version with merge ids.-->
   <target name="iati-iati"
-    description="Transform existing IATI input files into a version with merge ids."
     depends="init">
     <xslt
       basedir="/workspace/input/"
