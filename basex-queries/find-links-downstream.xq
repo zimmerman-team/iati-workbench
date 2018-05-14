@@ -29,7 +29,7 @@ let $newids:=(
   //iati-activity[iati-identifier=$downstream]
     /related-activity[@type="2"]/xs:string(@ref),
 
-  (: ----- Pointing downstream to one of the knowns ----- :)
+  (: ----- Pointing upstream to one of the knowns ----- :)
 
   (: claims one of the downstreams is funding it :)
   //participating-org[@activity-id=$downstream]
