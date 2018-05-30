@@ -302,7 +302,7 @@
       <xsl:when test="name($value[1])=('iso-date','value-date')">
         <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce1"/>
       </xsl:when>
-      <!-- TODO: CHECK the format
+      <!-- TODO CHECK the format
       <xsl:when test="name($value)=('percentage')">
         <table:table-cell office:value-type="number" calcext:value-type="number" office:date-value="{$value}" table:style-name="ce2">
           <text:p><xsl:value-of select="$value"/></text:p>

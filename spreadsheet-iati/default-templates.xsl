@@ -6,6 +6,10 @@
   expand-text="yes"
   version="3.0">
   
+  <xsl:variable name="file"/>
+  <xsl:variable name="reporting-org"/>
+  <xsl:variable name="reporting-org-type"/>
+  
   <!--Activities: -->
   <xsl:template match="record[starts-with($file, 'Projects')]">
     <xsl:if test="starts-with(entry[@name='IATI activity identifier'], $reporting-org) and not(merge:boolean(entry[@name='Exclusion applies?']))">
@@ -129,9 +133,9 @@
     <xsl:if test="starts-with(entry[@name='IATI activity identifier'][1], $reporting-org)">
       <iati-activity merge:id="{entry[@name='IATI activity identifier']}">
         <transaction ref="{entry[@name='Reference']}">
-          <transaction-type code="{entry[@name='Type']}"/>
+          <transaction-type code="{entry[@name=('Type', 'Transaction Type Code')]}"/>
           <transaction-date iso-date="{merge:date(entry[@name='Date'])}" />
-          <value value-date="{(merge:date(entry[@name='Value date']), merge:date(entry[@name='Date']))[1]}" currency="{entry[@name='Currency']}">{merge:decimal(entry[@name=' Amount '])}</value>
+          <value value-date="{(merge:date(entry[@name='Value date']), merge:date(entry[@name='Date']))[1]}" currency="{entry[@name='Currency']}">{merge:decimal(entry[@name=('Amount', ' Amount ')])}</value>
           <description>
             <narrative>{entry[@name='Description']}</narrative>
           </description>
@@ -251,20 +255,23 @@
   </xsl:template>
   
   <!--  Documents: -->
-  <xsl:template match="record[ends-with($file, 'Documents')]">
+  <xsl:template match="record[starts-with($file, 'Documents') or ends-with($file, 'Documents')]">
     <xsl:if test="starts-with(entry[@name='IATI activity identifier'], $reporting-org)">
       <iati-activity merge:id="{entry[@name='IATI activity identifier']}">
         <document-link format="{entry[@name='Format']}" url="{entry[@name='Web address']}">
           <title>
             <narrative><xsl:value-of select="entry[@name='Document title']"/></narrative>
           </title>
+          <description>
+            <narrative><xsl:value-of select="entry[@name='Document description']"/></narrative>
+          </description>
           <category code="{entry[@name='Category']}"/>
           <xsl:if test="entry[@name='Document language']!=''">
             <language code="{entry[@name='Document language']}" />
           </xsl:if>
           <document-date iso-date="{merge:date(entry[@name='Document date'])}" />
         </document-link>
-      </iati-activity>
+      </iati-activity>          
     </xsl:if>
   </xsl:template>  
 </xsl:stylesheet>

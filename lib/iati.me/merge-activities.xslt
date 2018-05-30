@@ -79,14 +79,14 @@
             </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/budget" group-by="@type">
-              <!-- TODO: split by @status as well -->
+              <!-- TODO split by @status as well -->
               <xsl:apply-templates select="current-group()"/>
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/planned-disbursement"/>
             <xsl:apply-templates select="current-group()/capital-spend"/>
-            <xsl:apply-templates select="current-group()/transaction[transaction-type/@code!='']"/>
-            <xsl:apply-templates select="current-group()/document-link"/>
+            <xsl:apply-templates select="current-group()/transaction[transaction-type/@code!='' and value!='']"/>
+            <xsl:apply-templates select="current-group()/document-link[@url!='']"/>
             <xsl:apply-templates select="current-group()/related-activity[@ref!='']"/>
 
             <xsl:if test="current-group()/conditions/condition/narrative">
@@ -96,7 +96,7 @@
                   <xsl:for-each-group select="current-group()" group-by="narrative">
                       <condition type="{$ctype}">
                         <narrative>
-                          <!-- TODO: add language -->
+                          <!-- TODO add language -->
                           <xsl:value-of select="current-grouping-key()"/>
                         </narrative>
                       </condition>
@@ -109,7 +109,7 @@
               <xsl:if test="current-group()/indicator/title and current-group()/@type">
                 <result>
                   <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
-                  <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions -->
+                  <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions -->
                   <xsl:apply-templates select="(current-group()/title)[1]"/>
                   <xsl:apply-templates select="(current-group()/description)[1]"/>
                   <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'indicator'))]"/>
@@ -117,7 +117,7 @@
                     <indicator>
                       <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
                       <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
-                      <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
+                      <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                       <xsl:apply-templates select="(current-group()/title)[1]"/>
                       <xsl:apply-templates select="(current-group()/description)[1]"/>
                       <xsl:for-each-group select="current-group()/reference" group-by="@vocabulary">
@@ -164,7 +164,7 @@
   
   <xsl:template match="provider-org[not(@*[.!='']) and not(narrative!='')]"/>
   <xsl:template match="receiver-org[not(@*[.!='']) and not(narrative!='')]"/>
-
+  
   <!-- targets or actuals without values -->
   <xsl:template match="target[not(@value) or @value='']"/>
   <xsl:template match="actual[not(@value) or @value='']"/>
