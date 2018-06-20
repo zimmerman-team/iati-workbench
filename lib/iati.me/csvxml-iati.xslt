@@ -162,4 +162,16 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="merge:entry" as="item()*">
+    <xsl:param name="record" as="node()"/>
+    <xsl:param name="label" as="xs:string"/>
+    <xsl:sequence select="$record/entry[functx:trim(lower-case(@name))=functx:trim(lower-case($label))]"/>
+  </xsl:function>
+
+  <xsl:function name="merge:entry" as="item()*">
+    <xsl:param name="record" as="node()"/>
+    <xsl:param name="label" as="xs:string"/>
+    <xsl:param name="default" as="xs:string"/>
+    <xsl:sequence select="(merge:entry($record, $label), $default)[1]"/>
+  </xsl:function>
 </xsl:stylesheet>
