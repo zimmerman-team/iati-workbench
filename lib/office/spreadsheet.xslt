@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:functx="http://www.functx.com"
   xmlns:iwb="http://iati.me/office"
+
+  expand-text="yes"
 
   xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
   xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
@@ -147,9 +149,6 @@
                     style:language-complex="hi"
                     style:country-complex="IN"/>
             </style:default-style>
-            <number:number-style style:name="N0">
-                <number:number number:min-integer-digits="1"/>
-            </number:number-style>
             <style:style style:name="Default" style:family="table-cell">
                 <style:text-properties
                     style:font-name-asian="Droid Sans Fallback"
@@ -232,6 +231,12 @@
             <style:style style:name="ta1" style:family="table" style:master-page-name="Default">
                 <style:table-properties table:display="true" style:writing-mode="lr-tb"/>
             </style:style>
+            <number:number-style style:name="N0">
+                <number:number number:min-integer-digits="1"/>
+            </number:number-style>
+            <number:number-style style:name="N2">
+             <number:number number:decimal-places="2" loext:min-decimal-places="2" number:min-integer-digits="1"/>
+            </number:number-style>
             <number:percentage-style style:name="N11">
                 <number:number number:decimal-places="2" loext:min-decimal-places="2" number:min-integer-digits="1"/>
                 <number:text>%</number:text>
@@ -245,6 +250,7 @@
             </number:date-style>
             <style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N37"/>
             <style:style style:name="ce2" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N11"/>
+            <style:style style:name="ce3" style:family="table-cell" style:parent-style-name="Default" style:data-style-name="N2"/>
         </office:automatic-styles>
         <office:body>
             <xsl:variable name="table">
@@ -292,15 +298,29 @@
   <xsl:function name="iwb:cell" as="node()*">
     <xsl:param name="value"/>
     <xsl:choose>
-      <xsl:when test="$value instance of xs:anyAtomicType">
-        <table:table-cell office:value-type="string" calcext:value-type="string">
-          <xsl:if test="$value != 0">
-            <text:p><xsl:value-of select="$value"/></text:p>
-          </xsl:if>
+      <xsl:when test="$value instance of xs:decimal">
+        <table:table-cell office:value-type="number" calcext:value-type="number" office:value="{$value}">
+           <xsl:if test="$value != 0">
+              <text:p>{$value}</text:p>
+           </xsl:if>
+        </table:table-cell>
+      </xsl:when>
+      <xsl:when test="name($value[1])=('value', 'percentage')">
+        <table:table-cell table:style-name="ce3" office:value-type="float" calcext:value-type="float" office:value="{$value}">
+          <text:p>{$value}</text:p>
         </table:table-cell>
       </xsl:when>
       <xsl:when test="name($value[1])=('iso-date','value-date')">
-        <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce1"/>
+        <table:table-cell office:value-type="date" calcext:value-type="date" office:date-value="{$value}" table:style-name="ce1">
+          <text:p>{$value}</text:p>
+        </table:table-cell>
+      </xsl:when>
+      <xsl:when test="$value instance of xs:anyAtomicType">
+        <table:table-cell office:value-type="string" calcext:value-type="string">
+          <xsl:if test="$value != 0">
+            <text:p>{$value}</text:p>
+          </xsl:if>
+        </table:table-cell>
       </xsl:when>
       <!-- TODO CHECK the format
       <xsl:when test="name($value)=('percentage')">
