@@ -2,7 +2,8 @@
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:x="http://iati.me/export"
-  xmlns:o="http://iati.me/office">
+  xmlns:o="http://iati.me/office"
+  exclude-result-prefixes="x o">
 
   <xsl:template match="/">
     <xsl:call-template name="create-file">
@@ -48,7 +49,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(title/narrative[1])" x:heading="Activity name" x:column="co4"/>
 
     <xsl:copy-of copy-namespaces="no" select="o:cell(related-activity[@type='1']/@ref[1])" x:heading="IATI parent activity identifier" x:column="co2"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(activity-status/@code)" x:heading="Activity status"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(activity-date[@type='1']/@iso-date)" x:heading="Planned start date"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(activity-date[@type='2']/@iso-date)" x:heading="Actual start date"/>
@@ -58,7 +59,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(description[@type='1'])" x:heading="General description" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@xml:lang)" x:heading="Language"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@default-currency)" x:heading="Currency"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(activity-scope/@code)" x:heading="Activity scope"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(collaboration-type/@code)" x:heading="Collaboration type"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(default-flow-type/@code)" x:heading="Default flow type"/>
@@ -72,7 +73,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(contact-info/email)" x:heading="Contact email" x:column="co2"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(contact-info/website)" x:heading="Contact website" x:column="co2"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(contact-info/mailing-address/narrative)" x:heading="Contact mailing address" x:column="co4"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(policy-marker/@code)" x:heading="Policy marker"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(policy-marker/@significance)" x:heading="Policy significance"/>
   </xsl:template>
@@ -80,7 +81,7 @@
   <xsl:template match="budget" mode="office-spreadsheet-cells" x:export="Budgets">
     <xsl:copy-of copy-namespaces="no" select="o:cell(../iati-identifier)" x:heading="IATI activity identifier" x:column="co3"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../title/narrative[1])" x:heading="Activity name" x:column="co4"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(@type)" x:heading="Budget type"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@status)" x:heading="Budget status"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(period-start/@iso-date)" x:heading="Budget start date"/>
@@ -89,7 +90,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(value)" x:heading="Budget"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(value/@value-date)" x:heading="Value date"/>
   </xsl:template>
-  
+
   <xsl:template match="transaction" mode="office-spreadsheet-cells" x:export="Transactions">
     <xsl:copy-of copy-namespaces="no" select="o:cell(../iati-identifier)" x:heading="IATI activity identifier" x:column="co3"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../title/narrative[1])" x:heading="Activity name" x:column="co4"/>
@@ -101,7 +102,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(value/@value-date)" x:heading="Value date"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@ref)" x:heading="Reference" x:column="co2"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(description/narrative[1])" x:heading="Description" x:column="co4"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(provider-org/narrative)" x:heading="Provider organisation"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(provider-org/@ref)" x:heading="Provider organisation identifier"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(provider-org/@provider-activity-id)" x:heading="Provider activity identifier"/>
@@ -118,7 +119,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(../description/narrative)" x:heading="Result description" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../@type)" x:heading="Result type"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../@aggregation-status)" x:heading="Aggregation status"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(@measure)" x:heading="Indicator measure"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(title/narrative)" x:heading="Indicator title" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(description/narrative)" x:heading="Indicator description" x:column="co4"/>
@@ -144,10 +145,10 @@
   <xsl:template match="participating-org" mode="office-spreadsheet-cells" x:export="Participating">
     <xsl:copy-of copy-namespaces="no" select="o:cell(../iati-identifier)" x:heading="IATI activity identifier" x:column="co3"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../title/narrative[1])" x:heading="Activity name" x:column="co4"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(@role)" x:heading="Role"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@type)" x:heading="Type"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(narrative)" x:heading="Organisation name" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@ref)" x:heading="Organisation identifier" x:column="co2"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@activity-id)" x:heading="Activity identifier" x:column="co2"/>
@@ -168,7 +169,7 @@
   <xsl:template match="sector" mode="office-spreadsheet-cells" x:export="Sectors">
     <xsl:copy-of copy-namespaces="no" select="o:cell(../iati-identifier)" x:heading="IATI activity identifier" x:column="co3"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(../title/narrative[1])" x:heading="Activity name" x:column="co4"/>
-    
+
     <xsl:copy-of copy-namespaces="no" select="o:cell(narrative)" x:heading="Sector name"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@vocabulary)" x:heading="Sector vocabulary"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(@vocabulary-uri)" x:heading="Sector vocabulary URI" x:column="co2"/>
