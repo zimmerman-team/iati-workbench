@@ -36,8 +36,8 @@
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
     <apply executable="soffice" dest="/workspace/tmp" verbose="false">
-      <fileset dir="/workspace/input" includes="*.xlsx"/>
-      <mapper id="csv-out" type="glob" from="*.xlsx" to="/workspace/tmp/*.csv"/>
+      <fileset dir="/workspace/input" includes="*.xls*"/>
+      <mapper id="csv-out" type="regexp" from="(.+)\.xls.*$$" to="/workspace/tmp/\1.csv"/>
 
       <arg line="--headless"/>
       <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
