@@ -142,12 +142,12 @@
             <narrative>{merge:entry(., 'Description')}</narrative>
           </description>
           <xsl:if test="merge:entry(., 'Provider organisation')!='' or merge:entry(., 'Provider organisation identifier')!=''">
-            <provider-org ref="{merge:entry(., 'Provider organisation identifier')}" provider-activity-id="{merge:entry(., 'Provider activity identifier')}" type="{merge:entry(., 'Provider organisation type')}">
+            <provider-org ref="{merge:entry(., 'Provider organisation identifier')}" provider-activity-id="{merge:entry(., 'Provider activity identifier')}" type="{merge:entry(., ('Provider organisation type', 'Provider organization type'))}">
               <narrative>{merge:entry(., 'Provider organisation')}</narrative>
             </provider-org>            
           </xsl:if>
           <xsl:if test="merge:entry(., 'Receiver organisation')!='' or merge:entry(., 'Receiver organisation identifier')!=''">
-            <receiver-org ref="{merge:entry(., 'Receiver organisation identifier')}" receiver-activity-id="{merge:entry(., 'Receiver activity identifier')}" type="{merge:entry(., 'Receiver organisation type')}">
+            <receiver-org ref="{merge:entry(., 'Receiver organisation identifier')}" receiver-activity-id="{merge:entry(., 'Receiver activity identifier')}" type="{merge:entry(., ('Receiver organisation type', 'Receiver organization type'))}">
               <narrative>{merge:entry(., 'Receiver organisation')}</narrative>
             </receiver-org>
           </xsl:if>
@@ -198,14 +198,14 @@
               <period>
                 <period-start iso-date="{merge:date(merge:entry(., 'Start date'))}"/>
                 <period-end iso-date="{merge:date(merge:entry(., 'End date'))}"/>
-                <xsl:if test="merge:entry(., 'Target')!=''">
+                <xsl:if test="merge:entry(., 'Target')!='' or merge:entry(., 'Target comment')!=''">
                   <target value="{merge:decimal(merge:entry(., 'Target'))}">
                     <comment>
-                      <narrative>{entry[@name="Target comment"]}</narrative>
+                      <narrative>{merge:entry(., 'Target comment')}</narrative>
                     </comment>
                   </target>
                 </xsl:if>
-                <xsl:if test="merge:entry(., 'Actual')!=''">
+                <xsl:if test="merge:entry(., 'Actual')!='' or merge:entry(., 'Actual comment')">
                   <actual value="{merge:decimal(merge:entry(., 'Actual'))}">
                     <comment>
                       <narrative>{merge:entry(., 'Actual comment')}</narrative>
@@ -270,7 +270,7 @@
         'https://drive.google.com/uc?export=download&amp;id=$1')"/>
 
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <document-link format="{merge:entry(., 'Format')}" url="{$url}">
+        <document-link format="{merge:format(merge:entry(., 'Format'))}" url="{$url}">
           <title>
             <narrative><xsl:value-of select="merge:entry(., 'Document title')"/></narrative>
           </title>

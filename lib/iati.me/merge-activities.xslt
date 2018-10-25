@@ -10,7 +10,9 @@
 
   <xsl:template match="/dir">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}">
+      <xsl:text>&#xa;</xsl:text>
       <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
+      <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="functx:trim(@merge:id)">
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>

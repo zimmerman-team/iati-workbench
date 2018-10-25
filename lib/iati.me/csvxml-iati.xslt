@@ -29,19 +29,21 @@
     </xsl:choose>  
   </xsl:function>
 
-  <xsl:function name="merge:decimal" as="xs:decimal?">
+  <xsl:function name="merge:decimal" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
       <!-- remove '%' and ',' -->
-      {replace($item,'[%,]','')}
+      <xsl:variable name="i" select="functx:trim(replace($item,'[%,]',''))"/>
+      <xsl:if test="$i!=''">{$i}</xsl:if>
     </xsl:if>
   </xsl:function>
 
-  <xsl:function name="merge:decimal2" as="xs:decimal?">
+  <xsl:function name="merge:decimal2" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
       <!-- remove '%' and '.', replace comma by period as decimal-separator -->
-      {replace(replace($item,'[%.]',''), ',', '.')}
+      <xsl:variable name="i" select="functx:trim(replace(replace($item,'[%.]',''), ',', '.'))"/>
+      <xsl:if test="$i!=''">{$i}</xsl:if>
     </xsl:if>
   </xsl:function>
   
@@ -166,7 +168,7 @@
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
     <xsl:variable name="llabel" select="for $w in $label return lower-case($w)"/>
-    <xsl:sequence select="$record/entry[functx:trim(lower-case(@name)) = $llabel][1]"/>
+    <xsl:sequence select="functx:trim($record/entry[functx:trim(lower-case(@name)) = $llabel][1])"/>
   </xsl:function>
 
   <xsl:function name="merge:entry" as="item()*">
@@ -176,4 +178,12 @@
     <xsl:sequence select="(merge:entry($record, $label), $default)[1]"/>
   </xsl:function>
   
+  <xsl:function name="merge:format" as="xs:string">
+    <xsl:param name="from" as="xs:string"/>
+    <xsl:variable name="known">
+      <to format="application/pdf"><f>pdf</f></to>
+      <to format="image/jpeg"><f>jpg</f><f>jpeg</f></to>
+    </xsl:variable>
+    <xsl:value-of select="($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]"/>
+  </xsl:function>
 </xsl:stylesheet>
