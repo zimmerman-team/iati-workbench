@@ -5,8 +5,11 @@ email: rolf@drostan.org
 description: >
   The IATI Workbench is a (growing) set of tools to work with IATI data: create
   network and flow diagrams, check data quality, convert it into other formats.
-baseurl: "/iati-workbench" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+brand: DataWorkbench
 
-# Build settings
-markdown: kramdown
+defaults:
+  -
+    values:
+      layout: "default"
+
+remote_theme: data4development/dataworkbench-jekyll-theme
