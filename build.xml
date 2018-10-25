@@ -16,6 +16,9 @@
   <import file="data-quality/build.xml"/>
   <import file="visualisations/build.xml"/>
 
+  <!-- Include additional development targets if available -->
+<!--  <import file="develop/build.xml" optional="yes"/>-->
+  
   <!-- Xspec tests -->
   <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
@@ -95,6 +98,19 @@
     <!-- <delete file="/workspace/tmp/reports.xml"/> -->
 
   </target>
+
+  <target name="dedup"
+    description="Deduplicates activities with the same activity identifier."
+    depends="init">
+
+    <xslt
+      basedir="/workspace/src"
+      destdir="/workspace/tmp"
+      includes="*.xml"
+      style="lib/iati.me/dedup.xslt"
+    />
+  </target>
+
   <target name="test-tree"
     description="Test: render hierarchical list of projects">
 

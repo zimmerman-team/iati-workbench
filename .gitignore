@@ -4,7 +4,5 @@ build.properties
 \.bower/
 \.basexhistory
 \.bash_history
-
-build\.svg
-
-build\.dot
+tmp/
+\.settings/

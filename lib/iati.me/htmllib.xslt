@@ -9,7 +9,7 @@
   <xsl:function name="htmllib:toHtml" as="xs:string">
     <xsl:param name="text" as="xs:string*"/>
     <xsl:value-of>
-      <xsl:for-each select="tokenize($text, '&#xa;|&#xd;|&#xa;&#xd;')">
+      <xsl:for-each select="tokenize($text[1], '&#xa;|&#xd;|&#xa;&#xd;')">
         <xsl:if test="position()>1"><br/></xsl:if>
         <xsl:value-of select="current()"/>
       </xsl:for-each>
