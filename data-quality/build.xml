@@ -41,7 +41,7 @@
     </apply>    
   </target>
 
-  <target name="list-validation-results">
+  <target name="list-validation-results" description="Show schema validation results">
     <xslt basedir="/workspace/tmp"
       includes="validation.*.xml"
       destdir="/workspace/reports"
