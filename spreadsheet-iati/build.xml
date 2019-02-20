@@ -40,8 +40,8 @@
       <mapper id="csv-out" type="regexp" from="(.+)\.xls.*$$" to="/workspace/tmp/\1.csv"/>
 
       <arg line="--headless"/>
-      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
-      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,1'"/>
+      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) https://wiki.openoffice.org/wiki/Documentation/DevGuide/Spreadsheets/Filter_Options -->
+      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1'"/>
       <arg line="--outdir /workspace/tmp"/>
       <srcfile/>
     </apply>
@@ -117,7 +117,7 @@
 
       <arg line="--headless"/>
       <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
-      <arg line="--convert-to 'xlsx:MS Excel 2003 XML'"/>
+      <arg line="--convert-to xlsx:'Calc MS Excel 2007 XML'"/>
       <arg line="--outdir /workspace/output"/>
       <srcfile/>
     </apply>

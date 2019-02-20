@@ -18,7 +18,7 @@
     </apply>    
   </target>
 
-  <target name="validate-iati-os" depends="source-highlight"
+  <target name="validate-iati-os"
     description="Validate generated IATI file and generate source-highlighted HTML page.">
     <schemavalidate
       noNamespaceFile="lib/schemata/2.03/iati-activities-schema.xsd"
@@ -28,7 +28,7 @@
     </schemavalidate>
   </target>
 
-  <target name="validate-iati" depends="source-highlight"
+  <target name="validate-iati"
     description="Validate generated IATI file using Saxon EE and generate source-highlighted HTML page and errors page.">
     <apply executable="java" dest="/workspace/tmp">
 <!-- java -cp /home/rolf/.ant/lib/saxon9ee.jar com.saxonica.Validate -xsd:/home/rolf/dev/dataworkbench/validator/engine/lib/schemata/2.03/iati-activities-schema.xsd -report:tmp/validation.xml -s:src/iati-activities.xml -->      
