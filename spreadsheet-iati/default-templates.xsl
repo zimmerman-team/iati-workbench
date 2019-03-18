@@ -142,12 +142,12 @@
             <narrative>{merge:entry(., 'Description')}</narrative>
           </description>
           <xsl:if test="merge:entry(., 'Provider organisation')!='' or merge:entry(., 'Provider organisation identifier')!=''">
-            <provider-org ref="{merge:entry(., 'Provider organisation identifier')}" provider-activity-id="{merge:entry(., 'Provider activity identifier')}" type="{merge:entry(., ('Provider organisation type', 'Provider organization type'))}">
+            <provider-org ref="{merge:entry(., ('Provider organisation identifier', 'Provider organization identifier'))}" provider-activity-id="{merge:entry(., 'Provider activity identifier')}" type="{merge:entry(., ('Provider organisation type', 'Provider organization type'))}">
               <narrative>{merge:entry(., 'Provider organisation')}</narrative>
             </provider-org>            
           </xsl:if>
           <xsl:if test="merge:entry(., 'Receiver organisation')!='' or merge:entry(., 'Receiver organisation identifier')!=''">
-            <receiver-org ref="{merge:entry(., 'Receiver organisation identifier')}" receiver-activity-id="{merge:entry(., 'Receiver activity identifier')}" type="{merge:entry(., ('Receiver organisation type', 'Receiver organization type'))}">
+            <receiver-org ref="{merge:entry(., ('Receiver organisation identifier', 'Receiver organization identifier'))}" receiver-activity-id="{merge:entry(., 'Receiver activity identifier')}" type="{merge:entry(., ('Receiver organisation type', 'Receiver organization type'))}">
               <narrative>{merge:entry(., 'Receiver organisation')}</narrative>
             </receiver-org>
           </xsl:if>
