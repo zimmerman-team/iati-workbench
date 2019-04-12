@@ -32,7 +32,7 @@ else
 fi
 
 # local version of the engine for now...
-docker run -it --rm -u=${USER} \
+docker run --rm -u=${USER} \
   -v ${ENGINE_PATH}:/root \
   -v ${WORKSPACE}:/workspace \
   -v iati-data:/iati-data \
