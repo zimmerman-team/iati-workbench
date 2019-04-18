@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+
+  <target name="find-downstream">
+    <xslt
+      in="/workspace/meta/activities.xml"
+      out="/workspace/meta/activities2.xml"
+      style="traceability/find-activities-downstream.xslt"
+    />
+    <xslt
+      in="/workspace/meta/activities2.xml"
+      out="/workspace/meta/activities2.csv"
+      style="traceability/activities-table.xslt"
+    />        
+  </target>
+
+</project>

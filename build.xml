@@ -14,8 +14,9 @@
   <import file="transform/build.xml"/>
   <import file="spreadsheet-iati/build.xml"/>
   <import file="data-quality/build.xml"/>
+  <import file="traceability/build.xml"/>
   <import file="visualisations/build.xml"/>
-
+  
   <!-- Include additional development targets if available -->
 <!--  <import file="develop/build.xml" optional="yes"/>-->
   
