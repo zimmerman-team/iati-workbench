@@ -9,6 +9,7 @@
   <xsl:output indent="yes"/>
 
   <xsl:variable name="corpus" select="collection('/workspace/input/?select=*.xml')/*/iati-activity"/>
+  <xsl:variable name="ignore" select="//activity[@class='ignore']"/>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -21,7 +22,27 @@
   </xsl:template>
   
   <xsl:template match="activity">
+    <activity 
+      partnership="{@partnership}"
+      partnership-name="{@partnership-name}"
+      published="{.=$corpus/iati-identifier}"
+      org="{$corpus[iati-identifier=current()]/reporting-org/narrative}"
+      level="{@level}"
+      hierarchy="{(@hierarchy)[1]}"
+      class="{@class}" 
+      up="{@up}"
+      up_org="{$corpus[iati-identifier=current()/@up]/reporting-org/narrative}"
+      in_this="{@in_this}"
+      in_up="{@in_up}">
+      <xsl:text>{.}</xsl:text>
+    </activity>
+          
+    <xsl:apply-templates select="." mode="downstream"/>
+  </xsl:template>
+  
+  <xsl:template match="activity" mode="downstream">
     <xsl:param name="known" select="()" tunnel="yes"/>
+    <xsl:variable name="this" select="."/>
     
     <xsl:variable name="findings_from_here" as="xs:untypedAtomic*">
       <!-- participating-org that is extending or implementing -->
@@ -47,33 +68,26 @@
       
       <!-- TODO: add facility to capture previous activity identifiers that may be used downstream, from other-identifier[...]; these should be marked as such in the table as they should not exist anymore -->
     </xsl:variable>
-
-    <xsl:copy>
-      <xsl:attribute name="published" select=".=$corpus/iati-identifier"/>
-      <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
     
-    <xsl:variable name="this" select="."/>
-    <xsl:variable name="seeds" select="distinct-values(//activity[@name=current()/@name])"/>
+    <xsl:variable name="seeds" select="distinct-values(//activity[@partnership=current()/@partnership])"/>
         
     <xsl:for-each select="distinct-values(($findings_from_here, $findings_to_here))[not(.=($seeds, $known))]">
 
       <xsl:variable name="activity">
-        <activity 
-          name="{$this/@name}"
-          org="{$corpus[iati-identifier=$this]/reporting-org/narrative}"
+        <activity
+          partnership="{$this/@partnership}"
+          partnership-name="{$this/@partnership-name}"
           level="{$this/@level+1}" 
           class="downstream" 
           up="{$this}"
-          up_org="{$corpus[iati-identifier=current()]/reporting-org/narrative}">
-          <xsl:attribute name="in_this" select=".=$findings_from_here"/>
-          <xsl:attribute name="in_up" select=".=$findings_to_here"/>
+          in_this="{.=$findings_to_here}"
+          in_up="{.=$findings_from_here}">
           <xsl:text>{.}</xsl:text>
         </activity>
       </xsl:variable>
 
-      <xsl:apply-templates select="$activity">
-        <xsl:with-param name="known" select="distinct-values(($findings_from_here, $findings_to_here, $known))" tunnel="yes"/>
+      <xsl:apply-templates select="$activity[not(.=$ignore)]">
+        <xsl:with-param name="known" select="distinct-values(($findings_from_here, $findings_to_here, $seeds, $known))" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:for-each>
     
