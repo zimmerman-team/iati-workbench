@@ -5,15 +5,19 @@
 
   <target name="find-downstream">
     <xslt
-      in="/workspace/meta/activities.xml"
-      out="/workspace/meta/activities2.xml"
-      style="traceability/find-activities-downstream.xslt"
-    />
+      basedir="/workspace/meta"
+      destdir="/workspace/output"
+      includes="activities*.xml"
+      style="traceability/find-activities-downstream.xslt">
+      <identitymapper/>
+    </xslt>
     <xslt
-      in="/workspace/meta/activities2.xml"
-      out="/workspace/meta/activities2.csv"
-      style="traceability/activities-table.xslt"
-    />        
+      basedir="/workspace/output"
+      destdir="/workspace/output"
+      includes="activities*.xml"
+      style="traceability/activities-table.xslt">
+      <globmapper from="*.xml" to="*.csv"/>
+    </xslt>        
   </target>
 
 </project>
