@@ -26,12 +26,12 @@
       partnership="{@partnership}"
       partnership-name="{@partnership-name}"
       published="{.=$corpus/iati-identifier}"
-      org="{$corpus[iati-identifier=current()]/reporting-org/narrative}"
+      org="{($corpus[iati-identifier=current()]/reporting-org/narrative)[1]}"
       level="{@level}"
       hierarchy="{(@hierarchy)[1]}"
       class="{@class}" 
       up="{@up}"
-      up_org="{$corpus[iati-identifier=current()/@up]/reporting-org/narrative}"
+      up_org="{($corpus[iati-identifier=current()/@up]/reporting-org/narrative)[1]}"
       in_this="{@in_this}"
       in_up="{@in_up}">
       <xsl:text>{.}</xsl:text>
