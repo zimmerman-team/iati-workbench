@@ -14,6 +14,7 @@
       <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
       <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="functx:trim(@merge:id)">
+        <xsl:sort select="current-grouping-key()"/>
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>
             <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude'))]" />
