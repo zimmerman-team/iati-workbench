@@ -4,6 +4,10 @@
   xmlns:unless="ant:unless">
 
   <target name="find-downstream" description="Find downstream activities from a set of known identifiers">
+    <dependset>
+      <srcfileset dir="/workspace/input" includes="*.xml"/>
+      <targetfileset dir="/workspace/output" includes="activities*.xml"/>
+    </dependset>
     <xslt
       basedir="/workspace/meta"
       destdir="/workspace/output"
