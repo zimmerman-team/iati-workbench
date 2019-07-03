@@ -11,7 +11,7 @@
   <xsl:variable name="reporting-org-type"/>
   
   <!--Activities: -->
-  <xsl:template match="record[contains($file, 'Projects')]">
+  <xsl:template match="record[contains(lower-case($file), 'projects')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
       <iati-activity default-currency="{merge:entry(., 'Currency')}"
         last-updated-datetime="{current-dateTime()}"
@@ -98,7 +98,7 @@
   </xsl:template>
 
   <!--  Budgets: -->
-  <xsl:template match="record[contains($file, 'Budgets')]">
+  <xsl:template match="record[contains(lower-case($file), 'budgets')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <budget status="{merge:entry(., 'Budget status')}" type="{merge:entry(., 'Budget type')}">
@@ -111,7 +111,7 @@
   </xsl:template>
   
   <!--  Policy markers: -->
-  <xsl:template match="record[contains($file, 'Policy')]">
+  <xsl:template match="record[contains(lower-case($file), 'policy')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <policy-marker significance="{merge:entry(., ('Significance', 'Policy significance'))}" code="{merge:entry(., 'Policy marker')}" vocabulary="1"/>
@@ -120,7 +120,7 @@
   </xsl:template>
   
   <!--  Sectors: -->
-  <xsl:template match="record[contains($file, 'Sectors')]">
+  <xsl:template match="record[contains(lower-case($file), 'sectors')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <sector percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}" code="{merge:entry(., 'Sector code')}" vocabulary="{(merge:entry(., ('Sector vocabulary', 'Sector vocabulaire')))[1]}">
@@ -131,7 +131,7 @@
   </xsl:template>
   
   <!--  Transactions: -->
-  <xsl:template match="record[contains($file, 'Transactions')]">
+  <xsl:template match="record[contains(lower-case($file), 'transactions')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <transaction ref="{merge:entry(., 'Reference')}">
@@ -157,7 +157,7 @@
   </xsl:template>
   
   <!--  Results: -->
-  <xsl:template match="record[contains($file, 'Results')]">
+  <xsl:template match="record[contains(lower-case($file), 'results')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <result
@@ -221,7 +221,7 @@
   </xsl:template>
   
   <!--  Geo: -->
-  <xsl:template match="record[contains($file, 'Countries')]">
+  <xsl:template match="record[contains(lower-case($file), 'countries')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <xsl:choose>
@@ -246,7 +246,7 @@
   
   
   <!--  Participating: -->
-  <xsl:template match="record[contains($file, 'Participating')]">
+  <xsl:template match="record[contains(lower-case($file), 'participating')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <participating-org role="{merge:entry(., ('Role', 'Organisation Role'))}" type="{merge:entry(., ('Type', 'Organisation Type'))}" ref="{merge:entry(., 'Organisation identifier')}" activity-id="{merge:entry(., 'Activity identifier')}">
@@ -257,7 +257,7 @@
   </xsl:template>
   
   <!--  Documents: -->
-  <xsl:template match="record[contains($file, 'Documents') or ends-with($file, 'Documents')]">
+  <xsl:template match="record[contains(lower-case($file), 'documents')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
       
       <!-- Replace Google Drive sharing links (open a preview page) with direct download links -->
