@@ -12,7 +12,7 @@
     <xsl:param name="list"/>
     <xsl:param name="text"/>
     <xsl:variable name="codelist" select="doc(concat(
-      '../schemata/2.02/codelist/', $list, '.xml' ))"/>
+      '../schemata/2.03/codelist/', $list, '.xml' ))"/>
     <xsl:value-of select="(
       $codelist//codelist-item[name/narrative=$text]/code,
       $text)[1]"/>
