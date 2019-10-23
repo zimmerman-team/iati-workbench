@@ -256,6 +256,25 @@
     </xsl:if>
   </xsl:template>
   
+  <!--  Location: -->
+  <xsl:template match="record[contains($file, 'Location')]">
+    <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
+      <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
+        <location ref="{merge:entry(., 'Location name')}">
+          <name>
+            <narrative>{merge:entry(., 'Location name')}</narrative>
+          </name>
+          <administrative vocabulary="A4" level="1" code="{merge:entry(., 'Location admin country')}" />
+          <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+            <pos>{merge:entry(., 'Latitude')} {merge:entry(., 'Longitude')}</pos>
+          </point>
+          <exactness code="{merge:entry(., 'Location Precision')}"/>
+          <feature-designation code="{merge:entry(., 'Location type code')}"/>
+        </location>
+      </iati-activity>
+    </xsl:if>
+  </xsl:template>
+  
   <!--  Documents: -->
   <xsl:template match="record[contains(lower-case($file), 'documents')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">

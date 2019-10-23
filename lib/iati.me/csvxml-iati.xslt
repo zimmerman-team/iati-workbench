@@ -186,6 +186,7 @@
     <xsl:variable name="known">
       <to format="application/pdf"><f>pdf</f></to>
       <to format="image/jpeg"><f>jpg</f><f>jpeg</f></to>
+      <to format="text/html"><f>html</f><f>web</f></to>
     </xsl:variable>
     <xsl:value-of select="($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]"/>
   </xsl:function>
