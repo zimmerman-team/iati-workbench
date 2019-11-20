@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jdk-slim
 
 MAINTAINER Rolf Kleef <rolf@drostan.org>
 
@@ -20,7 +20,7 @@ ENV NODE_VERSION   6.10.0
 
 RUN apt-get update && \
   apt-get -y install --no-install-recommends \
-    wget less git xmlstarlet libreoffice-calc libreoffice-java-common source-highlight && \
+    wget less git xmlstarlet libreoffice-calc libreoffice-java-common source-highlight unzip xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
