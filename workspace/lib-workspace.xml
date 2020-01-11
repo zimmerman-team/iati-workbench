@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lib-workspace">
+  <description>
+    Workspace helpers library. To be imported in a workspace build.xml, which allows
+    overriding the targets. These targets are then still available as lib-workspace.* 
+  </description>
+
+  <property file="config/iati-workbench.properties"/> 
+
+  <available file="config/iati-workbench.properties" property="config.properties.exist"/>
+  <target name="config.properties" unless="config.properties.exist">
+    <echo>Add a file config/iati-workbench.properties and include locations of remote files.</echo>
+    <fail/>
+  </target>
+
+  <target name="get-remote" description="Get input files from remote location, doesn't work yet"
+    depends="config.properties">
+    <echo message="Getting files from ${remote.input}"/>
+    <exec executable="rclone">
+      <arg value="-P"/>
+      <arg value="sync"/>
+      <arg line="--exclude '*/**'"/>
+      <arg line="${remote.input}"/>
+      <arg value="input"/>
+    </exec>
+  </target>
+  
+  <target name="get-remote-deep" description="Get input files from remote location, including subdirs"
+    depends="config.properties">
+    <echo message="Getting files from ${remote.input}"/>
+    <exec executable="rclone">
+      <arg value="-P"/>
+      <arg value="sync"/>
+      <arg line="${remote.input}"/>
+      <arg value="input"/>
+    </exec>
+  </target>
+  
+  <target name="put-remote">
+    <copy todir="remote/output">
+      <fileset dir="src" includes="*.xml"/>
+    </copy>
+  </target>
+ 
+</project>
