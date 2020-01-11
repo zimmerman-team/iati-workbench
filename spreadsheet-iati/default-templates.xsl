@@ -257,7 +257,7 @@
   </xsl:template>
   
   <!--  Location: -->
-  <xsl:template match="record[contains($file, 'Location')]">
+  <xsl:template match="record[contains(lower-case($file), 'location')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <location ref="{merge:entry(., 'Location name')}">
@@ -268,7 +268,7 @@
           <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
             <pos>{merge:entry(., 'Latitude')} {merge:entry(., 'Longitude')}</pos>
           </point>
-          <exactness code="{merge:entry(., 'Location Precision')}"/>
+<!--          <exactness code="{merge:entry(., 'Location Precision')}"/>-->
           <feature-designation code="{merge:entry(., 'Location type code')}"/>
         </location>
       </iati-activity>
