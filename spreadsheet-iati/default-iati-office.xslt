@@ -96,6 +96,29 @@
     </xsl:result-document>    
   </xsl:template>
 
+  <xsl:template match="iati-organisations">
+    <xsl:result-document method="xml" href="{$filebase}.organisation-budgets.fods">
+      <xsl:variable name="data">
+        <file>
+          <xsl:apply-templates select="//total-budget"/>
+          <xsl:apply-templates select="//recipient-country-budget"/>
+          <xsl:apply-templates select="//recipient-region-budget"/>
+          <xsl:apply-templates select="//recipient-org-budget"/>
+        </file>
+      </xsl:variable>
+      <xsl:apply-templates select="$data" mode="office-spreadsheet-file"/>
+    </xsl:result-document>    
+
+    <xsl:result-document method="xml" href="{$filebase}.organisation-documents.fods">
+      <xsl:variable name="data">
+        <file>
+          <xsl:apply-templates select="//document-link"/>
+        </file>
+      </xsl:variable>
+      <xsl:apply-templates select="$data" mode="office-spreadsheet-file"/>
+    </xsl:result-document>    
+  </xsl:template>
+  
   <xsl:template match="iati-activity">
     <row>
       <column name="IATI activity identifier" style="co3">{iati-identifier}</column>
@@ -246,7 +269,7 @@
     </row>
   </xsl:template>
 
-  <xsl:template match="document-link">
+  <xsl:template match="iati-activity/document-link">
     <row>
       <column name="IATI activity identifier" style="co3">{../iati-identifier}</column>
       <column name="Activity name" style="co4">{../title[1]}</column>
@@ -260,4 +283,39 @@
     </row>
   </xsl:template>
 
+  <!-- Organisation budgets are all in the same format (can be a single file) -->
+  <xsl:template match="total-budget|recipient-country-budget|recipient-region-budget|recipient-org-budget">
+    <row>
+      <column name="IATI organisation identifier" style="co3">{../organisation-identifier}</column>
+      
+      <column name="Budget status">{@status}</column>
+      <column name="Budget start date" type="date">{period-start/@iso-date}</column>
+      <column name="Budget end date" type="date">{period-end/@iso-date}</column>
+      <column name="Currency">{value/@currency}</column>
+      <column name="Budget" type="value">{value}</column>
+      <column name="Value date" type="date">{value/@value-date}</column>
+      <column name="Country code">{recipient-country/@code}</column>
+      <column name="Region code">{recipient-region/@code}</column>
+      <column name="Region name">{recipient-region/narrative[1]}</column>
+      <column name="Region vocabulary">{recipient-region/@vocabulary}</column>
+      <column name="Recipient organisation identifier">{recipient-region/@ref}</column>
+      <column name="Recipient organisation name">{recipient-region/narrative[1]}</column>
+    </row>
+  </xsl:template>
+  
+  <xsl:template match="iati-organisation/document-link">
+    <row>
+      <column name="IATI organisation identifier" style="co3">{../organisation-identifier}</column>
+      
+      <column name="Recipient country code">{recipient-country/@code}</column>
+      <column name="Document title" style="co4">{title/narrative}</column>
+      <column name="Document description" style="co4">{description/narrative}</column>
+      <column name="Document language">{language/@code}</column>
+      <column name="Document date" type="date">{document-date/@iso-date}</column>
+      <column name="Category">{category/@code}</column>
+      <column name="Web address" style="co4">{@url}</column>
+      <column name="Format" style="co2">{@format}</column>
+    </row>
+  </xsl:template>
+  
 </xsl:stylesheet>
