@@ -14,7 +14,7 @@
   </xsl:template>
 
   <xsl:template match="/iati-activities">
-    <xsl:result-document method="xml" href="{$filebase}.projects.fods">
+    <xsl:result-document method="xml" href="{$filebase}.Projects.fods">
       <xsl:variable name="data">
         <file>
           <xsl:apply-templates select="iati-activity"/>
