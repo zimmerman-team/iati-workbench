@@ -107,11 +107,11 @@
       destdir="/workspace/tmp"
       extension=".fods"
       filenameparameter="filename"
-      style="lib/iati.me/iati-office.xslt"
+      style="spreadsheet-iati/default-iati-office.xslt"
     />
 
     <apply executable="soffice" dest="/workspace/output" verbose="false">
-      <fileset dir="/workspace/tmp" includes="*.fods"/>
+      <fileset dir="/workspace/tmp" includes="*.*.fods"/>
       <mapper type="glob" from="*.fods" to="*.xlsx"/>
 
       <arg line="--headless"/>
