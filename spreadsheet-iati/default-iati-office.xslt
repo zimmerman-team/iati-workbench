@@ -109,6 +109,7 @@
     <xsl:copy-of copy-namespaces="no" select="o:cell(receiver-org/narrative)" x:heading="Receiver organisation"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(receiver-org/@ref)" x:heading="Receiver organisation identifier"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(receiver-org/@receiver-activity-id)" x:heading="Receiver activity identifier"/>
+    <xsl:copy-of copy-namespaces="no" select="o:cell(disbursement-channel)" x:heading="Disbursement channel"/>
   </xsl:template>
 
   <xsl:template match="indicator" mode="office-spreadsheet-cells" x:export="Results">
@@ -179,8 +180,9 @@
 
   <xsl:template match="document-link" mode="office-spreadsheet-cells" x:export="Documents">
     <xsl:copy-of copy-namespaces="no" select="o:cell(../iati-identifier)" x:heading="IATI activity identifier" x:column="co3"/>
-    <xsl:copy-of copy-namespaces="no" select="o:cell(../title[1])" x:heading="Activity Title" x:column="co4"/>
+    <xsl:copy-of copy-namespaces="no" select="o:cell(../title[1])" x:heading="Activity name" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(title/narrative)" x:heading="Document title" x:column="co4"/>
+    <xsl:copy-of copy-namespaces="no" select="o:cell(description/narrative)" x:heading="Document description" x:column="co4"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(language/@code)" x:heading="Document language"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(document-date/@iso-date)" x:heading="Document date"/>
     <xsl:copy-of copy-namespaces="no" select="o:cell(category/@code)" x:heading="Category"/>

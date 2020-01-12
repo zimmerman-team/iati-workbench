@@ -89,7 +89,7 @@
         <office:meta>
             <meta:creation-date><xsl:value-of select="current-dateTime()"/></meta:creation-date>
             <dc:date><xsl:value-of select="current-dateTime()"/></dc:date>
-            <meta:generator>IATI to Spreadsheet Engine</meta:generator>
+            <meta:generator>Data4Development Spreadsheet2IATI Engine</meta:generator>
             <meta:document-statistic meta:table-count="1" meta:cell-count="7" meta:object-count="0"/>
         </office:meta>
         <office:settings>
