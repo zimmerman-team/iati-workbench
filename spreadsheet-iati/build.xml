@@ -107,7 +107,7 @@
       destdir="/workspace/tmp"
       extension=".fods"
       filenameparameter="filename"
-      style="lib/iati.me/iati-office.xslt"
+      style="spreadsheet-iati/default-iati-office.xslt"
     />
 
     <apply executable="soffice" dest="/workspace/output" verbose="false">
