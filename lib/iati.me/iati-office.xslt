@@ -8,7 +8,6 @@
   <xsl:import href="../functx.xslt"/>
   <xsl:import href="../office/spreadsheet.xslt"/>
   <xsl:import href="../../spreadsheet-iati/default-iati-office.xslt"/>
-  <xsl:import href="/workspace/config/iati-office.xslt" />
 
   <xsl:param name="filename"/>
   <xsl:variable name="filebase" select="functx:substring-before-last($filename,'.xml')"/>

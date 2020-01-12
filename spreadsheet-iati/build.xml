@@ -97,7 +97,6 @@
     <dependset>
       <sources>
         <file file="lib/office/spreadsheet.xslt" />
-        <file file="/workspace/config/iati-office.xslt" />
       </sources>
       <targetfileset dir="/workspace/output" includes="*.xlsx" />
     </dependset>
