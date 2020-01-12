@@ -43,10 +43,11 @@
     <attribute name="dest" default="/workspace/tmp"/>
     <attribute name="from"/>
     <attribute name="to"/>
+    <attribute name="xmldb" default="IATI"/>
     <sequential>
       <apply executable="basex" dest="@{dest}" verbose="true">
         <fileset dir="@{src}" includes="@{from}"/>
-        <arg value="-iIATI"/>
+        <arg value="-i@{xmldb}"/>
         <srcfile prefix="-bfile="/>
         <arg value="-o"/>
         <targetfile/>
