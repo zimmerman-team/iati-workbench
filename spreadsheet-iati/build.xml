@@ -111,7 +111,7 @@
     />
 
     <apply executable="soffice" dest="/workspace/output" verbose="false">
-      <fileset dir="/workspace/tmp" includes="*.fods"/>
+      <fileset dir="/workspace/tmp" includes="*.*.fods"/>
       <mapper type="glob" from="*.fods" to="*.xlsx"/>
 
       <arg line="--headless"/>
