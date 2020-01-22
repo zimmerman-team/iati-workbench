@@ -25,7 +25,7 @@ RUN apt-get update && \
 
 WORKDIR /root
 
-RUN wget -q http://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz && \
+RUN wget -q https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz && \
   tar -xzf apache-ant-${ANT_VERSION}-bin.tar.gz && \
   rm apache-ant-${ANT_VERSION}-bin.tar.gz && \
   mv apache-ant-${ANT_VERSION} /opt/ant
