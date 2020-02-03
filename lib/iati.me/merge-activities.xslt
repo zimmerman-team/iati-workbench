@@ -9,7 +9,9 @@
   <xsl:output indent="yes"/>
 
   <xsl:template match="/dir">
-    <iati-activities version="2.03" generated-datetime="{current-dateTime()}">
+    <iati-activities version="2.03" generated-datetime="{current-dateTime()}" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-activities-schema.xsd">
       <xsl:text>&#xa;</xsl:text>
       <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
       <xsl:text>&#xa;</xsl:text>
