@@ -111,7 +111,7 @@
             </xsl:if>
 
             <xsl:for-each-group select="current-group()/result" group-by="@merge:id">
-              <xsl:if test="current-group()/indicator/title and current-group()/@type">
+              <xsl:if test="current-group()/indicator/title/narrative/text() and current-group()/@type">
                 <result>
                   <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
                   <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions -->
