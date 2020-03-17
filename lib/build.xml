@@ -87,7 +87,7 @@
   <target name="ls-tmp" depends="init">
     <apply executable="xmlstarlet" output="/workspace/tmp/ls.xml">
       <arg line="ls"/>
-      <dirset dir="/workspace/tmp" excludes="ls.xml"/>
+      <dirset dir="/workspace" includes="tmp"/>
       <!-- TODO: test this, should be dir=workspace, includes=tmp? -->
     </apply>
   </target>

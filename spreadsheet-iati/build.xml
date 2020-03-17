@@ -8,7 +8,7 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati, iati-summary">
+    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati">
   </target>
 
   <!--Merge activities from *.generated.xml into one file.-->
@@ -36,7 +36,7 @@
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
     <apply executable="soffice" dest="/workspace/tmp" verbose="false">
-      <fileset dir="/workspace/input" includes="*.xls*"/>
+      <fileset dir="/workspace/input" includes="**/*.xls*"/>
       <mapper id="csv-out" type="regexp" from="(.+)\.xls.*$$" to="/workspace/tmp/\1.csv"/>
 
       <arg line="--headless"/>
