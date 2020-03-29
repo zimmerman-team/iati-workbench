@@ -10,6 +10,8 @@
   <xsl:variable name="reporting-org"/>
   <xsl:variable name="reporting-org-type"/>
   
+  <xsl:include href="default-templates-org.xsl"/>
+  
   <!--Activities: -->
   <xsl:template match="record[contains(lower-case($file), 'projects')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
@@ -98,7 +100,8 @@
   </xsl:template>
 
   <!--  Budgets: -->
-  <xsl:template match="record[contains(lower-case($file), 'budgets')]">
+  <xsl:template match="record[contains(lower-case($file), 'budgets')
+    and not(contains(lower-case($file), 'organisation-budgets'))]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <budget status="{merge:entry(., 'Budget status')}" type="{merge:entry(., 'Budget type')}">
@@ -276,7 +279,8 @@
   </xsl:template>
   
   <!--  Documents: -->
-  <xsl:template match="record[contains(lower-case($file), 'documents')]">
+  <xsl:template match="record[contains(lower-case($file), 'documents')
+    and not(contains(lower-case($file), 'organisation-documents'))]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
       
       <!-- Replace Google Drive sharing links (open a preview page) with direct download links -->

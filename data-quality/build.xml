@@ -24,7 +24,15 @@
       noNamespaceFile="lib/schemata/2.03/iati-activities-schema.xsd"
       warn="true"
       failonerror="false">
-      <fileset dir="/workspace/src" includes="**/*.xml"/>
+      <fileset dir="/workspace/src" includes="**/*-activities.xml"/>
+    </schemavalidate>
+    <schemavalidate
+      noNamespaceFile="lib/schemata/2.03/iati-organisations-schema.xsd"
+      classname="org.apache.xerces.parsers.SAXParser"
+      classpath="lib/xerces.jar"
+      warn="true"
+      failonerror="false">
+      <fileset dir="/workspace/src" includes="**/*-organisations.xml"/>
     </schemavalidate>
   </target>
 
@@ -36,7 +44,7 @@
       <arg line="-xsd:lib/schemata/2.03/iati-activities-schema.xsd"/>
       <targetfile prefix="-report:"/>
       <srcfile prefix="-s:"/>
-      <fileset dir="/workspace/src" includes="*.xml"/>
+      <fileset dir="/workspace/src" includes="*-activities.xml"/>
       <globmapper from="*.xml" to="validation.*.xml"/>
     </apply>    
   </target>

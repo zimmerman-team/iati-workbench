@@ -23,6 +23,17 @@
     />
   </target>
 
+  <target name="merge-iati-org"
+    depends="ls-tmp">
+    <xslt
+      basedir="/workspace/tmp"
+      destdir="/workspace/tmp"
+      in="/workspace/tmp/ls.xml"
+      out="/workspace/src/iati-organisations.xml"
+      style="lib/iati.me/merge-organisations.xslt"
+    />
+  </target>
+  
   <!--Copy CSV files for further processing-->
   <target name="csv-csv">
     <copy todir="/workspace/tmp">
