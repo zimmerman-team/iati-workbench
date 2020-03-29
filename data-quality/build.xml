@@ -47,6 +47,14 @@
       <fileset dir="/workspace/src" includes="*-activities.xml"/>
       <globmapper from="*.xml" to="validation.*.xml"/>
     </apply>    
+    <apply executable="java" dest="/workspace/tmp">
+      <arg line="-cp develop/lib/saxon9ee.jar com.saxonica.Validate"/>
+      <arg line="-xsd:lib/schemata/2.03/iati-organisations-schema.xsd"/>
+      <targetfile prefix="-report:"/>
+      <srcfile prefix="-s:"/>
+      <fileset dir="/workspace/src" includes="*-organisations.xml"/>
+      <globmapper from="*.xml" to="validation.*.xml"/>
+    </apply>    
   </target>
 
   <target name="list-validation-results" description="Show schema validation results">

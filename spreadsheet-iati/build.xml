@@ -21,10 +21,6 @@
       out="/workspace/src/iati-activities.xml"
       style="lib/iati.me/merge-activities.xslt"
     />
-  </target>
-
-  <target name="merge-iati-org"
-    depends="ls-tmp">
     <xslt
       basedir="/workspace/tmp"
       destdir="/workspace/tmp"

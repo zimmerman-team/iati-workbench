@@ -22,8 +22,7 @@
 
   <xsd:include schemaLocation="iati-common.xsd"/>
 
-  <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
-              schemaLocation="../xml.xsd"/>
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../xml.xsd"/>
 
   <xsd:element name="iati-organisations">
     <xsd:annotation>
@@ -81,7 +80,8 @@
         <xsd:element ref="recipient-region-budget" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="recipient-country-budget" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="total-expenditure" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element name="document-link" minOccurs="0" maxOccurs="unbounded" type="documentLinkWithReceipientCountry"/>
+        <xsd:element name="document-link" minOccurs="0" maxOccurs="unbounded"
+          type="documentLinkWithReceipientCountry"/>
         <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:attribute name="last-updated-datetime" type="xsd:dateTime" use="optional">
@@ -122,7 +122,7 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
+        <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
         <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -151,7 +151,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -165,7 +166,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -201,8 +203,9 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -267,7 +270,8 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -286,7 +290,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -300,7 +305,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -338,8 +344,9 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -396,8 +403,9 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="vocabulary" type="xsd:string" use="optional">
               <xsd:annotation>
@@ -437,7 +445,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -451,7 +460,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -487,8 +497,9 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -545,10 +556,11 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
-            <xsd:attribute name="code" type="xsd:string"  use="required">
+            <xsd:attribute name="code" type="xsd:string" use="required">
               <xsd:annotation>
                 <xsd:documentation xml:lang="en">
                   ISO 3166-1 alpha-2 code for the country.
@@ -566,7 +578,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -580,7 +593,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -618,8 +632,9 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -669,7 +684,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -683,7 +699,8 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:any processContents="lax" namespace="##other" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="iso-date" type="xsd:date" use="required"/>
             <xsd:anyAttribute processContents="lax" namespace="##other"/>
@@ -720,8 +737,9 @@
                   </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
-              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded" />
-              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="narrative" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"
+              />
             </xsd:sequence>
             <xsd:attribute name="ref" use="optional" type="xsd:string">
               <xsd:annotation>
@@ -780,10 +798,11 @@
             </xsd:annotation>
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded" />
-                <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="narrative" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:any namespace="##other" processContents="lax" minOccurs="0"
+                  maxOccurs="unbounded"/>
               </xsd:sequence>
-              <xsd:attribute name="code" type="xsd:string"  use="required">
+              <xsd:attribute name="code" type="xsd:string" use="required">
                 <xsd:annotation>
                   <xsd:documentation xml:lang="en">
                     ISO 3166-1 alpha-2 code for the country.
@@ -793,7 +812,6 @@
               <xsd:anyAttribute processContents="lax" namespace="##other"/>
             </xsd:complexType>
           </xsd:element>
-          <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>
