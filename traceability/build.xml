@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+
+  <target name="find-downstream" description="Find downstream activities from a set of known identifiers">
+    <dependset>
+      <srcfileset dir="/workspace/input" includes="*.xml"/>
+      <targetfileset dir="/workspace/output" includes="activities*.xml"/>
+    </dependset>
+    <xslt
+      basedir="/workspace/meta"
+      destdir="/workspace/output"
+      includes="activities*.xml"
+      style="traceability/find-activities-downstream.xslt">
+      <identitymapper/>
+    </xslt>
+    <xslt
+      basedir="/workspace/output"
+      destdir="/workspace/output"
+      includes="activities*.xml"
+      style="traceability/activities-table.xslt">
+      <globmapper from="*.xml" to="*.csv"/>
+    </xslt>
+    
+    <apply executable="soffice" dest="/workspace/output" verbose="false">
+      <fileset dir="/workspace/output" includes="activities.csv"/>
+      <mapper type="glob" from="*.csv" to="*.xlsx"/>
+      
+      <arg line="--headless"/>
+      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
+      <arg line="--convert-to xlsx:'Calc MS Excel 2007 XML'"/>
+      <arg line="--outdir /workspace/output"/>
+      <srcfile/>
+    </apply>
+    
+  </target>
+
+</project>
