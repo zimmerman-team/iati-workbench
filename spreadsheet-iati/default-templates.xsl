@@ -50,7 +50,7 @@
           <narrative>{merge:entry(., 'Background')}</narrative>
         </description>
         
-        <activity-status code="{merge:entry(., 'Activity status')}"/>
+        <activity-status code="{(merge:entry(., 'Activity status'), '2')[1]}"/>
         <activity-date type="1" iso-date="{merge:date(merge:entry(., 'Planned start date', ''))}"/>
         <activity-date type="2" iso-date="{merge:date(merge:entry(., 'Actual start date', ''))}"/>
         <activity-date type="3" iso-date="{merge:date(merge:entry(., 'Planned end date', ''))}"/>
