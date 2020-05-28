@@ -20,7 +20,8 @@
   <target name="get-remote" depends="config.properties">
     <echo message="Getting files from ${remote.input}"/>
     <exec executable="rclone">
-      <arg value="-P"/>
+      <arg value="--log-level"/>
+      <arg value="INFO"/>
       <arg value="sync"/>
       <arg line="--exclude '*/**'"/>
       <arg line="${remote.input}"/>
