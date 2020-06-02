@@ -60,7 +60,7 @@
       <xsl:sequence select="$corpus[participating-org[@activity-id=current() and lower-case(@role)=('1', 'funding')]]/iati-identifier"/>
       
       <!-- activities with incoming transactions from this activity -->
-      <xsl:sequence select="$corpus[provider-org[@provider-activity-id=current() and lower-case(transaction-type/@code)=('1', '11', '13', 'if')]]/iati-identifier"/>
+      <xsl:sequence select="$corpus[transaction[lower-case(transaction-type/@code)=('1', '11', '13', 'if')]/provider-org/@provider-activity-id=current()]/iati-identifier"/>
       
       <!-- activities that claim this activity is a parent or cofunder -->
       <xsl:sequence select="$corpus[related-activity[@ref=current() and
