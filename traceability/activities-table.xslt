@@ -11,12 +11,12 @@
   <xsl:variable name="corpus" select="collection('/workspace/input/?select=*.xml')/*/iati-activity"/>
   
   <xsl:template match="/">
-    <xsl:text>"iati-identifier", "partnership", "partnership-name", "hierarchy", "organisation", "level", "class", "published?", "upstream", "upstream organisation", "in this", "in up"</xsl:text>    
+    <xsl:text>"iati-identifier", "organisation", "partnership", "comments", "published?", "is this linking to upstream?", "is upstream linking to this?", "upstream", "upstream organisation", "hierarchy", "level", "class"</xsl:text>    
     <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="activity">
-    <xsl:text>"{.}", "{@partnership}", "{@partnership-name}", "{@hierarchy}", "{@org}", "{@level}", "{@class}", "{@published}", "{@up}", "{@up_org}", "{@in_this}", "{@in_up}"</xsl:text>
+    <xsl:text>"{.}", "{@org}", "{@partnership}", "", "{@published}", "{@in_this}", "{@in_up}", "{@up}", "{@up_org}", "{@hierarchy}", "{@level}", "{@class}"</xsl:text>
   </xsl:template>
 
   <xsl:template match="*">
