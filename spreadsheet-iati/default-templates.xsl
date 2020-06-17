@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:functx="http://www.functx.com"
   xmlns:merge="http://iati.me/merge"
-  exclude-result-prefixes="xs"
+  exclude-result-prefixes="xs functx"
   expand-text="yes"
   version="3.0">
   
@@ -19,6 +20,9 @@
         last-updated-datetime="{current-dateTime()}"
         xml:lang="{merge:entry(., 'Language', 'en')}"
         merge:id="{merge:entry(., 'IATI activity identifier')}">
+        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian activity'))!=''">
+          <xsl:attribute name="humanitarian" select="merge:boolean(merge:entry(., 'Humanitarian activity'))"/>
+        </xsl:if>
         <iati-identifier>{merge:entry(., 'IATI activity identifier')}</iati-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
           <narrative>{$reporting-org-name}</narrative>
@@ -80,6 +84,18 @@
             <value value-date="{merge:date($start-date)}" currency="{(merge:entry(., 'Currency'), merge:currency-symbol(merge:entry(., 'Amount')), 'EUR')[1]}">{merge:currency-value(merge:entry(., ('Budget', 'Total Budget')))}</value>
           </budget>
         </xsl:if>
+        
+        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 1'))!=''">
+          <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 1'))}" 
+            vocabulary="{merge:entry(., 'Humanitarian vocabulary 1')}" 
+            code="{merge:entry(., 'Humanitarian code 1')}"/>
+        </xsl:if>        
+        
+        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 2'))!=''">
+          <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 2'))}" 
+            vocabulary="{merge:entry(., 'Humanitarian vocabulary 2')}" 
+            code="{merge:entry(., 'Humanitarian code 2')}"/>
+        </xsl:if>        
         
         <!-- Policy marker may be in the project file -->
         <xsl:if test="merge:entry(., 'Policy marker') != ''">
