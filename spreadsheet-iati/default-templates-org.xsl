@@ -94,7 +94,9 @@
           <xsl:if test="merge:entry(., 'Document language')!=''">
             <language code="{merge:entry(., 'Document language')}" />
           </xsl:if>
-          <document-date iso-date="{merge:date(merge:entry(., 'Document date'))}" />
+          <xsl:if test="merge:entry(., 'Document date')!=''">
+            <document-date iso-date="{merge:date(merge:entry(., 'Document date'))}" />
+          </xsl:if>
         </document-link>
       </iati-organisation>          
     </xsl:if>
