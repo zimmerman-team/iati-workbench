@@ -18,7 +18,7 @@
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
       <iati-activity default-currency="{merge:entry(., 'Currency')}"
         last-updated-datetime="{current-dateTime()}"
-        xml:lang="{merge:entry(., 'Language', 'en')}"
+        xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
         merge:id="{merge:entry(., 'IATI activity identifier')}">
         <xsl:if test="functx:trim(merge:entry(., 'Humanitarian activity'))!=''">
           <xsl:attribute name="humanitarian" select="merge:boolean(merge:entry(., 'Humanitarian activity'))"/>
@@ -311,14 +311,24 @@
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <document-link format="{merge:format(merge:entry(., 'Format'))}" url="{$url}">
           <title>
-            <narrative><xsl:value-of select="merge:entry(., 'Document title')"/></narrative>
+            <narrative>
+              <xsl:if test="merge:entry(., 'Document language')!=''">
+                <xsl:attribute name="xml:lang" select="lower-case(merge:entry(., 'Document language'))"/>
+              </xsl:if>
+              <xsl:value-of select="merge:entry(., 'Document title')"/>
+            </narrative>
           </title>
           <description>
-            <narrative><xsl:value-of select="merge:entry(., 'Document description')"/></narrative>
+            <narrative>
+              <xsl:if test="merge:entry(., 'Document language')!=''">
+                <xsl:attribute name="xml:lang" select="lower-case(merge:entry(., 'Document language'))"/>
+              </xsl:if>
+              <xsl:value-of select="merge:entry(., 'Document description')"/>
+            </narrative>
           </description>
           <category code="{merge:entry(., 'Category')}"/>
           <xsl:if test="merge:entry(., 'Document language')!=''">
-            <language code="{merge:entry(., 'Document language')}" />
+            <language code="{lower-case(merge:entry(., 'Document language'))}" />
           </xsl:if>
           <xsl:if test="merge:entry(., 'Document date')!=''">
             <document-date iso-date="{merge:date(merge:entry(., 'Document date'))}" />

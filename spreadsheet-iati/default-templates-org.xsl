@@ -16,7 +16,7 @@
     <xsl:if test="(merge:entry(., 'IATI organisation identifier')[1] = $reporting-org)">
       <iati-organisation merge:id="{merge:entry(., 'IATI organisation identifier')}"
         last-updated-datetime="{current-dateTime()}"
-        xml:lang="{merge:entry(., 'Language', 'en')}"
+        xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
         default-currency="{merge:entry(., 'Currency', ($default-currency, 'EUR')[1])}">
         <organisation-identifier>{merge:entry(., 'IATI organisation identifier')}</organisation-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
@@ -92,7 +92,7 @@
           </description>
           <category code="{merge:entry(., 'Category')}"/>
           <xsl:if test="merge:entry(., 'Document language')!=''">
-            <language code="{merge:entry(., 'Document language')}" />
+            <language code="{lower-case(merge:entry(., 'Document language'))}" />
           </xsl:if>
           <xsl:if test="merge:entry(., 'Document date')!=''">
             <document-date iso-date="{merge:date(merge:entry(., 'Document date'))}" />
