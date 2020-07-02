@@ -31,6 +31,15 @@
           <organisation>
             <narrative>{merge:entry(., 'Contact info organisation')}</narrative>
           </organisation>
+          <department>
+            <narrative>{merge:entry(., 'Contact department')}</narrative>
+          </department>
+          <person-name>
+            <narrative>{merge:entry(., 'Contact person')}</narrative>
+          </person-name>
+          <job-title>
+            <narrative>{merge:entry(., 'Contact job title')}</narrative>
+          </job-title>
           <telephone>{merge:entry(., 'Contact telephone')}</telephone>
           <email>{merge:entry(., 'Contact email')}</email>
           <website>{merge:entry(., 'Contact website')}</website>
@@ -169,6 +178,18 @@
             <receiver-org ref="{merge:entry(., ('Receiver organisation identifier', 'Receiver organization identifier'))}" receiver-activity-id="{merge:entry(., 'Receiver activity identifier')}" type="{merge:entry(., ('Receiver organisation type', 'Receiver organization type'))}">
               <narrative>{merge:entry(., 'Receiver organisation')}</narrative>
             </receiver-org>
+          </xsl:if>
+          <xsl:if test="merge:entry(., 'Flow type')!=''">
+            <flow-type code="{merge:entry(., 'Flow type')}"/>
+          </xsl:if>
+          <xsl:if test="merge:entry(., 'Finance type')!=''">
+            <finance-type code="{merge:entry(., 'Finance type')}"/>
+          </xsl:if>
+          <xsl:if test="merge:entry(., 'Aid type')!=''">
+            <aid-type code="{merge:entry(., 'Aid type')}" vocabulary="{merge:entry(., 'Aid type vocabulary')}"/>
+          </xsl:if>
+          <xsl:if test="merge:entry(., 'Tied status')!=''">
+            <tied-status code="{merge:entry(., 'Tied status')}"/>
           </xsl:if>
         </transaction>
       </iati-activity>

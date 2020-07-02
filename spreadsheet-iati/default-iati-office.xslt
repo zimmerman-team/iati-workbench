@@ -132,7 +132,10 @@
       <column name="Planned end date" type="date">{activity-date[@type='3']/@iso-date}</column>
       <column name="Actual end date" type="date">{activity-date[@type='4']/@iso-date}</column>
       
-      <column name="General description" style="co4">{description[@type='1']}</column>
+      <column name="General description" style="co4">{description[not(@type) or @type='1']/narrative[1]}</column>
+      <column name="Main objectives and outcomes" style="co4">{description[@type='2']/narrative[1]}</column>
+      <column name="Target group or reach" style="co4">{description[@type='3']/narrative[1]}</column>
+      <column name="Background" style="co4">{description[@type='4']/narrative[1]}</column>
       <column name="Language">{@xml:lang}</column>
       <column name="Currency">{@default-currency}</column>
       
@@ -145,6 +148,9 @@
       
       <column name="Contact info type">{contact-info/@type}</column>
       <column name="Contact info organisation" style="co2">{contact-info/organisation/narrative}</column>
+      <column name="Contact department" style="co2">{contact-info/department/narrative}</column>
+      <column name="Contact person" style="co2">{contact-info/person-name/narrative}</column>
+      <column name="Contact job title" style="co2">{contact-info/job-title/narrative}</column>
       <column name="Contact telephone" style="co2">{contact-info/telephone}</column>
       <column name="Contact email" style="co2">{contact-info/email}</column>
       <column name="Contact website" style="co2">{contact-info/website}</column>
@@ -190,6 +196,12 @@
       <column name="Receiver organisation identifier">{receiver-org/@ref}</column>
       <column name="Receiver activity identifier">{receiver-org/@receiver-activity-id}</column>
       <column name="Disbursement channel">{disbursement-channel}</column>
+      
+      <column name="Flow type">{flow-type/@code}</column>
+      <column name="Finance type">{finance-type/@code}</column>
+      <column name="Aid type">{aid-type/@code}</column>
+      <column name="Aid type vocabulary">{aid-type/@vocabulary}</column>
+      <column name="Tied status">{tied-status/@code}</column>
     </row>
   </xsl:template>
 
