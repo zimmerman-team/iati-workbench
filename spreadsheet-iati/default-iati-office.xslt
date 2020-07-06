@@ -222,12 +222,39 @@
       <column name="Baseline year">{baseline/@year}</column>
       <column name="Baseline" type="value">{baseline/@value}</column>
       <column name="Baseline comment" style="co4">{baseline/comment/narrative}</column>
-      <column name="Start date" type="date">{period/period-start/@iso-date}</column>
-      <column name="End date" type="date">{period/period-end/@iso-date}</column>
-      <column name="Target" type="value">{period/target/@value}</column>
-      <column name="Target comment">{period/target/comment}</column>
-      <column name="Actual" type="value">{period/actual/@value}</column>
-      <column name="Actual comment">{period/actual/comment}</column>
+      <column name="Start date" type="date"/>
+      <column name="End date" type="date"/>
+      <column name="Target" type="value"/>
+      <column name="Target comment"/>
+      <column name="Actual" type="value"/>
+      <column name="Actual comment"/>
+    </row>
+    <xsl:apply-templates select="period"/>
+  </xsl:template>
+
+  <xsl:template match="period">
+    <row>
+      <column name="IATI activity identifier" style="co3">{../../../iati-identifier}</column>
+      <column name="Activity name" style="co4">{../../../title/narrative[1]}</column>
+      
+      <column name="Result title" style="co4">{../../title/narrative}</column>
+      <column name="Result description" style="co4">{../../description/narrative}</column>
+      <column name="Result type">{../../@type}</column>
+      <column name="Aggregation status">{../../@aggregation-status}</column>
+      
+      <column name="Indicator measure">{../@measure}</column>
+      <column name="Indicator title" style="co4">{../title/narrative}</column>
+      <column name="Indicator description" style="co4">{../description/narrative}</column>
+      <column name="Ascending">{../@ascending}</column>
+      <column name="Baseline year"/>
+      <column name="Baseline" type="value"/>
+      <column name="Baseline comment" style="co4"/>
+      <column name="Start date" type="date">{period-start/@iso-date}</column>
+      <column name="End date" type="date">{period-end/@iso-date}</column>
+      <column name="Target" type="value">{target/@value}</column>
+      <column name="Target comment">{target/comment}</column>
+      <column name="Actual" type="value">{actual/@value}</column>
+      <column name="Actual comment">{actual/comment}</column>
     </row>
   </xsl:template>
 
