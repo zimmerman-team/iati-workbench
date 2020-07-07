@@ -50,7 +50,7 @@
   <xsl:function name="merge:currency-value" as="xs:decimal?">
     <xsl:param name="item" as="xs:string"/>
     
-    <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([0-9.,]+)$" select="normalize-space($item)">
+    <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:value-of select="merge:decimal(regex-group(1))"/>
       </xsl:matching-substring>
@@ -60,7 +60,7 @@
   <xsl:function name="merge:currency-symbol" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
     
-    <xsl:analyze-string regex="^([a-zA-Z]+)\s?[0-9.,]+$" select="normalize-space($item)">
+    <xsl:analyze-string regex="^([a-zA-Z]+)\s?[+-]?[0-9.,]+$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:value-of select="regex-group(1)"/>
       </xsl:matching-substring>
