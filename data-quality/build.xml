@@ -28,8 +28,6 @@
     </schemavalidate>
     <schemavalidate
       noNamespaceFile="lib/schemata/2.03/iati-organisations-schema.xsd"
-      classname="org.apache.xerces.parsers.SAXParser"
-      classpath="lib/xerces.jar"
       warn="true"
       failonerror="false">
       <fileset dir="/workspace/src" includes="**/*-organisations.xml"/>
@@ -40,7 +38,7 @@
     description="Validate generated IATI file using Saxon EE and generate source-highlighted HTML page and errors page.">
     <apply executable="java" dest="/workspace/tmp">
 <!-- java -cp /home/rolf/.ant/lib/saxon9ee.jar com.saxonica.Validate -xsd:/home/rolf/dev/dataworkbench/validator/engine/lib/schemata/2.03/iati-activities-schema.xsd -report:tmp/validation.xml -s:src/iati-activities.xml -->      
-      <arg line="-cp develop/lib/saxon9ee.jar com.saxonica.Validate"/>
+      <arg line="-cp lib/saxon9ee.jar com.saxonica.Validate"/>
       <arg line="-xsd:lib/schemata/2.03/iati-activities-schema.xsd"/>
       <targetfile prefix="-report:"/>
       <srcfile prefix="-s:"/>
@@ -48,7 +46,7 @@
       <globmapper from="*.xml" to="validation.*.xml"/>
     </apply>    
     <apply executable="java" dest="/workspace/tmp">
-      <arg line="-cp develop/lib/saxon9ee.jar com.saxonica.Validate"/>
+      <arg line="-cp lib/saxon9ee.jar com.saxonica.Validate"/>
       <arg line="-xsd:lib/schemata/2.03/iati-organisations-schema.xsd"/>
       <targetfile prefix="-report:"/>
       <srcfile prefix="-s:"/>
