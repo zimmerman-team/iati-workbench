@@ -30,6 +30,7 @@
   <target name="init">
 
     <mkdir dir="/workspace/src"/>
+    <mkdir dir="/workspace/dest"/>
     <mkdir dir="/workspace/config"/>
     <mkdir dir="/workspace/tmp"/>
     <mkdir dir="/workspace/input"/>
