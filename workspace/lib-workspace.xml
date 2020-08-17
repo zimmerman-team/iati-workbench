@@ -33,7 +33,8 @@
   <target name="get-remote-deep" depends="config.properties">
     <echo message="Getting files from ${remote.input}"/>
     <exec executable="rclone">
-      <arg value="-P"/>
+      <arg value="--log-level"/>
+      <arg value="INFO"/>
       <arg value="sync"/>
       <arg line="${remote.input}"/>
       <arg value="input"/>
@@ -91,11 +92,19 @@
   <!-- can  be overridden to do something with the IATI files before publishing -->
   <target name="postprocess-iati"/>
 
+  <target name="open-reports">
+    <apply executable="gio">
+      <arg line="open"/>
+      <srcfile/>
+      <fileset dir="reports" includes="*.feedback.html"/>
+    </apply>
+  </target>
+
   <target name="s2i-run" description="Run an S2I conversion"
-    depends="get-inputs, postprocess-inputs, prep-new-inputs, spreadsheet-iati, postprocess-iati"/>
+    depends="get-inputs, postprocess-inputs, prep-new-inputs, spreadsheet-iati, postprocess-iati, open-reports"/>
    
   <target name="s2i-rerun" description="Rerun an S2I conversion (skip csv-map and git commit" 
-    depends="get-inputs, postprocess-inputs, prep-input-fixes, spreadsheet-iati, postprocess-iati"/>
+    depends="get-inputs, postprocess-inputs, prep-input-fixes, spreadsheet-iati, postprocess-iati, open-reports"/>
     
   <target name="s2i-publish" description="Publish the IATI file(s) and push the repository">
     <exec executable="dataworkbench">

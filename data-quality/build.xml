@@ -53,19 +53,25 @@
       <fileset dir="/workspace/src" includes="*-organisations.xml"/>
       <globmapper from="*.xml" to="validation.*.xml"/>
     </apply>    
-  </target>
 
-  <target name="list-validation-results" description="Show schema validation results">
     <xslt basedir="/workspace/tmp"
       includes="validation.*.xml"
       destdir="/workspace/reports"
       extension=".txt"
       style="spreadsheet-iati/validation-results.xslt"
     />
+
     <apply executable="cat">
       <srcfile/>
       <fileset dir="/workspace/reports" includes="validation.*.txt"/>
-    </apply>    
+    </apply>
+    
+    <apply executable="iati-validator">
+      <arg line="report"/>
+    </apply>
+    <apply executable="iati-validator">
+      <arg line="report"/>
+    </apply>
   </target>
 
   <target name="iati-summary"
