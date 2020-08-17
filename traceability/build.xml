@@ -36,4 +36,25 @@
     
   </target>
 
+  <target name="prepare-meta">
+    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
+      <fileset dir="/workspace/meta" includes="partnership-info.xlsx"/>
+      <mapper type="glob" from="*.xlsx" to="*.xml"/>
+      
+      <arg line="--headless"/>
+      <arg line="--convert-to xml:'OpenDocument Spreadsheet Flat XML'"/>
+      <arg line="--outdir /workspace/tmp"/>
+      <srcfile/>
+    </apply>
+
+    <xslt
+      basedir="/workspace/tmp"
+      includes="partnership-info.xml"
+      destdir="/workspace/meta"
+      extension=".xml"
+      style="traceability/partnership-info-seeds.xslt"
+    />
+    <move file="/workspace/meta/partnership-info.xml" tofile="/workspace/meta/activities.xml"/>
+  </target>
+  
 </project>
