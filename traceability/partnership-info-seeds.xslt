@@ -60,12 +60,16 @@
   <xsl:template match="table:table">
     <partnerships>
       <xsl:apply-templates select="table:table-row[position()>1 and
-        string(table:table-cell[4]/text:p)!='']"/>
+        string(table:table-cell[4]/text:p)!='']">
+        <xsl:sort select="table:table-cell[1]/text:p"/>
+      </xsl:apply-templates>
     </partnerships>
   </xsl:template>
   
   <xsl:template match="table:table-row">
-    <activity level="1" hierarchy="{table:table-cell[4]/text:p}">{string(table:table-cell[2]/text:p[1])}</activity>
+    <activity class="lead" level="1"
+      hierarchy="{table:table-cell[4]/text:p}"
+      partnership="{table:table-cell[1]/text:p}">{string(table:table-cell[2]/text:p[1])}</activity>
   </xsl:template>
   
 </xsl:stylesheet>
