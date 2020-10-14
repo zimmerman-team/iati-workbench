@@ -14,7 +14,7 @@
     <xsl:variable name="codelist" select="doc(concat(
       '../schemata/2.03/codelist/', $list, '.xml' ))"/>
     <xsl:value-of select="(
-      $codelist//codelist-item[name/narrative=$text]/code,
+      $codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
       $text)[1]"/>
   </xsl:function>
 </xsl:stylesheet>
