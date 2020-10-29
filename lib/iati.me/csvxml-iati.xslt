@@ -168,8 +168,7 @@
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
     
-    <xsl:variable name="llabel" select="for $w in $label return lower-case($w)"/>
-    <xsl:sequence select="functx:trim($record/entry[functx:trim(lower-case(@name)) = $llabel][1])"/>
+    <xsl:sequence select="merge:entry($record, $label, '')"/>
   </xsl:function>
 
   <xsl:function name="merge:entry" as="item()*">
@@ -177,8 +176,8 @@
     <xsl:param name="label" as="xs:string+"/>
     <xsl:param name="default" as="xs:string"/>
 
-    <xsl:variable name="llabel" select="for $w in $label return lower-case($w)"/>
-    <xsl:sequence select="functx:trim(($record/entry[functx:trim(lower-case(@name)) = $llabel], $default)[1])"/>
+    <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
+    <xsl:sequence select="functx:trim(($values, $default)[1])"/>
   </xsl:function>
   
   <xsl:function name="merge:format" as="xs:string">

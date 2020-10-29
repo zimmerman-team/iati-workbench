@@ -236,8 +236,8 @@
             
             <xsl:if test="merge:entry(., 'Start date')!=''">
               <period>
-                <period-start iso-date="{merge:date(merge:entry(., 'Start date'))}"/>
-                <period-end iso-date="{merge:date(merge:entry(., 'End date'))}"/>
+                <period-start iso-date="{merge:date(merge:entry(., ('Period Start date', 'Start Date')))}"/>
+                <period-end iso-date="{merge:date(merge:entry(., ('Period End date', 'End Date')))}"/>
                 <xsl:if test="merge:entry(., 'Target')!='' or merge:entry(., 'Target comment')!=''">
                   <target value="{merge:decimal(merge:entry(., 'Target'))}">
                     <comment>
