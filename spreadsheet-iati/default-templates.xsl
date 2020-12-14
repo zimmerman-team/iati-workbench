@@ -202,7 +202,7 @@
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
         <result
           type="{merge:entry(., 'Result type')}"
-          merge:id="{merge:entry(., 'Result title')}">
+          merge:id="{merge:entry(., 'Result reference')}---{merge:entry(., 'Result title')}">
           <xsl:if test="merge:entry(., 'Aggregation status') != ''"><xsl:attribute name="aggregation-status">{merge:boolean(merge:entry(., 'Aggregation status'))}</xsl:attribute></xsl:if>
           <title>
             <narrative>{merge:entry(., 'Result title')}</narrative>
@@ -212,7 +212,7 @@
           </description>
           
           <indicator
-            merge:id="{merge:entry(., 'Indicator title')}"
+            merge:id="{merge:entry(., 'Indicator reference')}---{merge:entry(., 'Indicator title')}"
             measure="{merge:entry(., 'Indicator measure')}">
             <!--ascending="true">-->
             <xsl:if test="merge:entry(., 'Indicator reference')!=''">
