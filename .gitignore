@@ -5,4 +5,4 @@
 \.bash_history
 tmp/
 \.settings/
-/lib/saxon*
+lib/saxon*
