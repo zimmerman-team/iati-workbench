@@ -216,6 +216,7 @@
       <column name="Aggregation status">{../@aggregation-status}</column>
       
       <column name="Indicator measure">{@measure}</column>
+      <column name="Indicator reference">{reference/@code}</column>
       <column name="Indicator title" style="co4">{title/narrative}</column>
       <column name="Indicator description" style="co4">{description/narrative}</column>
       <column name="Ascending">{@ascending}</column>
@@ -228,6 +229,10 @@
       <column name="Target comment"/>
       <column name="Actual" type="value"/>
       <column name="Actual comment"/>
+      <column name="Dimension 1 name">{baseline/dimension[1]/@name}</column>
+      <column name="Dimension 1 value">{baseline/dimension[1]/@value}</column>
+      <column name="Dimension 2 name">{baseline/dimension[2]/@name}</column>
+      <column name="Dimension 2 value">{baseline/dimension[2]/@value}</column>
     </row>
     <xsl:apply-templates select="period"/>
   </xsl:template>
@@ -243,6 +248,7 @@
       <column name="Aggregation status">{../../@aggregation-status}</column>
       
       <column name="Indicator measure">{../@measure}</column>
+      <column name="Indicator reference">{../reference/@code}</column>
       <column name="Indicator title" style="co4">{../title/narrative}</column>
       <column name="Indicator description" style="co4">{../description/narrative}</column>
       <column name="Ascending">{../@ascending}</column>
@@ -255,6 +261,10 @@
       <column name="Target comment">{target/comment}</column>
       <column name="Actual" type="value">{actual/@value}</column>
       <column name="Actual comment">{actual/comment}</column>
+      <column name="Dimension 1 name">{actual/dimension[1]/@name}</column>
+      <column name="Dimension 1 value">{actual/dimension[1]/@value}</column>
+      <column name="Dimension 2 name">{actual/dimension[2]/@name}</column>
+      <column name="Dimension 2 value">{actual/dimension[2]/@value}</column>
     </row>
   </xsl:template>
 
