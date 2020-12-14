@@ -228,6 +228,7 @@
             
             <xsl:if test="merge:entry(., 'Baseline year')!=''">
               <baseline year="{merge:entry(., 'Baseline year')}" value="{merge:decimal(merge:entry(., 'Baseline'))}">
+                <xsl:apply-templates select="." mode="dimensions"/>
                 <comment>
                   <narrative>{merge:entry(., 'Baseline comment')}</narrative>
                 </comment>
@@ -240,6 +241,7 @@
                 <period-end iso-date="{merge:date(merge:entry(., ('Period End date', 'End Date')))}"/>
                 <xsl:if test="merge:entry(., 'Target')!='' or merge:entry(., 'Target comment')!=''">
                   <target value="{merge:decimal(merge:entry(., 'Target'))}">
+                    <xsl:apply-templates select="." mode="dimensions"/>
                     <comment>
                       <narrative>{merge:entry(., 'Target comment')}</narrative>
                     </comment>
@@ -247,6 +249,7 @@
                 </xsl:if>
                 <xsl:if test="merge:entry(., 'Actual')!='' or merge:entry(., 'Actual comment')">
                   <actual value="{merge:decimal(merge:entry(., 'Actual'))}">
+                    <xsl:apply-templates select="." mode="dimensions"/>
                     <comment>
                       <narrative>{merge:entry(., 'Actual comment')}</narrative>
                     </comment>
@@ -259,7 +262,16 @@
       </iati-activity>
     </xsl:if>
   </xsl:template>
-  
+
+  <xsl:template match="*" mode="dimensions">
+    <xsl:if test="merge:entry(., 'Dimension 1 name')!=''">
+      <dimension name="{merge:entry(., 'Dimension 1 name')}" value="{merge:entry(., 'Dimension 1 value')}"/>
+    </xsl:if>
+    <xsl:if test="merge:entry(., 'Dimension 2 name')!=''">
+      <dimension name="{merge:entry(., 'Dimension 2 name')}" value="{merge:entry(., 'Dimension 2 value')}"/>
+    </xsl:if>
+  </xsl:template>
+    
   <!--  Geo: -->
   <xsl:template match="record[contains(lower-case($file), 'countries')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
