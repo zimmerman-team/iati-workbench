@@ -180,6 +180,14 @@
     <xsl:sequence select="functx:trim(($values, $default)[1])"/>
   </xsl:function>
   
+  <xsl:function name="merge:entryExists" as="xs:boolean">
+    <xsl:param name="record" as="node()"/>
+    <xsl:param name="label" as="xs:string+"/>
+    
+    <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
+    <xsl:value-of select="count($values)>0"/>
+  </xsl:function>
+  
   <xsl:function name="merge:format" as="xs:string">
     <xsl:param name="from" as="xs:string"/>
     <xsl:variable name="known">

@@ -213,8 +213,10 @@
           
           <indicator
             merge:id="{merge:entry(., 'Indicator reference')}---{merge:entry(., 'Indicator title')}"
-            measure="{merge:entry(., 'Indicator measure')}"
-            ascending="{merge:boolean(merge:entry(., 'Ascending'))}">
+            measure="{merge:entry(., 'Indicator measure')}">
+            <xsl:if test="merge:entryExists(., 'Ascending')">
+              <xsl:attribute name="ascending" select="merge:boolean(merge:entry(., 'Ascending'))"/>
+            </xsl:if>
             <xsl:if test="merge:entry(., 'Indicator reference')!=''">
               <reference vocabulary="99" code="{merge:entry(., 'Indicator reference')}"/>
             </xsl:if>
