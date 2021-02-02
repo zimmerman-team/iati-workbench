@@ -50,7 +50,7 @@
   
   <xd:doc>
     <xd:desc>
-      <p>Extract joint response leads.</p>
+      <p>Extract partnership leads.</p>
     </xd:desc>
   </xd:doc>
   <xsl:template match="/">
@@ -69,7 +69,8 @@
   <xsl:template match="table:table-row">
     <activity class="lead" level="1"
       hierarchy="{table:table-cell[4]/text:p}"
-      partnership="{table:table-cell[1]/text:p}">{string(table:table-cell[2]/text:p[1])}</activity>
+      partnership="{table:table-cell[1]/text:p}"
+      partnership-name="{table:table-cell[6]/text:p}">{string(table:table-cell[2]/text:p[1])}</activity>
   </xsl:template>
   
 </xsl:stylesheet>
