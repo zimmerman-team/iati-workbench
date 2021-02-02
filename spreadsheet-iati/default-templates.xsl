@@ -231,6 +231,7 @@
             <xsl:if test="merge:entry(., 'Baseline year')!=''">
               <baseline year="{merge:entry(., 'Baseline year')}" value="{merge:decimal(merge:entry(., 'Baseline'))}"
                 merge:id="{merge:entry(., 'Baseline year')}--{merge:entry(., 'Baseline')}-1-{merge:entry(., 'Dimension 1 name')}--{merge:entry(., 'Dimension 1 value')}-2-{merge:entry(., 'Dimension 2 name')}--{merge:entry(., 'Dimension 2 value')}">
+                <xsl:apply-templates select="." mode="locations"/>
                 <xsl:apply-templates select="." mode="dimensions"/>
                 <comment>
                   <narrative>{merge:entry(., 'Baseline comment')}</narrative>
@@ -244,6 +245,7 @@
                 <period-end iso-date="{merge:date(merge:entry(., ('Period End date', 'End Date')))}"/>
                 <xsl:if test="merge:entry(., 'Target')!='' or merge:entry(., 'Target comment')!=''">
                   <target value="{merge:decimal(merge:entry(., 'Target'))}">
+                    <xsl:apply-templates select="." mode="locations"/>
                     <xsl:apply-templates select="." mode="dimensions"/>
                     <comment>
                       <narrative>{merge:entry(., 'Target comment')}</narrative>
@@ -252,6 +254,7 @@
                 </xsl:if>
                 <xsl:if test="merge:entry(., 'Actual')!='' or merge:entry(., 'Actual comment')">
                   <actual value="{merge:decimal(merge:entry(., 'Actual'))}">
+                    <xsl:apply-templates select="." mode="locations"/>
                     <xsl:apply-templates select="." mode="dimensions"/>
                     <comment>
                       <narrative>{merge:entry(., 'Actual comment')}</narrative>
@@ -272,6 +275,12 @@
     </xsl:if>
     <xsl:if test="merge:entry(., 'Dimension 2 name')!=''">
       <dimension name="{merge:entry(., 'Dimension 2 name')}" value="{merge:entry(., 'Dimension 2 value')}"/>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="locations">
+    <xsl:if test="merge:entry(., 'Location reference')!=''">
+      <location ref="{merge:entry(., 'Location reference')}"/>
     </xsl:if>
   </xsl:template>
     
