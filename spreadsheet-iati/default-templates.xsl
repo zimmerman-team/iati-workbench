@@ -229,7 +229,8 @@
             </description>
             
             <xsl:if test="merge:entry(., 'Baseline year')!=''">
-              <baseline year="{merge:entry(., 'Baseline year')}" value="{merge:decimal(merge:entry(., 'Baseline'))}">
+              <baseline year="{merge:entry(., 'Baseline year')}" value="{merge:decimal(merge:entry(., 'Baseline'))}"
+                merge:id="{merge:entry(., 'Baseline year')}--{merge:entry(., 'Baseline')}-1-{merge:entry(., 'Dimension 1 name')}--{merge:entry(., 'Dimension 1 value')}-2-{merge:entry(., 'Dimension 2 name')}--{merge:entry(., 'Dimension 2 value')}">
                 <xsl:apply-templates select="." mode="dimensions"/>
                 <comment>
                   <narrative>{merge:entry(., 'Baseline comment')}</narrative>

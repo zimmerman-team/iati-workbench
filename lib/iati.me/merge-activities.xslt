@@ -131,7 +131,13 @@
                         </xsl:for-each-group>
                       </xsl:for-each-group>
                       <!-- <xsl:apply-templates select="current-group()/reference"/> -->
-                      <xsl:apply-templates select="(current-group()/baseline[@value!=''])[1]"/>
+                      <xsl:for-each-group select="current-group()/baseline" group-by="@merge:id">
+                        <baseline>
+                          <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
+                          <xsl:apply-templates select="current-group()[1]/dimension"/>
+                          <xsl:apply-templates select="current-group()[1]/comment"/>
+                        </baseline>
+                      </xsl:for-each-group>
                       <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]"/>
                       <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
                       <!-- <xsl:apply-templates select="current-group()/*"/> -->
