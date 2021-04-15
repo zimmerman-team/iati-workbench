@@ -54,7 +54,7 @@
     </xd:desc>
   </xd:doc>
   <xsl:template match="/">
-    <xsl:apply-templates select="//table:table[@table:name='joint responses']"/>
+    <xsl:apply-templates select="//table:table[@table:name=('joint responses', 'partnerships')]"/>
   </xsl:template>
   
   <xsl:template match="table:table">

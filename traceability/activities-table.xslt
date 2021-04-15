@@ -26,11 +26,11 @@
   </xsl:template>
 
   <xsl:template match="*[@published='true' and @in_this='' and @in_up='']" mode="meaning">
-    <xsl:text>"OK", "This activity is provided manually (as JR lead or otherwise)", "", ""</xsl:text>
+    <xsl:text>"OK", "This activity is provided manually (as partnership lead or otherwise)", "", ""</xsl:text>
   </xsl:template>
 
   <xsl:template match="*[@published='false' and @in_this='' and @in_up='']" mode="meaning">
-    <xsl:text>"WARNING", "This activity is provided manually (JR lead or otherwise) but not published", "{@org} should publish the activity", "{@org}"</xsl:text>
+    <xsl:text>"WARNING", "This activity is provided manually (partnership lead or otherwise) but not published", "{@org} should publish the activity", "{@org}"</xsl:text>
   </xsl:template>
   
   <xsl:template match="*[@published='true' and @in_this='true' and @in_up='true']" mode="meaning">
