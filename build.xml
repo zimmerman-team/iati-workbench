@@ -138,4 +138,14 @@
     
   </target>
   
+  <target name="canonical" description="Create a more canonical version of an IATI file">
+    <xslt
+      basedir="/workspace/src"
+      includes="*.xml"
+      destdir="/workspace/output"
+      extension=".canonical.xml"
+      style="lib/iati.me/canonical.xslt"
+    />
+  </target>
+  
 </project>
