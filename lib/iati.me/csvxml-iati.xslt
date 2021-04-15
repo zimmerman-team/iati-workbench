@@ -33,18 +33,15 @@
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
       <!-- remove '%' and ',' -->
-      <xsl:variable name="i" select="functx:trim(replace($item,'[%,]',''))"/>
+      <xsl:variable name="i" select="replace($item,'[%,]','')=>functx:trim()=>replace('\((.+)\)', '-$1')"/>
       <xsl:if test="$i!=''">{$i}</xsl:if>
     </xsl:if>
   </xsl:function>
 
+  <!-- Remove periods, replace commas with period, then turn into decimal -->
   <xsl:function name="merge:decimal2" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
-    <xsl:if test="$item!=''">
-      <!-- remove '%' and '.', replace comma by period as decimal-separator -->
-      <xsl:variable name="i" select="functx:trim(replace(replace($item,'[%.]',''), ',', '.'))"/>
-      <xsl:if test="$i!=''">{$i}</xsl:if>
-    </xsl:if>
+    {merge:decimal(replace($item, '.', '')=>replace(',', '.'))}
   </xsl:function>
   
   <xsl:function name="merge:currency-value" as="xs:decimal?">
