@@ -82,7 +82,28 @@
       <arg line="report"/>
     </apply>  -->
   </target>
-
+  
+  <target name="filter-activities" description="Split the src file into valid and invalid activities">
+    <!-- filter valid activities -->
+    <xslt basedir="/workspace/reports"
+      includes="validation.iati-activities.xml"
+      destdir="/workspace/output"
+      extension=".xml"
+      style="spreadsheet-iati/filter-valid-activities.xslt">
+      <globmapper from="validation.*.xml" to="*.xml"/>
+    </xslt>
+    
+    <!-- filter invalid activities -->
+    <xslt basedir="/workspace/reports"
+      includes="validation.iati-activities.xml"
+      destdir="/workspace/output"
+      extension=".xml"
+      style="spreadsheet-iati/filter-valid-activities.xslt">
+      <globmapper from="validation.*.xml" to="*.invalid.xml"/>
+      <param name="select-valid" expression="false"/>
+    </xslt>
+  </target>
+            
   <target name="iati-summary"
     description="Create LibreOffice spreadsheet with a summary of an IATI file."
     depends="init">
@@ -93,7 +114,7 @@
       <targetfileset dir="/workspace/output" includes="*.fods" />
     </dependset>
     <xslt
-      basedir="/workspace/src"
+      basedir="/workspace/output"
       includes="*.xml"
       destdir="/workspace/output"
       extension=".fods"

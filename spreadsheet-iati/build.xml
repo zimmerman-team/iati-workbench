@@ -8,7 +8,7 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati">
+    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati, filter-activities">
   </target>
 
   <!--Merge activities from *.generated.xml into one file.-->
