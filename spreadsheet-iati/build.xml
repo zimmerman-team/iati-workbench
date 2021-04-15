@@ -73,12 +73,16 @@
      />
   </target>
 
+  <!-- Provide a place to add specific XML convertors -->
+  <extension-point name="iati-iati"
+    depends="iatixml-iati"/>
+
   <!--Transform existing IATI input files into a version with merge ids.-->
-  <target name="iati-iati"
+  <target name="iatixml-iati"
     depends="init">
     <xslt
       basedir="/workspace/input/"
-      includes="*.xml"
+      includes="*.iati.xml"
       destdir="/workspace/tmp"
       extension=".generated.xml"
       style="transform/add-merge-ids.xslt"
