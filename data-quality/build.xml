@@ -74,12 +74,13 @@
       <fileset dir="/workspace/reports" includes="validation.*.txt"/>
     </apply>
     
+    <!-- TODO: include this in the normal workbench, or add a resource to trigger this call
     <apply executable="iati-validator">
-      <arg line="report"/>
+      <arg line="rules"/>
     </apply>
     <apply executable="iati-validator">
       <arg line="report"/>
-    </apply>
+    </apply>  -->
   </target>
 
   <target name="iati-summary"
