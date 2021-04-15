@@ -54,7 +54,15 @@
       <globmapper from="*.xml" to="validation.*.xml"/>
     </apply>    
 
+    <!-- add IATI activity identifiers as attribute to the validation results -->
     <xslt basedir="/workspace/tmp"
+      includes="validation.*.xml"
+      destdir="/workspace/reports"
+      extension=".xml"
+      style="spreadsheet-iati/validation-identifiers.xslt"
+    />
+    
+    <xslt basedir="/workspace/reports"
       includes="validation.*.xml"
       destdir="/workspace/reports"
       extension=".txt"
