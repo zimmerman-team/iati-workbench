@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="functx merge">
@@ -26,9 +26,7 @@
             <iati-identifier><xsl:copy-of select="current-grouping-key()"/></iati-identifier>
             <xsl:apply-templates select="(current-group()/reporting-org)[1]"/>
 
-            <title>
-              <xsl:apply-templates select="current-group()/title/narrative"/>
-            </title>
+            <xsl:apply-templates select="current-group()/title"/>
 
             <!-- <xsl:for-each-group select="current-group()/description" group-by="@type"> -->
               <xsl:apply-templates select="current-group()/description"/>
@@ -179,6 +177,8 @@
   <!-- targets or actuals without values -->
   <xsl:template match="target[not(@value) or @value='']"/>
   <xsl:template match="actual[not(@value) or @value='']"/>
+
+  <xsl:template match="policy-marker[@code='']"/>
 
   <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
   <!-- <xsl:template match="collaboration-type">

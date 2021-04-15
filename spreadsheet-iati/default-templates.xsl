@@ -7,6 +7,8 @@
   expand-text="yes"
   version="3.0">
   
+  <xsl:output indent="yes"/>
+
   <xsl:variable name="file"/>
   <xsl:variable name="reporting-org"/>
   <xsl:variable name="reporting-org-type"/>
@@ -43,7 +45,9 @@
           <telephone>{merge:entry(., 'Contact telephone')}</telephone>
           <email>{merge:entry(., 'Contact email')}</email>
           <website>{merge:entry(., 'Contact website')}</website>
-          <mailing-address>{merge:entry(., 'Contact mailing address')}</mailing-address>
+          <mailing-address>
+            <narrative>{merge:entry(., 'Contact mailing address')}</narrative>
+          </mailing-address>
         </contact-info>
         
         <title>
