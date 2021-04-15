@@ -137,7 +137,17 @@
     depends="spreadsheet-iati,activities,gantt-results">
     
   </target>
-  
+
+  <target name="partnership-activities" description="Generate a table with all activities in a source file, add partnership info if available">
+    <xslt
+      basedir="/workspace/src"
+      includes="*.xml"
+      destdir="/workspace/output"
+      extension=".list.fods"
+      style="lib/iati.me/iati-partnership-activities-table.xslt"
+    />
+  </target>
+
   <target name="canonical" description="Create a more canonical version of an IATI file">
     <xslt
       basedir="/workspace/src"
