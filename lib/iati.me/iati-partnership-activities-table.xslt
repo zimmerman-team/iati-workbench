@@ -10,7 +10,8 @@
   
   <xsl:variable name="partnerships" select="doc('/workspace/output/activities.xml')"/>
   <xsl:variable name="subset" select="doc('/workspace/output/subset.xml')"/>
-  <xsl:variable name="currencies" select="(//value/@currency, //iati-activity/@default-currency-code)=>distinct-values()=>sort()"/>
+<!--  <xsl:variable name="currencies" select="(//value/@currency, //iati-activity/@default-currency-code)=>distinct-values()=>sort()"/>-->
+  <xsl:variable name="budgets" select="doc('/workspace/output/budgets-adhoc.xml')"/>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -31,6 +32,7 @@
     <xsl:variable name="id" select="iati-identifier/data()"/>
     <xsl:variable name="meta" select="$partnerships//activity[.=$id]"/>
     <xsl:variable name="subact" select="$subset//record[entry[@name='Activity_id']=$id]"/>
+    <xsl:variable name="b" select="$budgets//b[@act=$id]"/>
     <row>
       <column name="Partnership" style="co1">{$meta/@partnership}</column>
       <column name="Partnership name" style="co2">{$meta/@partnership-name}</column>
@@ -52,15 +54,24 @@
       <column name="Status" style="co1">{activity-status/@code}</column>
       
       <column name="Budgets:" style="co1"></column>
-      <xsl:variable name="budgets" select="budget"/>
-      <xsl:variable name="defcur" select="@default-currency"/>
-      <xsl:for-each select="$currencies">
-        <xsl:variable name="x" select="."/>
-<!--        <column name="{.}" style="co1">{string-join($budgets/value/@currency, ', ')}</column>-->
-        <column name="{.}" style="co1">{me:nonzero(sum($budgets/value[@currency=$x or (not(@currency) and $defcur=$x)]))}</column>
-      </xsl:for-each>
-
+      <column name="Currency" style="co1">{$b/value/@currency=>string-join(', ')}</column>
+      <column name="Value" style="co1">{me:nonzero(sum($b/value/double))}</column>
+      <column name="in USD" style="co1">{me:nonzero(sum($b/value/@usd))}</column>
+      
       <column name="DAC5 sectors" style="co1">{(sector[@vocabulary='1' or not(@vocabulary)]/@code)=>sort()=>string-join(', ')}</column>
+      <column name="DAC5 percentages" style="co1">{(sector[@vocabulary='1' or not(@vocabulary)]/@percentage)=>sort()=>string-join(', ')}</column>
+
+      <column name="SDG goal sectors" style="co1">{(sector[@vocabulary='7']/@code)=>sort()=>string-join(', ')}</column>
+      <column name="SDG goal percentages" style="co1">{(sector[@vocabulary='7']/@percentage)=>sort()=>string-join(', ')}</column>
+      
+      <column name="SDG target sectors" style="co1">{(sector[@vocabulary='7']/@code)=>sort()=>string-join(', ')}</column>
+      <column name="SDG target percentages" style="co1">{(sector[@vocabulary='7']/@percentage)=>sort()=>string-join(', ')}</column>
+      
+      <column name="SDG indicator sectors" style="co1">{(sector[@vocabulary='7']/@code)=>sort()=>string-join(', ')}</column>
+      <column name="SDG indicator percentages" style="co1">{(sector[@vocabulary='7']/@percentage)=>sort()=>string-join(', ')}</column>
+      
+      <column name="SDG goals (tags)" style="co1">{(tag[@vocabulary='2']/@code)=>sort()=>string-join(', ')}</column>
+      <column name="SDG targets (tags)" style="co1">{(tag[@vocabulary='3']/@code)=>sort()=>string-join(', ')}</column>
       
       <column name="Geography:" style="co1"></column>
       <column name="Countries" style="co1">{me:list(recipient-country/@code)}</column>
