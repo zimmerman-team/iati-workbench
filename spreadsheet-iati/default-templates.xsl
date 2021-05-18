@@ -12,6 +12,9 @@
   <xsl:variable name="file"/>
   <xsl:variable name="reporting-org"/>
   <xsl:variable name="reporting-org-type"/>
+  <xsl:variable name="reporting-org-name"/>
+  <xsl:variable name="include-reporting-org-as-role"/>
+  <xsl:variable name="default-participating-role"/>
   
   <xsl:include href="default-templates-org.xsl"/>
   
@@ -66,6 +69,14 @@
         <description type="4">
           <narrative>{merge:entry(., 'Background')}</narrative>
         </description>
+        
+        <xsl:if test="$include-reporting-org-as-role=('1', '2', '3', '4')">
+          <participating-org role="{$include-reporting-org-as-role}"
+            type="{$reporting-org-type}"
+            ref="{$reporting-org}">
+            <narrative>{$reporting-org-name}</narrative>
+          </participating-org>          
+        </xsl:if>
         
         <activity-status code="{(merge:entry(., 'Activity status'), '2')[1]}"/>
         <activity-date type="1" iso-date="{merge:date(merge:entry(., 'Planned start date', ''))}"/>
@@ -317,7 +328,8 @@
   <xsl:template match="record[contains(lower-case($file), 'participating')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <participating-org role="{merge:entry(., ('Role', 'Organisation Role'))}" type="{merge:entry(., ('Type', 'Organisation Type'))}" ref="{merge:entry(., 'Organisation identifier')}" activity-id="{merge:entry(., 'Activity identifier')}">
+        <participating-org role="{merge:entry(., ('Role', 'Organisation Role'), $default-participating-role)}" 
+          type="{merge:entry(., ('Type', 'Organisation Type'))}" ref="{merge:entry(., 'Organisation identifier')}" activity-id="{merge:entry(., 'Activity identifier')}">
           <narrative>{merge:entry(., 'Organisation name')}</narrative>
         </participating-org>
       </iati-activity>
