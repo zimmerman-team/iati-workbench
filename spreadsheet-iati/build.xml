@@ -79,6 +79,7 @@
 
   <!--Transform existing IATI input files into a version with merge ids.-->
   <target name="iatixml-iati"
+    description="Transform existing IATI input files into a version with merge ids."
     depends="init">
     <xslt
       basedir="/workspace/input/"
