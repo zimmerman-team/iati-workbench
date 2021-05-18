@@ -1,0 +1,10 @@
+= Spreadsheets2IATI
+
+Convertor.
+
+== General steps (tbd)
+
+[source, bash]
+....
+ant s2i-run # <1>
+....
