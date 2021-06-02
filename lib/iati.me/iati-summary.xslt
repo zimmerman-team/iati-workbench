@@ -33,7 +33,7 @@
       <column name="# parent activities" type="value">{me:nonzero(count(related-activity[@type='1']))}</column>
       <!--      <column name="# child activities">{me:nonzero(count(related-activity[@type='2']))}</column>-->
       
-      <column name="Basic info present?">{me:yesno(title/narrative[1]!='' 
+      <column name="Basic info present?">{me:yesno(title/narrative[1]!='' and description/narrative[1]!='' 
         and participating-org and activity-date)}</column>
       <column name="DAC5 sectors">{(sector[@vocabulary='1' or not(@vocabulary)]/@code)=>sort()=>string-join(', ')}</column>
       
