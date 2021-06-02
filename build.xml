@@ -16,6 +16,7 @@
   <import file="data-quality/build.xml"/>
   <import file="traceability/build.xml"/>
   <import file="visualisations/build.xml"/>
+  <import file="/workspace/config/build.iati-workbench.xml" optional="yes"/>
   
   <!-- Include additional development targets if available -->
 <!--  <import file="develop/build.xml" optional="yes"/>-->

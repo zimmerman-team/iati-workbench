@@ -45,7 +45,7 @@
   <target name="get-inputs" depends="get-remote"/>
 
   <!-- empty target to override if actions are needed after downloading remote files -->
-  <target name="postprocess-inputs"/>
+  <extension-point name="postprocess-inputs"/>
 
   <target name="prep-new-inputs">
     <!-- update csv-map and open git diff -->
