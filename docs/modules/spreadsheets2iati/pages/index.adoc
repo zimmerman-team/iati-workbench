@@ -2,9 +2,158 @@
 
 Convertor.
 
-== General steps (tbd)
+The DataWorkbench started out in 2016 as a single "engine": a Docker container that contains all the components needed to perform all the tasks.
+In 2017, we began to split the code into separate engines, each focusing on a different part of the workflow.
+This makes it easier to release engines as open source, and reduces the size individual container images.
 
-[source, bash]
+== Setup notes
+
+=== Organisation
+
+Create a directory for the organisation if it does not exist.
+
+Create or copy a file `organisation.xml` with the information about the organisation and the workspace (next step).
+
+=== Workspace
+
+Create a directory for the workspace if it does not exist.
+
+Initialise the workspace, for instance with `iati-engine init`
+
+Create or copy a `build.xml` to have local build capabilities: for instance to get files from a folder synchronised with Google Drive.
+
+== Spreadsheets2IATI
+
+The conversion process initiated by local `ant` in workspace.
+
+The local `build.xml` includes a workspace library build via a hardcoded link.
+
+.Sequence for `s2i-run` target
+[plantuml]
 ....
-ant s2i-run # <1>
+@startuml
+|Workspace|
+start
+#lightgreen:config/iati-workbench.properties]
+:get inputs;
+note
+  Uses rclone and local auth
+  //Flat// (default) or //deep// (recursive)
+end note
+
+#lightblue:inputs/*.*]
+:postprocess inputs;
+note
+  Rename files, remove
+  empty files, etc. 
+  override via local ""build.xml""
+end note
+#lightblue:updates inputs/*]
+
+|Workspace|
+#orange:prepare new inputs;
+
+|IATI Workbench|
+partition spreadsheet-map {
+  partition sheets-csvxml {
+    fork
+      #lightblue:input/*.xsl{x} ]
+      :excel-csv;
+      #lightblue:tmp/*.csv]
+    fork again
+      #lightblue:input/*.csv]
+      :csv-csv;
+      #lightblue:tmp/*.csv]
+    end fork
+    
+    :csv-csvxml;
+    note: using basex
+    #lightblue:tmp/*.csv.xml]
+  }
+  
+  :create map;
+  #lightblue:output/csvmap-csv]
+  
+}
+
+|Workspace|
+:prepare new inputs:
+store changes;
+note
+  Commit changes to git
+  Open diff in browser
+end note
+
+#orange:spreadsheets-iati;
+
+|IATI Workbench|
+:generate-iati-partials;
+note: extension point
+fork
+  partition sheets-iati {
+    partition sheets-csvxml {
+      :sheets-csvxml;
+      note
+        already done in step
+        ""spreadsheet-map"" above
+      end note
+    }
+    #lightblue:tmp/*.csv.xml]
+    
+    #lightgreen:config/csvxml-iati.xslt]
+    note
+      Can include or override
+      default templates
+    end note
+    :csvxml-iati;
+  }
+fork again
+  partition iatixml-iati {
+    #lightblue:input/*.iati.xml]
+    :iatixml-iati;
+  }
+fork again
+  #lightgreen:switch (additional targets in ""build.xml""?)
+  case (bespoke-akvo)
+    #lightblue:input/*.akvo.xml]
+    #lightgreen:config/akvo-s2i.xslt]
+    :akvo-s2i;
+  case (none)
+  endswitch
+
+end fork
+
+#lightblue:tmp/*.generated.xml]
+
+:merge-iati;
+#lightblue:src/iati-{activities, organisation}.xml]
+:validate-iati;
+
+#lightblue:via dest/*
+reports/*]
+
+:filter-activities;
+
+#lightblue:src/iati-{activities,organisation}.xml
+output/iati-activities{,.invalid}.xml
+reports/*]
+
+|Workspace|
+:postprocess iati;
+note
+  Fix known data errors, 
+  anonymisation, etc
+  override via local ""build.xml""
+end note
+
+|Workspace|
+:open reports;
+note
+  Open all feedback files
+  in a browser
+end note
+
+|Workspace|
+stop
+@enduml
 ....

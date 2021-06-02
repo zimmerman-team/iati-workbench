@@ -8,7 +8,7 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="csv-csvxml, csvxml-iati, iati-iati, merge-iati, validate-iati, filter-activities">
+    depends="generate-iati-partials, merge-iati, validate-iati, filter-activities">
   </target>
 
   <!--Merge activities from *.generated.xml into one file.-->
@@ -54,7 +54,7 @@
     </apply>
   </target>
 
-  <target name="csvxml-iati">
+  <target name="sheets-iati" depends="sheets-csvxml">
     <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.
@@ -74,11 +74,11 @@
   </target>
 
   <!-- Provide a place to add specific XML convertors -->
-  <extension-point name="iati-iati"
-    depends="iatixml-iati"/>
+  <extension-point name="generate-iati-partials"
+    depends="sheets-iati, iati-iati"/>
 
   <!--Transform existing IATI input files into a version with merge ids.-->
-  <target name="iatixml-iati"
+  <target name="iati-iati"
     description="Transform existing IATI input files into a version with merge ids."
     depends="init">
     <xslt
@@ -90,7 +90,7 @@
      />
   </target>
 
-  <target name="csv-csvxml" depends="excel-csv, csv-csv">
+  <target name="sheets-csvxml" depends="excel-csv, csv-csv">
     <sequential>
       <apply executable="basex" dest="/workspace/tmp" verbose="true">
         <fileset dir="/workspace/tmp" includes="*.csv"/>
@@ -134,7 +134,7 @@
     </apply>
   </target>
 
-  <target name="spreadsheet-map" depends="clean, csv-csvxml, ls-tmp" description="Create a map of the input files">
+  <target name="spreadsheet-map" depends="clean, sheets-csvxml, ls-tmp" description="Create a map of the input files">
     <xslt basedir="tmp"
       destdir="output"
       in="/workspace/tmp/ls.xml"
