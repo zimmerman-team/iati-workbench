@@ -278,10 +278,14 @@
     </table:table-row>    
   </xsl:template>
 
+  <xsl:template match="*[@type=('value', 'percentage')]" mode="office-spreadsheet-header-column-width">
+    <table:table-column table:style-name="{(@style,'co1')[1]}" table:default-cell-style-name="cell-decimal"/>
+  </xsl:template>
+
   <xsl:template match="*" mode="office-spreadsheet-header-column-width">
     <table:table-column table:style-name="{(@style,'co1')[1]}" table:default-cell-style-name="Default"/>
   </xsl:template>
-
+  
   <xsl:template match="*" mode="office-spreadsheet-header-column-heading">
     <table:table-cell table:style-name="Heading" office:value-type="string" calcext:value-type="string">
       <text:p>{@name}</text:p>
@@ -299,7 +303,7 @@
   </xsl:template>
   
   <xsl:template match="*[@type=('value', 'percentage')]" mode="office-spreadsheet-cell" priority="8">
-    <table:table-cell table:style-name="cell-decimal" office:value-type="float" calcext:value-type="float" office:value="{.}">
+    <table:table-cell office:value-type="float" calcext:value-type="float" office:value="{.}">
       <text:p>{.}</text:p>
     </table:table-cell>
   </xsl:template>

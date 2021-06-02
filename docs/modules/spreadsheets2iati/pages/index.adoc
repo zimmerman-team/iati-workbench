@@ -157,3 +157,10 @@ end note
 stop
 @enduml
 ....
+
+== IATI Summary
+
+Creates spreadsheets with summary information based on XML fils in the `output` folder.
+
+To create those XML files in the output folder, we need to run a validation and then filter activities.
+ 

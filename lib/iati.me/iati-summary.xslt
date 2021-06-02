@@ -30,31 +30,31 @@
       <column name="Activity name" style="co4">{title/narrative[1]}</column>
       
       
-      <column name="# parent activities" style="co1">{me:nonzero(count(related-activity[@type='1']))}</column>
-      <!--      <column name="# child activities" style="co1">{me:nonzero(count(related-activity[@type='2']))}</column>-->
+      <column name="# parent activities" type="value">{me:nonzero(count(related-activity[@type='1']))}</column>
+      <!--      <column name="# child activities">{me:nonzero(count(related-activity[@type='2']))}</column>-->
       
-      <column name="Basic info present?" style="co1">{me:yesno(title/narrative[1]!='' 
+      <column name="Basic info present?">{me:yesno(title/narrative[1]!='' 
         and participating-org and activity-date)}</column>
-      <column name="DAC5 sectors" style="co1">{(sector[@vocabulary='1' or not(@vocabulary)]/@code)=>sort()=>string-join(', ')}</column>
+      <column name="DAC5 sectors">{(sector[@vocabulary='1' or not(@vocabulary)]/@code)=>sort()=>string-join(', ')}</column>
       
       <column name="Geography:" style="co2"></column>
-      <column name="Countries" style="co1">{(recipient-country/@code)=>sort()=>string-join(', ')}</column>
-      <column name="# locations" style="co1">{me:nonzero(count(location))}</column>
+      <column name="Countries">{(recipient-country/@code)=>sort()=>string-join(', ')}</column>
+      <column name="# locations">{me:nonzero(count(location))}</column>
       
       <column name="Participating orgs:" style="co2"></column>
-      <column name="# funding" style="co1">{me:nonzero(count(participating-org[@role='1']))}</column>
-      <column name="# accountable" style="co1">{me:nonzero(count(participating-org[@role='2']))}</column>
-      <column name="# implementing" style="co1">{me:nonzero(count(participating-org[@role='4']))}</column>
+      <column name="# funding" type="value">{me:nonzero(count(participating-org[@role='1']))}</column>
+      <column name="# accountable" type="value">{me:nonzero(count(participating-org[@role='2']))}</column>
+      <column name="# implementing" type="value">{me:nonzero(count(participating-org[@role='4']))}</column>
 
       <column name="Transactions:" style="co2"></column>
-      <column name="# incoming commitments" style="co1">{me:nonzero(count(transaction[transaction-type/@code='11']))}</column>
-      <column name="# outgoing commitments" style="co1">{me:nonzero(count(transaction[transaction-type/@code='2']))}</column>
-      <column name="# incoming funds" style="co1">{me:nonzero(count(transaction[transaction-type/@code='1']))}</column>
-      <column name="# disbursements" style="co1">{me:nonzero(count(transaction[transaction-type/@code='3']))}</column>
-      <column name="# expenditures" style="co1">{me:nonzero(count(transaction[transaction-type/@code='4']))}</column>
+      <column name="# incoming commitments" type="value">{me:nonzero(count(transaction[transaction-type/@code='11']))}</column>
+      <column name="# outgoing commitments" type="value">{me:nonzero(count(transaction[transaction-type/@code='2']))}</column>
+      <column name="# incoming funds" type="value">{me:nonzero(count(transaction[transaction-type/@code='1']))}</column>
+      <column name="# disbursements" type="value">{me:nonzero(count(transaction[transaction-type/@code='3']))}</column>
+      <column name="# expenditures" type="value">{me:nonzero(count(transaction[transaction-type/@code='4']))}</column>
       
       <column name="Results:" style="co2"></column>
-      <column name="# indicators" style="co1">{me:nonzero(count(result/indicator))}</column>
+      <column name="# indicators" type="value">{me:nonzero(count(result/indicator))}</column>
       
     </row>
   </xsl:template>
