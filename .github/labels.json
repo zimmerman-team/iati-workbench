@@ -41,7 +41,74 @@
   },
   {
     "name": "documentation",
-    "color": "0075ca",
+    "color": "ff67d0",
     "description": "Improvements or additions to documentation"
+  },
+
+  {
+    "name": "Dashboard",
+    "color": "ff9a00",
+    "description": ""
+  },
+  {
+    "name": "Validation",
+    "color": "00ef93",
+    "description": ""
+  },
+  {
+    "name": "ETL",
+    "color": "00c8e4",
+    "description": ""
+  },
+  {
+    "name": "Platform",
+    "color": "2c4365",
+    "description": ""
+  },
+  {
+    "name": "IATI Standard",
+    "color": "C2E0C6",
+    "description": ""
+  },
+  {
+    "name": "kubernetes",
+    "color": "",
+    "description": ""
+  },
+  {
+    "name": "Spreadsheets2IATI",
+    "color": "d36ee6",
+    "description": ""
+  },
+  {
+    "name": "Workbench",
+    "color": "2213CD",
+    "description": ""
+  },
+  {
+    "name": "iati-financial",
+    "color": "6781AD",
+    "description": ""
+  },
+  {
+    "name": "iati-geo",
+    "color": "CC4A58",
+    "description": ""
+  },
+  {
+    "name": "iati-results",
+    "color": "C0DB8B",
+    "description": ""
+  },
+  {
+    "name": "iati-traceability",
+    "color": "D6BDD8",
+    "description": ""
+  },
+  {
+    "name": "iati.me",
+    "color": "B7F5E8",
+    "description": ""
   }
+
 ]
