@@ -105,17 +105,19 @@
    
   <target name="s2i-rerun" description="Rerun an S2I conversion (skip csv-map and git commit" 
     depends="get-inputs, postprocess-inputs, prep-input-fixes, spreadsheet-iati, postprocess-iati, open-reports"/>
-    
+
   <target name="s2i-publish" description="Publish the IATI file(s) and push the repository">
-    <exec executable="dataworkbench">
-      <arg value="refresh"/>
-    </exec>
+    <copy todir="/home/rolf/dev/websites/dataworkbench.io/www/publisher/${dwb.organisation}">
+      <fileset dir="output">
+        <include name="iati-*.xml"/>
+        <exclude name="*.invalid.xml"/>
+      </fileset>
+    </copy>
     
     <!-- TODO: make publishing the data more portable via external config -->
     <exec executable="git" dir="/home/rolf/dev/websites/dataworkbench.io">
       <arg value="add"/>
       <arg value="www/publisher"/>
-      <arg value="www/show"/>
     </exec>
     <exec executable="git" dir="/home/rolf/dev/websites/dataworkbench.io">
       <arg value="commit"/>
