@@ -107,35 +107,25 @@
     depends="get-inputs, postprocess-inputs, prep-input-fixes, spreadsheet-iati, postprocess-iati, open-reports"/>
 
   <target name="s2i-publish" description="Publish the IATI file(s) and push the repository">
-    <copy todir="/home/rolf/dev/websites/dataworkbench.io/www/publisher/${dwb.organisation}">
-      <fileset dir="output">
-        <include name="iati-*.xml"/>
-        <exclude name="*.invalid.xml"/>
-      </fileset>
-    </copy>
-    
-    <!-- TODO: make publishing the data more portable via external config -->
-    <exec executable="git" dir="/home/rolf/dev/websites/dataworkbench.io">
-      <arg value="add"/>
-      <arg value="www/publisher"/>
+    <exec executable="gsutil">
+      <arg value="cp"/>
+      <arg value="output/iati-activities.xml"/>
+      <arg value="gs://dataworkbench-static-files/publisher/${dwb.organisation}/iati-activities.xml"/>
     </exec>
-    <exec executable="git" dir="/home/rolf/dev/websites/dataworkbench.io">
-      <arg value="commit"/>
-      <arg value="-m"/>
-      <arg value="Update IATI data"/>
+    <exec executable="gsutil">
+      <arg value="cp"/>
+      <arg value="src/iati-organisations.xml"/>
+      <arg value="gs://dataworkbench-static-files/publisher/${dwb.organisation}/iati-organisations.xml"/>
     </exec>
-    <exec executable="git" dir="/home/rolf/dev/websites/dataworkbench.io">
-      <arg value="push"/>
-    </exec>
-    <exec executable="ssh" dir="/home/rolf/dev/websites/dataworkbench.io">
-      <arg value="vanaheim"/>
-      <arg value="cd /var/www/dataworkbench.io/ &amp;&amp; git pull"/>
-    </exec>  
-    
+
     <!-- Add changes in src/ and push to google repositories -->
     <exec executable="git">
       <arg value="add"/>
       <arg value="src/"/>
+    </exec>
+    <exec executable="git">
+      <arg value="add"/>
+      <arg value="output/iati-*.xml"/>
     </exec>
     <exec executable="git">
       <arg value="commit"/>
