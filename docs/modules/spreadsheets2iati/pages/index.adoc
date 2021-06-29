@@ -34,21 +34,21 @@ The local `build.xml` includes a workspace library build via a hardcoded link.
 @startuml
 |Workspace|
 start
-#lightgreen:config/iati-workbench.properties]
+$important_color:config/iati-workbench.properties]
 :get inputs;
 note
   Uses rclone and local auth
   //Flat// (default) or //deep// (recursive)
 end note
 
-#lightblue:inputs/*.*]
+$node_1_main_color:inputs/*.*]
 :postprocess inputs;
 note
   Rename files, remove
   empty files, etc. 
   override via local ""build.xml""
 end note
-#lightblue:updates inputs/*]
+$node_1_main_color:updates inputs/*]
 
 |Workspace|
 #orange:prepare new inputs;
@@ -57,22 +57,22 @@ end note
 partition spreadsheet-map {
   partition sheets-csvxml {
     fork
-      #lightblue:input/*.xsl{x} ]
+      $node_1_main_color:input/*.xsl{x} ]
       :excel-csv;
-      #lightblue:tmp/*.csv]
+      $node_1_main_color:tmp/*.csv]
     fork again
-      #lightblue:input/*.csv]
+      $node_1_main_color:input/*.csv]
       :csv-csv;
-      #lightblue:tmp/*.csv]
+      $node_1_main_color:tmp/*.csv]
     end fork
     
     :csv-csvxml;
     note: using basex
-    #lightblue:tmp/*.csv.xml]
+    $node_1_main_color:tmp/*.csv.xml]
   }
   
   :create map;
-  #lightblue:output/csvmap-csv]
+  $node_1_main_color:output/csvmap-csv]
   
 }
 
@@ -91,50 +91,47 @@ end note
 note: extension point
 fork
   partition sheets-iati {
-    partition sheets-csvxml {
-      :sheets-csvxml;
-      note
-        already done in step
-        ""spreadsheet-map"" above
-      end note
-    }
-    #lightblue:tmp/*.csv.xml]
+    :sheets-csvxml;
+    note
+      already done in step
+      ""spreadsheet-map"" above
+    end note
+    $node_1_main_color:tmp/*.csv.xml]
     
-    #lightgreen:config/csvxml-iati.xslt]
+    $important_color:config/csvxml-iati.xslt]
     note
       Can include or override
       default templates
     end note
-    :csvxml-iati;
+    :sheets-iati;
   }
 fork again
   partition iatixml-iati {
-    #lightblue:input/*.iati.xml]
+    $node_1_main_color:input/*.iati.xml]
     :iatixml-iati;
   }
 fork again
-  #lightgreen:switch (additional targets in ""build.xml""?)
-  case (bespoke-akvo)
-    #lightblue:input/*.akvo.xml]
-    #lightgreen:config/akvo-s2i.xslt]
+  partition akvo {
+    $important_color::Optional Akvo target in
+    config/build.iati-workbench.xml;
+    $node_1_main_color:input/*.akvo.xml]
+    $important_color:config/akvo-s2i.xslt]
     :akvo-s2i;
-  case (none)
-  endswitch
-
+  }
 end fork
 
-#lightblue:tmp/*.generated.xml]
+$node_1_main_color:tmp/*.generated.xml]
 
 :merge-iati;
-#lightblue:src/iati-{activities, organisation}.xml]
+$node_1_main_color:src/iati-{activities, organisation}.xml]
 :validate-iati;
 
-#lightblue:via dest/*
+$node_1_main_color:via dest/*
 reports/*]
 
 :filter-activities;
 
-#lightblue:src/iati-{activities,organisation}.xml
+$node_1_main_color:src/iati-{activities,organisation}.xml
 output/iati-activities{,.invalid}.xml
 reports/*]
 
