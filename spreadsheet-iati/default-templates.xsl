@@ -175,8 +175,8 @@
   
   <!--  Transactions: -->
   <xsl:template match="record[contains(lower-case($file), 'transactions')]">
-    <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
-      <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
+    <xsl:if test="starts-with(merge:entry(., ['IATI activity identifier', 'IATI identifier'])[1], $reporting-org)">
+      <iati-activity merge:id="{merge:entry(., ['IATI activity identifier', 'IATI identifier'])}">
         <transaction ref="{merge:entry(., 'Reference')}">
           <transaction-type code="{entry[@name=('Type', 'Transaction Type Code')]}"/>
           <transaction-date iso-date="{merge:date(merge:entry(., 'Date'))}" />
