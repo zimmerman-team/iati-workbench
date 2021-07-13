@@ -1,11 +1,11 @@
 #!/bin/bash
-iati_engine=$(basename ${BASH_SOURCE[0]})
+iati_workbench=$(basename ${BASH_SOURCE[0]})
 
 case "$1." in
   "-?.")
     cat <<EOT
 
-$iati_engine
+$iati_workbench
 
   -?                    Show this help text.
 
@@ -15,7 +15,7 @@ $iati_engine
   autocompletion        Add command-line autocompletion to your current
                         shell. Run this command, including the leading dot:
 
-                          . $iati_engine autocompletion
+                          . $iati_workbench autocompletion
 
 EOT
     ;;
@@ -24,64 +24,46 @@ EOT
     if [[ `basename $0` != 'bash' ]]
     then
       echo -e "\nMake sure to include the dot before the command to enable autocompletion:"
-      echo "Run '. $iati_engine autocompletion'"
+      echo "Run '. $iati_workbench autocompletion'"
     else
       # add command line autocompletion:
-      export _iati_data_validator_targets=`$iati_engine -p -q | grep ^\  | cut -f 2 -d \ `
-      _iati_data_validator()
+      export _iati_workbench_targets=`$iati_engine -p -q | grep ^\  | cut -f 2 -d \ `
+      _iati_workbench()
       {
-        local cur prev
+        local cur
         COMPREPLY=()
         cur="${COMP_WORDS[COMP_CWORD]}"
-        prev="${COMP_WORDS[COMP_CWORD-1]}"
-
-        case "${prev}" in
-            show|val-act|val-org)
-              _filedir
-              return 0
-              ;;
-            *)
-            ;;
-        esac
-
-        COMPREPLY=( $(compgen -W "${_iati_data_validator_targets}" -- ${cur}) )
+        COMPREPLY=( $(compgen -W "${_iati_workbench_targets}" -- ${cur}) )
       }
-      complete -F _iati_data_validator $iati_engine
+      complete -F _iati_workbench $iati_engine
 
-      echo -e "\nCommand-line autocompletion added for $iati_engine"
+      echo -e "\nCommand-line autocompletion added for $iati_workbench"
     fi
     ;;
 
   *)
     # Run a Docker container with the image
-
     if [ "${_iati_workbench_targets}." = "." ]; then
       echo -e "\nTIP: Run '. $(basename $0) autocompletion' to add command-line autocompletion in your shell.\n"
     fi
 
-    # Run the engine using our own user and group id's so we can manage the results
-    USER=`id -u`:`id -g`
-    PARAMETERS=$@
-
     # Use the local code of the engine if available
     MY_PATH=$(dirname `readlink -f "$0"`)
-    WORKSPACE=`pwd`
 
-    if [ "$1." != "webhook." ]; then
-      ENTRY="--entrypoint=/opt/ant/bin/ant"
-      PARAMETERS="-e -f build-engine.xml ${@:--p}"
-    fi
-        
-    if [[ -f ${MY_PATH}/helpers/engine-start ]]; then
-      . ${MY_PATH}/helpers/engine-start
+    if [[ -f ${MY_PATH}/this-is-iati-workbench ]]; then
+      echo -e "\nRunning in developer mode: using the engine source code at $MY_PATH\n"
+      OTHER_VOLUMES="-v ${MY_PATH}:/root"
+
+      if [ "${PWD}." = "$MY_PATH." ]; then
+        WORKSPACE=${MY_PATH}/testspace
+        echo -e "Using ./testspace as /workspace\n"
+      fi
     fi
 
-    docker run --rm -u=${USER} \
-      -v $WORKSPACE:/workspace \
+    docker run --rm -u=`id -u`:`id -g` \
+      -v ${PWD}:/workspace \
       -m 3g \
       $OTHER_VOLUMES \
-      $ENTRY \
-      iati-workbench $PARAMETERS
+      iati-workbench $@
     ;;
 esac
-  

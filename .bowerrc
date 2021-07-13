@@ -1,9 +1,0 @@
-{
-  "directory": "/root/.bower/components",
-  "storage": {
-    "packages" : "/root/.bower/packages",
-    "registry" : "/root/.bower/registry",
-    "links" : "/root/.bower/links"
-  },
-  "interactive": false
-}
