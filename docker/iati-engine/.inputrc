@@ -1,5 +1,0 @@
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-
-# words which have more than one possible completion cause the matches to be listed immediately instead of ringing the bell
-set show-all-if-ambiguous on

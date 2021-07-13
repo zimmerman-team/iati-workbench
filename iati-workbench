@@ -1,0 +1,87 @@
+#!/bin/bash
+iati_engine=$(basename ${BASH_SOURCE[0]})
+
+case "$1." in
+  "-?.")
+    cat <<EOT
+
+$iati_engine
+
+  -?                    Show this help text.
+
+  (without parameters)  Shows the available 'targets' the engine can create.
+  -p                    Idem.
+
+  autocompletion        Add command-line autocompletion to your current
+                        shell. Run this command, including the leading dot:
+
+                          . $iati_engine autocompletion
+
+EOT
+    ;;
+  "autocompletion." )
+    # When running as a 'dot command' $0 points to the shell, not to our script
+    if [[ `basename $0` != 'bash' ]]
+    then
+      echo -e "\nMake sure to include the dot before the command to enable autocompletion:"
+      echo "Run '. $iati_engine autocompletion'"
+    else
+      # add command line autocompletion:
+      export _iati_data_validator_targets=`$iati_engine -p -q | grep ^\  | cut -f 2 -d \ `
+      _iati_data_validator()
+      {
+        local cur prev
+        COMPREPLY=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+        case "${prev}" in
+            show|val-act|val-org)
+              _filedir
+              return 0
+              ;;
+            *)
+            ;;
+        esac
+
+        COMPREPLY=( $(compgen -W "${_iati_data_validator_targets}" -- ${cur}) )
+      }
+      complete -F _iati_data_validator $iati_engine
+
+      echo -e "\nCommand-line autocompletion added for $iati_engine"
+    fi
+    ;;
+
+  *)
+    # Run a Docker container with the image
+
+    if [ "${_iati_workbench_targets}." = "." ]; then
+      echo -e "\nTIP: Run '. $(basename $0) autocompletion' to add command-line autocompletion in your shell.\n"
+    fi
+
+    # Run the engine using our own user and group id's so we can manage the results
+    USER=`id -u`:`id -g`
+    PARAMETERS=$@
+
+    # Use the local code of the engine if available
+    MY_PATH=$(dirname `readlink -f "$0"`)
+    WORKSPACE=`pwd`
+
+    if [ "$1." != "webhook." ]; then
+      ENTRY="--entrypoint=/opt/ant/bin/ant"
+      PARAMETERS="-e -f build-engine.xml ${@:--p}"
+    fi
+        
+    if [[ -f ${MY_PATH}/helpers/engine-start ]]; then
+      . ${MY_PATH}/helpers/engine-start
+    fi
+
+    docker run --rm -u=${USER} \
+      -v $WORKSPACE:/workspace \
+      -m 3g \
+      $OTHER_VOLUMES \
+      $ENTRY \
+      iati-workbench $PARAMETERS
+    ;;
+esac
+  
