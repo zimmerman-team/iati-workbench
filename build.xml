@@ -114,26 +114,6 @@
     />
   </target>
 
-  <target name="test-tree"
-    description="Test: render hierarchical list of projects">
-
-    <copy todir="/workspace/reports/htdocs/css">
-      <fileset dir="share/htdocs/css" includes="*.css"/>
-    </copy>
-
-    <delete>
-      <fileset dir="/workspace/reports/htdocs" includes="*.list.html"/>
-    </delete>
-    <xslt
-      basedir="/workspace/src"
-      includes="*.xml"
-      destdir="/workspace/reports"
-      extension=".list.html"
-      style="iati/tree.xslt"
-     />
-
-  </target>
-
   <target name="artefacts" description="Create all artefacts"
     depends="spreadsheet-iati,activities,gantt-results">
     
