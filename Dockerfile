@@ -12,12 +12,16 @@ ENV \
     BASEX_VERSION=8.6.6\
     BASEX_SHORT=866 \
     \
-    HOME=/root \
+    HOME=/home/iati-workbench \
     ANT_HOME=/opt/ant \
     SAXON_HOME=/opt/ant \
     BASEX_HOME=/opt/basex
 
-WORKDIR /root
+WORKDIR ${HOME}
+
+# create home dir and make it world accessible, so java can use it
+RUN mkdir -p ${HOME} && \
+  chmod go+rwx ${HOME}
 
 RUN apt-get update && \
   apt-get -y install --no-install-recommends wget less git xmlstarlet libreoffice-calc libreoffice-java-common source-highlight unzip xz-utils && \
@@ -38,11 +42,11 @@ RUN wget -q https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION
   cp *.jar ${BASEX_HOME}/lib && \
   mv *.jar ${ANT_HOME}/lib
 
-ENV PATH ${PATH}:${ANT_HOME}/bin:${BASEX_HOME}/bin:/root/docker/iati-engine/bin
+ENV PATH ${PATH}:${ANT_HOME}/bin:${BASEX_HOME}/bin
 
 VOLUME /workspace
 
-COPY . $HOME
+COPY . ${HOME}
 
 # (ported from IATI validator, keep in case we add Xspec tests)
 # RUN mkdir -p $HOME/tests/xspec && \
