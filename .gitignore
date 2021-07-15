@@ -1,8 +1,9 @@
 /workspace/*/*
 !/workspace/src/*
-\.bower/
 \.basexhistory
 \.bash_history
 tmp/
 \.settings/
 lib/saxon*
+/.config/
+/.cache/

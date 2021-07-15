@@ -149,4 +149,25 @@
     />
   </target>
   
+  <target name="test" description="Run iati-workbench self-tests">
+    <exec executable="ls">
+      <arg line="-la"/>
+      <arg line="/home/iati-workbench"/>
+    </exec>
+    
+    <echoproperties/>
+
+    <exec executable="env"/>
+    <exec executable="id">
+      <arg line=" -u"/>
+      <arg line=" -n"/>
+    </exec>
+    <exec executable="id">
+      <arg line=" -u"/>
+    </exec>
+    <exec executable="id">
+      <arg line=" -g"/>
+    </exec>
+  </target>
+  
 </project>
