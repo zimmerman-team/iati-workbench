@@ -1,69 +1,56 @@
 #!/bin/bash
-iati_workbench=$(basename ${BASH_SOURCE[0]})
+
+if [ "$1." = "-d." ]; then
+  shift
+
+  # Use the local code of the engine if available
+  MY_PATH=$(dirname `readlink -f "$0"`)
+
+  if [[ -f ${MY_PATH}/this-is-iati-workbench ]]; then
+    echo -e "\nRunning in developer mode: using the engine source code at $MY_PATH\n"
+    OTHER_VOLUMES="-v ${MY_PATH}:/home/iati-workbench"
+
+    if [ "${PWD}." = "$MY_PATH." ]; then
+      WORKSPACE=${MY_PATH}/testspace
+      echo -e "Using ./testspace as /workspace\n"
+    fi
+
+    if [ "${_iati_workbench_targets}." = "." ]; then
+      echo -e "\nTIP: Run '. ${MY_PATH}/iati-workbench_completion' to add command-line autocompletion to your shell.\n"
+    fi
+  fi
+fi
+
+if [ "$1." = "-t." ]; then
+  shift
+  
+  DOCKER_TAG=":$1"
+  shift
+
+  echo -e "\nUsing Docker image tag version: ${DOCKER_TAG#:}\n"
+fi
 
 case "$1." in
-  "-?.")
+  "-h.")
     cat <<EOT
 
-$iati_workbench
+$(basename $0)
 
-  -?                    Show this help text.
+  -d                     (Optional) Run in developer mode: mount the directory where iati-workbench resides
+                         into the container as /home/iati-workbench. Must be the first argument.
+  -t <version>           (Optional) Use the version tag to select the Docker image version. Defaults to 'latest'
+  -h                     Show this help text.
 
-  (without parameters)  Shows the available 'targets' the engine can create.
-  -p                    Idem.
-
-  autocompletion        Add command-line autocompletion to your current
-                        shell. Run this command, including the leading dot:
-
-                          . $iati_workbench autocompletion
-
+  (without parameters)   Shows the available 'targets' the engine can create.
+  -p                     Idem.
 EOT
     ;;
-  "autocompletion." )
-    # When running as a 'dot command' $0 points to the shell, not to our script
-    if [[ `basename $0` != 'bash' ]]
-    then
-      echo -e "\nMake sure to include the dot before the command to enable autocompletion:"
-      echo "Run '. $iati_workbench autocompletion'"
-    else
-      # add command line autocompletion:
-      export _iati_workbench_targets=`$iati_engine -p -q | grep ^\  | cut -f 2 -d \ `
-      _iati_workbench()
-      {
-        local cur
-        COMPREPLY=()
-        cur="${COMP_WORDS[COMP_CWORD]}"
-        COMPREPLY=( $(compgen -W "${_iati_workbench_targets}" -- ${cur}) )
-      }
-      complete -F _iati_workbench $iati_engine
-
-      echo -e "\nCommand-line autocompletion added for $iati_workbench"
-    fi
-    ;;
-
   *)
-    # Run a Docker container with the image
-    if [ "${_iati_workbench_targets}." = "." ]; then
-      echo -e "\nTIP: Run '. $(basename $0) autocompletion' to add command-line autocompletion in your shell.\n"
-    fi
-
-    # Use the local code of the engine if available
-    MY_PATH=$(dirname `readlink -f "$0"`)
-
-    if [[ -f ${MY_PATH}/this-is-iati-workbench ]]; then
-      echo -e "\nRunning in developer mode: using the engine source code at $MY_PATH\n"
-      OTHER_VOLUMES="-v ${MY_PATH}:/home/iati-workbench"
-
-      if [ "${PWD}." = "$MY_PATH." ]; then
-        WORKSPACE=${MY_PATH}/testspace
-        echo -e "Using ./testspace as /workspace\n"
-      fi
-    fi
-
     docker run --rm -u=`id -u`:`id -g` \
       -v ${PWD}:/workspace \
       -m 3g \
       $OTHER_VOLUMES \
-      iati-workbench $@
+      iati-workbench${DOCKER_TAG} $@
     ;;
 esac
+

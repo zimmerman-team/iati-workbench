@@ -1,14 +1,12 @@
-# add command line autocompletion for iati-engine:
+# add command line autocompletion for iati-workbench:
 
-export _iati_workbench_targets=`iati-workbench ant -p -q | grep ^\  | cut -f 2 -d \ `
+export _iati_workbench_targets=`iati-workbench | grep ^\  | cut -f 2 -d \ `
 
-_iati_engine_spreadsheets="xls xlsx csv ods xml"
-
-_iati-engine()
+_iati-workbench()
 {
   local cur opts
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=( $(compgen -W "${_iati_engine_commands} ${_iati_engine_targets}" -- ${cur}) )
+  COMPREPLY=( $(compgen -W "${_iati_workbench_commands} ${_iati_workbench_targets}" -- ${cur}) )
 }
-complete -F _iati-engine iati-engine
+complete -F _iati-workbench iati-workbench
