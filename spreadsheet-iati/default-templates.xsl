@@ -340,15 +340,25 @@
   <xsl:template match="record[contains(lower-case($file), 'location')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <location ref="{merge:entry(., 'Location name')}">
+        <location ref="{merge:entry(., 'Location reference')}">
+          <location-reach code="{merge:entry(., 'Reach')}"/>
+          <location-id vocabulary="{merge:entry(., 'Location id vocabulary')}" code="{merge:entry(., 'Location id code')}"/>
           <name>
             <narrative>{merge:entry(., 'Location name')}</narrative>
           </name>
-          <administrative vocabulary="A4" level="1" code="{merge:entry(., 'Location admin country')}" />
+          <description>
+            <narrative>{merge:entry(., 'Location description')}</narrative>
+          </description>
+          <activity-description>
+            <narrative>{merge:entry(., 'Activity description')}</narrative>
+          </activity-description>
+          <administrative vocabulary="{(merge:entry(., 'Administrative level vocabulary'), 'A4')[1]}" 
+            level="{(merge:entry(., 'Administrative level'), '1')[1]}" 
+            code="{(merge:entry(., 'Administrative level code'), merge:entry(., 'Location admin country'))[1]}" />
           <point srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
             <pos>{merge:entry(., 'Latitude')} {merge:entry(., 'Longitude')}</pos>
           </point>
-<!--          <exactness code="{merge:entry(., 'Location Precision')}"/>-->
+          <exactness code="{merge:entry(., 'Exactness')}"/>
           <feature-designation code="{merge:entry(., 'Location type code')}"/>
         </location>
       </iati-activity>
