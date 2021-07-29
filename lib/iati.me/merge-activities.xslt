@@ -53,7 +53,9 @@
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
 
-            <xsl:apply-templates select="current-group()/contact-info"/>
+            <xsl:for-each-group select="current-group()/contact-info" group-by="@type">
+              <xsl:apply-templates select="current-group()[1]"/>
+            </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/activity-scope[@code!='']" group-by="@code">
               <xsl:apply-templates select="current-group()[1]"/>
             </xsl:for-each-group>
