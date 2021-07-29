@@ -180,7 +180,13 @@
   <xsl:template match="target[not(@value) or @value='']"/>
   <xsl:template match="actual[not(@value) or @value='']"/>
 
+  <!-- other empty elements -->
   <xsl:template match="policy-marker[@code='']"/>
+  <xsl:template match="point[normalize-space(pos)='']"/>
+  <xsl:template match="location-reach[@code='']"/>
+  <xsl:template match="location-id[@code='']"/>
+  <xsl:template match="administrative[@code='']"/>
+  <xsl:template match="exactness[@code='']"/>
   <xsl:template match="feature-designation[@code='']"/>
 
   <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
