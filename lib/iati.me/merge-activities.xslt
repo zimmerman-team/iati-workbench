@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' 
+  xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
+  expand-text="yes"
   exclude-result-prefixes="functx merge">
-
-  <xsl:import href="../functx.xslt"/>
   <xsl:output indent="yes"/>
+  
+  <xsl:import href="../functx.xslt"/>
 
   <xsl:template match="/dir">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}" 
@@ -149,6 +151,8 @@
 
             <xsl:apply-templates select="current-group()/resultcrs-add"/>
             <xsl:apply-templates select="current-group()/fss"/>
+
+            <xsl:apply-templates select="current-group()/*[namespace-uri()]"/>
           </iati-activity>
         </xsl:if>
       </xsl:for-each-group>
@@ -204,5 +208,4 @@
       <xsl:apply-templates/>
     </xsl:copy>
   </xsl:template>
-
 </xsl:stylesheet>
