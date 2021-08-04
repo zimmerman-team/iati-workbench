@@ -6,17 +6,13 @@ if [ "$1." = "-d." ]; then
   # Use the local code of the engine if available
   MY_PATH=$(dirname `readlink -f "$0"`)
 
-  if [[ -f ${MY_PATH}/this-is-iati-workbench ]]; then
-    echo -e "\nRunning in developer mode: using the engine source code at $MY_PATH\n"
+  if [[ -f "${MY_PATH}/this-is-iati-workbench" ]]; then
+    echo "Running in developer mode: using the engine source code at $MY_PATH"
     OTHER_VOLUMES="-v ${MY_PATH}:/home/iati-workbench"
 
-    if [ "${PWD}." = "$MY_PATH." ]; then
-      WORKSPACE=${MY_PATH}/testspace
-      echo -e "Using ./testspace as /workspace\n"
-    fi
-
-    if [ "${_iati_workbench_targets}." = "." ]; then
-      echo -e "\nTIP: Run '. ${MY_PATH}/iati-workbench_completion' to add command-line autocompletion to your shell.\n"
+    if [ "${PWD}" = "${MY_PATH}" ]; then
+      echo "Error: cannot run in engine source code directory"
+      exit 1
     fi
   fi
 fi
@@ -47,10 +43,9 @@ EOT
     ;;
   *)
     docker run --rm -u=`id -u`:`id -g` \
-      -v ${PWD}:/workspace \
+      -v "${PWD}":/workspace \
       -m 3g \
       $OTHER_VOLUMES \
       iati-workbench${DOCKER_TAG} $@
     ;;
 esac
-
