@@ -2,9 +2,8 @@
 
 Convertor.
 
-The DataWorkbench started out in 2016 as a single "engine": a Docker container that contains all the components needed to perform all the tasks.
-In 2017, we began to split the code into separate engines, each focusing on a different part of the workflow.
-This makes it easier to release engines as open source, and reduces the size individual container images.
+== 
+
 
 == Setup notes
 
@@ -18,7 +17,7 @@ Create or copy a file `organisation.xml` with the information about the organisa
 
 Create a directory for the workspace if it does not exist.
 
-Initialise the workspace, for instance with `iati-engine init`
+Initialise the workspace, for instance with `iati-workbench init`
 
 Create or copy a `build.xml` to have local build capabilities: for instance to get files from a folder synchronised with Google Drive.
 
