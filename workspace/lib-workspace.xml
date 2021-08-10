@@ -16,6 +16,17 @@
     <fail/>
   </target>
 
+  <!-- List input files from remote location -->
+  <target name="ls-inputs" depends="config.properties">
+    <echo message="Listing files from ${remote.input}"/>
+    <exec executable="rclone">
+      <arg value="--log-level"/>
+      <arg value="INFO"/>
+      <arg value="ls"/>
+      <arg line="${remote.input}"/>
+    </exec>
+  </target>
+  
   <!-- Get input files from remote location -->
   <target name="get-remote" depends="config.properties">
     <echo message="Getting files from ${remote.input}"/>
