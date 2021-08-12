@@ -65,6 +65,7 @@
             <xsl:apply-templates select="current-group()/recipient-region[@code!='']"/>
             <xsl:apply-templates select="current-group()/location"/>
             <xsl:apply-templates select="current-group()/sector"/>
+            <xsl:apply-templates select="current-group()/tag"/>
             <xsl:apply-templates select="current-group()/country-budget-items"/>
             <xsl:apply-templates select="current-group()/humanitarian-scope"/>
             <xsl:apply-templates select="current-group()/policy-marker"/>
