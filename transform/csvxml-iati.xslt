@@ -6,6 +6,7 @@
   exclude-result-prefixes="iati-me functx">
 
   <xsl:import href="../lib/iati.me/csvxml-iati.xslt"/>
+  <xsl:import href="../spreadsheet-iati/default-templates.xsl"/>
   <xsl:import href="/workspace/config/csvxml-iati.xslt"/>
 
   <xsl:param name="filename"/>
