@@ -2,16 +2,7 @@
 
 Convertor.
 
-== 
-
-
 == Setup notes
-
-=== Organisation
-
-Create a directory for the organisation if it does not exist.
-
-Create or copy a file `organisation.xml` with the information about the organisation and the workspace (next step).
 
 === Workspace
 
