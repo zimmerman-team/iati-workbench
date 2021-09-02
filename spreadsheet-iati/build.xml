@@ -111,4 +111,11 @@
       style="lib/iati.me/csvxml-map.xslt"
     />
   </target>
+  
+  <!-- empty target to override if actions are needed after downloading remote files -->
+  <extension-point name="postprocess-inputs"/>
+  
+  <!-- can  be overridden to do something with the IATI files before publishing -->
+  <target name="postprocess-iati"/>
+  
 </project>

@@ -1,6 +1,6 @@
-= IATI Workbench
+= Spreadsheets2IATI engine
 
-_Scripts and tools to investigate IATI data, provide feedback on data quality, etc._
+_Scripts to transform a set of input files (spreadsheets, IATI) into a combined IATI file._
 
 == Build the container
 
@@ -17,11 +17,11 @@ The local workspace directory has to be mounted under /workspace.
 In this case, the container will run as the user building the image.
 You need to make sure it has proper permissions for the local workspace directory.
 
-  $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t iati-workbench .
+  $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t aida-s2i .
 
 You should be able to run it and get a list of available targets:
 
-  $ docker run --rm iati-workbench
+  $ docker run --rm aida-s2i
 
 Next, you can put the `iati-workbench` script in your path, for instance as a symlink:
 
