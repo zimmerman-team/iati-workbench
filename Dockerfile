@@ -1,8 +1,8 @@
 FROM openjdk:11-jdk-slim
 
 LABEL maintainer="Rolf Kleef <rolf@drostan.org>" \
-  description="IATI Workbench Engine" \
-  repository="https://github.com/data4development/iati-workbench"
+  description="Spreadsheets2IATI Engine for AIDA" \
+  repository="https://github.com/data4development/iati-workbenchtree/aida"
 
 # create a non-root user iati-workbench that will contain the code in its home folder 
 ARG \
@@ -26,7 +26,7 @@ RUN groupadd -g $GID -o $UNAME && \
   useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
 
 RUN apt-get update && \
-  apt-get -y install --no-install-recommends wget less git xmlstarlet libreoffice-calc libreoffice-java-common source-highlight unzip xz-utils && \
+  apt-get -y install --no-install-recommends wget less git xmlstarlet libreoffice-calc libreoffice-java-common unzip xz-utils && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
