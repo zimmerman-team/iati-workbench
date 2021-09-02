@@ -103,37 +103,6 @@
     </sequential>
   </target>
 
-  <target name="iati-office"
-    description="Create LibreOffice and Excel spreadsheets from IATI."
-    depends="init">
-    <dependset>
-      <sources>
-        <file file="lib/office/spreadsheet.xslt" />
-      </sources>
-      <targetfileset dir="/workspace/output" includes="*.xlsx" />
-    </dependset>
-
-    <xslt
-      basedir="/workspace/src"
-      includes="*.xml"
-      destdir="/workspace/tmp"
-      extension=".fods"
-      filenameparameter="filename"
-      style="spreadsheet-iati/default-iati-office.xslt"
-    />
-
-    <apply executable="soffice" dest="/workspace/output" verbose="false">
-      <fileset dir="/workspace/tmp" includes="*.*.fods"/>
-      <mapper type="glob" from="*.fods" to="*.xlsx"/>
-
-      <arg line="--headless"/>
-      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
-      <arg line="--convert-to xlsx:'Calc MS Excel 2007 XML'"/>
-      <arg line="--outdir /workspace/output"/>
-      <srcfile/>
-    </apply>
-  </target>
-
   <target name="spreadsheet-map" depends="clean, sheets-csvxml, ls-tmp" description="Create a map of the input files">
     <xslt basedir="tmp"
       destdir="output"

@@ -1,6 +1,0 @@
-xquery version "3.1";
-
-import module namespace imo = "http://iati.me/map/organisation"
-  at "../map/organisation.xqm";
-
-imo:doc(/)
