@@ -10,7 +10,6 @@
     autocompletion.
   -->
   <import file="lib/build.xml"/>
-  <import file="develop/build.xml"/>
   <import file="spreadsheet-iati/build.xml"/>
   <import file="/workspace/config/build.iati-workbench.xml" optional="yes"/>
   
