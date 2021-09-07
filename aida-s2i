@@ -46,6 +46,6 @@ EOT
       -v "${PWD}":/workspace \
       -m 3g \
       $OTHER_VOLUMES \
-      iati-workbench${DOCKER_TAG} $@
+      aida-s2i${DOCKER_TAG} $@
     ;;
 esac

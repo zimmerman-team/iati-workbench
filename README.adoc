@@ -23,13 +23,13 @@ You should be able to run it and get a list of available targets:
 
   $ docker run --rm aida-s2i
 
-Next, you can put the `iati-workbench` script in your path, for instance as a symlink:
+Next, you can put the `aida-s2i` script in your path, for instance as a symlink:
 
-  $ ln -s ${PWD}/iati-workbench ~/bin/iati-workbench
+  $ ln -s ${PWD}/aida-s2i ~/bin/aida-s2i
 
 Then, verify everything is running:
 
-  $ iati-workbench
+  $ aida-s2i
 
 This will show the list of available "targets" in the workbench.
 
@@ -38,11 +38,11 @@ This will show the list of available "targets" in the workbench.
 You run the engine in a folder that will function as the 'workspace'.
 You specify the task you want performed, and the engine will take all steps needed to transform the source data into the desired output formats.
 
-The `iati-workbench` script will mount the current directory as the workspace.
+The `aida-s2i` script will mount the current directory as the workspace.
 
 Once you run any of the tasks, it will create the necessary folders for the source of your data, the intermediary files, and the output files generated.
 
-You can run `iati-workbench init` to create those folders yourself.
+You can run `aida-s2i init` to create those folders yourself.
 
 === Sample data
 
@@ -50,7 +50,7 @@ The https://github.com/data4development/demo-workspace[demo-workspace repository
 
 Clone the repository, and inside the directory, run
 
-  $ iati-workbench spreadsheet-iati
+  $ aida-s2i spreadsheet-iati
   
 This should process the input files and produce a raw IATI file in `src/`.
 
