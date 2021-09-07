@@ -44,37 +44,7 @@
     <echo>Intermediate results have been deleted from tmp directory.</echo>
   </target>
 
-  <target name="dedup"
-    description="Deduplicates activities with the same activity identifier."
-    depends="init">
-
-    <xslt
-      basedir="/workspace/src"
-      destdir="/workspace/tmp"
-      includes="*.xml"
-      style="lib/iati.me/dedup.xslt"
-    />
-  </target>
-
   <target name="test" description="Run iati-workbench self-tests">
-    <exec executable="ls">
-      <arg line="-la"/>
-      <arg line="/home/iati-workbench"/>
-    </exec>
-    
-    <echoproperties/>
-
-    <exec executable="env"/>
-    <exec executable="id">
-      <arg line=" -u"/>
-      <arg line=" -n"/>
-    </exec>
-    <exec executable="id">
-      <arg line=" -u"/>
-    </exec>
-    <exec executable="id">
-      <arg line=" -g"/>
-    </exec>
   </target>
   
 </project>
