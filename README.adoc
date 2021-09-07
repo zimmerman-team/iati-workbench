@@ -25,11 +25,11 @@ You should be able to run it and get a list of available targets:
 
 Next, you can put the `iati-workbench` script in your path, for instance as a symlink:
 
-`ln -s iati-workbench ~/bin/iati-workbench`
+  $ ln -s ${PWD}/iati-workbench ~/bin/iati-workbench
 
 Then, verify everything is running:
 
-`iati-workbench`
+  $ iati-workbench
 
 This will show the list of available "targets" in the workbench.
 
