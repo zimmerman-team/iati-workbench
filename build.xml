@@ -24,7 +24,8 @@
   <!-- Xspec tests -->
   <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
-  <property name="saxon.jar" location="${env.SAXON_HOME}/saxon9he.jar"/>
+<!-- TODO: check if this is needed, default location/search path? -->
+  <property name="saxon.jar" location="/usr/share/java/Saxon-HE.jar"/>
 <!--  <import file="develop/lib/xspec/build.xml"/>-->
 
   <!--Set up the project environment.-->
