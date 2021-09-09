@@ -5,8 +5,6 @@
     overriding the targets. These targets are then still available as lib-workspace.* 
   </description>
 
-  <import file="../develop/build.xml"/>
-
   <property file="config/iati-workbench.properties"/> 
 
   <available file="config/iati-workbench.properties" property="config.properties.exist"/>
