@@ -44,4 +44,14 @@
       <!-- TODO: test this, should be dir=workspace, includes=tmp? -->
     </apply>
   </target>
+
+  <target name="ant-log-json" description="Turn the Ant XML log into a JSON version">
+    <xslt
+      basedir="/workspace/output"
+      includes="ant-log.xml"
+      destdir="/workspace/output"
+      extension=".json"
+      style="lib/ant-log-json.xslt"
+    />
+  </target>  
 </project>

@@ -34,5 +34,5 @@ WORKDIR $HOME
 USER $UNAME
 COPY --chown=$UID:$GID . $HOME
 
-ENTRYPOINT ["/usr/bin/ant", "-e"]
+ENTRYPOINT ["/usr/bin/ant"]
 CMD ["-p"]
