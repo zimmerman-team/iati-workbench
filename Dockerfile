@@ -16,7 +16,7 @@ RUN groupadd -g $GID -o $UNAME && \
 
 RUN apt-get update && \
   # to remove basex warnings: libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java
-  apt-get -y install --no-install-recommends ant wget less git xmlstarlet libreoffice-calc-nogui libreoffice-java-common unzip xz-utils \
+  apt-get -y install --no-install-recommends ant xmlstarlet libreoffice-calc-nogui libreoffice-java-common \
     libsaxonhe-java basex libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java && \
   ln -s /usr/share/java/Saxon-HE.jar /usr/share/ant/lib && \
   # reduce footprint of this layer:
