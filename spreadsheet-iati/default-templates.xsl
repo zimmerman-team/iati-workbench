@@ -58,7 +58,7 @@
         </title>
         
         <description type="1">
-          <narrative>{merge:entry(., 'General description')}</narrative>
+          <narrative>{merge:entry(., 'General description', 'n/a')}</narrative>
         </description>
         <description type="2">
           <narrative>{merge:entry(., 'Main objectives and outcomes')}</narrative>
