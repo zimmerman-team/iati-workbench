@@ -26,10 +26,8 @@
   <!-- Xspec tests -->
   <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
-<!-- TODO: check if this is needed, default location/search path? -->
-  <property name="saxon.jar" location="/usr/share/java/Saxon-HE.jar"/>
-<!--  <import file="develop/lib/xspec/build.xml"/>-->
-
+  <include file="lib/xspec/build.xml"/>
+  
   <!--Set up the project environment.-->
   <target name="init">
 
@@ -152,7 +150,7 @@
     />
   </target>
   
-  <target name="test" description="Run iati-workbench self-tests">
+  <target name="selftest" description="Run iati-workbench self-tests">
     <exec executable="ls">
       <arg line="-la"/>
       <arg line="/home/iati-workbench"/>
@@ -172,5 +170,20 @@
       <arg line=" -g"/>
     </exec>
   </target>
+
+  <target name="test" description="Run xspec tests">
+    <!--    <xmlvalidate lenient="true">
+      <fileset dir="tests/iati/testfiles" includes="*.xml"/>
+    </xmlvalidate>-->
+
+    <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/s2i.xspec"/>
+    </antcall>
+  </target>
   
+  <target name="tests" description="Run all the tests (don't stop at first failure)">
+    <antcall target="test">
+      <param name="xspec.fail" value="false"/>
+    </antcall>
+  </target>
 </project>
