@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:me="http://iati.me"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-iati.xslt"
+  xslt-version="3.0">
+  
+  <x:scenario label="Test merge:date()">
+    
+    <x:scenario label="28-10-2021">
+      <x:call function="merge:date">
+        <x:param select="'28-10-2021'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-10-28." test=". = xs:date('2021-10-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="28-7-2021">
+      <x:call function="merge:date">
+        <x:param select="'28-7-2021'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-07-28." test=". = xs:date('2021-07-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="28-10-21">
+      <x:call function="merge:date">
+        <x:param select="'28-10-21'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-10-28." test=". = xs:date('2021-10-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="28-7-21">
+      <x:call function="merge:date">
+        <x:param select="'28-7-21'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-07-28." test=". = xs:date('2021-07-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="28/10/2021">
+      <x:call function="merge:date">
+        <x:param select="'28/10/2021'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-10-28." test=". = xs:date('2021-10-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="10/28/2021" pending="todo">
+      <x:call function="merge:date">
+        <x:param select="'10/28/2021'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2021-10-28." test=". = xs:date('2021-10-28')"/>
+    </x:scenario>
+    
+    <x:scenario label="31/06/2021" pending="todo">
+      <x:call function="merge:date">
+        <x:param select="'31/06/2021'"></x:param>
+      </x:call>
+      <x:expect label="should not produce anything." test=". = '3'"/>
+    </x:scenario>
+    
+    <x:scenario label="29/02/2021" pending="todo">
+      <x:call function="merge:date">
+        <x:param select="'29/02/2021'"></x:param>
+      </x:call>
+      <x:expect label="should not produce anything." test=". = '3'"/>
+    </x:scenario>
+    
+  </x:scenario>  
+  
+</x:description>
