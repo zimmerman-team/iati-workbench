@@ -17,6 +17,14 @@ if [ "$1." = "-d." ]; then
   fi
 fi
 
+if [ "$1." = "-xml." ]; then
+  shift
+  
+  LOGGING="-logger org.apache.tools.ant.XmlLogger -logfile /workspace/output/ant-log.xml"
+
+  echo "Logging as XML to: /workspace/output/ant-log.xml"
+fi
+
 if [ "$1." = "-t." ]; then
   shift
   
@@ -30,10 +38,11 @@ case "$1." in
   "-h.")
     cat <<EOT
 
-$(basename $0)
+$(basename $0) [-d] [-xml] [-t <version>] <command>
 
   -d                     (Optional) Run in developer mode: mount the directory where iati-workbench resides
                          into the container as /home/iati-workbench. Must be the first argument.
+  -xml                   (Optional) Use Ant's XML logger and store the result in output/ant-log.xml
   -t <version>           (Optional) Use the version tag to select the Docker image version. Defaults to 'latest'
   -h                     Show this help text.
 
@@ -42,10 +51,12 @@ $(basename $0)
 EOT
     ;;
   *)
+    echo -e "\nRunning $0 $@\n"
+    
     docker run --rm -u=`id -u`:`id -g` \
       -v "${PWD}":/workspace \
       -m 3g \
       $OTHER_VOLUMES \
-      iati-workbench${DOCKER_TAG} $@
+      iati-workbench${DOCKER_TAG} ${LOGGING} $@
     ;;
 esac

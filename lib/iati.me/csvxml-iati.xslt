@@ -84,21 +84,30 @@
     <!-- DD-MM-YYYY, DD/MM/YYYY, DD.MM.YYYY -->
     <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
       <xsl:matching-substring>
-        <xsl:value-of select="functx:date(regex-group(3), regex-group(2), regex-group(1))"/>
+        <xsl:try>
+          {functx:date(regex-group(3), regex-group(2), regex-group(1))}
+          <xsl:catch/>
+        </xsl:try>
       </xsl:matching-substring>
     </xsl:analyze-string>
 
     <!-- DD-MM-YY, DD.MM.YY, DD/MM/YY -->
     <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d\d)$" select="normalize-space($item)">
       <xsl:matching-substring>
-        <xsl:value-of select="functx:date(merge:year(regex-group(3)), regex-group(2), regex-group(1))"/>
+        <xsl:try>
+          {functx:date(merge:year(regex-group(3)), regex-group(2), regex-group(1))}
+          <xsl:catch/>
+        </xsl:try>
       </xsl:matching-substring>
     </xsl:analyze-string>
 
     <!-- YYYY-MM-DD -->
     <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d)$" select="normalize-space($item)">
       <xsl:matching-substring>
-        <xsl:value-of select="functx:date(regex-group(1), regex-group(2), regex-group(3))"/>
+        <xsl:try>
+          {functx:date(regex-group(1), regex-group(2), regex-group(3))}
+          <xsl:catch/>
+        </xsl:try>
       </xsl:matching-substring>
     </xsl:analyze-string>
 
@@ -108,37 +117,42 @@
     <!-- date function with format: return as proper date if possible -->
     <xsl:param name="item" as="xs:string"/>
     <xsl:param name="format" as="xs:string"/>
-    <xsl:variable name="i" select="normalize-space($item)"/>
-    <xsl:choose>
 
+    <xsl:choose>
       <!-- MM-DD-YYYY, MM/DD/YYYY -->
       <xsl:when test="matches($format, 'MM.DD.YYYY', 'i')">
         <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
           <xsl:matching-substring>
-            <xsl:value-of select="functx:date(regex-group(3), regex-group(1), regex-group(2))"/>
+            <xsl:try>
+              {functx:date(regex-group(3), regex-group(1), regex-group(2))}
+              <xsl:catch/>
+            </xsl:try>
           </xsl:matching-substring>
           <xsl:non-matching-substring>
-            <xsl:value-of select="merge:date($item)"/>
+            {merge:date($item)}
           </xsl:non-matching-substring>
         </xsl:analyze-string>
       </xsl:when>
       <xsl:when test="matches($format, 'YYYY.DD.MM', 'i')">
         <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d?)$" select="normalize-space($item)">
           <xsl:matching-substring>
-            <xsl:value-of select="functx:date(regex-group(1), regex-group(3), regex-group(2))"/>
+            <xsl:try>
+              {functx:date(regex-group(1), regex-group(3), regex-group(2))}
+              <xsl:catch/>
+            </xsl:try>
           </xsl:matching-substring>
           <xsl:non-matching-substring>
-            <xsl:value-of select="merge:date($item)"/>
+            {merge:date($item)}
           </xsl:non-matching-substring>
         </xsl:analyze-string>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="merge:date($item)"/>
+        {merge:date($item)}
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="merge:year" as="xs:decimal">
+  <xsl:function name="merge:year" as="xs:string">
     <xsl:param name="year" as="xs:string"/>
     <xsl:variable name="yy" select="xs:decimal($year)"/>
     <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY -->
