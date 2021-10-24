@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:me="http://iati.me"
+  stylesheet="../lib/iati.me/csvxml-iati.xslt"
+  xslt-version="3.0">
+  
+  <x:param name="file" select="'file'"></x:param>
+  
+  <x:import href="s2i/convert-dates.xspec"/>
+</x:description>
