@@ -17,7 +17,7 @@ RUN groupadd -g $GID -o $UNAME && \
 RUN apt-get update && \
   # to remove basex warnings: libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java
   apt-get -y install --no-install-recommends ant wget less git xmlstarlet libreoffice-calc-nogui libreoffice-java-common source-highlight unzip xz-utils \
-    libsaxonhe-java basex libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java && \
+    libsaxonhe-java basex libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java locales  && \
   ln -s /usr/share/java/Saxon-HE.jar /usr/share/ant/lib && \
   # reduce footprint of this layer:
   apt-get clean && \
@@ -30,6 +30,7 @@ RUN apt-get update && \
   rm -rf /usr/share/doc/*
 
 ENV HOME=/home/$UNAME
+ENV LC_ALL=en_IE.UTF-8
 WORKDIR $HOME
 USER $UNAME
 COPY --chown=$UID:$GID . $HOME

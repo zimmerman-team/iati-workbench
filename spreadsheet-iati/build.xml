@@ -48,7 +48,7 @@
 
       <arg line="--headless"/>
       <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) https://wiki.openoffice.org/wiki/Documentation/DevGuide/Spreadsheets/Filter_Options -->
-      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1'"/>
+      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,,,,,false'"/>
       <arg line="--outdir /workspace/tmp"/>
       <srcfile/>
     </apply>
