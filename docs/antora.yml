@@ -1,6 +1,6 @@
 name: iati-workbench
 title: IATI Workbench
-version: develop
+version: main
 prerelease:
 nav:
 - modules/ROOT/nav.adoc
