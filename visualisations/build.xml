@@ -12,12 +12,12 @@
       <sources>
         <file file="output/graphml-yed.xslt"/>
       </sources>
-      <targetfileset dir="/workspace/output" includes="*.graphml"/>
+      <targetfileset dir="${ws}/output" includes="*.graphml"/>
     </dependset>
     <xslt
-      basedir="/workspace/tmp/"
+      basedir="${ws}/tmp/"
       includes="*.graphml"
-      destdir="/workspace/output/"
+      destdir="${ws}/output/"
       extension=".graphml"
       style="output/graphml-yed.xslt"
      />
@@ -31,12 +31,12 @@
       <sources>
         <file file="output/transactions.xslt" />
       </sources>
-      <targetfileset dir="/workspace/reports/htdocs" includes="*.flows.html" />
+      <targetfileset dir="${ws}/reports/htdocs" includes="*.flows.html" />
     </dependset>
     <xslt
-      basedir="/workspace/tmp/"
+      basedir="${ws}/tmp/"
       includes="*.filtered.xml"
-      destdir="/workspace/reports/htdocs"
+      destdir="${ws}/reports/htdocs"
       style="output/transactions.xslt">
       <globmapper from="*.filtered.xml" to="*.flows.html"/>
     </xslt>
@@ -47,16 +47,16 @@
     depends="htdocs-skeleton">
     <echo level="info">Generate a gantt view of the results.</echo>
     <xslt
-      basedir="/workspace/src/"
+      basedir="${ws}/src/"
       includes="*.xml"
-      destdir="/workspace/reports"
+      destdir="${ws}/reports"
       extension=".gantt.xml"
       style="output/gantt-results.xslt"
      />
     <xslt
-      basedir="/workspace/src/"
+      basedir="${ws}/src/"
       includes="*.xml"
-      destdir="/workspace/reports"
+      destdir="${ws}/reports"
       extension=".gantt.html"
       style="lib/htdocs/gantt-results.xslt"
      />
@@ -65,15 +65,15 @@
   <target name="activities"
     description="Generate an overview page per activity"
     depends="">
-    <mkdir dir="/workspace/reports/act"/>
+    <mkdir dir="${ws}/reports/act"/>
     <xslt
-      basedir="/workspace/src/"
+      basedir="${ws}/src/"
       includes="*.xml"
-      destdir="/workspace/reports"
+      destdir="${ws}/reports"
       extension=".act.xml"
       style="lib/htdocs/iati-activity.xslt"
      />
-     <delete dir="/workspace/reports" includes="*.act.xml"/>
+     <delete dir="${ws}/reports" includes="*.act.xml"/>
   </target>
 
 </project>

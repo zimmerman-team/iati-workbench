@@ -32,6 +32,16 @@ else
   DOCKER_TAG=latest
 fi
 
+if [ "$1." = "-w." ]; then
+  shift
+  
+  WORKSPACE="$1/"
+  shift
+
+  echo -e "\nUsing workspace subdirectory: ${WORKSPACE}\n"
+  WORKSPACE="-Dworkspace=$WORKSPACE"
+fi
+
 case "$1." in
   "-h.")
     cat <<EOT
@@ -74,7 +84,7 @@ EOT
         -v "${PWD}":/workspace \
         -m 3g \
         $OTHER_VOLUMES \
-        iati-workbench:${DOCKER_TAG} ${LOGGING} $@
+        iati-workbench:${DOCKER_TAG} ${LOGGING} ${WORKSPACE} $@
     fi
     ;;
 esac
