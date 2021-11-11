@@ -63,13 +63,14 @@
       <srcfilelist dir="${ws}/config" files="csvxml-iati.xslt"/>
       <targetfileset dir="${ws}/tmp" includes="*.generated.xml"/>
     </dependset>
+    <copy file="/home/iati-workbench/workspace/config/sheets-iati.xslt" todir="${ws}/config"/>
     <xslt if:set="config-present"
       basedir="${ws}/tmp"
       includes="*.csv.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
       filenameparameter="filename"
-      style="transform/csvxml-iati.xslt"
+      style="${ws}/config/sheets-iati.xslt"
      />
   </target>
 
