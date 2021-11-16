@@ -4,11 +4,15 @@
     IATI Workbench
   </description>
 
+  <!-- optionally set the workspace directory to something under /workspace -->
+  <property name="workspace" value=""/>
+  <property name="ws" value="/workspace/${workspace}"/>
+
   <!-- when running Ant with -logger org.apache.tools.ant.XmlLogger -->
   <!-- the XmlLogger.file property seems to be ignored here -->
-  <property name="XmlLogger.file" value="/workspace/output/ant-log.xml"/>
+  <property name="XmlLogger.file" value="${ws}/output/ant-log.xml"/>
   <property name="ant.XmlLogger.stylesheet.uri" value=""/>
-  
+
   <!--
     Many build targets will be included from separate build files in their own
     folders. Only targets in this build file will benefit from command-line
@@ -16,7 +20,7 @@
   -->
   <import file="lib/build.xml"/>
   <import file="spreadsheet-iati/build.xml"/>
-  <import file="/workspace/config/build.iati-workbench.xml" optional="yes"/>
+  <import file="${ws}/config/build.iati-workbench.xml" optional="yes"/>
 
   <!-- Xspec tests -->
   <property environment="env"/>
@@ -25,27 +29,27 @@
   
   <!--Set up the project environment.-->
   <target name="init">
-
-    <mkdir dir="/workspace/src"/>
-    <mkdir dir="/workspace/dest"/>
-    <mkdir dir="/workspace/config"/>
-    <mkdir dir="/workspace/tmp"/>
-    <mkdir dir="/workspace/input"/>
-    <mkdir dir="/workspace/output"/>
-    <mkdir dir="/workspace/remote"/>
-    <mkdir dir="/workspace/reports"/>
+    <echo message="Working dir ${ws}"/>
+    <mkdir dir="${ws}/src"/>
+    <mkdir dir="${ws}/dest"/>
+    <mkdir dir="${ws}/config"/>
+    <mkdir dir="${ws}/tmp"/>
+    <mkdir dir="${ws}/input"/>
+    <mkdir dir="${ws}/output"/>
+    <mkdir dir="${ws}/remote"/>
+    <mkdir dir="${ws}/reports"/>
   </target>
 
   <target name="clean"
     depends="init"
     description="Clean intermediary results.">
     <delete>
-      <fileset dir="/workspace/tmp" includes="*"/>
+      <fileset dir="${ws}/tmp" includes="*"/>
     </delete>
     <echo>Intermediate results have been deleted from tmp directory.</echo>
   </target>
 
-  <target name="test" description="Run iati-workbench self-tests">
+  <target name="test" description="Run xspec tests">
     <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/s2i.xspec"/>
     </antcall>

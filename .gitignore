@@ -1,4 +1,5 @@
 /workspace/*/*
+!/workspace/config/sheets-iati.xslt
 !/workspace/src/*
 \.basexhistory
 \.bash_history

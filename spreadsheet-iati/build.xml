@@ -15,25 +15,25 @@
   <target name="merge-iati"
     depends="ls-tmp">
     <xslt
-      basedir="/workspace/tmp"
-      destdir="/workspace/tmp"
-      in="/workspace/tmp/ls.xml"
-      out="/workspace/src/iati-activities.xml"
+      basedir="${ws}/tmp"
+      destdir="${ws}/tmp"
+      in="${ws}/tmp/ls.xml"
+      out="${ws}/src/iati-activities.xml"
       style="lib/iati.me/merge-activities.xslt"
     />
     <xslt
-      basedir="/workspace/tmp"
-      destdir="/workspace/tmp"
-      in="/workspace/tmp/ls.xml"
-      out="/workspace/src/iati-organisations.xml"
+      basedir="${ws}/tmp"
+      destdir="${ws}/tmp"
+      in="${ws}/tmp/ls.xml"
+      out="${ws}/src/iati-organisations.xml"
       style="lib/iati.me/merge-organisations.xslt"
     />
   </target>
   
   <!--Copy CSV files for further processing-->
   <target name="csv-csv">
-    <copy todir="/workspace/tmp">
-      <fileset dir="/workspace/input" includes="*.csv"/>
+    <copy todir="${ws}/tmp">
+      <fileset dir="${ws}/input" includes="*.csv"/>
     </copy>
   </target>
 
@@ -42,34 +42,35 @@
     depends="init">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
-    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
-      <fileset dir="/workspace/input" includes="**/*.xls*"/>
-      <mapper id="csv-out" type="regexp" from="(.+)\.xls.*$$" to="/workspace/tmp/\1.csv"/>
+    <apply executable="soffice" dest="${ws}/tmp" verbose="false">
+      <fileset dir="${ws}/input" includes="**/*.xls*"/>
+      <mapper id="csv-out" type="regexp" from="(.+)\.xls.*$$" to="${ws}/tmp/\1.csv"/>
 
       <arg line="--headless"/>
       <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) https://wiki.openoffice.org/wiki/Documentation/DevGuide/Spreadsheets/Filter_Options -->
-      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1'"/>
-      <arg line="--outdir /workspace/tmp"/>
+      <arg line="--convert-to 'csv:Text - txt - csv (StarCalc):44,34,76,1,,,,,false'"/>
+      <arg line="--outdir ${ws}/tmp"/>
       <srcfile/>
     </apply>
   </target>
 
   <target name="sheets-iati" depends="sheets-csvxml">
-    <available property="config-present" file="/workspace/config/csvxml-iati.xslt"/>
+    <available property="config-present" file="${ws}/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.
     </echo>
     <dependset>
-      <srcfilelist dir="/workspace/config" files="csvxml-iati.xslt"/>
-      <targetfileset dir="/workspace/tmp" includes="*.generated.xml"/>
+      <srcfilelist dir="${ws}/config" files="csvxml-iati.xslt"/>
+      <targetfileset dir="${ws}/tmp" includes="*.generated.xml"/>
     </dependset>
+    <copy file="/home/iati-workbench/workspace/config/sheets-iati.xslt" todir="${ws}/config"/>
     <xslt if:set="config-present"
-      basedir="/workspace/tmp"
+      basedir="${ws}/tmp"
       includes="*.csv.xml"
-      destdir="/workspace/tmp"
+      destdir="${ws}/tmp"
       extension=".generated.xml"
       filenameparameter="filename"
-      style="transform/csvxml-iati.xslt"
+      style="${ws}/config/sheets-iati.xslt"
      />
   </target>
 
@@ -82,9 +83,9 @@
     description="Transform existing IATI input files into a version with merge ids."
     depends="init">
     <xslt
-      basedir="/workspace/input/"
+      basedir="${ws}/input/"
       includes="*.iati.xml"
-      destdir="/workspace/tmp"
+      destdir="${ws}/tmp"
       extension=".generated.xml"
       style="transform/add-merge-ids.xslt"
      />
@@ -92,8 +93,8 @@
 
   <target name="sheets-csvxml" depends="excel-csv, csv-csv">
     <sequential>
-      <apply executable="basex" dest="/workspace/tmp" verbose="true">
-        <fileset dir="/workspace/tmp" includes="*.csv"/>
+      <apply executable="basex" dest="${ws}/tmp" verbose="true">
+        <fileset dir="${ws}/tmp" includes="*.csv"/>
         <srcfile prefix="-bfile="/>
         <arg value="-o"/>
         <targetfile/>
@@ -106,8 +107,8 @@
   <target name="spreadsheet-map" depends="clean, sheets-csvxml, ls-tmp" description="Create a map of the input files">
     <xslt basedir="tmp"
       destdir="output"
-      in="/workspace/tmp/ls.xml"
-      out="/workspace/output/csv-map.csv"
+      in="${ws}/tmp/ls.xml"
+      out="${ws}/output/csv-map.csv"
       style="lib/iati.me/csvxml-map.xslt"
     />
   </target>

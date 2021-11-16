@@ -6,10 +6,10 @@
   expand-text="yes"
   version="3.0">
   
-  <xsl:variable name="file"/>
+<!--  <xsl:variable name="file"/>
   <xsl:variable name="reporting-org"/>
   <xsl:variable name="reporting-org-type"/>
-  <xsl:variable name="default-currency"/>
+-->  <xsl:variable name="default-currency"/>
 
   <!--  Budgets: -->
   <xsl:template match="record[contains(lower-case($file), 'organisation-budgets')]">

@@ -1,0 +1,39 @@
+= Date formats
+
+The spreadsheet convertor makes an effort to process dates properly.
+
+* Google Sheets, Excel, and LibreOffice (soffice) all do different things to recognise date formats.
+* When downloading a Google Sheet with rclone, it will be converted into Excel, with sometimes unexpected conversions.
+* When using soffice to convert to CSV, separate flag can indicate whether to use the _shown value_ or the _typed value_.
+This improves the ability to convert.
+* For some US-formatted dates (_mm/dd/yyyy_) it would be possible to detect its use (for days above 12, which cannot be months).
+This is not implemented.
+
+An overview of various formats in Google Sheets and the resulting value used for conversion.
+
+.Icons used in Table 2.
+[cols="1,10a"]
+|===
+|⚠️
+|A value format that is recognised and interpreted.
+
+NOTE: Short years: values up to 70 will be considered to be in the 21st century, _20xx_,
+from 70 onwards to be 20th century, _19xx_).
+
+|⚠️⛔️
+|A value that will either be interpreted incorrectly, or result in a date error.
+
+WARNING: US-formatted days up to 12 will be converted without warning, and the month and day will be reversed.
+
+|⛔️
+|A value that will result in a date error.
+
+|✅️
+|A value that will be correctly processed. 
+|===
+
+.Date format conversions
+[%header, cols="10,20,20,15,15"]
+,===
+include::../examples/date-format-testing.csv[]
+,===
