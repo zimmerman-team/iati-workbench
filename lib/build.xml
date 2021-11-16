@@ -7,10 +7,10 @@
   <!-- Pattern to work with BaseX as XQuery processor. -->
   <macrodef name="basexpipe">
     <attribute name="xquery"/>
-    <attribute name="src" default="/workspace/tmp"/>
+    <attribute name="src" default="${ws}/tmp"/>
     <attribute name="from"/>
     <attribute name="fromP" default="@from"/>
-    <attribute name="dest" default="/workspace/tmp"/>
+    <attribute name="dest" default="${ws}/tmp"/>
     <attribute name="to"/>
     <attribute name="toP" default="@to"/>
     <sequential>
@@ -39,8 +39,8 @@
   <!-- Using BaseX on the IATI XML database -->
   <macrodef name="iati-query">
     <attribute name="xquery"/>
-    <attribute name="src" default="/workspace/tmp"/>
-    <attribute name="dest" default="/workspace/tmp"/>
+    <attribute name="src" default="${ws}/tmp"/>
+    <attribute name="dest" default="${ws}/tmp"/>
     <attribute name="from"/>
     <attribute name="to"/>
     <attribute name="xmldb" default="IATI"/>
@@ -65,19 +65,19 @@
       <file file="bower.json"/>
     </apply>
 
-    <copy todir="/workspace/reports/htdocs">
+    <copy todir="${ws}/reports/htdocs">
       <fileset dir="share/htdocs"/>
     </copy>
 
-    <copy todir="/workspace/reports/htdocs/lib/css">
+    <copy todir="${ws}/reports/htdocs/lib/css">
       <fileset dir=".bower/components/bootstrap/dist/css"/>
       <fileset dir=".bower/components/fuelux/dist/css"/>
     </copy>
-    <copy todir="/workspace/reports/htdocs/lib/fonts">
+    <copy todir="${ws}/reports/htdocs/lib/fonts">
       <fileset dir=".bower/components/bootstrap/dist/fonts"/>
       <fileset dir=".bower/components/fuelux/dist/fonts"/>
     </copy>
-    <copy todir="/workspace/reports/htdocs/lib/js">
+    <copy todir="${ws}/reports/htdocs/lib/js">
       <fileset dir=".bower/components/jquery/dist"/>
       <fileset dir=".bower/components/bootstrap/dist/js"/>
     </copy>
@@ -85,18 +85,18 @@
 
   <!-- Create a listing of the tmp directory for further XSLT processing -->
   <target name="ls-tmp" depends="init">
-    <apply executable="xmlstarlet" output="/workspace/tmp/ls.xml">
+    <apply executable="xmlstarlet" output="${ws}/tmp/ls.xml">
       <arg line="ls"/>
-      <dirset dir="/workspace" includes="tmp"/>
+      <dirset dir="${ws}" includes="tmp"/>
       <!-- TODO: test this, should be dir=workspace, includes=tmp? -->
     </apply>
   </target>
 
   <target name="ant-log-json" description="Turn the Ant XML log into a JSON version">
     <xslt
-      basedir="/workspace/output"
+      basedir="${ws}/output"
       includes="ant-log.xml"
-      destdir="/workspace/output"
+      destdir="${ws}/output"
       extension=".json"
       style="lib/ant-log-json.xslt"
     />

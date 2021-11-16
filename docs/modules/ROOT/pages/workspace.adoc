@@ -1,0 +1,53 @@
+= Workspace location
+
+When running within a Docker container, the scripts use the directory
+
+  /workspace/
+
+as the starting point for all subdirectories.
+
+To use a subdirectory, the environment property `workspace` should be set.
+
+When running within the container:
+
+  $ ant -Dworkspace=clientA <target>
+  
+When using the container image with the calling script:
+
+  $ iati-workbench -xml -w clientA <target>
+
+The workspace name can contain multiple levels.
+
+== Running on a local machine
+
+Consider you have a local machine set up with a directory structure:
+
+[source, treeview]
+....
+~/workspaces
+├── s2i
+│   ├── clientA
+│   │   ├── config
+│   │   ├── dest
+│   │   ├── input
+│   │   ├── output
+│   │   ├── reports
+│   │   ├── src
+│   │   ├── tmp
+│   │   ├── build.xml
+│   │   ├── .gitignore
+│   │   └── README.md
+│   ├── clientB
+│   │   └── ...workspace dirs...
+│   └── ...other clients...
+└── README.md
+....
+
+=== Option 1: go into each client directory and run iati-workbench there
+
+  $ cd ~/workspaces/clientA
+  $ iati-workbench ...
+
+=== Option 2: run iati-workbench with -w
+
+  $ iati-workbench -w s2i/clientA ...

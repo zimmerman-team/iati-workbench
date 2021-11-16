@@ -7,9 +7,9 @@
   <target name="filtered" depends="init">
     <dependset>
       <srcfileset dir="map" includes="*.xqm"/>
-      <targetfileset dir="/workspace/tmp" includes="*.filtered.xml"/>
+      <targetfileset dir="${ws}/tmp" includes="*.filtered.xml"/>
     </dependset>
-    <basexpipe xquery="augment/organisations" src="/workspace/src" from="*.xml" to="*.filtered.xml"/>
+    <basexpipe xquery="augment/organisations" src="${ws}/src" from="*.xml" to="*.filtered.xml"/>
   </target>
 
 </project>

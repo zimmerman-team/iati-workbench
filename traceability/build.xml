@@ -5,56 +5,56 @@
 
   <target name="find-downstream" description="Find downstream activities from a set of known identifiers">
     <dependset>
-      <srcfileset dir="/workspace/input" includes="*.xml"/>
-      <targetfileset dir="/workspace/output" includes="activities*.xml"/>
+      <srcfileset dir="${ws}/input" includes="*.xml"/>
+      <targetfileset dir="${ws}/output" includes="activities*.xml"/>
     </dependset>
     <xslt
-      basedir="/workspace/meta"
-      destdir="/workspace/output"
+      basedir="${ws}/meta"
+      destdir="${ws}/output"
       includes="activities*.xml"
       style="traceability/find-activities-downstream.xslt">
       <identitymapper/>
     </xslt>
     <xslt
-      basedir="/workspace/output"
-      destdir="/workspace/output"
+      basedir="${ws}/output"
+      destdir="${ws}/output"
       includes="activities*.xml"
       style="traceability/activities-table.xslt">
       <globmapper from="*.xml" to="*.csv"/>
     </xslt>
     
-    <apply executable="soffice" dest="/workspace/output" verbose="false">
-      <fileset dir="/workspace/output" includes="activities.csv"/>
+    <apply executable="soffice" dest="${ws}/output" verbose="false">
+      <fileset dir="${ws}/output" includes="activities.csv"/>
       <mapper type="glob" from="*.csv" to="*.xlsx"/>
       
       <arg line="--headless"/>
       <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
       <arg line="--convert-to xlsx:'Calc MS Excel 2007 XML'"/>
-      <arg line="--outdir /workspace/output"/>
+      <arg line="--outdir ${ws}/output"/>
       <srcfile/>
     </apply>
     
   </target>
 
   <target name="prepare-meta">
-    <apply executable="soffice" dest="/workspace/tmp" verbose="false">
-      <fileset dir="/workspace/meta" includes="partnership-info.xlsx"/>
+    <apply executable="soffice" dest="${ws}/tmp" verbose="false">
+      <fileset dir="${ws}/meta" includes="partnership-info.xlsx"/>
       <mapper type="glob" from="*.xlsx" to="*.xml"/>
       
       <arg line="--headless"/>
       <arg line="--convert-to xml:'OpenDocument Spreadsheet Flat XML'"/>
-      <arg line="--outdir /workspace/tmp"/>
+      <arg line="--outdir ${ws}/tmp"/>
       <srcfile/>
     </apply>
 
     <xslt
-      basedir="/workspace/tmp"
+      basedir="${ws}/tmp"
       includes="partnership-info.xml"
-      destdir="/workspace/meta"
+      destdir="${ws}/meta"
       extension=".xml"
       style="traceability/partnership-info-seeds.xslt"
     />
-    <move file="/workspace/meta/partnership-info.xml" tofile="/workspace/meta/activities.xml"/>
+    <move file="${ws}/meta/partnership-info.xml" tofile="${ws}/meta/activities.xml"/>
   </target>
   
 </project>
