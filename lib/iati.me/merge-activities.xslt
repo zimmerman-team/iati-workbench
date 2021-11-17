@@ -5,7 +5,7 @@
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
   expand-text="yes"
-  exclude-result-prefixes="functx merge">
+  exclude-result-prefixes="#all">
   <xsl:output indent="yes"/>
   
   <xsl:import href="../functx.xslt"/>
