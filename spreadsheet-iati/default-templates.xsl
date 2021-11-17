@@ -21,60 +21,61 @@
   <!--Activities: -->
   <xsl:template match="record[contains(lower-case($file), 'projects')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
+      <xsl:variable name="lang" select="lower-case(merge:entry(., 'Language', 'en'))"/>
       <iati-activity default-currency="{merge:entry(., 'Currency')}"
         last-updated-datetime="{current-dateTime()}"
-        xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
+        xml:lang="{$lang}"
         merge:id="{merge:entry(., 'IATI activity identifier')}">
         <xsl:if test="functx:trim(merge:entry(., 'Humanitarian activity'))!=''">
           <xsl:attribute name="humanitarian" select="merge:boolean(merge:entry(., 'Humanitarian activity'))"/>
         </xsl:if>
         <iati-identifier>{merge:entry(., 'IATI activity identifier')}</iati-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
-          <narrative>{$reporting-org-name}</narrative>
+          <narrative xml:lang="{$lang}">{$reporting-org-name}</narrative>
         </reporting-org>
         <contact-info type="{merge:entry(., 'Contact info type')}">
           <organisation>
-            <narrative>{merge:entry(., 'Contact info organisation')}</narrative>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact info organisation')}</narrative>
           </organisation>
           <department>
-            <narrative>{merge:entry(., 'Contact department')}</narrative>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact department')}</narrative>
           </department>
           <person-name>
-            <narrative>{merge:entry(., 'Contact person')}</narrative>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact person')}</narrative>
           </person-name>
           <job-title>
-            <narrative>{merge:entry(., 'Contact job title')}</narrative>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact job title')}</narrative>
           </job-title>
           <telephone>{merge:entry(., 'Contact telephone')}</telephone>
           <email>{merge:entry(., 'Contact email')}</email>
           <website>{merge:entry(., 'Contact website')}</website>
           <mailing-address>
-            <narrative>{merge:entry(., 'Contact mailing address')}</narrative>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact mailing address')}</narrative>
           </mailing-address>
         </contact-info>
         
         <title>
-          <narrative>{merge:entry(., 'Activity name')}</narrative>
+          <narrative xml:lang="{$lang}">{merge:entry(., 'Activity name')}</narrative>
         </title>
         
         <description type="1">
-          <narrative>{merge:entry(., 'General description', 'n/a')}</narrative>
+          <narrative xml:lang="{$lang}">{merge:entry(., 'General description', 'n/a')}</narrative>
         </description>
         <description type="2">
-          <narrative>{merge:entry(., 'Main objectives and outcomes')}</narrative>
+          <narrative xml:lang="{$lang}">{merge:entry(., 'Main objectives and outcomes')}</narrative>
         </description>
         <description type="3">
-          <narrative>{merge:entry(., ('Target group or reach', 'Targetgroup or reach'))}</narrative>
+          <narrative xml:lang="{$lang}">{merge:entry(., ('Target group or reach', 'Targetgroup or reach'))}</narrative>
         </description>
         <description type="4">
-          <narrative>{merge:entry(., 'Background')}</narrative>
+          <narrative xml:lang="{$lang}">{merge:entry(., 'Background')}</narrative>
         </description>
         
         <xsl:if test="$include-reporting-org-as-role=('1', '2', '3', '4')">
           <participating-org role="{$include-reporting-org-as-role}"
             type="{$reporting-org-type}"
             ref="{$reporting-org}">
-            <narrative>{$reporting-org-name}</narrative>
+            <narrative xml:lang="{$lang}">{$reporting-org-name}</narrative>
           </participating-org>          
         </xsl:if>
         
