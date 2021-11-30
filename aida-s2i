@@ -84,7 +84,7 @@ EOT
       -v "${PWD}":/workspace \
       -m 3g \
       $OTHER_VOLUMES \
-      aida-s2i${DOCKER_TAG} ${LOGGING} ${WORKSPACE} $@
+      aida-s2i:${DOCKER_TAG} ${LOGGING} ${WORKSPACE} $@
     fi
     ;;
 esac
