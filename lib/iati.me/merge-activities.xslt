@@ -5,7 +5,7 @@
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
   expand-text="yes"
-  exclude-result-prefixes="functx merge">
+  exclude-result-prefixes="#all">
   <xsl:output indent="yes"/>
   
   <xsl:import href="../functx.xslt"/>
@@ -19,83 +19,146 @@
       <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
+        <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>
-            <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude'))]" />
+            <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude', 'xml:lang'))]" />
+            <xsl:attribute name="xml:lang">{$default-lang}</xsl:attribute>
             <!-- <xsl:for-each-group select="current-group()/@*[.!='' and name(.)!='merge:id']" group-by="name(.)">
               <xsl:copy-of select=".[1]" />
             </xsl:for-each-group> -->
             <iati-identifier><xsl:copy-of select="current-grouping-key()"/></iati-identifier>
-            <xsl:apply-templates select="(current-group()/reporting-org)[1]"/>
+            <xsl:apply-templates select="(current-group()/reporting-org)[1]">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
 
-            <xsl:apply-templates select="current-group()/title"/>
+            <title>
+              <xsl:apply-templates select="current-group()/title/narrative">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
+            </title>
 
-            <!-- <xsl:for-each-group select="current-group()/description" group-by="@type"> -->
-              <xsl:apply-templates select="current-group()/description"/>
-            <!-- </xsl:for-each-group> -->
+            <xsl:for-each-group select="current-group()/description" group-by="@type">
+              <description>
+                <xsl:copy-of select="current-group()/@*" />
+                <xsl:apply-templates select="current-group()/narrative">
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:apply-templates>
+              </description>
+            </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/participating-org" group-by="@role">
               <!-- all orgs with refs -->
               <xsl:for-each-group select="current-group()[@ref!='']" group-by="@ref">
-                <xsl:apply-templates select="current-group()[1]"/>
+                <xsl:apply-templates select="current-group()[1]">
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:apply-templates>
               </xsl:for-each-group>
               <!-- all orgs without refs -->
               <xsl:for-each-group select="current-group()[not(@ref) or @ref='']" group-by="narrative[1]">
-                <xsl:apply-templates select="current-group()"/>
+                <xsl:apply-templates select="current-group()">
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:apply-templates>
               </xsl:for-each-group>
             </xsl:for-each-group>
 
             <xsl:apply-templates select="current-group()/other-identifier"/>
             <xsl:for-each-group select="current-group()/activity-status[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/activity-date[@iso-date!='']" group-by="@type">
               <xsl:sort select="@iso-date"/>
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/contact-info" group-by="@type">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/activity-scope[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
-            <xsl:apply-templates select="current-group()/recipient-country[@code!='' and (@percentage!='0' or not(@percentage))]"/>
-            <xsl:apply-templates select="current-group()/recipient-region[@code!='']"/>
-            <xsl:apply-templates select="current-group()/location"/>
-            <xsl:apply-templates select="current-group()/sector"/>
-            <xsl:apply-templates select="current-group()/tag"/>
-            <xsl:apply-templates select="current-group()/country-budget-items"/>
-            <xsl:apply-templates select="current-group()/humanitarian-scope"/>
-            <xsl:apply-templates select="current-group()/policy-marker"/>
+            <xsl:apply-templates select="current-group()/recipient-country[@code!='' and (@percentage!='0' or not(@percentage))]">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/recipient-region[@code!='']">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/location">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/sector">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/tag">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/country-budget-items">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/humanitarian-scope">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/policy-marker">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
 
             <xsl:for-each-group select="current-group()/collaboration-type[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/default-flow-type[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/default-finance-type[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/default-aid-type[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
             <xsl:for-each-group select="current-group()/default-tied-status[@code!='']" group-by="@code">
-              <xsl:apply-templates select="current-group()[1]"/>
+              <xsl:apply-templates select="current-group()[1]">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/budget" group-by="@type">
               <!-- TODO split by @status as well -->
-              <xsl:apply-templates select="current-group()"/>
+              <xsl:apply-templates select="current-group()">
+                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:for-each-group>
 
-            <xsl:apply-templates select="current-group()/planned-disbursement"/>
-            <xsl:apply-templates select="current-group()/capital-spend"/>
-            <xsl:apply-templates select="current-group()/transaction[transaction-type/@code!='' and value!='']"/>
-            <xsl:apply-templates select="current-group()/document-link[@url!='']"/>
-            <xsl:apply-templates select="current-group()/related-activity[@ref!='']"/>
+            <xsl:apply-templates select="current-group()/planned-disbursement">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/capital-spend">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/transaction[transaction-type/@code!='' and value!='']">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/document-link[@url!='']">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/related-activity[@ref!='']">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
 
             <xsl:if test="current-group()/conditions/condition/narrative">
               <conditions attached="1">
@@ -118,16 +181,26 @@
                 <result>
                   <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
                   <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions -->
-                  <xsl:apply-templates select="(current-group()/title)[1]"/>
-                  <xsl:apply-templates select="(current-group()/description)[1]"/>
-                  <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'indicator'))]"/>
+                  <xsl:apply-templates select="(current-group()/title)[1]">
+                    <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                  </xsl:apply-templates>
+                  <xsl:apply-templates select="(current-group()/description)[1]">
+                    <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                  </xsl:apply-templates>
+                  <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'indicator'))]">
+                    <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                  </xsl:apply-templates>
                   <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
                     <indicator>
                       <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
                       <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
                       <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
-                      <xsl:apply-templates select="(current-group()/title)[1]"/>
-                      <xsl:apply-templates select="(current-group()/description)[1]"/>
+                      <xsl:apply-templates select="(current-group()/title)[1]">
+                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                      </xsl:apply-templates>
+                      <xsl:apply-templates select="(current-group()/description)[1]">
+                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                      </xsl:apply-templates>
                       <xsl:for-each-group select="current-group()/reference" group-by="@vocabulary">
                         <xsl:for-each-group select="." group-by="@code">
                           <xsl:copy-of select="." copy-namespaces="no"/>
@@ -137,23 +210,37 @@
                       <xsl:for-each-group select="current-group()/baseline" group-by="@merge:id">
                         <baseline>
                           <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
-                          <xsl:apply-templates select="current-group()[1]/dimension"/>
-                          <xsl:apply-templates select="current-group()[1]/comment"/>
+                          <xsl:apply-templates select="current-group()[1]/dimension">
+                            <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                          </xsl:apply-templates>
+                          <xsl:apply-templates select="current-group()[1]/comment">
+                            <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                          </xsl:apply-templates>
                         </baseline>
                       </xsl:for-each-group>
-                      <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]"/>
+                      <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]">
+                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                      </xsl:apply-templates>
                       <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
-                      <!-- <xsl:apply-templates select="current-group()/*"/> -->
+<!--                      <xsl:apply-templates select="current-group()/*">
+                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                      </xsl:apply-templates> -->
                     </indicator>
                   </xsl:for-each-group>
                 </result>
               </xsl:if>
             </xsl:for-each-group>
 
-            <xsl:apply-templates select="current-group()/resultcrs-add"/>
-            <xsl:apply-templates select="current-group()/fss"/>
+            <xsl:apply-templates select="current-group()/resultcrs-add">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="current-group()/fss">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
 
-            <xsl:apply-templates select="current-group()/*[namespace-uri()]"/>
+            <xsl:apply-templates select="current-group()/*[namespace-uri()]">
+              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+            </xsl:apply-templates>
           </iati-activity>
         </xsl:if>
       </xsl:for-each-group>
@@ -161,8 +248,6 @@
   </xsl:template>
 
   <!-- ignore these elements: -->
-  <xsl:template match="narrative            [not(text())]"/>
-
   <!-- text elements without any narrative element with actual content -->
   <xsl:template match="title                [not(narrative!='')]"/>
   <xsl:template match="description          [not(narrative!='')]"/>
@@ -200,6 +285,16 @@
       <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
     </collaboration-type>
   </xsl:template> -->
+
+  <xsl:template match="narrative[text()]">
+    <xsl:param name="default-lang" tunnel="yes" select="en"/>
+    <xsl:copy copy-namespaces="no" >
+      <xsl:if test="@xml:lang and @xml:lang != $default-lang">
+        <xsl:attribute name="xml:lang" select="@xml:lang"/>
+      </xsl:if>
+      <xsl:text>{.}</xsl:text>
+    </xsl:copy>
+  </xsl:template>
 
   <!-- copy the rest -->
   <!-- <xsl:template match="*[not(functx:is-node-in-sequence-deep-equal(.,preceding-sibling::*)) and not(name()='dir')]"> -->

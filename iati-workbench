@@ -8,7 +8,8 @@ if [ "$1." = "-d." ]; then
   # Use the local code of the engine if available
   if [[ -f "${MY_PATH}/this-is-iati-workbench" ]]; then
     DEVELOPER_MODE=true
-    echo "Running in developer mode: using the engine source code at $MY_PATH"
+    THIS_VERSION=`cat ${MY_PATH}/this-is-iati-workbench`
+    echo "Running in developer mode: using the engine source code version:$THIS_VERSION at $MY_PATH"
     OTHER_VOLUMES="-v ${MY_PATH}:/home/iati-workbench"
   fi
 fi
@@ -23,11 +24,15 @@ fi
 
 if [ "$1." = "-t." ]; then
   shift
-  
-  DOCKER_TAG="$1"
+
+  if [ "$1." = "this." ]; then
+    DOCKER_TAG=${THIS_VERSION:-latest}
+  else
+    DOCKER_TAG="$1"
+  fi
   shift
 
-  echo -e "\nUsing Docker image tag version: ${DOCKER_TAG#:}\n"
+  echo -e "\nUsing Docker image tag version: ${DOCKER_TAG}\n"
 else
   DOCKER_TAG=latest
 fi
@@ -35,10 +40,10 @@ fi
 if [ "$1." = "-w." ]; then
   shift
   
-  WORKSPACE="$1/"
+  WORKSPACE_P="$1/"
   shift
 
-  echo -e "\nUsing workspace subdirectory: ${WORKSPACE}\n"
+  echo -e "\nUsing workspace subdirectory: ${WORKSPACE_P}\n"
   WORKSPACE="-Dworkspace=$WORKSPACE"
 fi
 
@@ -46,27 +51,67 @@ case "$1." in
   "-h.")
     cat <<EOT
 
-$(basename $0) [-d] [-xml] [-t <version>] <command>
+$(basename $0) [-d] [-xml] [-t <version>] [-w <workspace>] [-v] <command>
 
-  -d                     (Optional) Run in developer mode: mount the directory where iati-workbench resides
-                         into the container as /home/iati-workbench. Must be the first argument.
-  -xml                   (Optional) Use Ant's XML logger and store the result in output/ant-log.xml
-  -t <version>           (Optional) Use the version tag to select the Docker image version. Defaults to 'latest'
+Options (sequence is important):
+
+  -d                     Run in developer mode: mount the directory where the 
+                         iati-workbench code resides in the container as 
+                         /home/iati-workbench.
+  -xml                   Use Ant's XML logger and store the result in 
+                         output/ant-log.xml
+  -t <version>           Use the version tag to select the Docker image version.
+                         Defaults to 'latest'. Use 'this' to indicate the
+                         current version of the code (as specified in the file
+                         this_is_iati_workbench).
+  -w <workspace>         Specify a workspace directory to use, below the current
+                         directory.
+
+  -v                     Echo the processed input parameters, but do nothing.
+
   -h                     Show this help text.
+
+Commands:
 
   (without parameters)   Shows the available 'targets' the engine can create.
   -p                     Idem.
   
-  -d build               Build a new docker image. MUST be combined with -d to run in developer mode.
-                         It will be tagged as iati-workbench:<version>, where version
-                         can be specified with the -t option (defaults to 'latest').
-                         
+  build                  Build a new docker image. MUST be combined with -d to
+                         run in developer mode. It will be tagged as
+                         iati-workbench:<version>, where version can be
+                         specified with the -t option (defaults to 'latest').
+
 EOT
     ;;
+
+  "-v.")
+    shift
+
+    echo "Called with:"
+    if [[ -n ${DEVELOPER_MODE} ]]; then
+      echo "-d: developer mode"
+    fi
+    if [[ -n ${LOGGING} ]]; then
+      echo "-xml: XML-based logging options: ${LOGGING}"
+    fi
+    echo "-t ${DOCKER_TAG}: default or explicit Docker image tag"
+    if [[ -n ${WORKSPACE} ]]; then
+      echo "-xml: XML-based logging options: ${LOGGING}"
+      echo "-w ${WORKSPACE_P}: specific subdirectory as workspace"
+    fi
+    echo "command: $@"
+    ;;
+
   "build.")
     if [[ -n ${DEVELOPER_MODE} ]]; then
-      echo "Starting docker build for version ${DOCKER_TAG}"
-      docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t iati-workbench:${DOCKER_TAG} ${MY_PATH:-.}
+      if [[ -f ${MY_PATH}/lib/xspec/build.xml ]]; then
+        echo "Starting docker build for version ${DOCKER_TAG}"
+        docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t iati-workbench:${DOCKER_TAG} ${MY_PATH:-.}
+      else
+        echo "Make sure to clone the submodules."
+        echo "In ${MY_PATH}, run: git submodule update --recursive"
+        exit 1
+      fi
     else
       echo "Error: use '-d build' to build the docker image, and have the source code checked out."
       exit 1
