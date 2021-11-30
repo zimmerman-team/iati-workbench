@@ -4,6 +4,10 @@ _Scripts and tools to investigate IATI data, provide feedback on data quality, e
 
 == Build the container
 
+Before building the container, make sure to check out the git submodules.
+
+  $ git submodule update --recursive
+
 [CAUTION]
 ====
 Work in progress: a local workspace (directory on host machine) is still required to run.
