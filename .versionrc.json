@@ -15,6 +15,10 @@
     {
       "filename": "docs/antora.yml",
       "updater": "docs/antora-version-updater.js"
+    },
+    {
+      "filename": "this-is-iati-workbench",
+      "type": "plain-text"
     }
   ]
 }
