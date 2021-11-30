@@ -2,6 +2,17 @@
 
 _Scripts and tools to investigate IATI data, provide feedback on data quality, etc._
 
+== Add the `iati-workbench` wrapper to your path
+
+You can put the `iati-workbench` script in your path, for instance as a symlink:
+
+  $ ln -s ${PWD}/iati-workbench ~/bin/iati-workbench
+
+This script can help build and run the container.
+To see its options:
+
+  $ iati-workbench -h
+
 == Build the container
 
 Before building the container, make sure to check out the git submodules.
@@ -16,24 +27,26 @@ This will become optional.
 The local workspace directory has to be mounted under /workspace.
 ====
 
-=== Option 1: localised build
-
 In this case, the container will run as the user building the image.
 You need to make sure it has proper permissions for the local workspace directory.
+
+=== With `iati-workbench`
+
+  $ iati-workbench -d build
+
+Then, verify everything is running:
+
+  $ iati-workbench
+
+This will show the list of available "targets" in the workbench.
+
+=== Manually
 
   $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t iati-workbench .
 
 You should be able to run it and get a list of available targets:
 
   $ docker run --rm iati-workbench
-
-Next, you can put the `iati-workbench` script in your path, for instance as a symlink:
-
-  $ ln -s ${PWD}/iati-workbench ~/bin/iati-workbench
-
-Then, verify everything is running:
-
-  $ iati-workbench
 
 This will show the list of available "targets" in the workbench.
 
