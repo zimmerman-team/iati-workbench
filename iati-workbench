@@ -48,19 +48,24 @@ case "$1." in
 
 $(basename $0) [-d] [-xml] [-t <version>] <command>
 
-  -d                     (Optional) Run in developer mode: mount the directory where iati-workbench resides
-                         into the container as /home/iati-workbench. Must be the first argument.
-  -xml                   (Optional) Use Ant's XML logger and store the result in output/ant-log.xml
-  -t <version>           (Optional) Use the version tag to select the Docker image version. Defaults to 'latest'
+  -d                     (Optional) Run in developer mode: mount the directory
+                         where the iati-workbench code resides into the
+                         container as /home/iati-workbench.
+                         Must be the first argument.
+  -xml                   (Optional) Use Ant's XML logger and store the result
+                         in output/ant-log.xml
+  -t <version>           (Optional) Use the version tag to select the Docker
+                         image version. Defaults to 'latest'
   -h                     Show this help text.
 
   (without parameters)   Shows the available 'targets' the engine can create.
   -p                     Idem.
   
-  -d build               Build a new docker image. MUST be combined with -d to run in developer mode.
-                         It will be tagged as iati-workbench:<version>, where version
-                         can be specified with the -t option (defaults to 'latest').
-                         
+  -d build               Build a new docker image. MUST be combined with -d to
+                         run in developer mode. It will be tagged as
+                         iati-workbench:<version>, where version can be
+                         specified with the -t option (defaults to 'latest').
+
 EOT
     ;;
   "build.")
