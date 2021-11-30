@@ -40,10 +40,10 @@ fi
 if [ "$1." = "-w." ]; then
   shift
   
-  WORKSPACE="$1/"
+  WORKSPACE_P="$1/"
   shift
 
-  echo -e "\nUsing workspace subdirectory: ${WORKSPACE}\n"
+  echo -e "\nUsing workspace subdirectory: ${WORKSPACE_P}\n"
   WORKSPACE="-Dworkspace=$WORKSPACE"
 fi
 
@@ -51,14 +51,13 @@ case "$1." in
   "-h.")
     cat <<EOT
 
-$(basename $0) [-d] [-xml] [-t <version>] [-w <workspace>] <command>
+$(basename $0) [-d] [-xml] [-t <version>] [-w <workspace>] [-v] <command>
 
 Options (sequence is important):
 
   -d                     Run in developer mode: mount the directory where the 
                          iati-workbench code resides in the container as 
                          /home/iati-workbench.
-
   -xml                   Use Ant's XML logger and store the result in 
                          output/ant-log.xml
   -t <version>           Use the version tag to select the Docker image version.
@@ -67,6 +66,8 @@ Options (sequence is important):
                          this_is_iati_workbench).
   -w <workspace>         Specify a workspace directory to use, below the current
                          directory.
+
+  -v                     Echo the processed input parameters, but do nothing.
 
   -h                     Show this help text.
 
@@ -82,6 +83,25 @@ Commands:
 
 EOT
     ;;
+
+  "-v.")
+    shift
+
+    echo "Called with:"
+    if [[ -n ${DEVELOPER_MODE} ]]; then
+      echo "-d: developer mode"
+    fi
+    if [[ -n ${LOGGING} ]]; then
+      echo "-xml: XML-based logging options: ${LOGGING}"
+    fi
+    echo "-t ${DOCKER_TAG}: default or explicit Docker image tag"
+    if [[ -n ${WORKSPACE} ]]; then
+      echo "-xml: XML-based logging options: ${LOGGING}"
+      echo "-w ${WORKSPACE_P}: specific subdirectory as workspace"
+    fi
+    echo "command: $@"
+    ;;
+
   "build.")
     if [[ -n ${DEVELOPER_MODE} ]]; then
       if [[ -f ${MY_PATH}/lib/xspec/build.xml ]]; then
