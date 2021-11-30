@@ -8,7 +8,8 @@ if [ "$1." = "-d." ]; then
   # Use the local code of the engine if available
   if [[ -f "${MY_PATH}/this-is-iati-workbench" ]]; then
     DEVELOPER_MODE=true
-    echo "Running in developer mode: using the engine source code at $MY_PATH"
+    THIS_VERSION=`cat ${MY_PATH}/this-is-iati-workbench`
+    echo "Running in developer mode: using the engine source code version:$THIS_VERSION at $MY_PATH"
     OTHER_VOLUMES="-v ${MY_PATH}:/home/iati-workbench"
   fi
 fi
@@ -23,11 +24,15 @@ fi
 
 if [ "$1." = "-t." ]; then
   shift
-  
-  DOCKER_TAG="$1"
+
+  if [ "$1." = "this." ]; then
+    DOCKER_TAG=${THIS_VERSION:-latest}
+  else
+    DOCKER_TAG="$1"
+  fi
   shift
 
-  echo -e "\nUsing Docker image tag version: ${DOCKER_TAG#:}\n"
+  echo -e "\nUsing Docker image tag version: ${DOCKER_TAG}\n"
 else
   DOCKER_TAG=latest
 fi
@@ -53,12 +58,13 @@ Options (sequence is important):
   -d                     Run in developer mode: mount the directory where the 
                          iati-workbench code resides in the container as 
                          /home/iati-workbench.
-                         
+
   -xml                   Use Ant's XML logger and store the result in 
                          output/ant-log.xml
-
   -t <version>           Use the version tag to select the Docker image version.
-                         Defaults to 'latest'.
+                         Defaults to 'latest'. Use 'this' to indicate the
+                         current version of the code (as specified in the file
+                         this_is_iati_workbench).
 
   -h                     Show this help text.
 
