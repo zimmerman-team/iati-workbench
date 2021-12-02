@@ -106,7 +106,7 @@ EOT
     if [[ -n ${DEVELOPER_MODE} ]]; then
       if [[ -f ${MY_PATH}/lib/xspec/build.xml ]]; then
         echo "Starting docker build for version ${DOCKER_TAG}"
-        docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t iati-workbench:${DOCKER_TAG} ${MY_PATH:-.}
+        docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t aida-s2i:${DOCKER_TAG} ${MY_PATH:-.}
       else
         echo "Make sure to clone the submodules."
         echo "In ${MY_PATH}, run: git submodule update --recursive"
