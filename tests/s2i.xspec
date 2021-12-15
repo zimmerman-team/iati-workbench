@@ -7,5 +7,6 @@
   
   <x:param name="file" select="'file'"></x:param>
   
+  <x:import href="s2i/convert-amounts.xspec"/>
   <x:import href="s2i/convert-dates.xspec"/>
 </x:description>

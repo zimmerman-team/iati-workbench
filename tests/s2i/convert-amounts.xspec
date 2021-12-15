@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:me="http://iati.me"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-iati.xslt"
+  xslt-version="3.0">
+  
+  <x:scenario label="Test merge:currency-symbol(string)">
+    
+    <x:scenario label="EUR 1000">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'EUR 1000'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string EUR." select="xs:string('EUR')"/>
+    </x:scenario>
+    
+    <x:scenario label="USD 1,200,300">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'USD 1,200,300'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string USD." select="xs:string('USD')"/>
+    </x:scenario>
+    
+  </x:scenario>  
+
+</x:description>
