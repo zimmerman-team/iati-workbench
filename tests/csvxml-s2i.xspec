@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  stylesheet="../lib/iati.me/csvxml-s2i.xslt">
+  
+  <x:param name="file" select="'file'"/>
+  
+  <x:import href="csvxml-s2i/convert-amounts.xspec"/>
+  <x:import href="csvxml-s2i/convert-dates.xspec"/>
+</x:description>

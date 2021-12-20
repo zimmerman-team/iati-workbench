@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:me="http://iati.me"
   xmlns:merge="http://iati.me/merge"
-  stylesheet="../../lib/iati.me/csvxml-iati.xslt"
-  xslt-version="3.0">
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
   
   <x:scenario label="Test merge:currency-symbol(string)">
     

@@ -180,7 +180,7 @@
     </xmlvalidate>-->
 
     <antcall target="xspec.xspec" inheritall="false">
-      <param name="xspec.xml" location="tests/s2i.xspec"/>
+      <param name="xspec.xml" location="tests/csvxml-s2i.xspec"/>
     </antcall>
   </target>
   

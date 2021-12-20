@@ -3,7 +3,7 @@
   xmlns:functx="http://www.functx.com">
   
   <!-- file will be copied into the workspace config/ dir -->
-  <xsl:import href="/home/iati-workbench/lib/iati.me/csvxml-iati.xslt"/>
+  <xsl:import href="/home/iati-workbench/lib/iati.me/csvxml-s2i.xslt"/>
   <xsl:import href="/home/iati-workbench/spreadsheet-iati/default-templates.xsl"/>
   <xsl:import href="csvxml-iati.xslt"/>
 
