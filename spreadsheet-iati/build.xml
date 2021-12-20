@@ -8,8 +8,12 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="generate-iati-partials, merge-iati, validate-iati, filter-activities">
+    depends="init, gather-input-files, generate-iati-partials, merge-iati, validate-iati, filter-activities">
   </target>
+
+  <extension-point name="gather-input-files"
+    description="Gather input files into tmp in expected formats"
+    depends="sheets-csvxml, collect-iati-files"/>
 
   <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
@@ -37,6 +41,13 @@
     </copy>
   </target>
 
+  <!--Copy IATI and Akvo files from the input folder-->
+  <target name="collect-iati-files">
+    <copy todir="${ws}/tmp" flatten="true">
+      <fileset dir="${ws}/input" includes="**/*.iati.xml, **/*.akvo.xml"/>
+    </copy>
+  </target>
+  
   <!--Convert spreadsheets to CSV files for further processing.-->
   <target name="excel-csv"
     depends="init">
@@ -54,7 +65,7 @@
     </apply>
   </target>
 
-  <target name="sheets-iati" depends="sheets-csvxml">
+  <target name="csvxml-s2i">
     <available property="config-present" file="${ws}/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.
@@ -74,20 +85,29 @@
      />
   </target>
 
-  <!-- Provide a place to add specific XML convertors -->
   <extension-point name="generate-iati-partials"
-    depends="sheets-iati, iati-iati"/>
-
+    description="Generate IATI partial activities for input files"
+    depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
+    
   <!--Transform existing IATI input files into a version with merge ids.-->
-  <target name="iati-iati"
-    description="Transform existing IATI input files into a version with merge ids."
-    depends="init">
+  <target name="iati-s2i">
     <xslt
       basedir="${ws}/input/"
       includes="*.iati.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
       style="transform/add-merge-ids.xslt"
+     />
+  </target>
+
+  <!--Transform existing Akvo input files using workspace-based config.-->
+  <target name="akvo-s2i">
+    <xslt
+      basedir="${ws}/tmp/"
+      includes="*.akvo.xml"
+      destdir="${ws}/tmp"
+      extension=".generated.xml"
+      style="${ws}/config/akvo-s2i.xslt"
      />
   </target>
 

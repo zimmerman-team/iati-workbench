@@ -77,15 +77,35 @@ end note
 #orange:spreadsheets-iati;
 
 |IATI Workbench|
+:gather-input-files;
+fork
+  partition sheets-csvxml {
+    fork
+      $node_1_main_color:input/*.xsl{x} ]
+      :excel-csv;
+      $node_1_main_color:tmp/*.csv]
+    fork again
+      $node_1_main_color:input/*.csv]
+      :csv-csv;
+      $node_1_main_color:tmp/*.csv]
+    end fork
+    
+    :csv-csvxml;
+    note: using basex
+    $node_1_main_color:tmp/*.csv.xml]
+  }
+fork again
+  partition collect-iati-files {
+    $node_1_main_color:input/**/*.{iati|akvo}.xml ]
+    :copy;
+    $node_1_main_color:tmp/*.{iati|akvo}.xml ]
+  }
+end fork
+
 :generate-iati-partials;
 note: extension point
 fork
-  partition sheets-iati {
-    :sheets-csvxml;
-    note
-      already done in step
-      ""spreadsheet-map"" above
-    end note
+  partition csvxml-s2i {
     $node_1_main_color:tmp/*.csv.xml]
     
     $important_color:config/csvxml-iati.xslt]
@@ -93,19 +113,21 @@ fork
       Can include or override
       default templates
     end note
-    :sheets-iati;
+    :csvxml-s2i;
   }
 fork again
-  partition iatixml-iati {
-    $node_1_main_color:input/*.iati.xml]
-    :iatixml-iati;
+  partition iati-s2i {
+    $node_1_main_color:tmp/*.iati.xml]
+    :iati-s2i;
   }
 fork again
-  partition akvo {
-    $important_color::Optional Akvo target in
-    config/build.iati-workbench.xml;
-    $node_1_main_color:input/*.akvo.xml]
+  partition akvo-s2i {
+    $node_1_main_color:tmp/*.akvo.xml]
     $important_color:config/akvo-s2i.xslt]
+    note
+      Expects an Akvo-specific
+      config file.
+    end note
     :akvo-s2i;
   }
 end fork
