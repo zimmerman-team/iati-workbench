@@ -8,12 +8,20 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="init, gather-input-files, generate-iati-partials, merge-iati, validate-iati, filter-activities">
+    depends="init, gather-input-files, generate-iati-partials, create-iati-output">
   </target>
 
   <extension-point name="gather-input-files"
     description="Gather input files into tmp in expected formats"
     depends="sheets-csvxml, collect-iati-files"/>
+
+  <extension-point name="generate-iati-partials"
+    description="Generate IATI partial activities for input files"
+    depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
+  
+  <extension-point name="create-iati-output"
+    description="Merge IATI partial activities, validate, create clean output"
+    depends="merge-iati, validate-iati, filter-activities"/>
 
   <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
@@ -33,8 +41,8 @@
       style="lib/iati.me/merge-organisations.xslt"
     />
   </target>
-  
-  <!--Copy CSV files for further processing-->
+
+  <!--Copy CSV files from the input folder-->
   <target name="csv-csv">
     <copy todir="${ws}/tmp">
       <fileset dir="${ws}/input" includes="*.csv"/>
@@ -49,8 +57,7 @@
   </target>
   
   <!--Convert spreadsheets to CSV files for further processing.-->
-  <target name="excel-csv"
-    depends="init">
+  <target name="excel-csv">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
     <apply executable="soffice" dest="${ws}/tmp" verbose="false">
@@ -85,10 +92,6 @@
      />
   </target>
 
-  <extension-point name="generate-iati-partials"
-    description="Generate IATI partial activities for input files"
-    depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
-    
   <!--Transform existing IATI input files into a version with merge ids.-->
   <target name="iati-s2i">
     <xslt
@@ -125,8 +128,7 @@
   </target>
 
   <target name="iati-office"
-    description="Create LibreOffice and Excel spreadsheets from IATI."
-    depends="init">
+    description="Create LibreOffice and Excel spreadsheets from IATI.">
     <dependset>
       <sources>
         <file file="lib/office/spreadsheet.xslt" />

@@ -4,7 +4,7 @@
     Targets to augment data.
   </description>
 
-  <target name="filtered" depends="init">
+  <target name="filtered">
     <dependset>
       <srcfileset dir="map" includes="*.xqm"/>
       <targetfileset dir="${ws}/tmp" includes="*.filtered.xml"/>

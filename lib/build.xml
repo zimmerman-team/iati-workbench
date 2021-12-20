@@ -58,8 +58,7 @@
   </macrodef>
 
   <!-- Set up the basic skeleton for HTML reports -->
-  <target name="htdocs-skeleton"
-    depends="init">
+  <target name="htdocs-skeleton">
     <apply executable="bower" verbose="true" force="true">
       <arg value="install"/>
       <file file="bower.json"/>
@@ -84,7 +83,7 @@
   </target>
 
   <!-- Create a listing of the tmp directory for further XSLT processing -->
-  <target name="ls-tmp" depends="init">
+  <target name="ls-tmp">
     <apply executable="xmlstarlet" output="${ws}/tmp/ls.xml">
       <arg line="ls"/>
       <dirset dir="${ws}" includes="tmp"/>

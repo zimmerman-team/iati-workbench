@@ -105,8 +105,7 @@
   </target>
             
   <target name="iati-summary"
-    description="Create LibreOffice spreadsheet with a summary of an IATI file."
-    depends="init">
+    description="Create LibreOffice spreadsheet with a summary of an IATI file.">
     <dependset>
       <sources>
         <file file="lib/office/spreadsheet.xslt" />

@@ -18,11 +18,10 @@ The conversion process initiated by local `ant` in workspace.
 
 The local `build.xml` includes a workspace library build via a hardcoded link.
 
-.Sequence for `s2i-run` target
+.Sequence for `s2i-run` target: workspace
 [plantuml]
 ....
 @startuml
-|Workspace|
 start
 $important_color:config/iati-workbench.properties]
 :get inputs;
@@ -40,10 +39,15 @@ note
 end note
 $node_1_main_color:updates inputs/*]
 
-|Workspace|
 #orange:prepare new inputs;
+(1)
+....
 
-|IATI Workbench|
+.IATI Workbench container
+[plantuml]
+....
+@startuml
+(1)
 partition spreadsheet-map {
   partition sheets-csvxml {
     fork
@@ -65,8 +69,14 @@ partition spreadsheet-map {
   $node_1_main_color:output/csvmap-csv]
   
 }
+(2)
+....
 
-|Workspace|
+.Workspace
+[plantuml]
+....
+@startuml
+(2)
 :prepare new inputs:
 store changes;
 note
@@ -75,9 +85,15 @@ note
 end note
 
 #orange:spreadsheets-iati;
+(3)
+....
 
-|IATI Workbench|
-:gather-input-files;
+.IATI Workbench container
+[plantuml]
+....
+@startuml
+(3)
+$group_main_color:gather-input-files;
 fork
   partition sheets-csvxml {
     fork
@@ -101,8 +117,15 @@ fork again
     $node_1_main_color:tmp/*.{iati|akvo}.xml ]
   }
 end fork
+(4)
+....
 
-:generate-iati-partials;
+.IATI Workbench container
+[plantuml]
+....
+@startuml
+(4)
+$group_main_color:generate-iati-partials;
 note: extension point
 fork
   partition csvxml-s2i {
@@ -133,6 +156,15 @@ fork again
 end fork
 
 $node_1_main_color:tmp/*.generated.xml]
+(5)
+....
+
+.IATI Workbench container
+[plantuml]
+....
+@startuml
+(5)
+$group_main_color:create-iati-output;
 
 :merge-iati;
 $node_1_main_color:src/iati-{activities, organisation}.xml]
@@ -146,8 +178,14 @@ reports/*]
 $node_1_main_color:src/iati-{activities,organisation}.xml
 output/iati-activities{,.invalid}.xml
 reports/*]
+(6)
+....
 
-|Workspace|
+.Workspace
+[plantuml]
+....
+@startuml
+(6)
 :postprocess iati;
 note
   Fix known data errors, 
@@ -155,17 +193,18 @@ note
   override via local ""build.xml""
 end note
 
-|Workspace|
 :open reports;
 note
   Open all feedback files
   in a browser
 end note
 
-|Workspace|
 stop
 @enduml
 ....
+
+.The dependencies of Ant targets involved in `spreadsheet-iati`
+image::image$ant-spreadsheet-iati.svg[] 
 
 == IATI Summary
 
