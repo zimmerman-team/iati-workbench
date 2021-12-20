@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<xsl:stylesheet version='3.0' 
+<xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
   expand-text="yes"
   exclude-result-prefixes="#all">
-  <xsl:output indent="yes"/>
-  
-  <xsl:import href="../functx.xslt"/>
 
-  <xsl:template match="/dir">
-    <iati-activities version="2.03" generated-datetime="{current-dateTime()}" 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  <xsl:output indent="yes"/>
+
+  <xsl:template name="merge-activities">
+    <xsl:param name="input-activities"/>
+    <iati-activities version="2.03" generated-datetime="{current-dateTime()}"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-activities-schema.xsd">
       <xsl:text>&#xa;</xsl:text>
       <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
       <xsl:text>&#xa;</xsl:text>
-      <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-activity" group-by="functx:trim(@merge:id)">
+      <xsl:for-each-group select="$input-activities" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
         <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
         <xsl:if test="not(@merge:exclude='true')">
@@ -262,10 +261,10 @@
   <xsl:template match="activity-description [not(narrative!='')]"/>
 
   <xsl:template match="telephone[.='']"/>
-  
+
   <xsl:template match="provider-org[not(@*[.!='']) and not(narrative!='')]"/>
   <xsl:template match="receiver-org[not(@*[.!='']) and not(narrative!='')]"/>
-  
+
   <!-- targets or actuals without values -->
   <xsl:template match="target[not(@value) or @value='']"/>
   <xsl:template match="actual[not(@value) or @value='']"/>

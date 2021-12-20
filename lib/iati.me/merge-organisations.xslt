@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="functx merge">
 
-  <xsl:import href="../functx.xslt"/>
   <xsl:output indent="yes"/>
 
-  <xsl:template match="/dir">
+  <xsl:template name="merge-organisations">
+    <xsl:param name="input-organisations"/>
     <iati-organisations version="2.03" generated-datetime="{current-dateTime()}" 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-organisations-schema.xsd">
       <xsl:text>&#xa;</xsl:text>
       <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
       <xsl:text>&#xa;</xsl:text>
-      <xsl:for-each-group select="document(f/@n[ends-with(.,'.generated.xml')])//iati-organisation" group-by="functx:trim(@merge:id)">
+      <xsl:for-each-group select="$input-organisations" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
         <xsl:if test="not(@merge:exclude='true')">
           <iati-organisation>

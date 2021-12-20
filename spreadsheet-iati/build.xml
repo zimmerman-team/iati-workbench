@@ -31,14 +31,7 @@
       destdir="${ws}/tmp"
       in="${ws}/tmp/ls.xml"
       out="${ws}/src/iati-activities.xml"
-      style="lib/iati.me/merge-activities.xslt"
-    />
-    <xslt
-      basedir="${ws}/tmp"
-      destdir="${ws}/tmp"
-      in="${ws}/tmp/ls.xml"
-      out="${ws}/src/iati-organisations.xml"
-      style="lib/iati.me/merge-organisations.xslt"
+      style="lib/iati.me/merge-generated-files.xslt"
     />
   </target>
 
