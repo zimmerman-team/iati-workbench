@@ -13,12 +13,17 @@
   <xsl:template match="/dir">
     <xsl:variable name="docs" select="document(f/@n[ends-with(.,'.generated.xml')])"/>
 
-    <xsl:call-template name="merge-activities">
-      <xsl:with-param name="input-activities" select="$docs//iati-activity"/>
-    </xsl:call-template>
+    <xsl:result-document method="xml" href="iati-activities.xml">
+      <xsl:call-template name="merge-activities">
+        <xsl:with-param name="input-activities" select="$docs//iati-activity"/>
+      </xsl:call-template>
+    </xsl:result-document>
 
-    <xsl:call-template name="merge-organisations">
-      <xsl:with-param name="input-organisations" select="$docs//iati-organisation"/>
-    </xsl:call-template>
+    <xsl:result-document method="xml" href="iati-organisations.xml">
+      <xsl:call-template name="merge-organisations">
+        <xsl:with-param name="input-organisations" select="$docs//iati-organisation"/>
+      </xsl:call-template>
+    </xsl:result-document>
+
   </xsl:template>
 </xsl:stylesheet>

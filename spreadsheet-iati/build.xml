@@ -30,7 +30,7 @@
       basedir="${ws}/tmp"
       destdir="${ws}/tmp"
       in="${ws}/tmp/ls.xml"
-      out="${ws}/src/iati-activities.xml"
+      out="${ws}/src/ls.xml"
       style="lib/iati.me/merge-generated-files.xslt"
     />
   </target>
