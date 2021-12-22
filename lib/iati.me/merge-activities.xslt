@@ -37,20 +37,30 @@
             <xsl:apply-templates select="(current-group()/reporting-org)[1]">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
-
-            <title>
-              <xsl:apply-templates select="current-group()/title/narrative">
-                <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-              </xsl:apply-templates>
-            </title>
+            
+            <xsl:where-populated>
+              <title>
+                <xsl:call-template name="narratives">
+                  <xsl:with-param name="narratives" select="current-group()/title/narrative"/>
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:call-template>
+              </title>
+            </xsl:where-populated>
 
             <xsl:for-each-group select="current-group()/description" group-by="@type">
-              <description>
-                <xsl:copy-of select="current-group()/@*" />
-                <xsl:apply-templates select="current-group()/narrative">
-                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-                </xsl:apply-templates>
-              </description>
+              <xsl:where-populated>
+                <description>
+                  <xsl:on-non-empty>
+                    <!-- include attributes if there are narratives -->
+                    <xsl:copy-of select="current-group()/@*" />
+                  </xsl:on-non-empty>
+
+                  <xsl:call-template name="narratives">
+                    <xsl:with-param name="narratives" select="current-group()/narrative"/>
+                    <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                  </xsl:call-template>                  
+                </description>
+              </xsl:where-populated>
             </xsl:for-each-group>
 
             <xsl:for-each-group select="current-group()/participating-org" group-by="@role">
@@ -294,6 +304,28 @@
       <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
     </collaboration-type>
   </xsl:template> -->
+  
+  <!-- Process a sequence of narratives:
+    * Group by language
+    * Then group by content (in effect eliminating duplicates in a language)
+    * Add the xml:lang attribute if it is not the default language
+  -->
+  <xsl:template name="narratives">
+    <xsl:param name="narratives"/>
+    <xsl:param name="default-lang" tunnel="yes"/>
+    <xsl:for-each-group select="$narratives"
+      group-by="(@xml:lang, $default-lang)[1]">
+
+      <xsl:variable name="lang" select="current-grouping-key()[. != $default-lang]"/>
+
+      <xsl:for-each-group select="current-group()" group-by="./text()">
+        <narrative>
+          <xsl:copy-of select="$lang"/>
+          <xsl:text>{current-grouping-key()}</xsl:text>
+        </narrative>
+      </xsl:for-each-group>
+    </xsl:for-each-group>
+  </xsl:template>
 
   <xsl:template match="narrative[text()]">
     <xsl:param name="default-lang" tunnel="yes"/>
