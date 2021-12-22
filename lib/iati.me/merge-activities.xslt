@@ -6,6 +6,7 @@
   expand-text="yes"
   exclude-result-prefixes="#all">
 
+  <xsl:mode on-no-match="shallow-copy"/>
   <xsl:output indent="yes"/>
 
   <xsl:template name="merge-activities">
@@ -253,6 +254,9 @@
   </xsl:template>
 
   <!-- ignore these elements: -->
+  <!-- attributes without a value -->
+  <xsl:template match="@*[normalize-space(.) = '']"/>
+  
   <!-- text elements without any narrative element with actual content -->
   <xsl:template match="title                [not(narrative!='')]"/>
   <xsl:template match="description          [not(narrative!='')]"/>
@@ -301,12 +305,4 @@
     </narrative>
   </xsl:template>
 
-  <!-- copy the rest -->
-  <!-- <xsl:template match="*[not(functx:is-node-in-sequence-deep-equal(.,preceding-sibling::*)) and not(name()='dir')]"> -->
-  <xsl:template match="*">
-    <xsl:copy copy-namespaces="no">
-      <xsl:copy-of select="@*[.!='']"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
-  </xsl:template>
 </xsl:stylesheet>
