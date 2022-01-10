@@ -12,11 +12,11 @@
   <xsl:key name="element" match="*" use="path()"/>
   
   <xsl:template match="val:error">
-    <xsl:variable name="path" select="@path"/>
+    <xsl:variable name="path" select="replace(@path, '(^.*iati-activity\[\d+\]).*$', '$1')"/>
     <xsl:copy>
       <xsl:copy-of select="@*[.!='']"/>
       <xsl:for-each select="doc(/val:*/@system-id)">
-        <xsl:attribute name="iati-identifier">{key('element', $path)/ancestor-or-self::iati-activity/iati-identifier}</xsl:attribute>
+        <xsl:attribute name="iati-identifier">{key('element', $path)/iati-identifier}</xsl:attribute>
       </xsl:for-each>      
       <xsl:text>{.}</xsl:text>
     </xsl:copy>

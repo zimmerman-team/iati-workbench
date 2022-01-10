@@ -5,15 +5,26 @@
   exclude-result-prefixes="xs"
   version="3.0"
   expand-text="yes">
-  
+
   <xsl:output method="text"/>
-  
+
   <xsl:template match="val:validation-report">
-    <xsl:text>{@system-id}: {val:results/@errors} errors, {val:results/@warnings} warnings&#xa;</xsl:text>
+    <xsl:text>{string-join((
+      'IATI identifier',
+      'line',
+      'element in activity',
+      'message'
+    ), ", ")}&#xa;</xsl:text>
     <xsl:apply-templates select="val:error"/>
   </xsl:template>
-  
+
   <xsl:template match="val:error">
-    <xsl:text>{@iati-identifier} , "{.}"&#xa;</xsl:text>
+    <xsl:text>{string-join((
+      @iati-identifier,
+      @line,
+      replace(@path, '^.*iati-activity\[\d+\]/(.*)$', '$1')=>replace('Q{}', '', 'q'),
+      '&quot;' || .  || '&quot;'), ", ")
+    }&#xa;</xsl:text>
+
   </xsl:template>
 </xsl:stylesheet>
