@@ -102,18 +102,32 @@
                 <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
               </xsl:apply-templates>
             </xsl:for-each-group>
-            <xsl:apply-templates select="current-group()/recipient-country[@code!='' and (@percentage!='0' or not(@percentage))]">
-              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-            </xsl:apply-templates>
+            
+            <xsl:for-each-group select="current-group()/recipient-country" group-by="@code">
+              <xsl:for-each-group select="current-group()" group-by="@percentage">
+                <xsl:apply-templates select="current-group()[1]">
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:apply-templates>
+              </xsl:for-each-group>
+            </xsl:for-each-group>
+
             <xsl:apply-templates select="current-group()/recipient-region[@code!='']">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
             <xsl:apply-templates select="current-group()/location">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
-            <xsl:apply-templates select="current-group()/sector">
-              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-            </xsl:apply-templates>
+
+            <xsl:for-each-group select="current-group()/sector" group-by="@vocabulary">
+              <xsl:for-each-group select="current-group()" group-by="@code">
+                <xsl:for-each-group select="current-group()" group-by="@percentage">
+                  <xsl:apply-templates select="current-group()[1]">
+                    <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                  </xsl:apply-templates>
+                </xsl:for-each-group>
+              </xsl:for-each-group>
+            </xsl:for-each-group>
+
             <xsl:apply-templates select="current-group()/tag">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
@@ -172,9 +186,14 @@
             <xsl:apply-templates select="current-group()/document-link[@url!='']">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
-            <xsl:apply-templates select="current-group()/related-activity[@ref!='']">
-              <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-            </xsl:apply-templates>
+            
+            <xsl:for-each-group select="current-group()/related-activity" group-by="@ref">
+              <xsl:for-each-group select="current-group()" group-by="@type">
+                <xsl:apply-templates select="current-group()[1]">
+                  <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
+                </xsl:apply-templates>
+              </xsl:for-each-group>
+            </xsl:for-each-group>
 
             <xsl:if test="current-group()/conditions/condition/narrative">
               <conditions attached="1">
@@ -268,22 +287,24 @@
   <xsl:template match="@*[normalize-space(.) = '']"/>
   
   <!-- text elements without any narrative element with actual content -->
-  <xsl:template match="title                [not(narrative!='')]"/>
-  <xsl:template match="description          [not(narrative!='')]"/>
-  <xsl:template match="comment              [not(narrative!='')]"/>
-  <xsl:template match="condition            [not(narrative!='')]"/>
-  <xsl:template match="organisation         [not(narrative!='')]"/>
-  <xsl:template match="department           [not(narrative!='')]"/>
-  <xsl:template match="person-name          [not(narrative!='')]"/>
-  <xsl:template match="job-title            [not(narrative!='')]"/>
-  <xsl:template match="mailing-address      [not(narrative!='')]"/>
-  <xsl:template match="name                 [not(narrative!='')]"/>
-  <xsl:template match="activity-description [not(narrative!='')]"/>
+  <xsl:template match="title                [not(narrative[.!=''])]"/>
+  <xsl:template match="description          [not(narrative[.!=''])]"/>
+  <xsl:template match="comment              [not(narrative[.!=''])]"/>
+  <xsl:template match="condition            [not(narrative[.!=''])]"/>
+  <xsl:template match="organisation         [not(narrative[.!=''])]"/>
+  <xsl:template match="department           [not(narrative[.!=''])]"/>
+  <xsl:template match="person-name          [not(narrative[.!=''])]"/>
+  <xsl:template match="job-title            [not(narrative[.!=''])]"/>
+  <xsl:template match="mailing-address      [not(narrative[.!=''])]"/>
+  <xsl:template match="name                 [not(narrative[.!=''])]"/>
+  <xsl:template match="activity-description [not(narrative[.!=''])]"/>
 
   <xsl:template match="telephone[.='']"/>
 
-  <xsl:template match="provider-org[not(@*[.!='']) and not(narrative!='')]"/>
-  <xsl:template match="receiver-org[not(@*[.!='']) and not(narrative!='')]"/>
+  <xsl:template match="provider-org[not(@*[.!='']) and not(narrative[.!=''])]"/>
+  <xsl:template match="receiver-org[not(@*[.!='']) and not(narrative[.!=''])]"/>
+
+  <xsl:template match="period[not(target) and not(actual)]"/>
 
   <!-- targets or actuals without values -->
   <xsl:template match="target[not(@value) or @value='']"/>
