@@ -22,7 +22,6 @@
   expand-text="yes"
   exclude-result-prefixes="#all">
 
-  <xsl:mode on-no-match="shallow-copy"/>
   <xsl:output indent="yes"/>
 
   <xsl:template name="merge-activities">

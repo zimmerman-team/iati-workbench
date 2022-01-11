@@ -18,7 +18,7 @@
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="functx merge">
+  exclude-result-prefixes="#all">
 
   <xsl:output indent="yes"/>
 
@@ -54,21 +54,6 @@
         </xsl:if>
       </xsl:for-each-group>
     </iati-organisations>
-  </xsl:template>
-
-  <!-- ignore these elements: -->
-  <xsl:template match="narrative            [not(text())]"/>
-
-  <!-- text elements without any narrative element with actual content -->
-  <xsl:template match="name                 [not(narrative!='')]"/>
-
-  <!-- copy the rest -->
-  <!-- <xsl:template match="*[not(functx:is-node-in-sequence-deep-equal(.,preceding-sibling::*)) and not(name()='dir')]"> -->
-  <xsl:template match="*">
-    <xsl:copy copy-namespaces="no">
-      <xsl:copy-of select="@*[.!='']"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>
