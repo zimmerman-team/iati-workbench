@@ -113,7 +113,10 @@
   </target>
 
   <!--Transform existing Akvo input files using workspace-based config.-->
-  <target name="akvo-s2i">
+  <target name="check-akvo-config">
+    <available property="has.akvo.config" file="${ws}/config/akvo-s2i.xslt"/>
+  </target>
+  <target name="akvo-s2i" depends="check-akvo-config" if="has.akvo.config">
     <xslt
       basedir="${ws}/tmp/"
       includes="*.akvo.xml"
