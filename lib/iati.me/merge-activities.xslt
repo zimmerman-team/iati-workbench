@@ -34,15 +34,12 @@
         <xsl:sort select="current-grouping-key()"/>
 
         <!-- select default language attribute -->
-        <xsl:variable name="default">
-          <n xml:lang="en"/>
-        </xsl:variable>
-        <xsl:variable name="default-lang" select="(current-group()/@xml:lang, $default/@xml:lang)[1]"/>
+        <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
 
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>
             <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude', 'xml:lang'))]" />
-            <xsl:copy-of select="$default-lang"/>
+            <xsl:attribute name="xml:lang" select="$default-lang"/>
             <!-- <xsl:for-each-group select="current-group()/@*[.!='' and name(.)!='merge:id']" group-by="name(.)">
               <xsl:copy-of select=".[1]" />
             </xsl:for-each-group> -->
@@ -349,15 +346,14 @@
     <xsl:param name="default-lang" tunnel="yes"/>
     <xsl:for-each-group select="$narratives"
       group-by="(@xml:lang, $default-lang)[1]">
+      <xsl:variable name="lang" select="current-grouping-key()"/>
 
-      <xsl:variable name="lang" select="current-grouping-key()[. != $default-lang]"/>
-
-      <xsl:for-each-group select="current-group()" group-by="./text()">
-        <narrative>
-          <xsl:copy-of select="$lang"/>
-          <xsl:text>{current-grouping-key()}</xsl:text>
-        </narrative>
-      </xsl:for-each-group>
+      <narrative>
+        <xsl:if test="$lang!=$default-lang">
+          <xsl:attribute name="xml:lang" select="$lang"/>
+        </xsl:if>
+        <xsl:text>{text()[1]}</xsl:text>
+      </narrative>
     </xsl:for-each-group>
   </xsl:template>
 
