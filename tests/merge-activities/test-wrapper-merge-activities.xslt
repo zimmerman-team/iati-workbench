@@ -18,36 +18,19 @@
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="#all">
-
-  <xsl:output indent="yes"/>
-
-  <xsl:import href="../functx.xslt"/>
-  <xsl:include href="merge-activities.xslt"/>
-  <xsl:include href="merge-organisations.xslt"/>
-
-  <xsl:template match="/dir">
-    <xsl:variable name="docs" select="document(f/@n[ends-with(.,'.generated.xml')])"/>
-
-    <xsl:result-document method="xml" href="iati-activities.xml">
-      <xsl:call-template name="merge-activities">
-        <xsl:with-param name="input-activities" select="$docs//iati-activity"/>
-      </xsl:call-template>
-    </xsl:result-document>
-
-    <xsl:result-document method="xml" href="iati-organisations.xml">
-      <xsl:call-template name="merge-organisations">
-        <xsl:with-param name="input-organisations" select="$docs//iati-organisation"/>
-      </xsl:call-template>
-    </xsl:result-document>
-  </xsl:template>
+  exclude-result-prefixes="#all"
+  expand-text="yes">
+  
+  <xsl:import href="../../lib/functx.xslt"/>
+  <xsl:include href="../../lib/iati.me/merge-activities.xslt"/>
   
   <!-- our version of on-no-match="shallow-copy", without copying namespaces -->
   <xsl:template match=".">
+    <xsl:message>shallow copy: {local-name(.)}</xsl:message>
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
     </xsl:copy>
   </xsl:template>
-
+  
 </xsl:stylesheet>

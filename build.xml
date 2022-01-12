@@ -191,12 +191,11 @@
   </target>
 
   <target name="test" description="Run xspec tests">
-    <!--    <xmlvalidate lenient="true">
-      <fileset dir="tests/iati/testfiles" includes="*.xml"/>
-    </xmlvalidate>-->
-
     <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/csvxml-s2i.xspec"/>
+    </antcall>
+    <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/merge-activities.xspec"/>
     </antcall>
   </target>
   
