@@ -23,7 +23,7 @@
   </description>
 
   <target name="spreadsheet-iati"
-    description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
+    description="Create IATI XML file from spreadsheet and IATI input files."
     depends="init, gather-input-files, generate-iati-partials, create-iati-output">
   </target>
 
@@ -37,7 +37,7 @@
   
   <extension-point name="create-iati-output"
     description="Merge IATI partial activities, validate, create clean output"
-    depends="merge-iati, validate-iati, filter-activities"/>
+    depends="merge-iati"/>
 
   <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
@@ -137,36 +137,6 @@
         <globmapper from="*.csv" to="*.csv.xml"/>
       </apply>
     </sequential>
-  </target>
-
-  <target name="iati-office"
-    description="Create LibreOffice and Excel spreadsheets from IATI.">
-    <dependset>
-      <sources>
-        <file file="lib/office/spreadsheet.xslt" />
-      </sources>
-      <targetfileset dir="${ws}/output" includes="*.xlsx" />
-    </dependset>
-
-    <xslt
-      basedir="${ws}/src"
-      includes="*.xml"
-      destdir="${ws}/tmp"
-      extension=".fods"
-      filenameparameter="filename"
-      style="spreadsheet-iati/default-iati-office.xslt"
-    />
-
-    <apply executable="soffice" dest="${ws}/output" verbose="false">
-      <fileset dir="${ws}/tmp" includes="*.*.fods"/>
-      <mapper type="glob" from="*.fods" to="*.xlsx"/>
-
-      <arg line="--headless"/>
-      <!-- convert-to: explicitly save as UTF-8 (token 3, code=76) -->
-      <arg line="--convert-to xlsx:'Calc MS Excel 2007 XML'"/>
-      <arg line="--outdir ${ws}/output"/>
-      <srcfile/>
-    </apply>
   </target>
 
   <target name="spreadsheet-map" depends="clean, sheets-csvxml, ls-tmp" description="Create a map of the input files">
