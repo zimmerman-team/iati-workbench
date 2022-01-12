@@ -15,32 +15,27 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->  
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:val="http://saxon.sf.net/ns/validation"
-  exclude-result-prefixes="xs"
-  version="3.0"
-  expand-text="yes">
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
+  
+  <x:scenario label="Test merge:currency-symbol(string)">
+    
+    <x:scenario label="EUR 1000">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'EUR 1000'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string EUR." select="xs:string('EUR')"/>
+    </x:scenario>
+    
+    <x:scenario label="USD 1,200,300">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'USD 1,200,300'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string USD." select="xs:string('USD')"/>
+    </x:scenario>
+    
+  </x:scenario>  
 
-  <xsl:output method="text"/>
-
-  <xsl:template match="val:validation-report">
-    <xsl:text>{string-join((
-      'IATI identifier',
-      'line',
-      'element in activity',
-      'message'
-    ), ", ")}&#xa;</xsl:text>
-    <xsl:apply-templates select="val:error"/>
-  </xsl:template>
-
-  <xsl:template match="val:error">
-    <xsl:text>{string-join((
-      @iati-identifier,
-      @line,
-      replace(@path, '^.*iati-activity\[\d+\]/(.*)$', '$1')=>replace('Q{}', '', 'q'),
-      '&quot;' || .  || '&quot;'), ", ")
-    }&#xa;</xsl:text>
-
-  </xsl:template>
-</xsl:stylesheet>
+</x:description>

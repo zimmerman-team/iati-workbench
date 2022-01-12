@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->  
 <project name="data-quality">
   <description>
     IATI Data Quality Engine
@@ -65,15 +81,12 @@
     <xslt basedir="${ws}/reports"
       includes="validation.*.xml"
       destdir="${ws}/reports"
-      extension=".txt"
+      extension=".csv"
       style="spreadsheet-iati/validation-results.xslt"
     />
-
-    <apply executable="cat">
-      <srcfile/>
-      <fileset dir="${ws}/reports" includes="validation.*.txt"/>
-    </apply>
     
+    <echo message="Validation results: open reports/validation.iati-activities.csv etc."/>
+
     <!-- TODO: include this in the normal workbench, or add a resource to trigger this call
     <apply executable="iati-validator">
       <arg line="rules"/>
@@ -105,8 +118,7 @@
   </target>
             
   <target name="iati-summary"
-    description="Create LibreOffice spreadsheet with a summary of an IATI file."
-    depends="init">
+    description="Create LibreOffice spreadsheet with a summary of an IATI file.">
     <dependset>
       <sources>
         <file file="lib/office/spreadsheet.xslt" />

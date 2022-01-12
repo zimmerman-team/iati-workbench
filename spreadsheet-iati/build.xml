@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->  
 <project name="spreadsheet-iati"
   xmlns:if="ant:if"
   xmlns:unless="ant:unless">
@@ -8,8 +24,20 @@
 
   <target name="spreadsheet-iati"
     description="Create IATI XML file from spreadsheet and IATI input files, validate and summarise."
-    depends="generate-iati-partials, merge-iati, validate-iati, filter-activities">
+    depends="init, gather-input-files, generate-iati-partials, create-iati-output">
   </target>
+
+  <extension-point name="gather-input-files"
+    description="Gather input files into tmp in expected formats"
+    depends="sheets-csvxml, collect-iati-files"/>
+
+  <extension-point name="generate-iati-partials"
+    description="Generate IATI partial activities for input files"
+    depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
+  
+  <extension-point name="create-iati-output"
+    description="Merge IATI partial activities, validate, create clean output"
+    depends="merge-iati, validate-iati, filter-activities"/>
 
   <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
@@ -18,28 +46,27 @@
       basedir="${ws}/tmp"
       destdir="${ws}/tmp"
       in="${ws}/tmp/ls.xml"
-      out="${ws}/src/iati-activities.xml"
-      style="lib/iati.me/merge-activities.xslt"
-    />
-    <xslt
-      basedir="${ws}/tmp"
-      destdir="${ws}/tmp"
-      in="${ws}/tmp/ls.xml"
-      out="${ws}/src/iati-organisations.xml"
-      style="lib/iati.me/merge-organisations.xslt"
+      out="${ws}/src/ls.xml"
+      style="lib/iati.me/merge-generated-files.xslt"
     />
   </target>
-  
-  <!--Copy CSV files for further processing-->
+
+  <!--Copy CSV files from the input folder-->
   <target name="csv-csv">
     <copy todir="${ws}/tmp">
       <fileset dir="${ws}/input" includes="*.csv"/>
     </copy>
   </target>
 
+  <!--Copy IATI and Akvo files from the input folder-->
+  <target name="collect-iati-files">
+    <copy todir="${ws}/tmp" flatten="true">
+      <fileset dir="${ws}/input" includes="**/*.iati.xml, **/*.akvo.xml"/>
+    </copy>
+  </target>
+  
   <!--Convert spreadsheets to CSV files for further processing.-->
-  <target name="excel-csv"
-    depends="init">
+  <target name="excel-csv">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
 
     <apply executable="soffice" dest="${ws}/tmp" verbose="false">
@@ -54,7 +81,7 @@
     </apply>
   </target>
 
-  <target name="sheets-iati" depends="sheets-csvxml">
+  <target name="csvxml-s2i">
     <available property="config-present" file="${ws}/config/csvxml-iati.xslt"/>
     <echo level="error" unless:set="config-present">
       There is no configuration how to transform these spreadsheets into IATI.
@@ -74,20 +101,28 @@
      />
   </target>
 
-  <!-- Provide a place to add specific XML convertors -->
-  <extension-point name="generate-iati-partials"
-    depends="sheets-iati, iati-iati"/>
-
   <!--Transform existing IATI input files into a version with merge ids.-->
-  <target name="iati-iati"
-    description="Transform existing IATI input files into a version with merge ids."
-    depends="init">
+  <target name="iati-s2i">
     <xslt
       basedir="${ws}/input/"
       includes="*.iati.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
       style="transform/add-merge-ids.xslt"
+     />
+  </target>
+
+  <!--Transform existing Akvo input files using workspace-based config.-->
+  <target name="check-akvo-config">
+    <available property="has.akvo.config" file="${ws}/config/akvo-s2i.xslt"/>
+  </target>
+  <target name="akvo-s2i" depends="check-akvo-config" if="has.akvo.config">
+    <xslt
+      basedir="${ws}/tmp/"
+      includes="*.akvo.xml"
+      destdir="${ws}/tmp"
+      extension=".generated.xml"
+      style="${ws}/config/akvo-s2i.xslt"
      />
   </target>
 
@@ -105,8 +140,7 @@
   </target>
 
   <target name="iati-office"
-    description="Create LibreOffice and Excel spreadsheets from IATI."
-    depends="init">
+    description="Create LibreOffice and Excel spreadsheets from IATI.">
     <dependset>
       <sources>
         <file file="lib/office/spreadsheet.xslt" />

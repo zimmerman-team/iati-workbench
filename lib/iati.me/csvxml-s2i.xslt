@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->  
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -22,11 +38,11 @@
 
   <xsl:function name="merge:boolean" as="xs:boolean">
     <xsl:param name="item" as="xs:string?"/>
-  
+
     <xsl:choose>
       <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
-    </xsl:choose>  
+    </xsl:choose>
   </xsl:function>
 
   <xsl:function name="merge:decimal" as="xs:string?">
@@ -43,10 +59,10 @@
     <xsl:param name="item" as="xs:string"/>
     {merge:decimal(replace($item, '.', '')=>replace(',', '.'))}
   </xsl:function>
-  
+
   <xsl:function name="merge:currency-value" as="xs:decimal?">
     <xsl:param name="item" as="xs:string"/>
-    
+
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:value-of select="merge:decimal(regex-group(1))"/>
@@ -56,7 +72,7 @@
 
   <xsl:function name="merge:currency-symbol" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
-    
+
     <xsl:analyze-string regex="^([a-zA-Z]+)\s?[+-]?[0-9.,]+$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:value-of select="regex-group(1)"/>
@@ -74,9 +90,9 @@
         <xsl:value-of select="'USD'"/>
       </xsl:matching-substring>
     </xsl:analyze-string>
-    
+
   </xsl:function>
-  
+
   <xsl:function name="merge:date" as="xs:date?">
     <!-- date function without format: recognise the format -->
     <xsl:param name="item" as="xs:string"/>
@@ -101,8 +117,8 @@
       </xsl:matching-substring>
     </xsl:analyze-string>
 
-    <!-- YYYY-MM-DD -->
-    <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d)$" select="normalize-space($item)">
+    <!-- YYYY-MM-DD or YYYY-MM-DD HH:MM... or YYYY-MM-DDTHH:MM... -->
+    <xsl:analyze-string regex="^(\d{{4}})\D(\d\d?)\D(\d\d)([T ].+)?$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:try>
           {functx:date(regex-group(1), regex-group(2), regex-group(3))}
@@ -178,7 +194,7 @@
   <xsl:function name="merge:entry" as="item()*">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
-    
+
     <xsl:sequence select="merge:entry($record, $label, '')"/>
   </xsl:function>
 
@@ -190,15 +206,15 @@
     <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
     <xsl:sequence select="functx:trim(($values, $default)[1])"/>
   </xsl:function>
-  
+
   <xsl:function name="merge:entryExists" as="xs:boolean">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
-    
+
     <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
     <xsl:value-of select="count($values)>0"/>
   </xsl:function>
-  
+
   <xsl:function name="merge:format" as="xs:string">
     <xsl:param name="from" as="xs:string"/>
     <xsl:variable name="known">
