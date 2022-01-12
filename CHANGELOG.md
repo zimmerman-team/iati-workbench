@@ -9,7 +9,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * add Akvo file processing, update IATI file processing ([64814f0](https://github.com/data4development/iati-workbench/commit/64814f0944272b2bcaba24e44bd805285ca2ea9c))
 * convert timestamp values as dates ([3c76b2a](https://github.com/data4development/iati-workbench/commit/3c76b2a83d04fab1ee009df386e30acd63b1d0e5))
-* export validation errors to CSV rather than text ([a95dd40](https://github.com/data4development/iati-workbench/commit/a95dd405317fa5cdc54375ec585c370b2eb288ca))
 
 
 ### Debts
