@@ -24,12 +24,10 @@
 
   <xsl:template name="merge-organisations">
     <xsl:param name="input-organisations"/>
+    <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
     <iati-organisations version="2.03" generated-datetime="{current-dateTime()}" 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-organisations-schema.xsd">
-      <xsl:text>&#xa;</xsl:text>
-      <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
-      <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="$input-organisations" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
         <xsl:if test="not(@merge:exclude='true')">

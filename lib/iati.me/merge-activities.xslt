@@ -26,12 +26,10 @@
 
   <xsl:template name="merge-activities">
     <xsl:param name="input-activities"/>
+    <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-activities-schema.xsd">
-      <xsl:text>&#xa;</xsl:text>
-      <xsl:comment>Data4Development Spreadsheets2IATI converter service https://data4development.nl</xsl:comment>
-      <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="$input-activities" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
 
