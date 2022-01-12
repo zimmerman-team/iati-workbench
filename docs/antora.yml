@@ -1,7 +1,3 @@
 name: iati-workbench
 title: IATI Workbench
-version: 1.3.0
-prerelease:
-nav:
-- modules/ROOT/nav.adoc
-- modules/spreadsheets2iati/nav.adoc
+version: '1.4.0'
