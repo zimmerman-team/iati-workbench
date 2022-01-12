@@ -20,13 +20,11 @@
   xmlns:merge="http://iati.me/merge"
   stylesheet="test-wrapper-merge-activities.xslt">
   
-  <x:scenario label="Test skipping elements with only empty narratives">
-    <x:scenario label="Merging contact-info elements">
+  <x:scenario label="Skip elements with only empty narratives">
+    <x:scenario label="When merging contact-info elements that are sometimes empty">
       <x:call template="merge-activities">
         <x:param name="input-activities">
-            <iati-activity default-currency="USD"
-              last-updated-datetime="2022-01-11T10:35:25.312472Z" xml:lang="en"
-              merge:id="XM-DAC-1234-Test">
+            <iati-activity merge:id="XM-DAC-1234-Test">
               <iati-identifier>XM-DAC-1234-Test</iati-identifier>
               <contact-info type="1">
                 <organisation>

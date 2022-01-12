@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  IATI workbench: produce and use IATI data
   Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
-  
+
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->  
+-->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
@@ -34,7 +34,7 @@
       <xsl:text>&#xa;</xsl:text>
       <xsl:for-each-group select="$input-activities" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
-        
+
         <!-- select default language attribute -->
         <xsl:variable name="default">
           <n xml:lang="en"/>
@@ -52,7 +52,7 @@
             <xsl:apply-templates select="(current-group()/reporting-org)[1]">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
-            
+
             <xsl:where-populated>
               <title>
                 <xsl:call-template name="narratives">
@@ -73,7 +73,7 @@
                   <xsl:call-template name="narratives">
                     <xsl:with-param name="narratives" select="current-group()/narrative"/>
                     <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-                  </xsl:call-template>                  
+                  </xsl:call-template>
                 </description>
               </xsl:where-populated>
             </xsl:for-each-group>
@@ -117,7 +117,7 @@
                 <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
               </xsl:apply-templates>
             </xsl:for-each-group>
-            
+
             <xsl:for-each-group select="current-group()/recipient-country" group-by="@code">
               <xsl:for-each-group select="current-group()" group-by="@percentage">
                 <xsl:apply-templates select="current-group()[1]">
@@ -201,7 +201,7 @@
             <xsl:apply-templates select="current-group()/document-link[@url!='']">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
             </xsl:apply-templates>
-            
+
             <xsl:for-each-group select="current-group()/related-activity" group-by="@ref">
               <xsl:for-each-group select="current-group()" group-by="@type">
                 <xsl:apply-templates select="current-group()[1]">
@@ -300,7 +300,7 @@
   <!-- ignore these elements: -->
   <!-- attributes without a value -->
   <xsl:template match="@*[normalize-space(.) = '']"/>
-  
+
   <!-- text elements without any narrative element with actual content -->
   <xsl:template match="title                [not(narrative[.!=''])]"/>
   <xsl:template match="description          [not(narrative[.!=''])]"/>
@@ -340,7 +340,7 @@
       <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
     </collaboration-type>
   </xsl:template> -->
-  
+
   <!-- Process a sequence of narratives:
     * Group by language
     * Then group by content (in effect eliminating duplicates in a language)

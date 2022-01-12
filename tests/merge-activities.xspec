@@ -21,4 +21,5 @@
   <x:param name="file" select="'file'"/>
 
   <x:import href="merge-activities/empty-narratives.xspec"/>
+  <x:import href="merge-activities/merge-narratives.xspec"/>
 </x:description>
