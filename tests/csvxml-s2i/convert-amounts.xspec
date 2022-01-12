@@ -15,22 +15,27 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->  
-
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
-  xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="">
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
+  
+  <x:scenario label="Test merge:currency-symbol(string)">
+    
+    <x:scenario label="EUR 1000">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'EUR 1000'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string EUR." select="xs:string('EUR')"/>
+    </x:scenario>
+    
+    <x:scenario label="USD 1,200,300">
+      <x:call function="merge:currency-symbol">
+        <x:param select="'USD 1,200,300'"></x:param>
+      </x:call>
+      <x:expect label="should produce xs:string USD." select="xs:string('USD')"/>
+    </x:scenario>
+    
+  </x:scenario>  
 
-  <xsl:import href="../functx.xslt"/>
-
-  <xsl:function name="merge:get-code-from-list">
-    <xsl:param name="list"/>
-    <xsl:param name="text"/>
-    <xsl:variable name="codelist" select="doc(concat(
-      '../schemata/2.03/codelist/', $list, '.xml' ))"/>
-    <xsl:value-of select="(
-      $codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
-      $text)[1]"/>
-  </xsl:function>
-</xsl:stylesheet>
+</x:description>

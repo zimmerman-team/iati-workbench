@@ -14,12 +14,58 @@ Create or copy a `build.xml` to have local build capabilities: for instance to g
 
 == Spreadsheets2IATI
 
-The conversion process runs within a container.
+The conversion process is initiated by a local call of `ant` in the workspace.
 
-.Sequence for `s2i-run` target
+  $ ant s2i-run
+  
+The process breaks down in a couple of components.
+
+.Sequence for `s2i-run`
 [plantuml]
 ....
 @startuml
+start
+partition s2i-run {
+  $group_main_color:get-inputs;
+  note right: Collect files from remote sources\n(not needed in AIDA)
+  
+  partition spreadsheet-iati {
+    $group_main_color:gather-input-files;
+    note right: Prepare input files from input/ to tmp/
+    
+    $group_main_color:generate-iati-partials;
+    note right: Generate IATI for each file individually 
+    
+    $group_main_color:create-iati-output;
+    note right
+      Merge generated IATI into one file and
+      (not in AIDA) filter out into valid and invalid activities
+    end note 
+  }
+
+  $group_main_color:postprocess-iati;
+  note right: Apply known fixes\n(not in AIDA)
+}
+
+$group_main_color:s2i-publish;
+note right: Put the generated online\n(not in AIDA)
+
+stop
+@enduml
+....
+
+The local `build.xml` in the workspace includes a library build file from the workbench.
+This makes it possible to extend or override the process in a particular workspace.
+
+=== Get inputs
+
+This step copies input files for the conversion 
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the workspace
 start
 $important_color:config/iati-workbench.properties]
 
@@ -33,6 +79,16 @@ note $important_color
 end note
 $node_1_main_color:updates inputs/*]
 
+#orange:prepare new inputs;
+(1)
+....
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the IATI Workbench container
+(1)
 partition spreadsheet-map {
   partition sheets-csvxml {
     fork
@@ -54,16 +110,82 @@ partition spreadsheet-map {
   $node_1_main_color:output/csvmap-csv]
   
 }
+(2)
+....
 
-:generate-iati-partials;
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the workspace
+(2)
+:prepare new inputs:
+store changes;
+note
+  Commit changes to git
+  Open diff in browser
+end note
+(3)
+....
+
+=== Gather input files
+
+This step takes files from the input folder, 
+and prepares them for processing, in a flat folder.
+
+* Excel files are converted into CSV.
+* Excel and CSV are then converted into an XML format.
+* Akvo and IATI XML files are copied.
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the IATI Workbench container
+(3)
+$group_main_color:gather-input-files;
+fork
+  partition sheets-csvxml {
+    fork
+      $node_1_main_color:input/*.xsl{x} ]
+      :excel-csv;
+      $node_1_main_color:tmp/*.csv]
+    fork again
+      $node_1_main_color:input/*.csv]
+      :csv-csv;
+      $node_1_main_color:tmp/*.csv]
+    end fork
+    
+    :csv-csvxml;
+    note: using basex
+    $node_1_main_color:tmp/*.csv.xml]
+  }
+fork again
+  partition collect-iati-files {
+    $node_1_main_color:input/**/*.{iati|akvo}.xml ]
+    :copy;
+    $node_1_main_color:tmp/*.{iati|akvo}.xml ]
+  }
+end fork
+(4)
+....
+
+=== Generate IATI partials
+
+This step transforms prepared input files into "partial IATI" files.
+These intermediary files are not valid IATI yet, 
+but contain the IATI representation for the particular input file.
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the IATI Workbench container
+(4)
+$group_main_color:generate-iati-partials;
 note: extension point
 fork
-  partition sheets-iati {
-    :sheets-csvxml;
-    note
-      already done in step
-      ""spreadsheet-map"" above
-    end note
+  partition csvxml-s2i {
     $node_1_main_color:tmp/*.csv.xml]
     
     $important_color:config/csvxml-iati.xslt]
@@ -71,36 +193,114 @@ fork
       Can include or override
       default templates
     end note
-    :sheets-iati;
+    :csvxml-s2i;
   }
 fork again
-  partition iatixml-iati {
-    $node_1_main_color:input/*.iati.xml]
-    :iatixml-iati;
+  partition iati-s2i {
+    $node_1_main_color:tmp/*.iati.xml]
+    :iati-s2i;
   }
 fork again
-  partition akvo {
-    $important_color::Optional Akvo target in
-    config/build.iati-workbench.xml;
-    $node_1_main_color:input/*.akvo.xml]
+  partition akvo-s2i {
+    $node_1_main_color:tmp/*.akvo.xml]
     $important_color:config/akvo-s2i.xslt]
+    note
+      Expects an Akvo-specific
+      config file.
+    end note
     :akvo-s2i;
   }
 end fork
 
 $node_1_main_color:tmp/*.generated.xml]
+(5)
+....
+
+=== Create IATI output
+
+This step combines all "partial IATI files" into one IATI activities and one IATI organisations file.
+These files can contain activities that are not IATI schema-compliant.
+
+With a paid Saxon license, it is possible to validate the file 
+and then split it at the activity level.
+This will create one valid IATI file,
+and one file with activities that contain validation errors.
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the IATI Workbench container
+(5)
+$group_main_color:create-iati-output;
 
 :merge-iati;
 $node_1_main_color:src/iati-{activities, organisation}.xml]
 
+$node_1_main_color:via dest/*
+reports/*]
+
+:filter-activities;
+
+$node_1_main_color:src/iati-{activities,organisation}.xml
+output/iati-activities{,.invalid}.xml
+reports/*]
+(6)
+....
+
+=== Postprocess IATI file
+
+This step in the Dataworkbench applies known fixes to an IATI file.
+This can be anonymisation (replacing an organisation name),
+or known issues (like an identifier NL-KvK-... with lowercase "v").
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the workspace
+(6)
 :postprocess iati;
 note $important_color
   TODO: check if needed
   Fix known data errors, 
-  anonymisation, etc
+  do anonymisation, etc
   override via local ""build.xml""
 end note
+(7)
+@enduml
+....
 
+=== S2I publish
+
+This step commits the produced IATI file to version control,
+and publishes it online on the dataworkbench.io website.
+
+[plantuml]
+....
+@startuml
+skinparam TitleFontColor $divider_main_color
+title In the workspace
+(7)
+$important_color:config/iati-workbench.properties]
+:s2i-publish;
+note
+  Publish IATI file to specified location,
+  commit updates to git and push to remote repository.
+end note
 stop
 @enduml
 ....
+
+== Ant targets in the IATI Workbench
+
+.The dependencies of Ant targets involved in `spreadsheet-iati`
+image::image$ant-spreadsheet-iati.svg[] 
+
+== IATI Summary
+
+Creates spreadsheets with summary information based on XML files in the `output` folder.
+
+To create those XML files in the output folder, 
+we need to run a validation and then filter activities.
+ 

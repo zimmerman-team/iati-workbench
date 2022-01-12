@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/data4development/iati-workbench/compare/v1.3.0...v1.4.0) (2022-01-12)
+
+
+### Features
+
+* add Akvo file processing, update IATI file processing ([64814f0](https://github.com/data4development/iati-workbench/commit/64814f0944272b2bcaba24e44bd805285ca2ea9c))
+* convert timestamp values as dates ([3c76b2a](https://github.com/data4development/iati-workbench/commit/3c76b2a83d04fab1ee009df386e30acd63b1d0e5))
+* export validation errors to CSV rather than text ([a95dd40](https://github.com/data4development/iati-workbench/commit/a95dd405317fa5cdc54375ec585c370b2eb288ca))
+
+
+### Debts
+
+* split file handling and merging of activities and organisations ([7a01d5b](https://github.com/data4development/iati-workbench/commit/7a01d5b7b196e2d02702937e65b65aa39e87c2bc))
+
+
+### Documentation
+
+* update description of s2i process ([5f07083](https://github.com/data4development/iati-workbench/commit/5f07083ccc42c4ec67adff63171fed9ef1a0f411))
+
+
+### Risks and compliance
+
+* for compliance, add AGPL license text to source files ([22cd10f](https://github.com/data4development/iati-workbench/commit/22cd10f607508ca431b456359ecf19149584cc4e))
+
+
+### Improvements
+
+* check if Akvo config exists ([5968415](https://github.com/data4development/iati-workbench/commit/596841565064ee15ecd8ac9c00fc8daf16568cbf))
+* error introduced in merging activities ([e2cf9fd](https://github.com/data4development/iati-workbench/commit/e2cf9fd65047582f0eb33d9ddbea0c38b6081663))
+* handle xml:lang better ([1da02a8](https://github.com/data4development/iati-workbench/commit/1da02a877cd64596025965219808da29168cc579))
+* merge recipient-country and sector per code ([18637d1](https://github.com/data4development/iati-workbench/commit/18637d163c5aebf28e75b50908fbb9c2266e8cd7))
+* output iati-activities and iati-organisations into separate files ([e86fb99](https://github.com/data4development/iati-workbench/commit/e86fb99835931f3722bc0fa6d9d1b6d575cad0e7))
+* skip several elements with empty narratives in merge-activities ([95229d1](https://github.com/data4development/iati-workbench/commit/95229d149fd849d68ffeb22ae3f1bed51b7297b7))
+* start updating handling of narratives ([0a0ae9d](https://github.com/data4development/iati-workbench/commit/0a0ae9dc59cbb4a8fa489921c6efc3108465ea5a))
+
 ## [1.3.0](https://github.com/data4development/iati-workbench/compare/v1.2.0...v1.3.0) (2021-11-30)
 
 

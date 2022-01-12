@@ -1,6 +1,6 @@
 name: iati-workbench
 title: IATI Workbench
-version: 1.2.0-aida
+version: 1.4.0-aida
 prerelease:
 nav:
 - modules/ROOT/nav.adoc

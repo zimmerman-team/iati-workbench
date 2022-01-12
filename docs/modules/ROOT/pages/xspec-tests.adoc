@@ -1,0 +1,22 @@
+= Xspec tests
+
+The XSLT transformations can be unit tested with the https://xspec.io/[Xspec framework^].
+The Xspec library is included as git submodule under `lib/xspec`.
+
+== Test setup
+
+The main test scenarios are organised under `tests/`.
+
+Each main scenario includes smaller subsets in subfolders.
+
+The `build.xml` file contains calls to each of the main scenarios.
+
+[NOTE]
+====
+A test scenario can only process one main XSLT file.
+This file is specified in the `<x:description>` element of that scenario.
+
+Files imported in this main scenario have their own stylesheet specification.
+However, these are ignored when running the main scenario.
+They can be run on their own too, for instance when using the OxygenXML Xspec features.
+====
