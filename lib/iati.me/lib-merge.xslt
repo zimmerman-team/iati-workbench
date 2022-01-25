@@ -58,4 +58,12 @@
     </narrative>
   </xsl:template>
 
+  <!-- our version of on-no-match="shallow-copy", without copying namespaces -->
+  <xsl:template match=".">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </xsl:copy>
+  </xsl:template>
+  
 </xsl:stylesheet>

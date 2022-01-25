@@ -18,7 +18,8 @@
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes="#all">
+  exclude-result-prefixes="#all"
+  expand-text="yes">
 
   <xsl:output indent="yes"/>
 
@@ -42,13 +43,4 @@
       </xsl:call-template>
     </xsl:result-document>
   </xsl:template>
-  
-  <!-- our version of on-no-match="shallow-copy", without copying namespaces -->
-  <xsl:template match=".">
-    <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
-  </xsl:template>
-
 </xsl:stylesheet>
