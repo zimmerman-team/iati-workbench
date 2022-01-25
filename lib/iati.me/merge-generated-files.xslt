@@ -23,6 +23,7 @@
   <xsl:output indent="yes"/>
 
   <xsl:import href="../functx.xslt"/>
+  <xsl:include href="lib-merge.xslt"/>
   <xsl:include href="merge-activities.xslt"/>
   <xsl:include href="merge-organisations.xslt"/>
 
