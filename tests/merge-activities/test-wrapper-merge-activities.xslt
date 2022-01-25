@@ -26,7 +26,6 @@
   
   <!-- our version of on-no-match="shallow-copy", without copying namespaces -->
   <xsl:template match=".">
-    <xsl:message>shallow copy: {local-name(.)}</xsl:message>
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
