@@ -51,7 +51,7 @@
             <xsl:where-populated>
               <title>
                 <xsl:call-template name="narratives">
-                  <xsl:with-param name="narratives" select="current-group()/title/narrative"/>
+                  <xsl:with-param name="narratives" select="current-group()/title/narrative[.!='']"/>
                   <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                 </xsl:call-template>
               </title>
@@ -66,7 +66,7 @@
                   </xsl:on-non-empty>
 
                   <xsl:call-template name="narratives">
-                    <xsl:with-param name="narratives" select="current-group()/narrative"/>
+                    <xsl:with-param name="narratives" select="current-group()/narrative[.!='']"/>
                     <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                   </xsl:call-template>
                 </description>
