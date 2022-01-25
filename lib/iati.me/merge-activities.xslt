@@ -327,6 +327,8 @@
   <xsl:template match="exactness[@code='']"/>
   <xsl:template match="feature-designation[@code='']"/>
 
+  <xsl:template match="related-activity[@ref='']"/>
+
   <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
   <!-- <xsl:template match="collaboration-type">
     <collaboration-type code="{@code}">

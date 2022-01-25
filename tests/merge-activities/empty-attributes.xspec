@@ -16,11 +16,22 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->  
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-  stylesheet="merge-activities/test-wrapper-merge-activities.xslt">
-
-  <x:param name="file" select="'file'"/>
-
-  <x:import href="merge-activities/empty-attributes.xspec"/>
-  <x:import href="merge-activities/empty-narratives.xspec"/>
-  <x:import href="merge-activities/merge-narratives.xspec"/>
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="test-wrapper-merge-activities.xslt">
+  
+  <x:scenario label="Skip elements with empty but crucial attributes">
+    <x:scenario label="When merging a related-activity without @ref">
+      <x:call template="merge-activities">
+        <x:param name="input-activities">
+            <iati-activity merge:id="XM-DAC-1234-Test">
+              <iati-identifier>XM-DAC-1234-Test</iati-identifier>
+              <related-activity ref="" type="1"/>
+            </iati-activity>
+        </x:param>
+      </x:call>
+      <x:expect label="it should not produce a related-activity element" test="not(//related-activity)"/>
+    </x:scenario>
+    
+  </x:scenario>
 </x:description>
