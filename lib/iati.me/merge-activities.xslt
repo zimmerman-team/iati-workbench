@@ -82,7 +82,7 @@
               </xsl:for-each-group>
               <!-- all orgs without refs -->
               <xsl:for-each-group select="current-group()[not(@ref) or @ref='']" group-by="narrative[1]">
-                <xsl:apply-templates select="current-group()">
+                <xsl:apply-templates select="current-group()[1]">
                   <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                 </xsl:apply-templates>
               </xsl:for-each-group>

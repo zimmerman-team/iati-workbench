@@ -23,4 +23,5 @@
   <x:import href="merge-activities/empty-attributes.xspec"/>
   <x:import href="merge-activities/empty-narratives.xspec"/>
   <x:import href="merge-activities/merge-narratives.xspec"/>
+  <x:import href="merge-activities/participating-orgs.xspec"/>
 </x:description>
