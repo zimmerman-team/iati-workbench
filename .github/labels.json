@@ -1,0 +1,67 @@
+[
+  {
+    "name": "IATI Standard",
+    "color": "41af46",
+    "description": ""
+  },
+  {
+    "name": "Spreadsheets2IATI",
+    "color": "e18114",
+    "description": ""
+  },
+  {
+    "name": "Debt",
+    "color": "08427b",
+    "description": "Removal of impedements to future development (architecture changes, refactoring, infrastructure)"
+  },
+  {
+    "name": "Improvement",
+    "color": "08427b",
+    "description": "Fixes and improvements for quality that affect the customer experience (bugs, incidents, changes)"
+  },
+  {
+    "name": "Feature",
+    "color": "08427b",
+    "description": "New business value visible to the customer (requirement, user story)"
+  },
+  {
+    "name": "Risk",
+    "color": "08427b",
+    "description": "Security, governance, compliance (vulnerability, regulatory requirement)"
+  },
+  {
+    "name": "Epic",
+    "color": "a0439c",
+    "description": ""
+  },
+  {
+    "name": "bug",
+    "color": "d32f2f",
+    "description": ""
+  },
+  {
+    "name": "priority",
+    "color": "d32f2f",
+    "description": ""
+  },
+  {
+    "name": "duplicate",
+    "color": "e1e1e1",
+    "description": "This issue or pull request already exists"
+  },
+  {
+    "name": "wontfix",
+    "color": "e1e1e1",
+    "description": "This will not be worked on"
+  },
+  {
+    "name": "docs",
+    "color": "41af46",
+    "description": "Documentation"
+  },
+  {
+    "name": "ux",
+    "color": "41af46",
+    "description": "User experience, interface"
+  }
+]

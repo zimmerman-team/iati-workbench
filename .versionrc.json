@@ -2,6 +2,7 @@
   "types": [
     {"type": "feat", "section": "Features"},
     {"type": "fix", "section": "Improvements"},
+    {"type": "enhance", "section": "Improvements"},
     {"type": "debt", "section": "Debts"},
     {"type": "risk", "section": "Risks and compliance"},
     {"type": "chore", "hidden": true},
