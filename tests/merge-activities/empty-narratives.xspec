@@ -49,12 +49,12 @@
             </iati-activity>
         </x:param>
       </x:call>
-      <x:expect label="should produce the organisation element" test="boolean(//organisation)"/>
-      <x:expect label="should not produce an empty department element" test="not(//department)"/>
-      <x:expect label="should not produce an empty department element" test="not(//person-name)"/>
-      <x:expect label="should not produce an empty department element" test="not(//job-title)"/>
-      <x:expect label="should not produce an empty department element" test="not(//telephone)"/>
-      <x:expect label="should produce the mailing-address element" test="boolean(//mailing-address)"/>
+      <x:expect label="it should produce the organisation element" test="boolean(//organisation)"/>
+      <x:expect label="it should not produce an empty department element" test="not(//department)"/>
+      <x:expect label="it should not produce an empty person-name element" test="not(//person-name)"/>
+      <x:expect label="it should not produce an empty job-title element" test="not(//job-title)"/>
+      <x:expect label="it should not produce an empty telephone element" test="not(//telephone)"/>
+      <x:expect label="it should produce the mailing-address element" test="boolean(//mailing-address)"/>
     </x:scenario>
     
     <x:scenario label="When merging description elements that are sometimes empty">
