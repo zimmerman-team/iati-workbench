@@ -49,12 +49,64 @@
             </iati-activity>
         </x:param>
       </x:call>
-      <x:expect label="should produce the organisation element" test="boolean(//organisation)"/>
-      <x:expect label="should not produce an empty department element" test="not(//department)"/>
-      <x:expect label="should not produce an empty department element" test="not(//person-name)"/>
-      <x:expect label="should not produce an empty department element" test="not(//job-title)"/>
-      <x:expect label="should not produce an empty department element" test="not(//telephone)"/>
-      <x:expect label="should produce the mailing-address element" test="boolean(//mailing-address)"/>
+      <x:expect label="it should produce the organisation element" test="boolean(//organisation)"/>
+      <x:expect label="it should not produce an empty department element" test="not(//department)"/>
+      <x:expect label="it should not produce an empty person-name element" test="not(//person-name)"/>
+      <x:expect label="it should not produce an empty job-title element" test="not(//job-title)"/>
+      <x:expect label="it should not produce an empty telephone element" test="not(//telephone)"/>
+      <x:expect label="it should produce the mailing-address element" test="boolean(//mailing-address)"/>
+    </x:scenario>
+    
+    <x:scenario label="When merging description elements that are sometimes empty">
+      <x:call template="merge-activities">
+        <x:param name="input-activities">
+          <iati-activity xml:lang="en" merge:id="XM-DAC-1234-Test">
+            <iati-identifier>XM-DAC-1234-Test</iati-identifier>
+            <description type="1">
+              <narrative xml:lang="en">
+                Narrative for description type 1
+              </narrative>
+            </description>
+            <description type="2">
+              <narrative xml:lang="en"/>
+            </description>
+            <description type="3">
+              <narrative xml:lang="fr"/>
+            </description>
+            <description type="4">
+              <narrative/>
+            </description>
+          </iati-activity>
+        </x:param>
+      </x:call>
+      <x:expect label="should produce the description type 1 element" test="boolean(//description[@type='1'])"/>
+      <x:expect label="should not produce an empty description type 2 element" test="not(//description[@type='2'])"/>
+      <x:expect label="should not produce an empty description type 3 element" test="not(//description[@type='3'])"/>
+      <x:expect label="should not produce an empty description type 4 element" test="not(//description[@type='4'])"/>
+    </x:scenario>
+    
+    <x:scenario label="When merging title elements that are sometimes empty">
+      <x:call template="merge-activities">
+        <x:param name="input-activities">
+          <iati-activity xml:lang="en" merge:id="XM-DAC-1234-Test">
+            <iati-identifier>XM-DAC-1234-Test</iati-identifier>
+            <title>
+              <narrative xml:lang="en">
+                Narrative for description type 1
+              </narrative>
+            </title>
+          </iati-activity>
+          <iati-activity xml:lang="en" merge:id="XM-DAC-1234-Test">
+            <iati-identifier>XM-DAC-1234-Test</iati-identifier>
+            <title>
+              <narrative xml:lang="fr">
+              </narrative>
+            </title>
+          </iati-activity>
+        </x:param>
+      </x:call>
+      <x:expect label="should produce the title element with a narrative" test="boolean(//title/narrative)"/>
+      <x:expect label="should produce only one narrative element" test="count(//title/narrative)=1"/>
     </x:scenario>
     
   </x:scenario>

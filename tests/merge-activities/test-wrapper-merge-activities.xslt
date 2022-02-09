@@ -22,15 +22,6 @@
   expand-text="yes">
   
   <xsl:import href="../../lib/functx.xslt"/>
+  <xsl:include href="../../lib/iati.me/lib-merge.xslt"/>
   <xsl:include href="../../lib/iati.me/merge-activities.xslt"/>
-  
-  <!-- our version of on-no-match="shallow-copy", without copying namespaces -->
-  <xsl:template match=".">
-    <xsl:message>shallow copy: {local-name(.)}</xsl:message>
-    <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates/>
-    </xsl:copy>
-  </xsl:template>
-  
 </xsl:stylesheet>

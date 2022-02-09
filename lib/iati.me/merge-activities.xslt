@@ -51,7 +51,7 @@
             <xsl:where-populated>
               <title>
                 <xsl:call-template name="narratives">
-                  <xsl:with-param name="narratives" select="current-group()/title/narrative"/>
+                  <xsl:with-param name="narratives" select="current-group()/title/narrative[.!='']"/>
                   <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                 </xsl:call-template>
               </title>
@@ -66,7 +66,7 @@
                   </xsl:on-non-empty>
 
                   <xsl:call-template name="narratives">
-                    <xsl:with-param name="narratives" select="current-group()/narrative"/>
+                    <xsl:with-param name="narratives" select="current-group()/narrative[.!='']"/>
                     <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                   </xsl:call-template>
                 </description>
@@ -82,7 +82,7 @@
               </xsl:for-each-group>
               <!-- all orgs without refs -->
               <xsl:for-each-group select="current-group()[not(@ref) or @ref='']" group-by="narrative[1]">
-                <xsl:apply-templates select="current-group()">
+                <xsl:apply-templates select="current-group()[1]">
                   <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                 </xsl:apply-templates>
               </xsl:for-each-group>
@@ -293,8 +293,6 @@
   </xsl:template>
 
   <!-- ignore these elements: -->
-  <!-- attributes without a value -->
-  <xsl:template match="@*[normalize-space(.) = '']"/>
 
   <!-- text elements without any narrative element with actual content -->
   <xsl:template match="title                [not(narrative[.!=''])]"/>
@@ -329,42 +327,13 @@
   <xsl:template match="exactness[@code='']"/>
   <xsl:template match="feature-designation[@code='']"/>
 
+  <xsl:template match="related-activity[@ref='']"/>
+
   <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
   <!-- <xsl:template match="collaboration-type">
     <collaboration-type code="{@code}">
       <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
     </collaboration-type>
   </xsl:template> -->
-
-  <!-- Process a sequence of narratives:
-    * Group by language
-    * Then group by content (in effect eliminating duplicates in a language)
-    * Add the xml:lang attribute if it is not the default language
-  -->
-  <xsl:template name="narratives">
-    <xsl:param name="narratives"/>
-    <xsl:param name="default-lang" tunnel="yes"/>
-    <xsl:for-each-group select="$narratives"
-      group-by="(@xml:lang, $default-lang)[1]">
-      <xsl:variable name="lang" select="current-grouping-key()"/>
-
-      <narrative>
-        <xsl:if test="$lang!=$default-lang">
-          <xsl:attribute name="xml:lang" select="$lang"/>
-        </xsl:if>
-        <xsl:text>{text()[1]}</xsl:text>
-      </narrative>
-    </xsl:for-each-group>
-  </xsl:template>
-
-  <xsl:template match="narrative[text()]">
-    <xsl:param name="default-lang" tunnel="yes"/>
-    <narrative>
-      <xsl:if test="@xml:lang != $default-lang">
-        <xsl:copy-of select="@xml:lang"/>
-      </xsl:if>
-      <xsl:text>{.}</xsl:text>
-    </narrative>
-  </xsl:template>
 
 </xsl:stylesheet>

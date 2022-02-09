@@ -2,12 +2,12 @@
   {
     "name": "IATI Standard",
     "color": "41af46",
-    "description": ""
+    "description": "Updates and changes related to IATI"
   },
   {
-    "name": "Spreadsheets2IATI",
+    "name": "S2I",
     "color": "e18114",
-    "description": ""
+    "description": "Updates and changes related to spreadsheet conversions"
   },
   {
     "name": "Debt",
