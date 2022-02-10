@@ -10,10 +10,10 @@ To capture the Ant process log as XML data, call Ant with additional parameters:
 When running within the container:
 
   $ ant -logger org.apache.tools.ant.XmlLogger -logfile /workspace/output/ant-log.xml <target>
-  
+
 When using the container image with the calling script:
 
-  $ iati-workbench -xml <target>
+  $ aida-s2i -xml <target>
 
 The Ant logfile will be stored in the workspace's `output` directory.
 
@@ -25,8 +25,8 @@ Within the container:
   $ ant ant-log-json
 
 Or via the calling script:
-  
-  $ iati-workbench ant-log-json
+
+  $ aida-s2i ant-log-json
 
 The JSON data will look like this:
 
@@ -61,7 +61,7 @@ The JSON data will look like this:
         }
       ]
     },
-    
+
     {"...etcetera..."}
   ]
 }

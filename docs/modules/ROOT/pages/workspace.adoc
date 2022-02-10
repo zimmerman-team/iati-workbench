@@ -11,10 +11,10 @@ To use a subdirectory, the environment property `workspace` should be set.
 When running within the container:
 
   $ ant -Dworkspace=clientA <target>
-  
+
 When using the container image with the calling script:
 
-  $ iati-workbench -xml -w clientA <target>
+  $ aida-s2i -xml -w clientA <target>
 
 The workspace name can contain multiple levels.
 
@@ -43,11 +43,11 @@ Consider you have a local machine set up with a directory structure:
 └── README.md
 ....
 
-=== Option 1: go into each client directory and run iati-workbench there
+=== Option 1: go into each client directory and run aida-s2i there
 
   $ cd ~/workspaces/clientA
-  $ iati-workbench ...
+  $ aida-s2i ...
 
-=== Option 2: run iati-workbench with -w
+=== Option 2: run aida-s2i with -w
 
-  $ iati-workbench -w s2i/clientA ...
+  $ aida-s2i -w s2i/clientA ...
