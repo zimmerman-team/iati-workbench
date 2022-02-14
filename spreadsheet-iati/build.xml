@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  IATI workbench: produce and use IATI data
   Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
-  
+
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->  
+-->
 <project name="spreadsheet-iati"
   xmlns:if="ant:if"
   xmlns:unless="ant:unless">
@@ -34,7 +34,7 @@
   <extension-point name="generate-iati-partials"
     description="Generate IATI partial activities for input files"
     depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
-  
+
   <extension-point name="create-iati-output"
     description="Merge IATI partial activities, validate, create clean output"
     depends="merge-iati"/>
@@ -64,7 +64,7 @@
       <fileset dir="${ws}/input" includes="**/*.iati.xml, **/*.akvo.xml"/>
     </copy>
   </target>
-  
+
   <!--Convert spreadsheets to CSV files for further processing.-->
   <target name="excel-csv">
     <echo level="info">Convert spreadsheets to CSV files for further processing.</echo>
@@ -113,10 +113,12 @@
   </target>
 
   <!--Transform existing Akvo input files using workspace-based config.-->
+  <target name="akvo-s2i" depends="check-akvo-config, akvo-s2i-custom, akvo-s2i-generic"/>
+
   <target name="check-akvo-config">
     <available property="has.akvo.config" file="${ws}/config/akvo-s2i.xslt"/>
   </target>
-  <target name="akvo-s2i" depends="check-akvo-config" if="has.akvo.config">
+  <target name="akvo-s2i-custom" depends="check-akvo-config" if="has.akvo.config">
     <xslt
       basedir="${ws}/tmp/"
       includes="*.akvo.xml"
@@ -124,6 +126,15 @@
       extension=".generated.xml"
       style="${ws}/config/akvo-s2i.xslt"
      />
+  </target>
+  <target name="akvo-s2i-generic" depends="check-akvo-config" unless="has.akvo.config">
+    <xslt
+      basedir="${ws}/tmp/"
+      includes="*.akvo.xml"
+      destdir="${ws}/tmp"
+      extension=".generated.xml"
+      style="transform/add-merge-ids.xslt"
+    />
   </target>
 
   <target name="sheets-csvxml" depends="excel-csv, csv-csv">
@@ -147,11 +158,11 @@
       style="lib/iati.me/csvxml-map.xslt"
     />
   </target>
-  
+
   <!-- empty target to override if actions are needed after downloading remote files -->
   <extension-point name="postprocess-inputs"/>
-  
+
   <!-- can  be overridden to do something with the IATI files before publishing -->
   <target name="postprocess-iati"/>
-  
+
 </project>

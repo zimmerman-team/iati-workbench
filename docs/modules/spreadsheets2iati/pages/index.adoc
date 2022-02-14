@@ -204,12 +204,12 @@ fork again
 fork again
   partition akvo-s2i {
     $node_1_main_color:tmp/*.akvo.xml]
-    $important_color:config/akvo-s2i.xslt]
-    note
-      Expects an Akvo-specific
-      config file.
-    end note
-    :akvo-s2i;
+    if (Akvo-specific config file exists) then (yes)
+      $important_color:config/akvo-s2i.xslt]
+      :akvo-s2i;
+    else (no)
+      :iati-s2i;
+    endif
   }
 end fork
 
