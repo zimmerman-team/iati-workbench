@@ -104,7 +104,7 @@
   <!--Transform existing IATI input files into a version with merge ids.-->
   <target name="iati-s2i">
     <xslt
-      basedir="${ws}/input/"
+      basedir="${ws}/tmp/"
       includes="*.iati.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
