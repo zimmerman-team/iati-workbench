@@ -1,6 +1,7 @@
 = Spreadsheets2IATI
 
-Convertor.
+Combine and convert spreadsheets and IATI files into a single set of files
+for IATI activities and IATI organisations.
 
 == Setup notes
 
@@ -8,7 +9,7 @@ Convertor.
 
 Create a directory for the workspace if it does not exist.
 
-Initialise the workspace, for instance with `iati-workbench init`
+Initialise the workspace, for instance with `aida-s2i init`
 
 Create or copy a `build.xml` to have local build capabilities: for instance to get files from a folder synchronised with Google Drive.
 
@@ -17,7 +18,7 @@ Create or copy a `build.xml` to have local build capabilities: for instance to g
 The conversion process is initiated by a local call of `ant` in the workspace.
 
   $ ant s2i-run
-  
+
 The process breaks down in a couple of components.
 
 .Sequence for `s2i-run`
@@ -28,19 +29,19 @@ start
 partition s2i-run {
   $group_main_color:get-inputs;
   note right: Collect files from remote sources\n(not needed in AIDA)
-  
+
   partition spreadsheet-iati {
     $group_main_color:gather-input-files;
     note right: Prepare input files from input/ to tmp/
-    
+
     $group_main_color:generate-iati-partials;
-    note right: Generate IATI for each file individually 
-    
+    note right: Generate IATI for each file individually
+
     $group_main_color:create-iati-output;
     note right
       Merge generated IATI into one file and
       (not in AIDA) filter out into valid and invalid activities
-    end note 
+    end note
   }
 
   $group_main_color:postprocess-iati;
@@ -59,7 +60,7 @@ This makes it possible to extend or override the process in a particular workspa
 
 === Get inputs
 
-This step copies input files for the conversion 
+This step copies input files for the conversion
 
 [plantuml]
 ....
@@ -74,7 +75,7 @@ $node_1_main_color:inputs/*.*]
 note $important_color
   TODO: check if needed
   Rename files, remove
-  empty files, etc. 
+  empty files, etc.
   override via local ""build.xml""
 end note
 $node_1_main_color:updates inputs/*]
@@ -100,15 +101,15 @@ partition spreadsheet-map {
       :csv-csv;
       $node_1_main_color:tmp/*.csv]
     end fork
-    
+
     :csv-csvxml;
     note: using basex
     $node_1_main_color:tmp/*.csv.xml]
   }
-  
+
   :create map;
   $node_1_main_color:output/csvmap-csv]
-  
+
 }
 (2)
 ....
@@ -130,7 +131,7 @@ end note
 
 === Gather input files
 
-This step takes files from the input folder, 
+This step takes files from the input folder,
 and prepares them for processing, in a flat folder.
 
 * Excel files are converted into CSV.
@@ -155,7 +156,7 @@ fork
       :csv-csv;
       $node_1_main_color:tmp/*.csv]
     end fork
-    
+
     :csv-csvxml;
     note: using basex
     $node_1_main_color:tmp/*.csv.xml]
@@ -173,7 +174,7 @@ end fork
 === Generate IATI partials
 
 This step transforms prepared input files into "partial IATI" files.
-These intermediary files are not valid IATI yet, 
+These intermediary files are not valid IATI yet,
 but contain the IATI representation for the particular input file.
 
 [plantuml]
@@ -187,7 +188,7 @@ note: extension point
 fork
   partition csvxml-s2i {
     $node_1_main_color:tmp/*.csv.xml]
-    
+
     $important_color:config/csvxml-iati.xslt]
     note
       Can include or override
@@ -203,12 +204,12 @@ fork again
 fork again
   partition akvo-s2i {
     $node_1_main_color:tmp/*.akvo.xml]
-    $important_color:config/akvo-s2i.xslt]
-    note
-      Expects an Akvo-specific
-      config file.
-    end note
-    :akvo-s2i;
+    if (Akvo-specific config file exists) then (yes)
+      $important_color:config/akvo-s2i.xslt]
+      :akvo-s2i;
+    else (no)
+      :iati-s2i;
+    endif
   }
 end fork
 
@@ -221,7 +222,7 @@ $node_1_main_color:tmp/*.generated.xml]
 This step combines all "partial IATI files" into one IATI activities and one IATI organisations file.
 These files can contain activities that are not IATI schema-compliant.
 
-With a paid Saxon license, it is possible to validate the file 
+With a paid Saxon license, it is possible to validate the file
 and then split it at the activity level.
 This will create one valid IATI file,
 and one file with activities that contain validation errors.
@@ -263,7 +264,7 @@ title In the workspace
 :postprocess iati;
 note $important_color
   TODO: check if needed
-  Fix known data errors, 
+  Fix known data errors,
   do anonymisation, etc
   override via local ""build.xml""
 end note
@@ -295,12 +296,11 @@ stop
 == Ant targets in the IATI Workbench
 
 .The dependencies of Ant targets involved in `spreadsheet-iati`
-image::image$ant-spreadsheet-iati.svg[] 
+image::image$ant-spreadsheet-iati.svg[]
 
 == IATI Summary
 
 Creates spreadsheets with summary information based on XML files in the `output` folder.
 
-To create those XML files in the output folder, 
+To create those XML files in the output folder,
 we need to run a validation and then filter activities.
- 
