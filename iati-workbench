@@ -2,17 +2,17 @@
 
 #  IATI workbench: produce and use IATI data
 #  Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published
 #  by the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
-  
+
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU Affero General Public License for more details.
-  
+
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,7 +32,7 @@ fi
 
 if [ "$1." = "-xml." ]; then
   shift
-  
+
   LOGGING="-logger org.apache.tools.ant.XmlLogger -logfile /workspace/output/ant-log.xml"
 
   echo "Logging as XML to: /workspace/output/ant-log.xml"
@@ -55,7 +55,7 @@ fi
 
 if [ "$1." = "-w." ]; then
   shift
-  
+
   WORKSPACE_P="$1/"
   shift
 
@@ -71,10 +71,10 @@ $(basename $0) [-d] [-xml] [-t <version>] [-w <workspace>] [-v] <command>
 
 Options (sequence is important):
 
-  -d                     Run in developer mode: mount the directory where the 
-                         iati-workbench code resides in the container as 
+  -d                     Run in developer mode: mount the directory where the
+                         iati-workbench code resides in the container as
                          /home/iati-workbench.
-  -xml                   Use Ant's XML logger and store the result in 
+  -xml                   Use Ant's XML logger and store the result in
                          output/ant-log.xml
   -t <version>           Use the version tag to select the Docker image version.
                          Defaults to 'latest'. Use 'this' to indicate the
@@ -91,7 +91,7 @@ Commands:
 
   (without parameters)   Shows the available 'targets' the engine can create.
   -p                     Idem.
-  
+
   build                  Build a new docker image. MUST be combined with -d to
                          run in developer mode. It will be tagged as
                          iati-workbench:<version>, where version can be
@@ -125,7 +125,7 @@ EOT
         docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t aida-s2i:${DOCKER_TAG} ${MY_PATH:-.}
       else
         echo "Make sure to clone the submodules."
-        echo "In ${MY_PATH}, run: git submodule update --recursive"
+        echo "In ${MY_PATH}, run: git submodule update --init --recursive"
         exit 1
       fi
     else
@@ -140,7 +140,7 @@ EOT
       exit 1
     else
     echo -e "\nRunning $0 $@\n"
-    
+
     docker run --rm -u=`id -u`:`id -g` \
       -v "${PWD}":/workspace \
       -m 3g \

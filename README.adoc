@@ -17,7 +17,7 @@ To see its options:
 
 Before building the container, make sure to check out the git submodules.
 
-  $ git submodule update --recursive
+  $ git submodule update --init --recursive
 
 [CAUTION]
 ====
@@ -68,7 +68,7 @@ The https://github.com/data4development/demo-workspace[demo-workspace repository
 Clone the repository, and inside the directory, run
 
   $ aida-s2i spreadsheet-iati
-  
+
 This should process the input files and produce a raw IATI file in `src/`.
 
 === Acknowledgements
