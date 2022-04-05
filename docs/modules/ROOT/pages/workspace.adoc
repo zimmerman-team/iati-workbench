@@ -23,7 +23,7 @@ The workspace name can contain multiple levels.
 Consider you have a local machine set up with a directory structure:
 
 [source, treeview]
-....
+----
 ~/workspaces
 ├── s2i
 │   ├── clientA
@@ -41,7 +41,7 @@ Consider you have a local machine set up with a directory structure:
 │   │   └── ...workspace dirs...
 │   └── ...other clients...
 └── README.md
-....
+----
 
 === Option 1: go into each client directory and run aida-s2i there
 

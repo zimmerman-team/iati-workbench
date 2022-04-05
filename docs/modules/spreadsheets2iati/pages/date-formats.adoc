@@ -29,7 +29,7 @@ WARNING: US-formatted days up to 12 will be converted without warning, and the m
 |A value that will result in a date error.
 
 |✅️
-|A value that will be correctly processed. 
+|A value that will be correctly processed.
 |===
 
 .Date format conversions
