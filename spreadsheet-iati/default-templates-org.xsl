@@ -101,10 +101,10 @@
       <iati-organisation merge:id="{merge:entry(., 'IATI organisation identifier')}">
         <document-link format="{merge:format(merge:entry(., 'Format'))}" url="{$url}">
           <title>
-            <narrative><xsl:value-of select="merge:entry(., 'Document title')"/></narrative>
+            <narrative>{merge:entry(., 'Document title')}</narrative>
           </title>
           <description>
-            <narrative><xsl:value-of select="merge:entry(., 'Document description')"/></narrative>
+            <narrative>{merge:entry(., 'Document description')}</narrative>
           </description>
           <category code="{merge:entry(., 'Category')}"/>
           <xsl:if test="merge:entry(., 'Document language')!=''">

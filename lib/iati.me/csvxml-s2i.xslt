@@ -33,7 +33,7 @@
 
   <xsl:template match="record">
     <!-- This is a fallback for any file not mentioned in the /workspace/config/csvxml-iati.xslt file -->
-    <merge:not-processed>file <xsl:value-of select="$file"/> row <xsl:value-of select="position()"/></merge:not-processed>
+    <merge:not-processed>file {$file} row {position()}</merge:not-processed>
   </xsl:template>
 
   <xsl:function name="merge:boolean" as="xs:boolean">
@@ -64,9 +64,7 @@
     <xsl:param name="item" as="xs:string"/>
 
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="merge:decimal(regex-group(1))"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>{merge:decimal(regex-group(1))}</xsl:matching-substring>
     </xsl:analyze-string>
   </xsl:function>
 
@@ -74,23 +72,16 @@
     <xsl:param name="item" as="xs:string"/>
 
     <xsl:analyze-string regex="^([a-zA-Z]+)\s?[+-]?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="regex-group(1)"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>{regex-group(1)}</xsl:matching-substring>
     </xsl:analyze-string>
 
     <xsl:analyze-string regex="^€\s?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="'EUR'"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>EUR</xsl:matching-substring>
     </xsl:analyze-string>
 
     <xsl:analyze-string regex="^$\s?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="'USD'"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>USD</xsl:matching-substring>
     </xsl:analyze-string>
-
   </xsl:function>
 
   <xsl:function name="merge:date" as="xs:date?">
@@ -173,8 +164,8 @@
     <xsl:variable name="yy" select="xs:decimal($year)"/>
     <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY -->
     <xsl:choose>
-      <xsl:when test="$yy >= 70"><xsl:value-of select="1900+$yy"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="2000+$yy"/></xsl:otherwise>
+      <xsl:when test="$yy >= 70">{1900+$yy}</xsl:when>
+      <xsl:otherwise>{2000+$yy}</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
@@ -212,7 +203,7 @@
     <xsl:param name="label" as="xs:string+"/>
 
     <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
-    <xsl:value-of select="count($values)>0"/>
+    {count($values)>0}
   </xsl:function>
 
   <xsl:function name="merge:format" as="xs:string">
@@ -222,7 +213,7 @@
       <to format="image/jpeg"><f>jpg</f><f>jpeg</f></to>
       <to format="text/html"><f>html</f><f>web</f></to>
     </xsl:variable>
-    <xsl:value-of select="($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]"/>
+    <xsl:text>{($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]}</xsl:text>
   </xsl:function>
 
   <xsl:function name="merge:get-code-from-list">
@@ -230,8 +221,7 @@
     <xsl:param name="text"/>
     <!--  TODO: refactor IATI version for codelists into configuration  -->
     <xsl:variable name="codelist" select="doc(concat('../schemata/2.03/codelist/', $list, '.xml' ))"/>
-    <xsl:value-of select="(
-      $codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
-      $text)[1]"/>
+    <xsl:text>{($codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
+      $text)[1]}</xsl:text>
   </xsl:function>
 </xsl:stylesheet>

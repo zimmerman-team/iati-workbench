@@ -403,7 +403,7 @@
               <xsl:if test="merge:entry(., 'Document language')!=''">
                 <xsl:attribute name="xml:lang" select="lower-case(merge:entry(., 'Document language'))"/>
               </xsl:if>
-              <xsl:value-of select="merge:entry(., 'Document title')"/>
+              <xsl:text>{merge:entry(., 'Document title')}</xsl:text>
             </narrative>
           </title>
           <description>
@@ -411,7 +411,7 @@
               <xsl:if test="merge:entry(., 'Document language')!=''">
                 <xsl:attribute name="xml:lang" select="lower-case(merge:entry(., 'Document language'))"/>
               </xsl:if>
-              <xsl:value-of select="merge:entry(., 'Document description')"/>
+              <xsl:text>{merge:entry(., 'Document description')}</xsl:text>
             </narrative>
           </description>
           <category code="{merge:entry(., 'Category')}"/>

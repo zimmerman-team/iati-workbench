@@ -211,10 +211,8 @@
                   <xsl:variable name="ctype" select="current-grouping-key()"/>
                   <xsl:for-each-group select="current-group()" group-by="narrative">
                       <condition type="{$ctype}">
-                        <narrative>
-                          <!-- TODO add language -->
-                          <xsl:value-of select="current-grouping-key()"/>
-                        </narrative>
+                        <!-- TODO add language -->
+                        <narrative>{current-grouping-key()}</narrative>
                       </condition>
                   </xsl:for-each-group>
                 </xsl:for-each-group>
