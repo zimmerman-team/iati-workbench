@@ -35,5 +35,5 @@ WARNING: US-formatted days up to 12 will be converted without warning, and the m
 .Date format conversions
 [%header, cols="10,20,20,15,15"]
 ,===
-include::../examples/date-format-testing.csv[]
+include::example$date-format-testing.csv[]
 ,===
