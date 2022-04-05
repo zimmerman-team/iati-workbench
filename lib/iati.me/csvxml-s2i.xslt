@@ -23,7 +23,7 @@
   exclude-result-prefixes=""
   expand-text="yes">
 
-  <xsl:import href="codelists.xslt"/>
+  <xsl:import href="../functx.xslt"/>
 
   <xsl:template match="csv">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
@@ -223,5 +223,15 @@
       <to format="text/html"><f>html</f><f>web</f></to>
     </xsl:variable>
     <xsl:value-of select="($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]"/>
+  </xsl:function>
+
+  <xsl:function name="merge:get-code-from-list">
+    <xsl:param name="list"/>
+    <xsl:param name="text"/>
+    <!--  TODO: refactor IATI version for codelists into configuration  -->
+    <xsl:variable name="codelist" select="doc(concat('../schemata/2.03/codelist/', $list, '.xml' ))"/>
+    <xsl:value-of select="(
+      $codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
+      $text)[1]"/>
   </xsl:function>
 </xsl:stylesheet>
