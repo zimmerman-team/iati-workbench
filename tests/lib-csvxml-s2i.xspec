@@ -16,10 +16,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-  stylesheet="../spreadsheet-iati/csvxml-s2i.xslt">
+  stylesheet="../lib/iati.me/csvxml-s2i.xslt">
 
   <x:param name="file" select="'file'"/>
 
-  <x:import href="csvxml-s2i/convert-amounts.xspec"/>
-  <x:import href="csvxml-s2i/convert-dates.xspec"/>
+  <x:import href="lib-csvxml-s2i/convert-amounts.xspec"/>
+  <x:import href="lib-csvxml-s2i/convert-dates.xspec"/>
 </x:description>
