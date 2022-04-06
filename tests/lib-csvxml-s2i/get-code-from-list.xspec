@@ -16,11 +16,25 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-  stylesheet="../lib/iati.me/csvxml-s2i.xslt">
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
 
-  <x:param name="file" select="'file'"/>
+  <x:scenario label="Test merge:get-code-from-list(list, text)">
+    <x:scenario label="Activity status '2'">
+      <x:call function="merge:get-code-from-list">
+        <x:param name="list" select="'ActivityStatus'"/>
+        <x:param name="text" select="'2'"/>
+      </x:call>
+      <x:expect label="should produce text node 2." test="text()='2'"/>
+    </x:scenario>
 
-  <x:import href="lib-csvxml-s2i/convert-amounts.xspec"/>
-  <x:import href="lib-csvxml-s2i/convert-dates.xspec"/>
-  <x:import href="lib-csvxml-s2i/get-code-from-list.xspec"/>
+    <x:scenario label="Activity status 'implementation'">
+      <x:call function="merge:get-code-from-list">
+        <x:param name="list" select="'ActivityStatus'"/>
+        <x:param name="text" select="'implementation'"/>
+      </x:call>
+      <x:expect label="should produce text node 2." test="text()='2'"/>
+    </x:scenario>
+  </x:scenario>
 </x:description>
