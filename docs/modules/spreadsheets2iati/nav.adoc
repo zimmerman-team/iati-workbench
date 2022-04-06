@@ -2,3 +2,4 @@
 
 ** Reference
 *** xref:reference/date-formats.adoc[]
+*** xref:reference/client-configuration.adoc[]

@@ -32,13 +32,12 @@
   </xsl:template>
 
   <xsl:template match="record">
-    <!-- This is a fallback for any file not mentioned in the /workspace/config/csvxml-iati.xslt file -->
-    <merge:not-processed>file {$file} row {position()}</merge:not-processed>
+    <!-- This is a fallback for any file not mentioned in any of the templates -->
+    <merge:not-processed>row {position()}</merge:not-processed>
   </xsl:template>
 
   <xsl:function name="merge:boolean" as="xs:boolean">
     <xsl:param name="item" as="xs:string?"/>
-
     <xsl:choose>
       <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>

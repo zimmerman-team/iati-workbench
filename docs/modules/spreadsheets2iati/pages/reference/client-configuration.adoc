@@ -1,0 +1,45 @@
+= Client configuration
+
+The client configuration consists of variables for their organisation name,
+identifier, and so on.
+These are stored in `config/csvxml-iati.xslt` in their workspace directory.
+
+The location of the workspace is variable.
+However, in XSLT it is not possible to import or include another file using a variable filename.
+
+Therefore, we have to add a bit of complexity.
+
+- The Ant build target first copies a generic template `sheets-iati.xslt`
+into the `config` directory.
+- Next, this stylesheet includes the generic stylesheets using a hard-coded path,
+and the client variables using a relative path that does need a variable.
+
+NOTE: Possible future development:
+change this to reading the variables from a JSON file in the workspace.
+
+[plantuml]
+----
+folder workspace {
+    [sheets-iati] ..> [csvxml-iati (1)]: include
+}
+
+folder engine {
+    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\ndefault-templates-act]: include
+    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\ndefault-templates-org]: include
+    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\nclient-templates-org]: include
+    [spreadsheet-iati/\ncsvxml-s2i] ..> [lib/iati.me/\ncsvxml-iati (2)]: import
+}
+
+[sheets-iati] .> [spreadsheet-iati/\ncsvxml-s2i]: import
+----
+<.> Contains organisation identifier, name, and so on.
+<.> Contains generic template functions.
+
+[NOTE]
+====
+In XSLT, an `xsl:include` simply puts the contents of the included file into the including file.
+Included templates, variables, and so on, will have the same precedence as those in the including file.
+
+An `xsl:import` creates a _precedence tree_:
+the importing file can override a template, variable, and so on.
+====

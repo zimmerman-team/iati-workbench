@@ -15,13 +15,25 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:functx="http://www.functx.com">
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:merge="http://iati.me/merge"
+  xmlns:functx="http://www.functx.com"
+  exclude-result-prefixes=""
+  expand-text="yes">
 
-  <!-- file will be copied into the workspace config/ dir -->
-  <xsl:import href="/home/iati-workbench/spreadsheet-iati/csvxml-s2i.xslt"/>
-  <xsl:include href="csvxml-iati.xslt"/>
+  <!-- configuration variables for conversion -->
+  <xsl:variable name="file"/>
+  <xsl:variable name="reporting-org"/>
+  <xsl:variable name="reporting-org-type"/>
+  <xsl:variable name="reporting-org-name"/>
+  <xsl:variable name="include-reporting-org-as-role"/>
+  <xsl:variable name="default-participating-role"/>
+  <xsl:variable name="default-currency"/>
 
-  <xsl:param name="filename"/>
-  <xsl:variable name="file" select="functx:substring-before-last($filename,'.csv.xml')"/>
+  <!-- add generic templates -->
+  <xsl:include href="default-templates-act.xsl"/>
+  <xsl:include href="default-templates-org.xsl"/>
+  <xsl:import href="../lib/iati.me/csvxml-s2i.xslt"/>
 </xsl:stylesheet>

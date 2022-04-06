@@ -25,15 +25,8 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="file"/>
-  <xsl:variable name="reporting-org"/>
-  <xsl:variable name="reporting-org-type"/>
-  <xsl:variable name="reporting-org-name"/>
-  <xsl:variable name="include-reporting-org-as-role"/>
-  <xsl:variable name="default-participating-role"/>
-  
-  <xsl:include href="default-templates-org.xsl"/>
-  
+  <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
+
   <!--Activities: -->
   <xsl:template match="record[contains(lower-case($file), 'projects')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
