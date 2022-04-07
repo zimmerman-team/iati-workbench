@@ -24,15 +24,16 @@ folder workspace {
 }
 
 folder engine {
-    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\ndefault-templates-act]: include
-    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\ndefault-templates-org]: include
-    [spreadsheet-iati/\ncsvxml-s2i] ..> [spreadsheet-iati/\nclient-templates-org]: include
-    [spreadsheet-iati/\ncsvxml-s2i] ..> [lib/iati.me/\ncsvxml-iati (2)]: import
+    [spreadsheet-iati/\ncsvxml-s2i (2)] ..> [spreadsheet-iati/\ndefault-templates-act]: include
+    [spreadsheet-iati/\ncsvxml-s2i (2)] ..> [spreadsheet-iati/\ndefault-templates-org]: include
+    [spreadsheet-iati/\ncsvxml-s2i (2)] ..> [spreadsheet-iati/\nclient-templates-org]: include
+    [spreadsheet-iati/\ncsvxml-s2i (2)] ..> [lib/iati.me/\ncsvxml-iati (3)]: import
 }
 
-[sheets-iati] .> [spreadsheet-iati/\ncsvxml-s2i]: import
+[sheets-iati] .> [spreadsheet-iati/\ncsvxml-s2i (2)]: import
 ----
 <.> Contains organisation identifier, name, and so on.
+<.> Can include a file with client-specific templates, and override generic csv processing.
 <.> Contains generic template functions, and default configuration variables.
 
 [NOTE]

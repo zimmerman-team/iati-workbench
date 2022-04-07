@@ -27,4 +27,18 @@
   <xsl:include href="default-templates-act.xsl"/>
   <xsl:include href="default-templates-org.xsl"/>
   <xsl:import href="../lib/iati.me/csvxml-s2i.xslt"/>
+
+  <!-- add client-specific templates -->
+  <xsl:include href="nuffic-templates.xsl"/>
+  <!-- override top-level csv processing to include client-specific templates -->
+  <xsl:template match="csv">
+    <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
+      <xsl:apply-templates select="record"/>
+      <xsl:choose>
+        <xsl:when test="$reporting-org='NL-KVK-41150085'">
+          <xsl:apply-templates select="record" mode="nuffic"/>
+        </xsl:when>
+      </xsl:choose>
+    </iati-activities>
+  </xsl:template>
 </xsl:stylesheet>
