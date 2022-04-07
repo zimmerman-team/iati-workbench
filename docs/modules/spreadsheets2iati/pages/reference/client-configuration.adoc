@@ -33,7 +33,7 @@ folder engine {
 [sheets-iati] .> [spreadsheet-iati/\ncsvxml-s2i]: import
 ----
 <.> Contains organisation identifier, name, and so on.
-<.> Contains generic template functions.
+<.> Contains generic template functions, and default configuration variables.
 
 [NOTE]
 ====

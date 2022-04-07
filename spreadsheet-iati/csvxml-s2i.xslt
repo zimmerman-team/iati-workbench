@@ -23,15 +23,6 @@
   exclude-result-prefixes=""
   expand-text="yes">
 
-  <!-- configuration variables for conversion -->
-  <xsl:variable name="file"/>
-  <xsl:variable name="reporting-org"/>
-  <xsl:variable name="reporting-org-type"/>
-  <xsl:variable name="reporting-org-name"/>
-  <xsl:variable name="include-reporting-org-as-role"/>
-  <xsl:variable name="default-participating-role"/>
-  <xsl:variable name="default-currency"/>
-
   <!-- add generic templates -->
   <xsl:include href="default-templates-act.xsl"/>
   <xsl:include href="default-templates-org.xsl"/>

@@ -25,6 +25,15 @@
 
   <xsl:import href="../functx.xslt"/>
 
+  <!-- configuration variables for conversion -->
+  <xsl:variable name="file"/>
+  <xsl:variable name="reporting-org"/>
+  <xsl:variable name="reporting-org-type"/>
+  <xsl:variable name="reporting-org-name"/>
+  <xsl:variable name="include-reporting-org-as-role"/>
+  <xsl:variable name="default-participating-role"/>
+  <xsl:variable name="default-currency"/>
+
   <xsl:template match="csv">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
       <xsl:apply-templates select="record"/>
