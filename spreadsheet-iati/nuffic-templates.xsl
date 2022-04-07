@@ -219,23 +219,25 @@
 
         <xsl:variable name="status" select="merge:entry(., 'Activity status')"/>
         <xsl:choose>
-          <xsl:when test="$status=('Report pending', 'Report pending')">
-            <activity-status code="2"/>
-          </xsl:when>
-          <xsl:when test="$status=('F-Report required', 'F-Report overdue', 'Assessing F-Report',
-          'F-Report required', 'F-Report overdue', 'Assessing F-Report',
-          'I-Report required', 'I-Report overdue', 'Assessing I-Report',
-          'I-Report required', 'I-Report overdue', 'Assessing I-Report')">
-            <activity-status code="3"/>
-          </xsl:when>
-          <xsl:when test="$status=('Withdrawn', 'Negatively decided')">
-            <activity-status code="5"/>
-          </xsl:when>
           <xsl:when test="$status=('Selected')">
             <activity-status code="1"/>
           </xsl:when>
+          <xsl:when test="$status=('Report pending', 'Report pending',
+          'I-Report required', 'I-Report overdue', 'Assessing I-Report',
+          'I-Report required', 'I-Report overdue', 'Assessing I-Report',
+          'Approving draft settlement letter for I-Report')">
+            <activity-status code="2"/>
+          </xsl:when>
+          <xsl:when test="$status=('F-Report required', 'F-Report overdue', 'Assessing F-Report',
+          'F-Report required', 'F-Report overdue', 'Assessing F-Report', 'F-Report rejected',
+          'Approving draft settlement letter for F-Report', 'Draft settlement letter rejected for F-Report')">
+            <activity-status code="3"/>
+          </xsl:when>
           <xsl:when test="$status=('Closed')">
             <activity-status code="4"/>
+          </xsl:when>
+          <xsl:when test="$status=('Withdrawn', 'Negatively decided')">
+            <activity-status code="5"/>
           </xsl:when>
           <xsl:otherwise>
             <activity-status code="3"/>
