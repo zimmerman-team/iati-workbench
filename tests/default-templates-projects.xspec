@@ -16,12 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-  stylesheet="../lib/iati.me/csvxml-s2i.xslt">
+  stylesheet="default-templates-projects/test-wrapper.xslt">
 
-  <x:param name="file" select="'file'"/>
-
-  <x:import href="lib-csvxml-s2i/convert-amounts.xspec"/>
-  <x:import href="lib-csvxml-s2i/convert-dates.xspec"/>
-  <x:import href="lib-csvxml-s2i/entry.xspec"/>
-  <x:import href="lib-csvxml-s2i/get-code-from-list.xspec"/>
+  <x:import href="default-templates-projects/convert-codes.xspec"/>
 </x:description>

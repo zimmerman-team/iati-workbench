@@ -15,13 +15,12 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-  stylesheet="../lib/iati.me/csvxml-s2i.xslt">
+<xsl:stylesheet version='3.0'
+  xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  exclude-result-prefixes="#all"
+  expand-text="yes">
 
-  <x:param name="file" select="'file'"/>
-
-  <x:import href="lib-csvxml-s2i/convert-amounts.xspec"/>
-  <x:import href="lib-csvxml-s2i/convert-dates.xspec"/>
-  <x:import href="lib-csvxml-s2i/entry.xspec"/>
-  <x:import href="lib-csvxml-s2i/get-code-from-list.xspec"/>
-</x:description>
+  <xsl:variable name="reporting-org" select="'XX-TEST-1234'"/>
+  <xsl:variable name="file" select="'projects'"/>
+  <xsl:include href="../../spreadsheet-iati/csvxml-s2i.xslt"/>
+</xsl:stylesheet>

@@ -88,7 +88,10 @@
           </participating-org>
         </xsl:if>
 
-        <activity-status code="{(merge:entry(., 'Activity status'), '2')[1]}"/>
+        <activity-status code="{(
+          merge:entry(., 'Activity status code')[not(.='')],
+          merge:get-code-from-list('ActivityStatus', merge:entry(., 'Activity status')),
+          '2')[1]}"/>
         <activity-date type="1" iso-date="{merge:date(merge:entry(., 'Planned start date', ''))}"/>
         <activity-date type="2" iso-date="{merge:date(merge:entry(., 'Actual start date', ''))}"/>
         <activity-date type="3" iso-date="{merge:date(merge:entry(., 'Planned end date', ''))}"/>

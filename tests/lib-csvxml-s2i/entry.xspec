@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
+
+  <x:scenario label="Test merge:entry()">
+    <x:variable name="record">
+      <record>
+        <entry name="IATI activity identifier">XX-TEST-1234-ABC</entry>
+        <entry name="Activity status">2</entry>
+      </record>
+    </x:variable>
+
+    <x:scenario label="When getting an existing column">
+      <x:call function="merge:entry">
+        <x:param name="record" select="$record"/>
+        <x:param name="label" select="'IATI activity identifier'"/>
+      </x:call>
+      <x:expect label="it should return its contents." select="'XX-TEST-1234-ABC'"/>
+    </x:scenario>
+
+    <x:scenario label="When getting an existing column with different upper and lower case">
+      <x:call function="merge:entry">
+        <x:param name="record" select="$record"/>
+        <x:param name="label" select="'iati Activity Identifier'"/>
+      </x:call>
+      <x:expect label="it should still return its contents." select="'XX-TEST-1234-ABC'"/>
+    </x:scenario>
+
+    <x:scenario label="When getting a non-existing column">
+      <x:call function="merge:entry">
+        <x:param name="record" select="$record"/>
+        <x:param name="label" select="'does not exist'"/>
+      </x:call>
+      <x:expect label="it should return an empty string." select="''"/>
+    </x:scenario>
+
+    <x:scenario label="When getting a non-existing column, with a default value">
+      <x:call function="merge:entry">
+        <x:param name="record" select="$record"/>
+        <x:param name="label" select="'does not exist'"/>
+        <x:param name="default" select="'default value'"/>
+      </x:call>
+      <x:expect label="it should return the default value." select="'default value'"/>
+    </x:scenario>
+
+  </x:scenario>
+</x:description>
