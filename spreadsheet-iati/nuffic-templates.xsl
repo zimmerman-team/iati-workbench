@@ -27,6 +27,11 @@
 
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 
+  <!-- skip unmatched records -->
+  <xsl:template match="record" mode="nuffic">
+    <merge:not-processed>row {position()}</merge:not-processed>
+  </xsl:template>
+
   <!--  Transactions: Project Expenditures -->
   <xsl:template match="record[$file=>lower-case()=>contains('businessworld')]" mode="nuffic">
     <xsl:variable name="rawid">
