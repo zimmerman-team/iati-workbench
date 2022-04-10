@@ -20,13 +20,14 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes=""
+  exclude-result-prefixes="xs functx"
   expand-text="yes">
+
+  <xsl:output indent="yes"/>
 
   <xsl:import href="../functx.xslt"/>
 
   <!-- configuration variables for conversion -->
-  <xsl:variable name="file"/>
   <xsl:variable name="reporting-org"/>
   <xsl:variable name="reporting-org-type"/>
   <xsl:variable name="reporting-org-name"/>

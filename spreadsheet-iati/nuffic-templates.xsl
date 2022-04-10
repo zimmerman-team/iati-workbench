@@ -20,7 +20,9 @@
   xmlns:functx="http://www.functx.com"
   xmlns:merge="http://iati.me/merge"
   xmlns:nuffic="http://iati.me/nuffic"
+  exclude-result-prefixes="xs functx nuffic"
   expand-text="yes">
+
   <xsl:output indent="yes"/>
 
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->

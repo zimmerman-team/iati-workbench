@@ -20,7 +20,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes=""
+  exclude-result-prefixes="#all"
   expand-text="yes">
 
   <!-- add generic templates -->
