@@ -1,2 +1,5 @@
 * xref:index.adoc[]
-** xref:date-formats.adoc[]
+
+** Reference
+*** xref:reference/date-formats.adoc[]
+*** xref:reference/client-configuration.adoc[]

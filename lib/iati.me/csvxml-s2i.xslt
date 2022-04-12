@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  IATI workbench: produce and use IATI data
   Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
-  
+
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->  
+-->
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
   xmlns:functx="http://www.functx.com"
-  exclude-result-prefixes=""
+  exclude-result-prefixes="xs functx"
   expand-text="yes">
 
-  <xsl:import href="codelists.xslt"/>
+  <xsl:output indent="yes"/>
+
+  <xsl:import href="../functx.xslt"/>
+
+  <!-- configuration variables for conversion -->
+  <xsl:variable name="reporting-org"/>
+  <xsl:variable name="reporting-org-type"/>
+  <xsl:variable name="reporting-org-name"/>
+  <xsl:variable name="include-reporting-org-as-role"/>
+  <xsl:variable name="default-participating-role"/>
+  <xsl:variable name="default-currency"/>
 
   <xsl:template match="csv">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
@@ -32,13 +42,12 @@
   </xsl:template>
 
   <xsl:template match="record">
-    <!-- This is a fallback for any file not mentioned in the /workspace/config/csvxml-iati.xslt file -->
-    <merge:not-processed>file <xsl:value-of select="$file"/> row <xsl:value-of select="position()"/></merge:not-processed>
+    <!-- This is a fallback for any file not mentioned in any of the templates -->
+    <merge:not-processed>row {position()}</merge:not-processed>
   </xsl:template>
 
   <xsl:function name="merge:boolean" as="xs:boolean">
     <xsl:param name="item" as="xs:string?"/>
-
     <xsl:choose>
       <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
@@ -64,9 +73,7 @@
     <xsl:param name="item" as="xs:string"/>
 
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="merge:decimal(regex-group(1))"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>{merge:decimal(regex-group(1))}</xsl:matching-substring>
     </xsl:analyze-string>
   </xsl:function>
 
@@ -74,23 +81,16 @@
     <xsl:param name="item" as="xs:string"/>
 
     <xsl:analyze-string regex="^([a-zA-Z]+)\s?[+-]?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="regex-group(1)"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>{regex-group(1)}</xsl:matching-substring>
     </xsl:analyze-string>
 
     <xsl:analyze-string regex="^€\s?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="'EUR'"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>EUR</xsl:matching-substring>
     </xsl:analyze-string>
 
     <xsl:analyze-string regex="^$\s?[0-9.,]+$" select="normalize-space($item)">
-      <xsl:matching-substring>
-        <xsl:value-of select="'USD'"/>
-      </xsl:matching-substring>
+      <xsl:matching-substring>USD</xsl:matching-substring>
     </xsl:analyze-string>
-
   </xsl:function>
 
   <xsl:function name="merge:date" as="xs:date?">
@@ -173,8 +173,8 @@
     <xsl:variable name="yy" select="xs:decimal($year)"/>
     <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY -->
     <xsl:choose>
-      <xsl:when test="$yy >= 70"><xsl:value-of select="1900+$yy"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="2000+$yy"/></xsl:otherwise>
+      <xsl:when test="$yy >= 70">{1900+$yy}</xsl:when>
+      <xsl:otherwise>{2000+$yy}</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
@@ -212,7 +212,7 @@
     <xsl:param name="label" as="xs:string+"/>
 
     <xsl:variable name="values" select="for $w in $label return $record/entry[functx:trim(lower-case(@name)) = lower-case($w) and functx:trim(.) != '']"/>
-    <xsl:value-of select="count($values)>0"/>
+    {count($values)>0}
   </xsl:function>
 
   <xsl:function name="merge:format" as="xs:string">
@@ -222,6 +222,15 @@
       <to format="image/jpeg"><f>jpg</f><f>jpeg</f></to>
       <to format="text/html"><f>html</f><f>web</f></to>
     </xsl:variable>
-    <xsl:value-of select="($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]"/>
+    <xsl:text>{($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]}</xsl:text>
+  </xsl:function>
+
+  <xsl:function name="merge:get-code-from-list">
+    <xsl:param name="list"/>
+    <xsl:param name="text"/>
+    <!--  TODO: refactor IATI version for codelists into configuration  -->
+    <xsl:variable name="codelist" select="doc(concat('../schemata/2.03/codelist/', $list, '.xml' ))"/>
+    <xsl:text>{($codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
+      $text)[1]}</xsl:text>
   </xsl:function>
 </xsl:stylesheet>

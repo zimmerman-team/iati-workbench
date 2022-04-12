@@ -15,9 +15,12 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<xsl:stylesheet version="3.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+<xsl:stylesheet version='3.0'
+  xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  exclude-result-prefixes="#all"
+  expand-text="yes">
 
-<!-- deprecated: empty placeholder for backward compatibility:
-if a workspace still includes this, it will not break -->
+  <xsl:variable name="reporting-org" select="'XX-TEST-1234'"/>
+  <xsl:variable name="file" select="'projects'"/>
+  <xsl:include href="../../spreadsheet-iati/csvxml-s2i.xslt"/>
+</xsl:stylesheet>

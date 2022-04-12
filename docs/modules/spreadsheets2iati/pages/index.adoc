@@ -23,8 +23,7 @@ The process breaks down in a couple of components.
 
 .Sequence for `s2i-run`
 [plantuml]
-....
-@startuml
+----
 start
 partition s2i-run {
   $group_main_color:get-inputs;
@@ -52,8 +51,7 @@ $group_main_color:s2i-publish;
 note right: Put the generated online\n(not in AIDA)
 
 stop
-@enduml
-....
+----
 
 The local `build.xml` in the workspace includes a library build file from the workbench.
 This makes it possible to extend or override the process in a particular workspace.
@@ -63,8 +61,7 @@ This makes it possible to extend or override the process in a particular workspa
 This step copies input files for the conversion
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the workspace
 start
@@ -82,18 +79,17 @@ $node_1_main_color:updates inputs/*]
 
 #orange:prepare new inputs;
 (1)
-....
+----
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the IATI Workbench container
 (1)
 partition spreadsheet-map {
   partition sheets-csvxml {
     fork
-      $node_1_main_color:input/*.xsl{x} ]
+      $node_1_main_color:input/*.xsl{x}]
       :excel-csv;
       $node_1_main_color:tmp/*.csv]
     fork again
@@ -112,11 +108,10 @@ partition spreadsheet-map {
 
 }
 (2)
-....
+----
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the workspace
 (2)
@@ -127,7 +122,7 @@ note
   Open diff in browser
 end note
 (3)
-....
+----
 
 === Gather input files
 
@@ -139,8 +134,7 @@ and prepares them for processing, in a flat folder.
 * Akvo and IATI XML files are copied.
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the IATI Workbench container
 (3)
@@ -169,7 +163,7 @@ fork again
   }
 end fork
 (4)
-....
+----
 
 === Generate IATI partials
 
@@ -178,8 +172,7 @@ These intermediary files are not valid IATI yet,
 but contain the IATI representation for the particular input file.
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the IATI Workbench container
 (4)
@@ -215,7 +208,7 @@ end fork
 
 $node_1_main_color:tmp/*.generated.xml]
 (5)
-....
+----
 
 === Create IATI output
 
@@ -228,8 +221,7 @@ This will create one valid IATI file,
 and one file with activities that contain validation errors.
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the IATI Workbench container
 (5)
@@ -247,7 +239,7 @@ $node_1_main_color:src/iati-{activities,organisation}.xml
 output/iati-activities{,.invalid}.xml
 reports/*]
 (6)
-....
+----
 
 === Postprocess IATI file
 
@@ -256,8 +248,7 @@ This can be anonymisation (replacing an organisation name),
 or known issues (like an identifier NL-KvK-... with lowercase "v").
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the workspace
 (6)
@@ -269,8 +260,7 @@ note $important_color
   override via local ""build.xml""
 end note
 (7)
-@enduml
-....
+----
 
 === S2I publish
 
@@ -278,8 +268,7 @@ This step commits the produced IATI file to version control,
 and publishes it online on the dataworkbench.io website.
 
 [plantuml]
-....
-@startuml
+----
 skinparam TitleFontColor $divider_main_color
 title In the workspace
 (7)
@@ -290,8 +279,7 @@ note
   commit updates to git and push to remote repository.
 end note
 stop
-@enduml
-....
+----
 
 == Ant targets in the IATI Workbench
 
