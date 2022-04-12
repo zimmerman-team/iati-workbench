@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/data4development/iati-workbench/compare/v1.5.0...v1.5.1) (2022-04-12)
+
+
+### Documentation
+
+* fix navigation that disappeared in merge ([54b6f82](https://github.com/data4development/iati-workbench/commit/54b6f82f59d27a11e10734c744f5943f00e77ebd))
+
 ## [1.5.0](https://github.com/data4development/iati-workbench/compare/v1.4.0-aida...v1.5.0) (2022-04-12)
 
 
