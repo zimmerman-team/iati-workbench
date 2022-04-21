@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:merge="http://iati.me/merge"
+  stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
+
+  <x:scenario label="Recognise numerical values">
+
+    <x:scenario label="The text '1000'">
+      <x:call function="merge:decimal">
+        <x:param>1000</x:param>
+      </x:call>
+      <x:expect label="should produce text '1000'." select="'1000'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '1000.00'">
+      <x:call function="merge:decimal">
+        <x:param>1000.00</x:param>
+      </x:call>
+      <x:expect label="should produce text '1000.00'." select="'1000.00'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '50%'">
+      <x:call function="merge:decimal">
+        <x:param>50%</x:param>
+      </x:call>
+      <x:expect label="should produce text '50'." select="'50'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '1,234,567'">
+      <x:call function="merge:decimal">
+        <x:param>1,234,567</x:param>
+      </x:call>
+      <x:expect label="should produce text '1234567'." select="'1234567'"/>
+    </x:scenario>
+
+    <x:scenario label="The text 'text 123'">
+      <x:call function="merge:decimal">
+        <x:param>text 123</x:param>
+      </x:call>
+      <x:expect label="should produce nothing." pending="not yet implemented" select="()"/>
+    </x:scenario>
+
+  </x:scenario>
+
+</x:description>
