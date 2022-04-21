@@ -20,7 +20,7 @@
 
   <x:param name="file" select="'file'"/>
 
-  <x:import href="lib-csvxml-s2i/convert-amounts.xspec"/>
+  <x:import href="lib-csvxml-s2i/convert-currency.xspec"/>
   <x:import href="lib-csvxml-s2i/convert-dates.xspec"/>
   <x:import href="lib-csvxml-s2i/entry.xspec"/>
   <x:import href="lib-csvxml-s2i/get-code-from-list.xspec"/>
