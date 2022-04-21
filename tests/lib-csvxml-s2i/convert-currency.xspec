@@ -81,5 +81,12 @@
       <x:expect label="should produce number 2300.19." select="2300.19"/>
     </x:scenario>
 
+    <x:scenario label="The text '(2,300.19)'">
+      <x:call function="merge:currency-value">
+        <x:param>(2,300.19)</x:param>
+      </x:call>
+      <x:expect label="should produce number -2300.19." pending="not yet implemented" select="2300.19"/>
+    </x:scenario>
+
   </x:scenario>
 </x:description>
