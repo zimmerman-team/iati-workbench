@@ -20,22 +20,66 @@
   xmlns:merge="http://iati.me/merge"
   stylesheet="../../lib/iati.me/csvxml-s2i.xslt">
 
-  <x:scenario label="Test merge:currency-symbol(string)">
+  <x:scenario label="Recognise currency symbols used in monetary values">
 
-    <x:scenario label="EUR 1000">
+    <x:scenario label="The text 'EUR 1000'">
       <x:call function="merge:currency-symbol">
-        <x:param select="'EUR 1000'"></x:param>
+        <x:param>EUR 1000</x:param>
       </x:call>
-      <x:expect label="should produce xs:string EUR." select="xs:string('EUR')"/>
+      <x:expect label="should produce 'EUR'." select="'EUR'"/>
     </x:scenario>
 
-    <x:scenario label="USD 1,200,300">
+    <x:scenario label="The text 'EURO 1000'">
       <x:call function="merge:currency-symbol">
-        <x:param select="'USD 1,200,300'"></x:param>
+        <x:param>EUR 1000</x:param>
       </x:call>
-      <x:expect label="should produce xs:string USD." select="xs:string('USD')"/>
+      <x:expect label="should produce 'EUR'." pending="not yet implemented" select="'EUR'"/>
+    </x:scenario>
+
+    <x:scenario label="The text 'USD 1,200,300'">
+      <x:call function="merge:currency-symbol">
+        <x:param>USD 1,200,300</x:param>
+      </x:call>
+      <x:expect label="should produce 'USD'." select="'USD'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '€1000'">
+      <x:call function="merge:currency-symbol">
+        <x:param>€1000</x:param>
+      </x:call>
+      <x:expect label="should produce 'EUR'." select="'EUR'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '$1,200,300'">
+      <x:call function="merge:currency-symbol">
+        <x:param>$1,200,300</x:param>
+      </x:call>
+      <x:expect label="should produce 'USD'." select="'USD'"/>
+    </x:scenario>
+
+    <x:scenario label="The text 'US$1,200,300'">
+      <x:call function="merge:currency-symbol">
+        <x:param>US$1,200,300</x:param>
+      </x:call>
+      <x:expect label="should produce 'USD'." select="'USD'"/>
     </x:scenario>
 
   </x:scenario>
 
+  <x:scenario label="Recognise monetary values as numerical values">
+    <x:scenario label="The text 'US$1,200,300'">
+      <x:call function="merge:currency-value">
+        <x:param>US$1,200,300</x:param>
+      </x:call>
+      <x:expect label="should produce number 1200300." select="1200300"/>
+    </x:scenario>
+
+    <x:scenario label="The text 'US$ 2,300.19'">
+      <x:call function="merge:currency-value">
+        <x:param>US$ 2,300.19</x:param>
+      </x:call>
+      <x:expect label="should produce number 2300.19." select="2300.19"/>
+    </x:scenario>
+
+  </x:scenario>
 </x:description>
