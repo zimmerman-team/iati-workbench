@@ -78,6 +78,9 @@
     <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/default-templates-results.xspec"/>
     </antcall>
+    <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/default-templates-sectors.xspec"/>
+    </antcall>
 
     <fileset id="results" dir="." includes="tmp/*-result.html"/>
     <property name="resultfiles" refid="results"/>

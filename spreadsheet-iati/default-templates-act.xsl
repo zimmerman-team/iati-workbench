@@ -179,7 +179,12 @@
   <xsl:template match="record[contains(lower-case($file), 'sectors')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <sector percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}" code="{merge:entry(., 'Sector code')}" vocabulary="{(merge:entry(., ('Sector vocabulary', 'Sector vocabulaire')))[1]}">
+        <sector percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}"
+                code="{merge:entry(., 'Sector code')}"
+                vocabulary="{(merge:entry(., ('Sector vocabulary', 'Sector vocabulaire')))[1]}">
+          <xsl:if test="merge:entry(., 'Sector vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Sector vocabulary URI')"/>
+          </xsl:if>
           <narrative>{merge:entry(., 'Sector name')}</narrative>
         </sector>
       </iati-activity>
