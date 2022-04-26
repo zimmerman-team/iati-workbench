@@ -23,7 +23,7 @@
   <x:scenario label="Test merge:entry()">
     <x:variable name="record">
       <record>
-        <entry name="IATI activity identifier">XX-TEST-1234-ABC</entry>
+        <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
         <entry name="Activity status">2</entry>
       </record>
     </x:variable>
@@ -33,7 +33,7 @@
         <x:param name="record" select="$record"/>
         <x:param name="label" select="'IATI activity identifier'"/>
       </x:call>
-      <x:expect label="it should return its contents." select="'XX-TEST-1234-ABC'"/>
+      <x:expect label="it should return its contents." select="'XE-EXAMPLE-AIDA-1234-ABC'"/>
     </x:scenario>
 
     <x:scenario label="When getting an existing column with different upper and lower case">
@@ -41,7 +41,7 @@
         <x:param name="record" select="$record"/>
         <x:param name="label" select="'iati Activity Identifier'"/>
       </x:call>
-      <x:expect label="it should still return its contents." select="'XX-TEST-1234-ABC'"/>
+      <x:expect label="it should still return its contents." select="'XE-EXAMPLE-AIDA-1234-ABC'"/>
     </x:scenario>
 
     <x:scenario label="When getting a non-existing column">

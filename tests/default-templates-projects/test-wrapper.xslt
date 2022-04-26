@@ -20,7 +20,7 @@
   exclude-result-prefixes="#all"
   expand-text="yes">
 
-  <xsl:variable name="reporting-org" select="'XX-TEST-1234'"/>
+  <xsl:variable name="reporting-org" select="'XE-EXAMPLE-AIDA-1234'"/>
   <xsl:variable name="file" select="'projects'"/>
   <xsl:include href="../../spreadsheet-iati/csvxml-s2i.xslt"/>
 </xsl:stylesheet>
