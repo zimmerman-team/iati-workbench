@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2022, drostan.org and data4development.org
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:merge="http://iati.me/merge"
+               stylesheet="test-wrapper-default-templates.xslt">
+
+    <x:scenario label="Test reference vocabulary code, URI for results">
+        <x:scenario label="When a result has a reference code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Result reference">DD1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that code in reference/@code." test="//result/reference/@code='DD1'"/>
+            <x:expect label="it should produce reference/@vocabulary='99'." test="//result/reference/@vocabulary='99'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When a result has a reference code with column name 'Result reference code'">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Result reference code">DD1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that code in reference/@code." test="//result/reference/@code='DD1'"/>
+            <x:expect label="it should produce reference/@vocabulary='99'." test="//result/reference/@vocabulary='99'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When a result also has a vocabulary code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Result reference">DD1</entry>
+                    <entry name="Result reference vocabulary">1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When a result has a vocabulary code and URI">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Result reference">DD1</entry>
+                    <entry name="Result reference vocabulary">1</entry>
+                    <entry name="Result reference URI">http://iati.me/aida</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary-URI." test="//result/reference/@vocabulary-uri='http://iati.me/aida'
+"/>
+        </x:scenario>
+    </x:scenario>
+
+    <x:scenario label="Test reference vocabulary code, URI for indicators">
+        <x:scenario label="When an indicator has a reference code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Indicator reference">DD1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that code in reference/@code." test="//indicator/reference/@code='DD1'"/>
+            <x:expect label="it should produce reference/@vocabulary='99'." test="//indicator/reference/@vocabulary='99'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When an indicator has a reference code with column name 'Indicator reference code'">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Indicator reference code">DD1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that code in reference/@code." test="//indicator/reference/@code='DD1'"/>
+            <x:expect label="it should produce reference/@vocabulary='99'." test="//indicator/reference/@vocabulary='99'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When an indicator also has a vocabulary code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Indicator reference">DD1</entry>
+                    <entry name="Indicator reference vocabulary">1</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
+            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When an indicator has a vocabulary code and URI">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Indicator reference">DD1</entry>
+                    <entry name="Indicator reference vocabulary">1</entry>
+                    <entry name="Indicator reference URI">http://iati.me/aida</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary-URI." test="//indicator/reference/@vocabulary-uri='http://iati.me/aida'
+"/>
+        </x:scenario>
+
+    </x:scenario>
+
+</x:description>

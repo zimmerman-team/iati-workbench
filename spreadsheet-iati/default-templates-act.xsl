@@ -238,6 +238,15 @@
           <description>
             <narrative>{merge:entry(., 'Result description')}</narrative>
           </description>
+          <xsl:if test="merge:entry(., ('Result reference', 'Result reference code'))!=''">
+            <reference
+                vocabulary="{merge:entry(., 'Result reference vocabulary', '99')}"
+                code="{merge:entry(., ('Result reference', 'Result reference code'))}">
+              <xsl:if test="merge:entry(., 'Result reference URI')!=''">
+                <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Result reference URI')"/>
+              </xsl:if>
+            </reference>
+          </xsl:if>
 
           <indicator
             merge:id="{merge:entry(., 'Indicator reference')}---{merge:entry(., 'Indicator title')}"
@@ -245,8 +254,14 @@
             <xsl:if test="merge:entryExists(., 'Ascending')">
               <xsl:attribute name="ascending" select="merge:boolean(merge:entry(., 'Ascending'))"/>
             </xsl:if>
-            <xsl:if test="merge:entry(., 'Indicator reference')!=''">
-              <reference vocabulary="99" code="{merge:entry(., 'Indicator reference')}"/>
+            <xsl:if test="merge:entry(., ('Indicator reference', 'Indicator reference code'))!=''">
+              <reference
+                  vocabulary="{merge:entry(., 'Indicator reference vocabulary', '99')}"
+                  code="{merge:entry(., ('Indicator reference', 'Indicator reference code'))}">
+                <xsl:if test="merge:entry(., 'Indicator reference URI')!=''">
+                  <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Indicator reference URI')"/>
+                </xsl:if>
+              </reference>
             </xsl:if>
 
             <title>
