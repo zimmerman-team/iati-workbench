@@ -20,11 +20,7 @@
                xmlns:merge="http://iati.me/merge"
                stylesheet="test-wrapper-default-templates.xslt">
 
-    <x:variable name="reporting-org">XE-EXAMPLE-AIDA</x:variable>
-
-    <x:scenario label="Test code lookups">
-        <x:variable name="file">projects</x:variable>
-
+    <x:scenario label="Test code list values and lookups">
         <x:scenario label="When the project row has no activity status code">
             <x:context>
                 <record>
@@ -32,7 +28,7 @@
                     <entry name="Activity status">2</entry>
                 </record>
             </x:context>
-            <x:expect label="it should produce activity-status/@code='2'." test="//activity-status/@code='2'"/>
+            <x:expect label="it should produce default activity-status/@code='2'." test="//activity-status/@code='2'"/>
         </x:scenario>
 
         <x:scenario label="When the project row has activity status code 2">
@@ -45,16 +41,16 @@
             <x:expect label="should produce activity-status/@code='2'." test="//activity-status/@code='2'"/>
         </x:scenario>
 
-        <x:scenario label="When the project row has activity status text 'implementation'">
+        <x:scenario label="When the project row has activity status text 'finalisation'">
             <x:context>
                 <csv>
                     <record>
                         <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-T35P147</entry>
-                        <entry name="Activity status">implementation</entry>
+                        <entry name="Activity status">finalisation</entry>
                     </record>
                 </csv>
             </x:context>
-            <x:expect label="it should produce activity-status/@code='2'." test="//activity-status/@code='2'"/>
+            <x:expect label="it should produce activity-status/@code='3'." test="//activity-status/@code='3'"/>
         </x:scenario>
 
         <x:scenario label="When the project row has a separate status activity status code column">
