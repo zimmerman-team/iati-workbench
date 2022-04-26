@@ -21,6 +21,6 @@
   expand-text="yes">
 
   <xsl:variable name="reporting-org" select="'XE-EXAMPLE-AIDA-1234'"/>
-  <xsl:variable name="file" select="'projects'"/>
+  <xsl:variable name="file" select="'results'"/>
   <xsl:include href="../../spreadsheet-iati/csvxml-s2i.xslt"/>
 </xsl:stylesheet>

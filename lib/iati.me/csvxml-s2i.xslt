@@ -88,7 +88,7 @@
       <xsl:matching-substring>EUR</xsl:matching-substring>
     </xsl:analyze-string>
 
-    <xsl:analyze-string regex="^$\s?[0-9.,]+$" select="normalize-space($item)">
+    <xsl:analyze-string regex="^(US)?\$\s?[0-9.,]+$" select="normalize-space($item)">
       <xsl:matching-substring>USD</xsl:matching-substring>
     </xsl:analyze-string>
   </xsl:function>

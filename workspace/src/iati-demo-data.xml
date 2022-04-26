@@ -1,7 +1,7 @@
 <iati-activities>
   <iati-activity xml:lang="en">
-    <iati-identifier>XX-TEST-12345-Testcase-0</iati-identifier>
-    <reporting-org type="21" ref="XX-TEST-12345">
+    <iati-identifier>XE-EXAMPLE-AIDA-12345-Testcase-0</iati-identifier>
+    <reporting-org type="21" ref="XE-EXAMPLE-AIDA-12345">
       <narrative>Some Organisation</narrative>
     </reporting-org>
     <title>
@@ -10,12 +10,12 @@
     <description>
       There should be no issues with this activity.
     </description>
-    <related-activity ref="XX-TEST-12345-Testcase-1" type="1"/>
+    <related-activity ref="XE-EXAMPLE-AIDA-12345-Testcase-1" type="1"/>
   </iati-activity>
 
   <iati-activity>
-    <iati-identifier>XX-TEST-12345-Testcase-1</iati-identifier>
-    <reporting-org type="21" ref="XX-Test-12345">
+    <iati-identifier>XE-EXAMPLE-AIDA-12345-Testcase-1</iati-identifier>
+    <reporting-org type="21" ref="XE-EXAMPLE-AIDA-12345">
       <narrative>Some Organisation</narrative>
     </reporting-org>
     <title>
@@ -27,7 +27,7 @@
       - One participating organisation has whitespace at the end of its identifier.
       - Percentages in sectors for vocabulary 1 don't add up to 100%.
     </description>
-    <participating-org ref="XX-TEST-2345678 " type="22" role="4">
+    <participating-org ref="XE-EXAMPLE-AIDA-2345678 " type="22" role="4">
       <narrative>Organisation With Space In Identifier</narrative>
     </participating-org>
 
@@ -39,8 +39,8 @@
   </iati-activity>
 
   <iati-activity>
-    <iati-identifier>XX-TEST-12345-Testcase-2</iati-identifier>
-    <reporting-org type="21" ref="XX-TEST-12345">
+    <iati-identifier>XE-EXAMPLE-AIDA-12345-Testcase-2</iati-identifier>
+    <reporting-org type="21" ref="XE-EXAMPLE-AIDA-12345">
       <narrative>Some Organisation</narrative>
     </reporting-org>
     <title>
@@ -61,8 +61,8 @@
   </iati-activity>
 
   <iati-activity>
-    <iati-identifier>XX-TEST-12345-Testcase-3</iati-identifier>
-    <reporting-org type="21" ref="XX-TEST-12345">
+    <iati-identifier>XE-EXAMPLE-AIDA-12345-Testcase-3</iati-identifier>
+    <reporting-org type="21" ref="XE-EXAMPLE-AIDA-12345">
       <narrative>Some Organisation</narrative>
     </reporting-org>
     <title>
@@ -78,7 +78,7 @@
     <transaction>
       <transaction-type code="2"/>
       <transaction-date iso-date="2015-02-17"/>
-      <provider-org ref="XX-TEST-2345678 "/>
+      <provider-org ref="XE-EXAMPLE-AIDA-2345678 "/>
     </transaction>
 
   </iati-activity>
