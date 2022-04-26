@@ -264,7 +264,7 @@
                   vocabulary="{merge:entry(., 'Indicator reference vocabulary', '99')}"
                   code="{merge:entry(., ('Indicator reference', 'Indicator reference code'))}">
                 <xsl:if test="merge:entry(., 'Indicator reference URI')!=''">
-                  <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Indicator reference URI')"/>
+                  <xsl:attribute name="indicator-uri" select="merge:entry(., 'Indicator reference URI')"/>
                 </xsl:if>
               </reference>
             </xsl:if>

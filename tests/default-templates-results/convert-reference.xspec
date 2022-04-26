@@ -30,7 +30,7 @@
             </x:context>
             <x:expect label="it should produce that code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce reference/@vocabulary='99'." test="//result/reference/@vocabulary='99'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@vocabulary-uri." test="not(//result/reference/@vocabulary-uri)"/>
         </x:scenario>
 
         <x:scenario label="When a result has a reference code with column name 'Result reference code'">
@@ -42,7 +42,7 @@
             </x:context>
             <x:expect label="it should produce that code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce reference/@vocabulary='99'." test="//result/reference/@vocabulary='99'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@vocabulary-uri." test="not(//result/reference/@vocabulary-uri)"/>
         </x:scenario>
 
         <x:scenario label="When a result also has a vocabulary code">
@@ -55,7 +55,7 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//result/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@vocabulary-uri." test="not(//result/reference/@vocabulary-uri)"/>
         </x:scenario>
 
         <x:scenario label="When a result has a vocabulary code and URI">
@@ -69,7 +69,7 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@vocabulary-URI." test="//result/reference/@vocabulary-uri='http://iati.me/aida'
+            <x:expect label="it should produce the indicated reference/@vocabulary-uri." test="//result/reference/@vocabulary-uri='http://iati.me/aida'
 "/>
         </x:scenario>
     </x:scenario>
@@ -84,7 +84,7 @@
             </x:context>
             <x:expect label="it should produce that code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce reference/@vocabulary='99'." test="//indicator/reference/@vocabulary='99'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@indicator-uri." test="not(//indicator/reference/@indicator-uri)"/>
         </x:scenario>
 
         <x:scenario label="When an indicator has a reference code with column name 'Indicator reference code'">
@@ -96,7 +96,7 @@
             </x:context>
             <x:expect label="it should produce that code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce reference/@vocabulary='99'." test="//indicator/reference/@vocabulary='99'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@indicator-uri." test="not(//indicator/reference/@indicator-uri)"/>
         </x:scenario>
 
         <x:scenario label="When an indicator also has a vocabulary code">
@@ -109,7 +109,7 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
-            <x:expect label="it should not produce an reference/@vocabulary-URI." test="not(//indicator/reference/@vocabulary-uri)"/>
+            <x:expect label="it should not produce an reference/@indicator-uri." test="not(//indicator/reference/@indicator-uri)"/>
         </x:scenario>
 
         <x:scenario label="When an indicator has a vocabulary code and URI">
@@ -123,7 +123,7 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@vocabulary-URI." test="//indicator/reference/@vocabulary-uri='http://iati.me/aida'
+            <x:expect label="it should produce the indicated reference/@indicator-uri." test="//indicator/reference/@indicator-uri='http://iati.me/aida'
 "/>
         </x:scenario>
 

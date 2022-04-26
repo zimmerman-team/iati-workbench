@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/data4development/iati-workbench/compare/v1.5.1...v1.6.0) (2022-04-26)
+
+
+### Features
+
+* add vocabulary code and URI on results and indicators ([57d60c0](https://github.com/data4development/iati-workbench/commit/57d60c0eccde4d6158d1f6e66e2f58e494fe46a3))
+
+
+### Improvements
+
+* add US$; simplify tests for currency symbol and value recognition ([1a7481d](https://github.com/data4development/iati-workbench/commit/1a7481dca541ced802b9a8f7b282bbe96e8482d7))
+
+### [1.5.1](https://github.com/data4development/iati-workbench/compare/v1.5.0...v1.5.1) (2022-04-12)
+
+
+### Documentation
+
+* fix navigation that disappeared in merge ([54b6f82](https://github.com/data4development/iati-workbench/commit/54b6f82f59d27a11e10734c744f5943f00e77ebd))
+
+## [1.5.0](https://github.com/data4development/iati-workbench/compare/v1.4.0-aida...v1.5.0) (2022-04-12)
+
+
+### Features
+
+* add custom configuration for specific client ([5fab225](https://github.com/data4development/iati-workbench/commit/5fab225354a0c7f38fab33e91726bb3f1b078605))
+
+
+### Debts
+
+* rename git branch aida to main ([8560617](https://github.com/data4development/iati-workbench/commit/856061731fa6ddf78fc55fe76d6f4bfc4c37b242))
+
+
+### Documentation
+
+* make aida-s2i consistent ([9b995ff](https://github.com/data4development/iati-workbench/commit/9b995ff4c9af9b56531709e256081c2a8d862e81))
+* move date formats overview into references section ([4368f18](https://github.com/data4development/iati-workbench/commit/4368f18881e23586891bdf41bc85e5ac6a6ad018))
+
+
+### Improvements
+
+* add --init to git submodule update ([40ec4d1](https://github.com/data4development/iati-workbench/commit/40ec4d13c9147f589436d5b2aa35e980e3f4e632))
+* add activity status code lookup and optional column ([02b28c1](https://github.com/data4development/iati-workbench/commit/02b28c12705abb4f4bdd97408cd7cb001e7fbe38))
+* add an empty default-templates.xsl ([71f8fbe](https://github.com/data4development/iati-workbench/commit/71f8fbec22d10a7309342917bb25df13b7f50ace))
+* add not-processed template for nuffic ([b47e376](https://github.com/data4development/iati-workbench/commit/b47e3763b85cb6ebd0ffd4fa050176cea6757242))
+* handle utf8 in filenames ([aa9c141](https://github.com/data4development/iati-workbench/commit/aa9c1413e0419dab1069825110a79bcf12efa382))
+* merge-activities shouldn't include related-activity with empty @ref ([1a0a053](https://github.com/data4development/iati-workbench/commit/1a0a053fb63bcc9f14330e5dd6ec2788646e18ba))
+* no duplication of participating-orgs without @ref ([8f7caa4](https://github.com/data4development/iati-workbench/commit/8f7caa4a8197373f879a6c28d7361bb126036486))
+* process Akvo files as regular IATI when no custom config exists ([9297874](https://github.com/data4development/iati-workbench/commit/9297874519a9fa64d6cdfd4dd7af25c21622dba7))
+* run iati-s2i for files in the tmp folder ([8ee4c86](https://github.com/data4development/iati-workbench/commit/8ee4c86cbb3e4186d27c40b93965702bf5c76780))
+* skip empty activity title and description narratives ([7eb6847](https://github.com/data4development/iati-workbench/commit/7eb6847f2c0b2d99292add066be78280e524d51b))
+* update Nuffic activity status mapping ([7485c89](https://github.com/data4development/iati-workbench/commit/7485c89505c68cc4a457381a614db9f8cc5f6507))
+
 ## [1.4.0](https://github.com/data4development/iati-workbench/compare/v1.3.0...v1.4.0) (2022-01-12)
 
 
