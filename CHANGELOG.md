@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/data4development/iati-workbench/compare/v1.5.1...v1.6.0) (2022-04-26)
+
+
+### Features
+
+* add vocabulary code and URI on results and indicators ([57d60c0](https://github.com/data4development/iati-workbench/commit/57d60c0eccde4d6158d1f6e66e2f58e494fe46a3))
+
+
+### Improvements
+
+* add US$; simplify tests for currency symbol and value recognition ([1a7481d](https://github.com/data4development/iati-workbench/commit/1a7481dca541ced802b9a8f7b282bbe96e8482d7))
+
 ### [1.5.1](https://github.com/data4development/iati-workbench/compare/v1.5.0...v1.5.1) (2022-04-12)
 
 
