@@ -76,6 +76,9 @@
       <param name="xspec.xml" location="tests/default-templates-projects.xspec"/>
     </antcall>
     <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/default-templates-policy-markers.xspec"/>
+    </antcall>
+    <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/default-templates-results.xspec"/>
     </antcall>
     <antcall target="xspec.xspec" inheritall="false">

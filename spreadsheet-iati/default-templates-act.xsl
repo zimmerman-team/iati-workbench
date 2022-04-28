@@ -170,7 +170,13 @@
   <xsl:template match="record[contains(lower-case($file), 'policy')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <policy-marker significance="{merge:entry(., ('Significance', 'Policy significance'))}" code="{merge:entry(., 'Policy marker')}" vocabulary="1"/>
+        <policy-marker significance="{merge:entry(., ('Significance', 'Policy significance'))}"
+                       code="{merge:entry(., 'Policy marker')}"
+                       vocabulary="{merge:entry(., 'Policy marker vocabulary', '1')}">
+          <xsl:if test="merge:entry(., 'Policy marker vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Policy marker vocabulary URI')"/>
+          </xsl:if>
+        </policy-marker>
       </iati-activity>
     </xsl:if>
   </xsl:template>
