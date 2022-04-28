@@ -73,6 +73,9 @@
       <param name="xspec.xml" location="tests/merge-activities.xspec"/>
     </antcall>
     <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/default-templates-countries-regions.xspec"/>
+    </antcall>
+    <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/default-templates-projects.xspec"/>
     </antcall>
     <antcall target="xspec.xspec" inheritall="false">

@@ -366,6 +366,12 @@
           </xsl:when>
           <xsl:when test="merge:entry(., 'Region code')!=''">
             <recipient-region code="{merge:entry(., 'Region code')}" percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}">
+              <xsl:if test="merge:entry(., 'Region vocabulary')!=''">
+                <xsl:attribute name="vocabulary" select="merge:entry(., 'Region vocabulary')"/>
+              </xsl:if>
+              <xsl:if test="merge:entry(., 'Region vocabulary URI')!=''">
+                <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Region vocabulary URI')"/>
+              </xsl:if>
               <xsl:if test="merge:entry(., 'Region name')!=''">
                 <narrative>{merge:entry(., 'Region name')}</narrative>
               </xsl:if>
