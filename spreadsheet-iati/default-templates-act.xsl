@@ -191,6 +191,20 @@
     </xsl:if>
   </xsl:template>
 
+  <!--  Tags: -->
+  <xsl:template match="record[contains(lower-case($file), 'tags')]">
+    <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
+      <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
+        <tag code="{merge:entry(., 'Tag code')}" vocabulary="{(merge:entry(., ('Tag vocabulary')))[1]}">
+          <xsl:if test="merge:entry(., 'Tag vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Tag vocabulary URI')"/>
+          </xsl:if>
+          <narrative>{merge:entry(., 'Tag name')}</narrative>
+        </tag>
+      </iati-activity>
+    </xsl:if>
+  </xsl:template>
+
   <!--  Transactions: -->
   <xsl:template match="record[contains(lower-case($file), 'transactions')]">
     <xsl:if test="starts-with(merge:entry(., ['IATI activity identifier', 'IATI identifier'])[1], $reporting-org)">
