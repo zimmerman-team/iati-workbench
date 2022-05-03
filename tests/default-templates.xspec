@@ -16,12 +16,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
-               stylesheet="../spreadsheet-iati/csvxml-s2i.xslt"
-               run-as="external">
+  stylesheet="../spreadsheet-iati/csvxml-s2i.xslt"
+  run-as="external">
 
   <x:param name="reporting-org" select="'XE-EXAMPLE-AIDA'"/>
 
-  <x:scenario label="Treat a file as additional template when a template keyword and 'projects' appear in their name.">
+  <x:import href="default-templates-projects/convert-codes.xspec"/>
+  <x:import href="default-templates-countries-regions/convert-reference.xspec"/>
+  <x:import href="default-templates-sectors/convert-reference.xspec"/>
+  <x:import href="default-templates-tags/convert-reference.xspec"/>
+  <x:import href="default-templates-policy-markers/convert-reference.xspec"/>
+  <x:import href="default-templates-results/convert-reference.xspec"/>
+
+  <x:scenario label="Ambiguous filenames: when a template keyword and 'projects' appear both in a file name.">
     <x:scenario label="When a filename contains 'sectors' and 'projects'">
       <x:param name="file" select="'sectors-for-my-projects'"/>
       <x:context>

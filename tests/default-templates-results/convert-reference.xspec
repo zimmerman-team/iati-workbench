@@ -18,9 +18,11 @@
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                xmlns:merge="http://iati.me/merge"
-               stylesheet="test-wrapper-default-templates.xslt">
+               stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
 
-    <x:scenario label="Test reference vocabulary code, URI for results">
+    <x:scenario label="Results: reference vocabulary code, URI for results">
+        <x:param name="file" select="'results'"/>
+
         <x:scenario label="When a result has a reference code">
             <x:context>
                 <record>
@@ -74,7 +76,9 @@
         </x:scenario>
     </x:scenario>
 
-    <x:scenario label="Test reference vocabulary code, URI for indicators">
+    <x:scenario label="Indicators: reference vocabulary code, URI for indicators">
+        <x:param name="file" select="'results'"/>
+
         <x:scenario label="When an indicator has a reference code">
             <x:context>
                 <record>

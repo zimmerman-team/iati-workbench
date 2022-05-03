@@ -18,9 +18,11 @@
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                xmlns:merge="http://iati.me/merge"
-               stylesheet="test-wrapper-default-templates.xslt">
+               stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
 
-    <x:scenario label="Test vocabulary code and URI for policy markers">
+    <x:scenario label="Policy markers: vocabulary code and URI for policy markers">
+        <x:param name="file" select="'policy'"/>
+
         <x:scenario label="When a policy marker has no vocabulary code">
             <x:context>
                 <record>
