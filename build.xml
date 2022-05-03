@@ -90,6 +90,9 @@
     <antcall target="xspec.xspec" inheritall="false">
       <param name="xspec.xml" location="tests/default-templates-tags.xspec"/>
     </antcall>
+    <antcall target="xspec.xspec" inheritall="false">
+      <param name="xspec.xml" location="tests/ambiguous-filename.xspec"/>
+    </antcall>
 
     <fileset id="results" dir="." includes="tmp/*-result.html"/>
     <property name="resultfiles" refid="results"/>

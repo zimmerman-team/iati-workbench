@@ -22,6 +22,4 @@
   <xsl:import href="/home/iati-workbench/spreadsheet-iati/csvxml-s2i.xslt"/>
   <xsl:include href="csvxml-iati.xslt"/>
 
-  <xsl:param name="filename"/>
-  <xsl:variable name="file" select="functx:substring-before-last($filename,'.csv.xml')"/>
 </xsl:stylesheet>

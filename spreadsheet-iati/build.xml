@@ -96,7 +96,7 @@
       includes="*.csv.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
-      filenameparameter="filename"
+      filenameparameter="file"
       style="${ws}/config/sheets-iati.xslt"
      />
   </target>

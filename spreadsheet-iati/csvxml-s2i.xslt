@@ -23,6 +23,8 @@
   exclude-result-prefixes="#all"
   expand-text="yes">
 
+  <xsl:param name="file"/>
+
   <!-- add generic templates -->
   <xsl:include href="default-templates-act.xsl"/>
   <xsl:include href="default-templates-org.xsl"/>

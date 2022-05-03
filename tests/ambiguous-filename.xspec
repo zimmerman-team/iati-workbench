@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2016-2022, drostan.org and data4development.org
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+               stylesheet="../spreadsheet-iati/csvxml-s2i.xslt"
+               run-as="external">
+
+  <x:param name="reporting-org" select="'XE-EXAMPLE-AIDA'"/>
+
+  <x:scenario label="Treat a file as additional template when a template keyword and 'projects' appear in their name.">
+    <x:scenario label="When a filename contains 'sectors' and 'projects'">
+      <x:param name="file" select="'sectors-for-my-projects'"/>
+      <x:context>
+        <record>
+          <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+          <entry name="Sector vocabulary"/>
+          <entry name="Sector code">123</entry>
+        </record>
+      </x:context>
+      <x:expect label="it should produce a sector." test="boolean(//sector/@code)"/>
+      <x:expect label="it should not produce a reporting-org." test="not(//reporting-org)"/>
+    </x:scenario>
+  </x:scenario>
+</x:description>

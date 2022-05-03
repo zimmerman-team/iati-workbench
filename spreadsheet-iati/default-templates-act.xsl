@@ -28,7 +28,7 @@
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 
   <!--Activities: -->
-  <xsl:template match="record[contains(lower-case($file), 'projects')]">
+  <xsl:template match="record[contains(lower-case($file), 'projects')]" priority="-1">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
       <xsl:variable name="lang" select="lower-case(merge:entry(., 'Language', 'en'))"/>
       <iati-activity default-currency="{merge:entry(., 'Currency')}"
