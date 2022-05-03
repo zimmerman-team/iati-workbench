@@ -71,14 +71,14 @@
       <x:call function="merge:currency-value">
         <x:param>US$1,200,300</x:param>
       </x:call>
-      <x:expect label="should produce number 1200300." select="1200300"/>
+      <x:expect label="should produce number 1200300." select="'1200300'"/>
     </x:scenario>
 
     <x:scenario label="The text 'US$ 2,300.19'">
       <x:call function="merge:currency-value">
         <x:param>US$ 2,300.19</x:param>
       </x:call>
-      <x:expect label="should produce number 2300.19." select="2300.19"/>
+      <x:expect label="should produce number 2300.19." select="'2300.19'"/>
     </x:scenario>
 
     <x:scenario label="The text '(2,300.19)'">
@@ -86,6 +86,20 @@
         <x:param>(2,300.19)</x:param>
       </x:call>
       <x:expect label="should produce number -2300.19." pending="not yet implemented" select="2300.19"/>
+    </x:scenario>
+
+    <x:scenario label="The text '1.234.567,89'">
+      <x:call function="merge:currency-value">
+        <x:param>1.234.567,89</x:param>
+      </x:call>
+      <x:expect label="should produce number 1.234.56789, triggering a schema error." select="'1.234.56789'"/>
+    </x:scenario>
+
+    <x:scenario label="The text '1.234.567,89'">
+      <x:call function="merge:currency-value">
+        <x:param>1.234.567,89</x:param>
+      </x:call>
+      <x:expect label="should produce number 1234567.89." pending="not yet implemented, should replace previous test" select="'1.234.56789'"/>
     </x:scenario>
 
   </x:scenario>

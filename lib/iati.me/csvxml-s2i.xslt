@@ -69,7 +69,7 @@
     {merge:decimal(replace($item, '.', '')=>replace(',', '.'))}
   </xsl:function>
 
-  <xsl:function name="merge:currency-value" as="xs:decimal?">
+  <xsl:function name="merge:currency-value" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
 
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
