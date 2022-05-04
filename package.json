@@ -1,0 +1,74 @@
+{
+  "name": "Spreadsheets2IATI",
+  "version": "1.7.0-0",
+  "repository": "github:data4development/iati-workbench",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "devDependencies": {
+    "standard-version": "^9.3.2"
+  },
+  "scripts": {
+    "release:preview": "standard-version -p",
+    "release:main": "standard-version"
+  },
+  "standard-version": {
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Improvements"
+      },
+      {
+        "type": "improve",
+        "section": "Improvements"
+      },
+      {
+        "type": "debt",
+        "section": "Debts"
+      },
+      {
+        "type": "risk",
+        "section": "Risks and compliance"
+      },
+      {
+        "type": "chore",
+        "hidden": true
+      },
+      {
+        "type": "docs",
+        "section": "Documentation"
+      },
+      {
+        "type": "style",
+        "hidden": true
+      },
+      {
+        "type": "refactor",
+        "hidden": true
+      },
+      {
+        "type": "perf",
+        "hidden": true
+      },
+      {
+        "type": "test",
+        "hidden": true
+      }
+    ],
+    "bumpFiles": [
+      "package.json",
+      "package-lock.json",
+      {
+        "filename": "this-is-iati-workbench",
+        "type": "plain-text"
+      },
+      {
+        "filename": "docs/antora.yml",
+        "updater": "docs/antora-version-updater.js"
+      }
+    ]
+  }
+}

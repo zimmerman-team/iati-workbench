@@ -1,5 +1,16 @@
 = Spreadsheets2IATI engine
 
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+ifndef::env-github[]
+:icons: font
+endif::[]
+
 _Scripts to transform a set of input files (spreadsheets, IATI) into a combined IATI file._
 
 == Add the `aidi-s2i` wrapper to your path

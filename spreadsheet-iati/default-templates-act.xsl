@@ -28,7 +28,7 @@
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 
   <!--Activities: -->
-  <xsl:template match="record[contains(lower-case($file), 'projects')]">
+  <xsl:template match="record[contains(lower-case($file), 'projects')]" priority="-1">
     <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
       <xsl:variable name="lang" select="lower-case(merge:entry(., 'Language', 'en'))"/>
       <iati-activity default-currency="{merge:entry(., 'Currency')}"
@@ -170,7 +170,13 @@
   <xsl:template match="record[contains(lower-case($file), 'policy')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <policy-marker significance="{merge:entry(., ('Significance', 'Policy significance'))}" code="{merge:entry(., 'Policy marker')}" vocabulary="1"/>
+        <policy-marker significance="{merge:entry(., ('Significance', 'Policy significance'))}"
+                       code="{merge:entry(., 'Policy marker')}"
+                       vocabulary="{merge:entry(., 'Policy marker vocabulary', '1')}">
+          <xsl:if test="merge:entry(., 'Policy marker vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Policy marker vocabulary URI')"/>
+          </xsl:if>
+        </policy-marker>
       </iati-activity>
     </xsl:if>
   </xsl:template>
@@ -179,9 +185,28 @@
   <xsl:template match="record[contains(lower-case($file), 'sectors')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <sector percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}" code="{merge:entry(., 'Sector code')}" vocabulary="{(merge:entry(., ('Sector vocabulary', 'Sector vocabulaire')))[1]}">
+        <sector percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}"
+                code="{merge:entry(., 'Sector code')}"
+                vocabulary="{(merge:entry(., ('Sector vocabulary', 'Sector vocabulaire')))[1]}">
+          <xsl:if test="merge:entry(., 'Sector vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Sector vocabulary URI')"/>
+          </xsl:if>
           <narrative>{merge:entry(., 'Sector name')}</narrative>
         </sector>
+      </iati-activity>
+    </xsl:if>
+  </xsl:template>
+
+  <!--  Tags: -->
+  <xsl:template match="record[contains(lower-case($file), 'tags')]">
+    <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier'), $reporting-org)">
+      <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
+        <tag code="{merge:entry(., 'Tag code')}" vocabulary="{(merge:entry(., ('Tag vocabulary')))[1]}">
+          <xsl:if test="merge:entry(., 'Tag vocabulary URI')!=''">
+            <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Tag vocabulary URI')"/>
+          </xsl:if>
+          <narrative>{merge:entry(., 'Tag name')}</narrative>
+        </tag>
       </iati-activity>
     </xsl:if>
   </xsl:template>
@@ -341,6 +366,12 @@
           </xsl:when>
           <xsl:when test="merge:entry(., 'Region code')!=''">
             <recipient-region code="{merge:entry(., 'Region code')}" percentage="{merge:decimal(merge:entry(., 'Budget percentage'))}">
+              <xsl:if test="merge:entry(., 'Region vocabulary')!=''">
+                <xsl:attribute name="vocabulary" select="merge:entry(., 'Region vocabulary')"/>
+              </xsl:if>
+              <xsl:if test="merge:entry(., 'Region vocabulary URI')!=''">
+                <xsl:attribute name="vocabulary-uri" select="merge:entry(., 'Region vocabulary URI')"/>
+              </xsl:if>
               <xsl:if test="merge:entry(., 'Region name')!=''">
                 <narrative>{merge:entry(., 'Region name')}</narrative>
               </xsl:if>

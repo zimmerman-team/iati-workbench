@@ -1,0 +1,48 @@
+= Version releases
+
+We use https://github.com/conventional-changelog/standard-version[Standard Version^]
+to update version numbers and the CHANGELOG.
+This relies on using the https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits^]
+approach to describing git commit message headers.
+
+== Setup
+
+Install the required npm packages
+
+  $ npm i
+
+The file `package.json` contains the configuration to update the version number in various files.
+
+== Adding a next version
+
+When creating a next version, Standard Version will:
+
+- determine the next version number (using semantic versioning);
+- update the version number in several files;
+- add a section to the `CHANGELOG.md` file;
+- commit these changes;
+- and add the version number as tag in git.
+
+To create a preview release, for instance on the branch `develop`:
+
+  $ npm run release:preview
+
+This will create a prerelease version number for the next version,
+based on the commits so far:
+
+- If there are only bug fixes, the it may go from `1.6.1` to `1.6.2-0`.
+- If there are also new features added, it may go to `1.7.0-0`.
+
+To create a next release, typically on branch `main`:
+
+$ npm run release:main
+
+[NOTE]
+====
+Each preview release will create its own section in the changelog.
+
+For the full release, we may combine all entries into a single section for that version.
+
+This requires some additional work, amending the release commit
+and moving the version tag.
+====

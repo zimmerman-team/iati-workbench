@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  IATI workbench: produce and use IATI data
+  Copyright (C) 2022, drostan.org and data4development.org
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:merge="http://iati.me/merge"
+               stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
+
+    <x:scenario label="Countries and regions: vocabulary code and URI for recipient regions">
+        <x:param name="file" select="'countries'"/>
+
+        <x:scenario label="When a recipient region has no vocabulary code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Region vocabulary"/>
+                    <entry name="Region code">123</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should not produce a recipient-region/@vocabulary." test="not(//recipient-region/@vocabulary)"/>
+            <x:expect label="it should not produce a recipient-region/@vocabulary-uri." test="not(//recipient-region/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When a recipient region has a vocabulary code">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Region vocabulary">2</entry>
+                    <entry name="Region code">123</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that recipient-region/@vocabulary code." test="//recipient-region/@vocabulary='2'"/>
+            <x:expect label="it should not produce a recipient-region/@vocabulary-uri." test="not(//recipient-region/@vocabulary-uri)"/>
+        </x:scenario>
+
+        <x:scenario label="When a recipient region has a vocabulary code and URI">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Region vocabulary">2</entry>
+                    <entry name="Region vocabulary URI">http://iati.me/aida</entry>
+                    <entry name="Region code">123</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce that recipient-region/@vocabulary code." test="//recipient-region/@vocabulary='2'"/>
+            <x:expect label="it should produce that recipient-region/@vocabulary-uri." test="//recipient-region/@vocabulary-uri='http://iati.me/aida'"/>
+        </x:scenario>
+
+    </x:scenario>
+
+</x:description>
