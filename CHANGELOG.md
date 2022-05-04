@@ -25,6 +25,13 @@ All notable changes to this project will be documented in this file. See [standa
 * make the version release process easier ([d172f88](https://github.com/data4development/iati-workbench/commit/d172f880c256ce70f0a52571898d0a3d002d8378))
 * simplify test setup for default templates ([9e5e38e](https://github.com/data4development/iati-workbench/commit/9e5e38e8d9e807c9c6deb27ab88cf8a4fe38761d))
 
+### [1.6.1](https://github.com/data4development/iati-workbench/compare/v1.6.0...v1.6.1) (2022-04-26)
+
+
+### Improvements
+
+* attribute is called indicator-uri rather than vocabulary-uri ([5bfe012](https://github.com/data4development/iati-workbench/commit/5bfe012306f81e5b552359355efd34aaab80b2ff))
+
 ## [1.6.0](https://github.com/data4development/iati-workbench/compare/v1.5.1...v1.6.0) (2022-04-26)
 
 
