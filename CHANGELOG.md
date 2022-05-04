@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/data4development/iati-workbench/compare/v1.6.1...v1.7.0) (2022-05-04)
+
+
+### Features
+
+* add optional vocabulary code and URI for recipient regions ([296902a](https://github.com/data4development/iati-workbench/commit/296902a8b81c3522e846fd8c93fdced9fe258dee))
+* add optional vocabulary URI for policy markers ([92a0ca2](https://github.com/data4development/iati-workbench/commit/92a0ca28b03554cadeefa3b4cf25e20567f4e91f))
+* add optional vocabulary URI for sectors ([47bd1b1](https://github.com/data4development/iati-workbench/commit/47bd1b1f2dc3550d3c0e6db7d1cf3835ae91102d))
+* add tags template ([236443e](https://github.com/data4development/iati-workbench/commit/236443eecb105cff0f1707ea8914fca75b956673))
+
+
+### Improvements
+
+* handle ambiguous filenames containing 'projects" ([e34b05c](https://github.com/data4development/iati-workbench/commit/e34b05c65094d553db6fa884d6021f2e2f106827))
+* return monetary values as strings rather than xs:decimal ([ffe3fc3](https://github.com/data4development/iati-workbench/commit/ffe3fc32c5c9677df3e0c53abce1be602d702f18))
+
+
+### Debts
+
+* make the version release process easier ([e55deca](https://github.com/data4development/iati-workbench/commit/e55deca6103aaf3acd8f3630b00a5494a83cde20))
+* simplify test setup for default templates ([44d4a40](https://github.com/data4development/iati-workbench/commit/44d4a402d140ff76decb6b555cefd6b6526f86a5))
+
 ### [1.6.1](https://github.com/data4development/iati-workbench/compare/v1.6.0...v1.6.1) (2022-04-26)
 
 

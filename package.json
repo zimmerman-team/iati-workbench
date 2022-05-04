@@ -1,6 +1,6 @@
 {
   "name": "Spreadsheets2IATI",
-  "version": "1.7.0-0",
+  "version": "1.7.0",
   "repository": "github:data4development/iati-workbench",
   "license": "AGPL-3.0-or-later",
   "private": true,
