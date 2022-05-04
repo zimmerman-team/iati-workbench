@@ -1,3 +1,5 @@
-* xref:ant-results.adoc[]
-* xref:workspace.adoc[]
-* xref:xspec-tests.adoc[]
+* xref:index.adoc[Workbench technical reference]
+** xref:ant-results.adoc[]
+** xref:workspace.adoc[]
+** xref:xspec-tests.adoc[]
+** xref:version-release.adoc[]
