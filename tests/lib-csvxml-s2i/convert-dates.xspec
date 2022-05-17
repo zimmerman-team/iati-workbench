@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  IATI workbench: produce and use IATI data
   Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
-  
+
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->  
+-->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
@@ -23,77 +23,77 @@
   <x:scenario label="Test merge:date(string)">
     <x:scenario label="28-10-2021">
       <x:call function="merge:date">
-        <x:param select="'28-10-2021'"></x:param>
+        <x:param>28-10-2021</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-10-28." select="xs:date('2021-10-28')"/>
     </x:scenario>
 
     <x:scenario label="28-7-2021">
       <x:call function="merge:date">
-        <x:param select="'28-7-2021'"></x:param>
+        <x:param>28-7-2021</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-07-28." select="xs:date('2021-07-28')"/>
     </x:scenario>
 
     <x:scenario label="28-10-21">
       <x:call function="merge:date">
-        <x:param select="'28-10-21'"></x:param>
+        <x:param>28-10-21</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-10-28." select="xs:date('2021-10-28')"/>
     </x:scenario>
 
     <x:scenario label="28-7-21">
       <x:call function="merge:date">
-        <x:param select="'28-7-21'"></x:param>
+        <x:param>28-7-21</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-07-28." select="xs:date('2021-07-28')"/>
     </x:scenario>
 
     <x:scenario label="28/10/2021">
       <x:call function="merge:date">
-        <x:param select="'28/10/2021'"></x:param>
+        <x:param>28/10/2021</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-10-28." select="xs:date('2021-10-28')"/>
     </x:scenario>
 
     <x:scenario label="10/28/2021">
       <x:call function="merge:date">
-        <x:param select="'10/28/2021'"></x:param>
+        <x:param>10/28/2021</x:param>
       </x:call>
       <x:expect label="should not produce anything." select="()"/>
     </x:scenario>
 
-    <x:scenario label="31/06/2021">
+    <x:scenario label="31/06/2021 - invalid day of month">
       <x:call function="merge:date">
-        <x:param select="'31/06/2021'"></x:param>
+        <x:param>31/06/2021</x:param>
       </x:call>
       <x:expect label="should not produce anything." select="()"/>
     </x:scenario>
 
-    <x:scenario label="29/02/2021">
+    <x:scenario label="29/02/2021 - invalid leap year date">
       <x:call function="merge:date">
-        <x:param select="'29/02/2021'"></x:param>
+        <x:param>29/02/2021</x:param>
       </x:call>
       <x:expect label="should not produce anything." select="()"/>
     </x:scenario>
 
     <x:scenario label="2020-09-01 00:00:00.000Z - spreadsheet timestamp">
       <x:call function="merge:date">
-        <x:param select="'2020-09-01 00:00:00.000Z'"></x:param>
+        <x:param>2020-09-01 00:00:00.000Z</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2020-09-01." select="xs:date('2020-09-01')"/>
     </x:scenario>
 
     <x:scenario label="2020-09-01T00:00:00.000+02:45 - ISO timestamp">
       <x:call function="merge:date">
-        <x:param select="'2020-09-01T00:00:00.000+02:45'"></x:param>
+        <x:param>2020-09-01T00:00:00.000+02:45</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2020-09-01." select="xs:date('2020-09-01')"/>
     </x:scenario>
 
     <x:scenario label="2020-09-01X00:00:00.000+02:45 - X not valid in timestamp">
       <x:call function="merge:date">
-        <x:param select="'2020-09-01X00:00:00.000+02:45'"></x:param>
+        <x:param>2020-09-01X00:00:00.000+02:45</x:param>
       </x:call>
       <x:expect label="should not produce anything." select="()"/>
     </x:scenario>
@@ -102,16 +102,16 @@
   <x:scenario label="Test merge:date(string, format)">
     <x:scenario label="10/28/2021, MM-DD-YYYY">
       <x:call function="merge:date">
-        <x:param select="'10/28/2021'"/>
-        <x:param select="'MM-DD-YYYY'"></x:param>
+        <x:param>10/28/2021</x:param>
+        <x:param>MM-DD-YYYY</x:param>
       </x:call>
       <x:expect label="should produce xs:date 2021-10-28." select="xs:date('2021-10-28')"/>
     </x:scenario>
 
     <x:scenario label="06/31/2021, MM-DD-YYYY">
       <x:call function="merge:date">
-        <x:param select="'06/31/2021'"/>
-        <x:param select="'MM-DD-YYYY'"></x:param>
+        <x:param>06/31/2021</x:param>
+        <x:param>MM-DD-YYYY</x:param>
       </x:call>
       <x:expect label="should not produce anything." select="()"/>
     </x:scenario>

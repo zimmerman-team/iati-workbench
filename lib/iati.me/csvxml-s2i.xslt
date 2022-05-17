@@ -191,14 +191,14 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="merge:entry" as="item()*">
+  <xsl:function name="merge:entry">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
 
     <xsl:sequence select="merge:entry($record, $label, '')"/>
   </xsl:function>
 
-  <xsl:function name="merge:entry" as="item()*">
+  <xsl:function name="merge:entry">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
     <xsl:param name="default" as="xs:string"/>
