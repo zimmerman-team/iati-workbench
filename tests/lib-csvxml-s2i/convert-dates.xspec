@@ -56,6 +56,13 @@
       <x:expect label="should produce xs:date 2021-10-28." select="xs:date('2021-10-28')"/>
     </x:scenario>
 
+    <x:scenario label="31/10/2016 00:00:00 - with timestamp">
+      <x:call function="merge:date">
+        <x:param>31/10/2016 00:00:00</x:param>
+      </x:call>
+      <x:expect label="should produce xs:date 2016-10-31." select="xs:date('2016-10-31')"/>
+    </x:scenario>
+
     <x:scenario label="10/28/2021">
       <x:call function="merge:date">
         <x:param>10/28/2021</x:param>

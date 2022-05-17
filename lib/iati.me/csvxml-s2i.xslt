@@ -97,8 +97,8 @@
     <!-- date function without format: recognise the format -->
     <xsl:param name="item" as="xs:string"/>
 
-    <!-- DD-MM-YYYY, DD/MM/YYYY, DD.MM.YYYY -->
-    <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
+    <!-- DD-MM-YYYY, DD/MM/YYYY HH:MM, DD.MM.YYYY -->
+    <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})([T ].+)?$" select="normalize-space($item)">
       <xsl:matching-substring>
         <xsl:try>
           {functx:date(regex-group(3), regex-group(2), regex-group(1))}
