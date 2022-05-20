@@ -108,7 +108,7 @@
       includes="*.iati.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
-      style="transform/add-merge-ids.xslt"
+      style="spreadsheet-iati/iati-s2i.xslt"
      />
   </target>
 
@@ -133,7 +133,7 @@
       includes="*.akvo.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
-      style="transform/add-merge-ids.xslt"
+      style="spreadsheet-iati/iati-s2i.xslt"
     />
   </target>
 
