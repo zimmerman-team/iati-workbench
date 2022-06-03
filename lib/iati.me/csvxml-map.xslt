@@ -15,12 +15,15 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->  
-
+<!-- TODO: A general description of the functional content of this file. for example
+  XSLT Stylesheet responsible for...
+  Specific design choices here were...
+-->
 <xsl:stylesheet version='3.0' expand-text="yes" xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:export="http://iati.me/export"
   xmlns:functx="http://www.functx.com">
-  
+  <!-- TODO: The //IATI.me/, we talked about either changing this (aida.tools?) or making this available to TODC. I won't repeat this everywhere. -->
   <xsl:output method="text"/>
 
   <xsl:import href="../functx.xslt"/>
@@ -33,6 +36,7 @@
   </xsl:template>
   
   <xsl:template match="f">
+      <!-- TODO: Describe extremely specific strings such as this specifically, why are we using record[1], etcetera -->
       <xsl:apply-templates select="doc(concat('/workspace/tmp/',@n))/csv/record[1]/entry">
         
         <xsl:with-param name="filename" select="substring-before(@n,'.csv.xml')"/>

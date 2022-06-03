@@ -18,7 +18,9 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 :)
-
+(:~
+: TODO: You were able to describe to us why you still use basex to convert the files here. It would add a lot of value to describe this here in a comment as well. Just so that knowledge is not just in your head, but available for any user of this repo.
+:)
 declare variable $file external;
 
 let $text := file:read-text($file)

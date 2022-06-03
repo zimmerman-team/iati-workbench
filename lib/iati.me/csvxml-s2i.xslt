@@ -15,7 +15,10 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
+<!-- TODO: A general description of the functional content of this file. for example
+  XSLT Stylesheet responsible for...
+  Specific design choices here were...
+-->
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:merge="http://iati.me/merge"
@@ -49,6 +52,7 @@
   <xsl:function name="merge:boolean" as="xs:boolean">
     <xsl:param name="item" as="xs:string?"/>
     <xsl:choose>
+      <!-- TODO: Describe extremely specific strings such as this, why are only these values considered as boolean true. Should other languages be included? -->
       <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
     </xsl:choose>
@@ -72,6 +76,7 @@
   <xsl:function name="merge:currency-value" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
 
+    <!-- TODO: As you've done for previous functions, describe "why are we doing this". -->
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
       <xsl:matching-substring>{merge:decimal(regex-group(1))}</xsl:matching-substring>
     </xsl:analyze-string>
@@ -84,6 +89,7 @@
       <xsl:matching-substring>{regex-group(1)}</xsl:matching-substring>
     </xsl:analyze-string>
 
+    <!-- TODO: Why do we only have USD and EUR? Is this a specific decision? A short comment could be helpful to explain the decision. -->
     <xsl:analyze-string regex="^€\s?[0-9.,]+$" select="normalize-space($item)">
       <xsl:matching-substring>EUR</xsl:matching-substring>
     </xsl:analyze-string>
@@ -129,12 +135,14 @@
 
   </xsl:function>
 
+  <!-- TODO: Perhaps describe why we have two `merge:date` functions. -->
   <xsl:function name="merge:date" as="xs:date?">
     <!-- date function with format: return as proper date if possible -->
     <xsl:param name="item" as="xs:string"/>
     <xsl:param name="format" as="xs:string"/>
 
     <xsl:choose>
+      <!-- TODO: Perhaps a more clear description here, describe decision of why only mm.dd.yyyy and yyyy.dd.mm? do we never receive dd.mm.yyyy? -->
       <!-- MM-DD-YYYY, MM/DD/YYYY -->
       <xsl:when test="matches($format, 'MM.DD.YYYY', 'i')">
         <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
@@ -171,7 +179,7 @@
   <xsl:function name="merge:year" as="xs:string">
     <xsl:param name="year" as="xs:string"/>
     <xsl:variable name="yy" select="xs:decimal($year)"/>
-    <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY -->
+    <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY TODO: describe why we use 70. What about 1967 data, what about 2070 data. (Presumably, that data is never expected, thus 70 is a safe value) -->
     <xsl:choose>
       <xsl:when test="$yy >= 70">{1900+$yy}</xsl:when>
       <xsl:otherwise>{2000+$yy}</xsl:otherwise>

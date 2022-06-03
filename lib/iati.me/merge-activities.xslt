@@ -15,6 +15,13 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<!-- TODO: A general description of the functional content of this file. The filename is indicative but elaboration could add value. for example
+  XSLT Stylesheet responsible for...
+  Specific design choices here were...
+
+  Do we include all possible fields from the IATI Standard, and do we produce in the same order as https://iatistandard.org/en/iati-standard/203/activity-standard/summary-table/
+  Of course not necessary but if not, why are we skipping certain fields, and why are we producing them in a different order?
+-->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
@@ -235,6 +242,7 @@
                   </xsl:apply-templates>
                   <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
                     <indicator>
+                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
                       <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
                       <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
                       <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
@@ -249,6 +257,7 @@
                           <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each-group>
                       </xsl:for-each-group>
+                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
                       <!-- <xsl:apply-templates select="current-group()/reference"/> -->
                       <xsl:for-each-group select="current-group()/baseline" group-by="@merge:id">
                         <baseline>
@@ -264,6 +273,7 @@
                       <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]">
                         <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                       </xsl:apply-templates>
+                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
                       <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
 <!--                      <xsl:apply-templates select="current-group()/*">
                         <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
@@ -327,6 +337,7 @@
 
   <xsl:template match="related-activity[@ref='']"/>
 
+  <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
   <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
   <!-- <xsl:template match="collaboration-type">
     <collaboration-type code="{@code}">
