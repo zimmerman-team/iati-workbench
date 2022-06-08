@@ -24,7 +24,7 @@
   expand-text="yes">
 
   <xsl:output indent="yes"/>
-  <xsl:include href="nuffic-lib.xslt"/>
+  <xsl:include href="lib.xslt"/>
 
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 

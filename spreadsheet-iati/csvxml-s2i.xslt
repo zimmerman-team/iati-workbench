@@ -31,7 +31,7 @@
   <xsl:import href="../lib/iati.me/csvxml-s2i.xslt"/>
 
   <!-- add client-specific templates -->
-  <xsl:include href="nuffic-templates.xsl"/>
+  <xsl:include href="nuffic/templates.xsl"/>
   <!-- override top-level csv processing to include client-specific templates -->
   <xsl:template match="csv">
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">

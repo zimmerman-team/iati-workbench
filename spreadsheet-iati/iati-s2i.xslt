@@ -47,7 +47,7 @@
   </xsl:template>
 
   <!-- add client-specific templates -->
-  <xsl:include href="nuffic-akvo-s2i.xslt"/>
+  <xsl:include href="nuffic/akvo-s2i.xslt"/>
   <!-- override top-level iati-activity processing to include client-specific templates -->
   <xsl:template match="iati-activity[reporting-org/@ref='NL-KVK-41150085']">
     <xsl:apply-templates select="." mode="nuffic"/>

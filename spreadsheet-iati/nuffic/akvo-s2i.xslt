@@ -25,7 +25,7 @@
   exclude-result-prefixes="akvo"
   expand-text="yes">
 
-  <xsl:include href="nuffic-lib.xslt"/>
+  <xsl:include href="lib.xslt"/>
   <xsl:mode name="nuffic" on-no-match="shallow-copy"/>
 
   <xsl:template match="iati-activity" mode="nuffic">
