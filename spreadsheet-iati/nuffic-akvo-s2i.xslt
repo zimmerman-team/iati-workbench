@@ -20,16 +20,18 @@
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
+  xmlns:nuffic="http://iati.me/nuffic"
   xmlns:akvo="http://akvo.org/iati-activities"
   exclude-result-prefixes="akvo"
   expand-text="yes">
 
+  <xsl:include href="nuffic-lib.xslt"/>
   <xsl:mode name="nuffic" on-no-match="shallow-copy"/>
 
   <xsl:template match="iati-activity" mode="nuffic">
     <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*[.!='']"/>
-      <xsl:attribute name="merge:id" select="merge:idfix(iati-identifier)"/>
+      <xsl:attribute name="merge:id" select="nuffic:idfix(iati-identifier)"/>
       <xsl:apply-templates mode="#current"/>
     </xsl:copy>
   </xsl:template>
@@ -51,7 +53,7 @@
   </xsl:template>
 
   <xsl:template match="iati-identifier" mode="nuffic">
-    <xsl:copy>{merge:idfix(.)}</xsl:copy>
+    <xsl:copy>{nuffic:idfix(.)}</xsl:copy>
   </xsl:template>
 
   <xsl:template match="related-activity" mode="nuffic">
@@ -67,7 +69,7 @@
       </xsl:variable>
       <xsl:copy>
         <xsl:attribute name="type" select="@type"/>
-        <xsl:attribute name="ref" select="merge:idfix($parent)"/>
+        <xsl:attribute name="ref" select="nuffic:idfix($parent)"/>
       </xsl:copy>
     </xsl:if>
   </xsl:template>
@@ -89,20 +91,5 @@
 
   <!-- skip results with value 'N/A' -->
   <xsl:template match="(baseline|target|actual)[lower-case(@value)='n/a']" mode="nuffic"/>
-
-  <xsl:function name="merge:idfix">
-    <xsl:param name="i"/>
-    <xsl:text>{replace($i, "TMT.+TMT", "TMT")
-      =>replace("ICP-[A-Za-z]+-([0-9]+)", "ICP-$1")
-      =>replace("NL-KVK-41150085-NL-KVK-41150085-", "NL-KVK-41150085-")
-      =>replace(" ", "")
-      =>replace("[ ,()]", "-")
-      =>replace("--", "-")
-      =>replace("-$", "")
-      =>replace("\+", "PLUS")
-      =>replace("41150085[0-9]+", "41150085")
-      =>replace("TMT-[0-9]{4}-call-[0-9]", "TMT")
-      =>substring(1,70)}</xsl:text>
-  </xsl:function>
 
 </xsl:stylesheet>

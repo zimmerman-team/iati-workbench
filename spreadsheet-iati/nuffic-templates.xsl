@@ -24,6 +24,7 @@
   expand-text="yes">
 
   <xsl:output indent="yes"/>
+  <xsl:include href="nuffic-lib.xslt"/>
 
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 
@@ -321,20 +322,4 @@
       </iati-activity>
     </xsl:if>
   </xsl:template>
-
-  <xsl:function name="nuffic:idfix">
-    <xsl:param name="i"/>
-    <xsl:text>{replace($i, "TMT.+TMT", "TMT")
-      =>replace("OKP-TMT-","OKP-TMT.")
-      =>replace("OKP/NFP","OKP")
-      =>replace("(OKP-.*[0-9]{5}).*", "$1")
-      =>replace("NL-KVK-41150085-NL-KVK-41150085-", "NL-KVK-41150085-")
-      =>replace("[ ,()]", "-")
-      =>replace("--", "-")
-      =>replace("-$", "")
-      =>replace("\+", "PLUS")
-      =>replace("41150085[0-9]+", "41150085")
-      =>replace("TMT-[0-9]{4}-call-[0-9]", "TMT")
-      =>substring(1,71)}</xsl:text>
-  </xsl:function>
 </xsl:stylesheet>
