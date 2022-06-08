@@ -20,7 +20,8 @@
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://iati.me/merge"
-  exclude-result-prefixes=""
+  xmlns:akvo="http://akvo.org/iati-activities"
+  exclude-result-prefixes="akvo"
   expand-text="yes">
 
   <xsl:mode name="nuffic" on-no-match="shallow-copy"/>
