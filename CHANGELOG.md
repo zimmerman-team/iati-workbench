@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/data4development/iati-workbench/compare/v1.7.0...v1.8.0) (2022-06-09)
+
+
+### Features
+
+* add other-identifier to the related activities sheet ([b1ab088](https://github.com/data4development/iati-workbench/commit/b1ab0889c1cb0208efeab625845e21d074b2a106))
+
+
+### Improvements
+
+* add date format recognition for "26/10/2030 06:00:00" ([852bd89](https://github.com/data4development/iati-workbench/commit/852bd890bf50a619bc10512bd21d67ef5de380d3)), closes [#53](https://github.com/data4development/iati-workbench/issues/53)
+* check for exclude flag when merging activities ([9b1952d](https://github.com/data4development/iati-workbench/commit/9b1952dc92def825a10055cd7b8466f8a99b60c4))
+* improve custom identifier cleanup function ([89ee078](https://github.com/data4development/iati-workbench/commit/89ee07836819799dae578f8389f4866ba58d5087))
+* include client-specific Akvo data processing in engine ([5d2768b](https://github.com/data4development/iati-workbench/commit/5d2768b95e33e857207e1e87313c6231f7f1f3e0))
+* use actual workspace parameter ([b872a88](https://github.com/data4development/iati-workbench/commit/b872a88af3465c6c786bcacea122b6c9bbd2f6ae))
+
+
+### Documentation
+
+* clean up s2i process description ([44043fc](https://github.com/data4development/iati-workbench/commit/44043fcddf0d4faa7ebd7044db2d66db41d9d609))
+
+
+### Debts
+
+* add Antora documentation system ([e2672f5](https://github.com/data4development/iati-workbench/commit/e2672f501e56e36e2497e8757860e3aebccdbffe))
+* revert to version "next" on develop branch ([c5418c1](https://github.com/data4development/iati-workbench/commit/c5418c117bbf0e3b865f3622d2557b7888fe5f87))
+* use separate template to merge an activity ([64ce9a4](https://github.com/data4development/iati-workbench/commit/64ce9a426e0d3c4489b090bf38089a537f0ff4d7))
+
 ## [1.7.0](https://github.com/data4development/iati-workbench/compare/v1.6.1...v1.7.0) (2022-05-04)
 
 
