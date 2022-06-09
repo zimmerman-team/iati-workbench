@@ -16,9 +16,10 @@ jobs:
 
     steps:
       - name: Get the sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: 'recursive'
+          fetch-depth: 0
 
       - name: Setup Antora
         run: npm ci
