@@ -1,0 +1,46 @@
+site:
+  title: IATI workbench
+  start_page: iati-workbench::index.adoc
+
+urls:
+  latest_version_segment: current
+  latest_prerelease_version_segment: next
+
+output:
+  dir: build/site
+
+content:
+  sources:
+  - url: ./..
+    worktrees: true
+    branches:
+    - main
+    - develop
+    start_path: docs
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: antora/supplemental-ui
+
+runtime:
+  fetch: true
+
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+
+asciidoc:
+  sourcemap: true
+  extensions:
+  - asciidoctor-kroki
+  attributes:
+    page-pagination: true
+    hide-uri-scheme@: true
+    kroki-fetch-diagram: true
+    allow-uri-read: true
+    experimental: true
+    kroki-default-format@: svg
+    kroki-server-url: http://kroki:8000
+    kroki-plantuml-include: antora/plantuml-styling.cfg
