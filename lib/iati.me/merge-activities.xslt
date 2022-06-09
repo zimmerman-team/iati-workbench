@@ -36,7 +36,7 @@
         <!-- select default language attribute -->
         <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
 
-        <xsl:if test="not(@merge:exclude='true')">
+        <xsl:if test="not(current-group()/@merge:exclude='true')">
           <xsl:call-template name="merge-activity">
             <xsl:with-param name="input-activities" select="current-group()"/>
             <xsl:with-param name="iati-identifier" select="current-grouping-key()"/>
