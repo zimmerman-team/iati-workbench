@@ -10,6 +10,7 @@
   "scripts": {
     "release:preview": "standard-version -p",
     "release:main": "standard-version"
+    
   },
   "standard-version": {
     "types": [
