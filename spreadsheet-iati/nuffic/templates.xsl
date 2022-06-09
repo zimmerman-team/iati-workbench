@@ -24,6 +24,7 @@
   expand-text="yes">
 
   <xsl:output indent="yes"/>
+  <xsl:include href="lib.xslt"/>
 
   <!-- imported via spreadsheet-iati/csvxml-iati.xslt -->
 
@@ -34,6 +35,10 @@
 
   <!--  Transactions: Project Expenditures -->
   <xsl:template match="record[$file=>lower-case()=>contains('businessworld')]" mode="nuffic">
+    <xsl:param name="reporting-org" select="$reporting-org"/>
+    <xsl:param name="reporting-org-name" select="$reporting-org-name"/>
+    <xsl:param name="reporting-org-type" select="$reporting-org-type"/>
+
     <xsl:variable name="rawid">
       <xsl:choose>
         <xsl:when test="entry[@name='Subprogram (T)']='Masters'">{entry[@name=('External grant nu. ', 'External Grant number')]}</xsl:when>
@@ -70,6 +75,10 @@
 
   <!--Activities: -->
   <xsl:template match="record[$file=>lower-case()=>contains('atlas')]" mode="nuffic">
+    <xsl:param name="reporting-org" select="$reporting-org"/>
+    <xsl:param name="reporting-org-name" select="$reporting-org-name"/>
+    <xsl:param name="reporting-org-type" select="$reporting-org-type"/>
+
     <!-- TODO: move into proper configuration -->
     <xsl:variable name="contact-email" select="'okp@nuffic.nl'"/>
     <xsl:variable name="contact-website" select="'https://www.nuffic.nl/en'"/>
@@ -82,8 +91,8 @@
       <iati-activity default-currency="EUR"
         last-updated-datetime="{current-dateTime()}"
         xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
-        merge:id="{nuffic:idfix($rawid)}">
-        <iati-identifier>{nuffic:idfix($rawid)}</iati-identifier>
+        merge:id="{$rawid}">
+        <iati-identifier>{$rawid}</iati-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
           <narrative>{$reporting-org-name}</narrative>
         </reporting-org>
@@ -176,6 +185,10 @@
 
   <!--Activities: -->
   <xsl:template match="record[$file=>lower-case()=>contains('delta')]" mode="nuffic">
+    <xsl:param name="reporting-org" select="$reporting-org"/>
+    <xsl:param name="reporting-org-name" select="$reporting-org-name"/>
+    <xsl:param name="reporting-org-type" select="$reporting-org-type"/>
+
     <xsl:variable name="contact-email" select="'okp@nuffic.nl'"/>
     <xsl:variable name="contact-website" select="'https://www.nuffic.nl/en'"/>
     <xsl:variable name="contact-address" select="'P.O. Box 29777, 2502 LT The Hague, The Netherlands'"/>
@@ -186,8 +199,8 @@
       <iati-activity default-currency="EUR"
         last-updated-datetime="{current-dateTime()}"
         xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
-        merge:id="{nuffic:idfix($rawid)}">
-        <iati-identifier>{nuffic:idfix($rawid)}</iati-identifier>
+        merge:id="{$rawid}">
+        <iati-identifier>{$rawid}</iati-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
           <narrative>{$reporting-org-name}</narrative>
         </reporting-org>
@@ -309,20 +322,4 @@
       </iati-activity>
     </xsl:if>
   </xsl:template>
-
-  <xsl:function name="nuffic:idfix">
-    <xsl:param name="i"/>
-    <xsl:text>{replace($i, "TMT.+TMT", "TMT")
-      =>replace("OKP-TMT-","OKP-TMT.")
-      =>replace("OKP/NFP","OKP")
-      =>replace("(OKP-.*[0-9]{5}).*", "$1")
-      =>replace("NL-KVK-41150085-NL-KVK-41150085-", "NL-KVK-41150085-")
-      =>replace("[ ,()]", "-")
-      =>replace("--", "-")
-      =>replace("-$", "")
-      =>replace("\+", "PLUS")
-      =>replace("41150085[0-9]+", "41150085")
-      =>replace("TMT-[0-9]{4}-call-[0-9]", "TMT")
-      =>substring(1,71)}</xsl:text>
-  </xsl:function>
 </xsl:stylesheet>

@@ -60,7 +60,7 @@ if [ "$1." = "-w." ]; then
   shift
 
   echo -e "\nUsing workspace subdirectory: ${WORKSPACE_P}\n"
-  WORKSPACE="-Dworkspace=$WORKSPACE"
+  WORKSPACE="-Dworkspace=$WORKSPACE_P"
 fi
 
 case "$1." in

@@ -27,6 +27,7 @@
   <x:import href="default-templates-tags/convert-reference.xspec"/>
   <x:import href="default-templates-policy-markers/convert-reference.xspec"/>
   <x:import href="default-templates-results/convert-reference.xspec"/>
+  <x:import href="default-templates-related/convert-related-activities.xspec"/>
 
   <x:scenario label="Ambiguous filenames: when a template keyword and 'projects' appear both in a file name.">
     <x:scenario label="When a filename contains 'sectors' and 'projects'">

@@ -471,8 +471,16 @@
   <xsl:template match="record[contains(lower-case($file), 'related')]">
     <xsl:if test="starts-with(merge:entry(., 'From IATI activity identifier'), $reporting-org)">
       <iati-activity merge:id="{merge:entry(., ('From IATI activity identifier'))}">
-        <related-activity ref="{merge:entry(., ('To IATI activity identifier'))}"
-          type="{merge:entry(., ('Type'))}"/>
+        <xsl:choose>
+          <xsl:when test="merge:entry(., ('Type', 'Related activity type'))!=''">
+            <related-activity ref="{merge:entry(., ('To IATI activity identifier'))}"
+                              type="{merge:entry(., ('Type', 'Related activity type'))}"/>
+          </xsl:when>
+          <xsl:when test="merge:entry(., ('Other identifier type'))!=''">
+            <other-identifier ref="{merge:entry(., ('To IATI activity identifier'))}"
+                              type="{merge:entry(., ('Type', 'Other identifier type'))}"/>
+          </xsl:when>
+        </xsl:choose>
       </iati-activity>
     </xsl:if>
   </xsl:template>
