@@ -91,8 +91,8 @@
       <iati-activity default-currency="EUR"
         last-updated-datetime="{current-dateTime()}"
         xml:lang="{lower-case(merge:entry(., 'Language', 'en'))}"
-        merge:id="{nuffic:idfix($rawid)}">
-        <iati-identifier>{nuffic:idfix($rawid)}</iati-identifier>
+        merge:id="{$rawid}">
+        <iati-identifier>{$rawid}</iati-identifier>
         <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
           <narrative>{$reporting-org-name}</narrative>
         </reporting-org>

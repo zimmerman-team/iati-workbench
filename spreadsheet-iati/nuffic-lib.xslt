@@ -30,13 +30,12 @@
       =>replace("OKP-TMT-","OKP-TMT.")
       =>replace("OKP/NFP","OKP")
       =>replace("(OKP-.*[0-9]{5}).*", "$1")
-      =>replace(" ", "")
       =>replace("[ ,()]", "-")
-      =>replace("--", "-")
+      =>replace("-+", "-")
       =>replace("-$", "")
       =>replace("\+", "PLUS")
       =>replace("41150085[0-9]+", "41150085")
-      =>replace("TMT-[0-9]{4}-call-[0-9]", "TMT")
+      =>replace("TMT-[0-9]{4}.call-[0-9]", "TMT")
       =>substring(1,70)}</xsl:text>
   </xsl:function>
 
