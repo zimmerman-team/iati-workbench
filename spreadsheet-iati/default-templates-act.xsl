@@ -386,8 +386,8 @@
   <xsl:template match="record[contains(lower-case($file), 'participating')]">
     <xsl:if test="starts-with(merge:entry(., 'IATI activity identifier')[1], $reporting-org)">
       <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <participating-org role="{merge:entry(., ('Role', 'Organisation Role'), $default-participating-role)}"
-          type="{merge:entry(., ('Type', 'Organisation Type'))}" ref="{merge:entry(., 'Organisation identifier')}" activity-id="{merge:entry(., 'Activity identifier')}">
+        <participating-org role="{merge:entry(., ('Role', 'Role description', 'Organisation Role'), $default-participating-role)}"
+          type="{merge:entry(., ('Type', 'Type description', 'Organisation Type'))}" ref="{merge:entry(., 'Organisation identifier')}" activity-id="{merge:entry(., 'Activity identifier')}">
           <narrative>{merge:entry(., 'Organisation name')}</narrative>
         </participating-org>
       </iati-activity>
