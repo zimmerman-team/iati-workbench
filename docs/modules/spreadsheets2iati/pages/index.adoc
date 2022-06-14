@@ -105,18 +105,8 @@ fork
   }
 fork again
   partition iati-s2i {
-    $node_1_main_color:tmp/*.iati.xml]
+    $node_1_main_color:tmp/*.iati.xml,*.akvo.xml]
     :iati-s2i;
-  }
-fork again
-  partition akvo-s2i {
-    $node_1_main_color:tmp/*.akvo.xml]
-    if (Akvo-specific config file exists) then (yes)
-      $important_color:config/akvo-s2i.xslt]
-      :akvo-s2i;
-    else (no)
-      :iati-s2i;
-    endif
   }
 end fork
 
