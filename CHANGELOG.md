@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://github.com/data4development/iati-workbench/compare/v1.8.0...v1.8.1) (2022-06-14)
+
+
+### Documentation
+
+* create docs for multiple versions ([472c568](https://github.com/data4development/iati-workbench/commit/472c5683608146cd0f706a681917dc8b927d32c2))
+
+
+### Improvements
+
+* add column name alternatives for toladata participating orgs ([8bd7db7](https://github.com/data4development/iati-workbench/commit/8bd7db7dee80d78e6c43808c356a6446dc60386d))
+
 ## [1.8.0](https://github.com/data4development/iati-workbench/compare/v1.7.0...v1.8.0) (2022-06-09)
 
 
