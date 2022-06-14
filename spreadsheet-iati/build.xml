@@ -33,7 +33,7 @@
 
   <extension-point name="generate-iati-partials"
     description="Generate IATI partial activities for input files"
-    depends="csvxml-s2i, iati-s2i, akvo-s2i"/>
+    depends="csvxml-s2i, iati-s2i"/>
 
   <extension-point name="create-iati-output"
     description="Merge IATI partial activities, validate, create clean output"
@@ -101,26 +101,15 @@
      />
   </target>
 
-  <!--Transform existing IATI input files into a version with merge ids.-->
+  <!--Transform existing IATI and Akvo input files into a version with merge ids.-->
   <target name="iati-s2i">
     <xslt
       basedir="${ws}/tmp/"
-      includes="*.iati.xml"
+      includes="*.iati.xml,*.akvo.xml"
       destdir="${ws}/tmp"
       extension=".generated.xml"
       style="spreadsheet-iati/iati-s2i.xslt"
      />
-  </target>
-
-  <!--Transform existing Akvo input files using workspace-based config.-->
-  <target name="akvo-s2i">
-    <xslt
-      basedir="${ws}/tmp/"
-      includes="*.akvo.xml"
-      destdir="${ws}/tmp"
-      extension=".generated.xml"
-      style="spreadsheet-iati/iati-s2i.xslt"
-    />
   </target>
 
   <target name="sheets-csvxml" depends="excel-csv, csv-csv">
