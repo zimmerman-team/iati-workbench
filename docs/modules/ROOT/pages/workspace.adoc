@@ -36,7 +36,7 @@ Consider you have a local machine set up with a directory structure:
 │   │   ├── tmp
 │   │   ├── build.xml
 │   │   ├── .gitignore
-│   │   └── README.md
+│   │   └── README.adoc
 │   ├── clientB
 │   │   └── ...workspace dirs...
 │   └── ...other clients...

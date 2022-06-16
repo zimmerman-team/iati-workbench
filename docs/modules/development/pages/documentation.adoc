@@ -1,0 +1,58 @@
+= Antora and Asciidoc documentation
+
+The repository uses https://antora.org/[Antora] as documentation tool.
+Antora has conventions on how to work with directories.
+Antora uses https://docs.antora.org/antora/latest/asciidoc/asciidoc/[Asciidoc]
+as markup language for documentation pages.
+
+In addition, we use a plugin to generate diagrams written for https://plantuml.com/[PlantUML].
+The system depends on a Docker container running https://kroki.io/[Kroki] to process these diagrams.
+
+[NOTE]
+====
+We also include a PlantUML configuration file,
+which defines variables that can be used to specify colours for diagram elements.
+====
+
+== Antora setup
+
+Antora generates a static website for technical documentation.
+It makes it easy to generate documentation for multiple versions.
+
+We use the "current" version (on branch main)
+as well as a "next" version (on branch develop).
+
+The file `antora/playbook.yml` contains the specification for the documentation:
+
+* The `content: sources: branches` parameter specifies which git branches to include.
+* The `main` branch will be published as `current`,
+the `develop` branch as `next`.
+
+The file `package.json` contains the necessary dependencies to run Antora.
+
+== Running locally
+
+After installing developer depencies, create a local copy of the documentation:
+
+  $ npm run docs:local
+
+This will start a local Docker service for Kroki, and generate the documentation.
+The resulting site can be accessed via:
+
+  $ open build/site/index.html
+
+[NOTE]
+====
+If the branch `main` or `develop` is checked out in git,
+the local documentation will be created from the sources on disk.
+
+It will include changes not yet committed to git.
+====
+
+== Running on Github
+
+The file `.github/workflows/generate-site` contains a Github Action,
+to generate the documentation and publish it via Github Pages.
+
+It is triggered by pushed to either the branches `develop` or `main`.
+The resulting site is pushed to the `gh-pages` branch, and published.

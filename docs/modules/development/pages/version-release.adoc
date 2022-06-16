@@ -7,13 +7,11 @@ approach to describing git commit message headers.
 
 == Setup
 
-Install the required npm packages
+The file `package.json` contains the configuration under the key "standard-version".
 
-  $ npm i
+The npm scripts to do releases are only available on the `main` branch.
 
-The file `package.json` contains the configuration to update the version number in various files.
-
-== Adding a next version
+== Add a new version
 
 When creating a next version, Standard Version will:
 
@@ -23,19 +21,11 @@ When creating a next version, Standard Version will:
 - commit these changes;
 - and add the version number as tag in git.
 
-To create a preview release, for instance on the branch `develop`:
+.Create a new version
+  $ npm run release:main
 
+.Create a preview version
   $ npm run release:preview
-
-This will create a prerelease version number for the next version,
-based on the commits so far:
-
-- If there are only bug fixes, the it may go from `1.6.1` to `1.6.2-0`.
-- If there are also new features added, it may go to `1.7.0-0`.
-
-To create a next release, typically on branch `main`:
-
-$ npm run release:main
 
 [NOTE]
 ====

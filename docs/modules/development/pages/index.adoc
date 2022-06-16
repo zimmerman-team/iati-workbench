@@ -1,0 +1,68 @@
+= Development
+
+The library uses a mix of technologies:
+
+* Docker containers
+* Npm modules
+* XML tools
+
+== Setting up a development environment
+
+. Check out the source repository from Github.
+
+. Install XML dependencies:
++
+  $ git submodule update --init --recursive
+
+. Install npm development dependencies:
++
+  $ npm i
+
+. Optional: put the `aida-s2i` script in your path, for instance as a symlink:
++
+  $ ln -s ${PWD}/aida-s2i ~/bin/aida-s2i
+
+. Create a workspace directory outside the source repository, for instance:
++
+  $ mkdir ~/workspace && cd /workspace
+
+. Build a local container image:
++
+  $ aida-s2i -d build
+
+== Developing and testing
+
+There are two modes to work on the codebase.
+
+=== Work within the source directory
+
+Within the source directory, the targets in the Ant build file
+and the scripts in the npm package file are available.
+
+To run Ant requires a local installation of `ant`
+and the Saxon library available for Ant.
+
+You can then run the test suites using:
+
+  $ ant tests
+
+=== Work in a workspace directory, with the source directory mounted into a container
+
+Once you have a local Docker image, the `aida-s2i` script can use this.
+This eliminates the need to install Ant or Saxon on your machine.
+
+Add the `-d` flag to mount the source directory into the container,
+to test things without building a new container image:
+
+  $ aida-s2i -d tests
+
+=== Tag container image versions
+
+You can build and run different versions of the Docker container image
+using the `-t` parameter:
+
+.Build a test version container image
+  $ aida-s2i -d -t v1.8.0-test1 build
+
+.Run a conversion with the test version
+  $ aida-s2i -t v1.8.0-test1 spreadsheet-iati
