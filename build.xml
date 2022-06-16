@@ -82,6 +82,11 @@
     </antcall>
 
     <fileset id="results" dir="." includes="tmp/*-result.html"/>
+
+    <copy todir="${ws}" if:set="env.container">
+      <fileset refid="results"/>
+    </copy>
+
     <property name="resultfiles" refid="results"/>
     <echo>Xspec result files: ${resultfiles}</echo>
   </target>
