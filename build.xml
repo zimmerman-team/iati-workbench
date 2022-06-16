@@ -15,14 +15,20 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<project name="IATI Engine">
+<project name="IATI Engine" xmlns:if="ant:if" xmlns:unless="ant:unless">
   <description>
     IATI Workbench
   </description>
 
+  <!-- make environment variables available -->
+  <property environment="env"/>
+
   <!-- optionally set the workspace directory to something under /workspace -->
   <property name="workspace" value=""/>
-  <property name="ws" value="/workspace/${workspace}"/>
+  <!-- within the container, use /workspace -->
+  <property name="ws" value="/workspace/${workspace}" if:set="env.container"/>
+  <!-- on a host system, use the current working directory as workspace -->
+  <property name="ws" value="${env.PWD}/${workspace}" unless:set="env.container"/>
 
   <!-- when running Ant with -logger org.apache.tools.ant.XmlLogger -->
   <!-- the XmlLogger.file property seems to be ignored here -->
@@ -39,7 +45,6 @@
   <import file="${ws}/config/build.iati-workbench.xml" optional="yes"/>
 
   <!-- Xspec tests -->
-  <property environment="env"/>
   <property name="xspec.dir" location="tmp"/>
   <include file="lib/xspec/build.xml"/>
 

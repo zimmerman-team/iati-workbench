@@ -6,21 +6,21 @@ LABEL maintainer="Rolf Kleef <rolf@drostan.org>" \
 
 #  IATI workbench: produce and use IATI data
 #  Copyright (C) 2016-2022, drostan.org and data4development.org
-  
+
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published
 #  by the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
-  
+
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU Affero General Public License for more details.
-  
+
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# create a non-root user iati-workbench that will contain the code in its home folder 
+# create a non-root user iati-workbench that will contain the code in its home folder
 ARG \
   UNAME=iati-workbench \
   GID=1000 \
@@ -50,6 +50,7 @@ RUN apt-get update && \
 
 ENV HOME=/home/$UNAME
 ENV LC_ALL=en_IE.UTF-8
+ENV container=docker
 WORKDIR $HOME
 USER $UNAME
 COPY --chown=$UID:$GID . $HOME
