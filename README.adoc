@@ -11,66 +11,9 @@ ifndef::env-github[]
 :icons: font
 endif::[]
 
-_Scripts to transform a set of input files (spreadsheets, IATI) into a combined IATI file._
+Scripts to transform a set of input files (spreadsheets, IATI) into a combined IATI file.
 
-== Add the `aidi-s2i` wrapper to your path
-
-You can put the `aida-s2i` script in your path, for instance as a symlink:
-
-  $ ln -s ${PWD}/aida-s2i ~/bin/aida-s2i
-
-This script can help build and run the container.
-To see its options:
-
-  $ aida-s2i -h
-
-== Build the container
-
-Before building the container, make sure to check out the git submodules.
-
-  $ git submodule update --init --recursive
-
-[CAUTION]
-====
-Work in progress: a local workspace (directory on host machine) is still required to run.
-This will become optional.
-
-The local workspace directory has to be mounted under /workspace.
-====
-
-In this case, the container will run as the user building the image.
-You need to make sure it has proper permissions for the local workspace directory.
-
-=== With `aida-s2i`
-
-  $ aida-s2i -d build
-
-Then, verify everything is running:
-
-  $ aida-s2i
-
-This will show the list of available "targets" in the workbench.
-
-=== Manually
-
-  $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t aida-s2i .
-
-You should be able to run it and get a list of available targets:
-
-  $ docker run --rm aida-s2i
-
-This will show the list of available "targets" in the workbench.
-
-== Workspaces
-
-You run the engine in a folder that will function as the 'workspace'.
-You specify the task you want performed, and the engine will take all steps needed to transform the source data into the desired output formats.
-
-The `aida-s2i` script will mount the current directory as the workspace.
-
-Once you run any of the tasks, it will create the necessary folders for the source of your data, the intermediary files, and the output files generated.
-
-You can run `aida-s2i init` to create those folders yourself.
+See https://developer.data4development.nl/iati-workbench/[the developer documentation website] for further details.
 
 === Sample data
 
