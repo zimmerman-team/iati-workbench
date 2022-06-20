@@ -87,6 +87,5 @@ This should process the input files and produce a raw IATI file in `src/`.
 First inspiration came from https://github.com/KitWallace/AIDVIEW-DB[Kit Wallace's Aidview DB (working with eXist)]
 
 TODO: in the root directory, aida-s2i is a symlink to iati-workbench, do they still both have value? If the only use is for you locally, maybe it could be a local thing for you, rather than for the remote repository.
-TODO: Missing base documentation on how the testing works/runs/is used. could be valuable to describe here, or describe that the description is available under docs/modules/root/pages/xspec-tests.adoc. (or explain that the antora docs need to be read in addition to this readme)
 TODO: Continuing on testing, would it be helpful for the testing setup to include some kind of CI/CD steps? Like having the tests run whenever you push and perhaps integrating some test coverage interface? @stefanos perhaps you could elaborate?
 TODO: Not a requirement, but perhaps a description of the folders and what they are for could be useful. If that is already available in the antora docs, could be useful to make that known as well.
