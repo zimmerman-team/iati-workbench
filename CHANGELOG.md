@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.8.2](https://github.com/data4development/iati-workbench/compare/v1.8.1...v1.8.2) (2022-06-15)
 
+* Revert "fix: use actual workspace parameter" ([d535c80](https://github.com/data4development/iati-workbench/commit/d535c8003462bfb9432d79c5a507b7fb12dd3187))
+
 ### [1.8.1](https://github.com/data4development/iati-workbench/compare/v1.8.0...v1.8.1) (2022-06-14)
 
 
