@@ -9,7 +9,15 @@ for IATI activities and IATI organisations.
 
 Create a directory for the workspace if it does not exist.
 
-Initialise the workspace, for instance with `aida-s2i init`
+Set up the directories in the workspace:
+
+  $ aida-s2i init
+
+Optionally, add the demo workspace spreadsheet templates and configuration.
+
+  $ aida-s2i add-templates
+
+TIP: Adding the templates will not overwrite newer files in your workspace.
 
 == Spreadsheets2IATI
 

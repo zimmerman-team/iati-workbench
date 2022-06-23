@@ -15,15 +15,7 @@ Scripts to transform a set of input files (spreadsheets, IATI) into a combined I
 
 See https://developer.data4development.nl/iati-workbench/[the developer documentation website] for further details.
 
-=== Sample data
-
-The https://github.com/data4development/demo-workspace[demo-workspace repository] contains example data files.
-
-Clone the repository, and inside the directory, run
-
-  $ aida-s2i spreadsheet-iati
-
-This should process the input files and produce a raw IATI file in `src/`.
+This includes setting up a demo workspace with example templates.
 
 === Acknowledgements
 

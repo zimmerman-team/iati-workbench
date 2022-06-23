@@ -1,7 +1,6 @@
-/workspace/*/*
+/workspace/dest/
+/workspace/reports/
 /node_modules/
-!/workspace/config/sheets-iati.xslt
-!/workspace/src/*
 \.basexhistory
 \.bash_history
 tmp/

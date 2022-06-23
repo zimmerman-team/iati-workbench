@@ -57,7 +57,6 @@
     <mkdir dir="${ws}/tmp"/>
     <mkdir dir="${ws}/input"/>
     <mkdir dir="${ws}/output"/>
-    <mkdir dir="${ws}/remote"/>
     <mkdir dir="${ws}/reports"/>
   </target>
 
