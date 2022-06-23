@@ -1,4 +1,6 @@
-= Workspace location
+= Workspaces
+
+== Workspace location
 
 When running within a Docker container, the scripts use the directory
 
@@ -18,7 +20,7 @@ When using the container image with the calling script:
 
 The workspace name can contain multiple levels.
 
-== Running on a local machine
+=== Running on a local machine
 
 Consider you have a local machine set up with a directory structure:
 
@@ -43,11 +45,25 @@ Consider you have a local machine set up with a directory structure:
 └── README.md
 ----
 
-=== Option 1: go into each client directory and run aida-s2i there
+==== Option 1: go into each client directory and run aida-s2i there
 
   $ cd ~/workspaces/clientA
   $ aida-s2i ...
 
-=== Option 2: run aida-s2i with -w
+==== Option 2: run aida-s2i with -w
 
   $ aida-s2i -w s2i/clientA ...
+
+== Workspace structure
+
+The directories within the workspace have grown organically,
+mostly starting out as intermediate "pipes" between steps.
+
+config:: Configuration files for the workspace.
+dest:: (not used; for validation pipelines)
+input:: User-supplied input files
+output:: Deliverable files (for s2i in limited use)
+reports:: Output to be presented to the user (for s2i not used?)
+src:: IATI source files (output of S2I, input for validation etc)
+tmp:: Temporary files, using filename extensions as "sub stages".
+Cleared with `aida-s2i clean` to reprocess input files.

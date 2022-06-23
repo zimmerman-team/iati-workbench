@@ -88,4 +88,3 @@ First inspiration came from https://github.com/KitWallace/AIDVIEW-DB[Kit Wallace
 
 TODO: in the root directory, aida-s2i is a symlink to iati-workbench, do they still both have value? If the only use is for you locally, maybe it could be a local thing for you, rather than for the remote repository.
 TODO: Continuing on testing, would it be helpful for the testing setup to include some kind of CI/CD steps? Like having the tests run whenever you push and perhaps integrating some test coverage interface? @stefanos perhaps you could elaborate?
-TODO: Not a requirement, but perhaps a description of the folders and what they are for could be useful. If that is already available in the antora docs, could be useful to make that known as well.
