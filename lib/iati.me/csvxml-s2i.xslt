@@ -15,9 +15,14 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- TODO: A general description of the functional content of this file. for example
-  XSLT Stylesheet responsible for...
-  Specific design choices here were...
+<!--
+  This styleheet contains generic templates for CSV-XML files,
+  and functions to process strings in templates.
+
+  The string processing functions expand the capabilities of recognising various common formats
+  that are not included in the standard XML/Xpath functions.
+
+  The functions will return an (optional) string.
 -->
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -49,39 +54,48 @@
     <merge:not-processed>row {position()}</merge:not-processed>
   </xsl:template>
 
+  <!-- Expand recognition of boolean values.
+  XML only accepts 'true', '1', and 'yes' as booleans.
+  We want to add some more based on experience with client sheets. -->
   <xsl:function name="merge:boolean" as="xs:boolean">
     <xsl:param name="item" as="xs:string?"/>
     <xsl:choose>
-      <!-- TODO: Describe extremely specific strings such as this, why are only these values considered as boolean true. Should other languages be included? -->
       <xsl:when test="lower-case($item) = ('true', '1', 'ja', 'yes', 'oui', 'si', 'waar', 'y')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
+  <!-- Expand recognition of common numerical values:
+   * remove '%' and ',' characters (common in percentages or formatted number strings)
+   * interpret (...) as negative number -->
   <xsl:function name="merge:decimal" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
     <xsl:if test="$item!=''">
-      <!-- remove '%' and ',' -->
       <xsl:variable name="i" select="replace($item,'[%,]','')=>functx:trim()=>replace('\((.+)\)', '-$1')"/>
       <xsl:if test="$i!=''">{$i}</xsl:if>
     </xsl:if>
   </xsl:function>
 
-  <!-- Remove periods, replace commas with period, then turn into decimal -->
+  <!-- Recognise Dutch numerical values:
+  Remove periods, replace commas with period, then apply decimal() -->
   <xsl:function name="merge:decimal2" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
     {merge:decimal(replace($item, '.', '')=>replace(',', '.'))}
   </xsl:function>
 
+  <!-- Recognise numerical currency values with a currency in the string: USD 1234, €567
+  It will remove starting text, €, $, and apply decimal() on a possible number -->
   <xsl:function name="merge:currency-value" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
 
-    <!-- TODO: As you've done for previous functions, describe "why are we doing this". -->
     <xsl:analyze-string regex="^[a-zA-Z€$]*\s?([+-]?[0-9.,]+)$" select="normalize-space($item)">
       <xsl:matching-substring>{merge:decimal(regex-group(1))}</xsl:matching-substring>
     </xsl:analyze-string>
   </xsl:function>
 
+  <!-- Recognise currency symbols in a string.
+  Currently recognising € as EUR, and $ and US$ as USD,
+  and returning any non-numerical starting text as symbol. -->
   <xsl:function name="merge:currency-symbol" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
 
@@ -89,7 +103,6 @@
       <xsl:matching-substring>{regex-group(1)}</xsl:matching-substring>
     </xsl:analyze-string>
 
-    <!-- TODO: Why do we only have USD and EUR? Is this a specific decision? A short comment could be helpful to explain the decision. -->
     <xsl:analyze-string regex="^€\s?[0-9.,]+$" select="normalize-space($item)">
       <xsl:matching-substring>EUR</xsl:matching-substring>
     </xsl:analyze-string>
@@ -99,6 +112,8 @@
     </xsl:analyze-string>
   </xsl:function>
 
+  <!-- Recognise various date formats.
+  This is the generic function. -->
   <xsl:function name="merge:date" as="xs:date?">
     <!-- date function without format: recognise the format -->
     <xsl:param name="item" as="xs:string"/>
@@ -135,14 +150,15 @@
 
   </xsl:function>
 
-  <!-- TODO: Perhaps describe why we have two `merge:date` functions. -->
+  <!-- Recognise specific known date formats in client-specific templates.
+  For this version, a second format parameter is required, to indicate how to interpret the string.
+  This is useful when a client uses for instance a US-specific format that cannot always be recognised automatically. -->
   <xsl:function name="merge:date" as="xs:date?">
     <!-- date function with format: return as proper date if possible -->
     <xsl:param name="item" as="xs:string"/>
     <xsl:param name="format" as="xs:string"/>
 
     <xsl:choose>
-      <!-- TODO: Perhaps a more clear description here, describe decision of why only mm.dd.yyyy and yyyy.dd.mm? do we never receive dd.mm.yyyy? -->
       <!-- MM-DD-YYYY, MM/DD/YYYY -->
       <xsl:when test="matches($format, 'MM.DD.YYYY', 'i')">
         <xsl:analyze-string regex="^(\d\d?)\D(\d\d?)\D(\d{{4}})$" select="normalize-space($item)">
@@ -176,10 +192,13 @@
     </xsl:choose>
   </xsl:function>
 
+  <!-- Recognise more possible year values:
+  * anything from '70' onwards will be interpreted as 19..
+  * anything up to '69' will be interpreted as 20...
+  Based on existing values in earlier examples. -->
   <xsl:function name="merge:year" as="xs:string">
     <xsl:param name="year" as="xs:string"/>
     <xsl:variable name="yy" select="xs:decimal($year)"/>
-    <!-- for YY >= 70 we'll assume 19YY, otherwise 20YY TODO: describe why we use 70. What about 1967 data, what about 2070 data. (Presumably, that data is never expected, thus 70 is a safe value) -->
     <xsl:choose>
       <xsl:when test="$yy >= 70">{1900+$yy}</xsl:when>
       <xsl:otherwise>{2000+$yy}</xsl:otherwise>
@@ -199,6 +218,8 @@
     </xsl:choose>
   </xsl:function>
 
+  <!-- Look for a column (=entry) with a possible column name.
+  Return and empty string if not found -->
   <xsl:function name="merge:entry">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
@@ -206,6 +227,10 @@
     <xsl:sequence select="merge:entry($record, $label, '')"/>
   </xsl:function>
 
+  <!-- Look for a column (=entry) with a list of possible column names.
+  If not found, return the provided default string.
+  If multiple options are found, return the first one.
+  Remove starting or trailing whitespace, and compare as lower-case values. -->
   <xsl:function name="merge:entry">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
@@ -215,6 +240,7 @@
     <xsl:sequence select="functx:trim(($values, $default)[1])"/>
   </xsl:function>
 
+  <!-- Check if a column with a list of possible names has a value that is not an empty string. -->
   <xsl:function name="merge:entryExists" as="xs:boolean">
     <xsl:param name="record" as="node()"/>
     <xsl:param name="label" as="xs:string+"/>
@@ -223,6 +249,8 @@
     {count($values)>0}
   </xsl:function>
 
+  <!-- Recognise some common file formats, and return their proper mime type.
+   TODO: this could be an XSLT map as well to maybe make it easier to read. -->
   <xsl:function name="merge:format" as="xs:string">
     <xsl:param name="from" as="xs:string"/>
     <xsl:variable name="known">
@@ -233,12 +261,14 @@
     <xsl:text>{($known/to[lower-case(functx:trim($from))=f]/@format, $from)[1]}</xsl:text>
   </xsl:function>
 
+  <!-- Recognise a possible code textual or numerical value, or return a default value.
+   This requires up-to-date IATI codelists in `lib/schemata/2.03/codelists` -->
   <xsl:function name="merge:get-code-from-list">
     <xsl:param name="list"/>
-    <xsl:param name="text"/>
+    <xsl:param name="default"/>
     <!--  TODO: refactor IATI version for codelists into configuration  -->
     <xsl:variable name="codelist" select="doc(concat('../schemata/2.03/codelist/', $list, '.xml' ))"/>
     <xsl:text>{($codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
-      $text)[1]}</xsl:text>
+      $default)[1]}</xsl:text>
   </xsl:function>
 </xsl:stylesheet>
