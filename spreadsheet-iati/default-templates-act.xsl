@@ -19,7 +19,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:functx="http://www.functx.com"
-  xmlns:merge="http://iati.me/merge"
+  xmlns:merge="http://aida.tools/merge"
   exclude-result-prefixes="xs functx"
   expand-text="yes">
 

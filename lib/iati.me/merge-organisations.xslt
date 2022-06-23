@@ -23,7 +23,7 @@
   Of course not necessary but if not, why are we skipping certain fields, and why are we producing them in a different order?
 -->
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:merge="http://iati.me/merge"
+  xmlns:merge="http://aida.tools/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="#all">
 

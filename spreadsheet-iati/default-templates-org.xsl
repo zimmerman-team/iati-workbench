@@ -17,7 +17,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:merge="http://iati.me/merge"
+  xmlns:merge="http://aida.tools/merge"
   exclude-result-prefixes="xs"
   expand-text="yes"
   version="3.0">
