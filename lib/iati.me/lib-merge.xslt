@@ -19,7 +19,7 @@
   XSLT Stylesheet responsible for...
   Specific design choices here were...
 -->
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://aida.tools/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="#all"
