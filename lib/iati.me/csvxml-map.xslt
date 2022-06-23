@@ -37,6 +37,8 @@
 
   <xsl:template match="f">
       <!-- TODO: Describe extremely specific strings such as this specifically, why are we using record[1], etcetera -->
+      <!-- for the file f with name @n, get the first line (=record) with the column headers,
+      and process each column (=entry). -->
       <xsl:apply-templates select="doc(concat('/workspace/tmp/',@n))/csv/record[1]/entry">
 
         <xsl:with-param name="filename" select="substring-before(@n,'.csv.xml')"/>
