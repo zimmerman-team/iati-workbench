@@ -15,12 +15,16 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- TODO: A general description of the functional content of this file. The filename is indicative but elaboration could add value. for example
-  XSLT Stylesheet responsible for...
-  Specific design choices here were...
+<!--
+  This styleheet merges IATI elements into a predictable sequence:
+  it follows the IATI Standard, and sort activities and elements within activities.
+  This should make standard file versioning more useful when inspecting the results.
+  See the detailed remarks for more information.
 
-  Do we include all possible fields from the IATI Standard, and do we produce in the same order as https://iatistandard.org/en/iati-standard/203/activity-standard/summary-table/
-  Of course not necessary but if not, why are we skipping certain fields, and why are we producing them in a different order?
+  It also does some deduplication of elements based on "best effort":
+  * Repeated elements will not be included.
+  * Attributes with empty values will not be included.
+
 -->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
@@ -37,19 +41,18 @@
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-activities-schema.xsd">
+      <!-- Gather all elements per activity, and sort them by identifier -->
       <xsl:for-each-group select="$input-activities" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
 
-        <!-- select default language attribute -->
+        <!-- select the first default language attribute -->
         <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
 
+        <!-- if the activity is not excluded -->
         <xsl:if test="not(@merge:exclude='true')">
           <iati-activity>
             <xsl:copy-of select="current-group()/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude', 'xml:lang'))]" />
             <xsl:attribute name="xml:lang" select="$default-lang"/>
-            <!-- <xsl:for-each-group select="current-group()/@*[.!='' and name(.)!='merge:id']" group-by="name(.)">
-              <xsl:copy-of select=".[1]" />
-            </xsl:for-each-group> -->
             <iati-identifier><xsl:copy-of select="current-grouping-key()"/></iati-identifier>
             <xsl:apply-templates select="(current-group()/reporting-org)[1]">
               <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
@@ -242,8 +245,6 @@
                   </xsl:apply-templates>
                   <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
                     <indicator>
-                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
-                      <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
                       <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
                       <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                       <xsl:apply-templates select="(current-group()/title)[1]">
