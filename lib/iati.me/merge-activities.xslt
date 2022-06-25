@@ -16,8 +16,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!--
-  This styleheet merges IATI elements into a predictable sequence:
-  it follows the IATI Standard, and sort activities and elements within activities.
+  This styleheet merges IATI activity elements into a predictable sequence:
+  it follows the IATI Standard, and sorts activities and elements within activities.
   This should make standard file versioning more useful when inspecting the results.
   See the detailed remarks for more information.
 

@@ -19,7 +19,7 @@
   This styleheet contains generic templates for CSV-XML files,
   and functions to process strings in templates.
 
-  The string processing functions expand the capabilities of recognising various common formats
+  The string processing functions expand the capabilities to recognise various common formats
   that are not included in the standard XML/Xpath functions.
 
   The functions will return an (optional) string.
@@ -83,8 +83,9 @@
     {merge:decimal(replace($item, '.', '')=>replace(',', '.'))}
   </xsl:function>
 
+  <!-- Currency values: some systems export financial data in a single column -->
   <!-- Recognise numerical currency values with a currency in the string: USD 1234, €567
-  It will remove starting text, €, $, and apply decimal() on a possible number -->
+  It will remove starting text, €, $, and apply decimal() on a possible number. -->
   <xsl:function name="merge:currency-value" as="xs:string?">
     <xsl:param name="item" as="xs:string"/>
 
