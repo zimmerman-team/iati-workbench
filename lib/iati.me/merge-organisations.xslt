@@ -15,12 +15,15 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- TODO: A general description of the functional content of this file. for example
-  XSLT Stylesheet responsible for...
-  Specific design choices here were...
+<!--
+  This styleheet merges IATI organisation elements into a predictable sequence:
+  it follows the IATI Standard, and sorts organisations and elements within activities.
+  This should make standard file versioning more useful when inspecting the results.
+  See the detailed remarks for more information.
 
-  Do we include all possible fields from the IATI Standard, and do we produce in the same order as https://iatistandard.org/en/iati-standard/203/organisation-standard/summary-table/
-  Of course not necessary but if not, why are we skipping certain fields, and why are we producing them in a different order?
+  It does a minimal effort to generate an IATI organisation file,
+  based on earlier limited needs of one or two clients to provide organisation
+  budgets and document links.
 -->
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://aida.tools/merge"

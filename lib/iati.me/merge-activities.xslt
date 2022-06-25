@@ -25,6 +25,9 @@
   * Repeated elements will not be included.
   * Attributes with empty values will not be included.
 
+  There still are some open to do's: the code works for existing clients,
+  but deduplication is not always fully defined, and it is possible to construct
+  inputs where it won't work.
 -->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
@@ -220,10 +223,10 @@
                 <xsl:for-each-group select="current-group()/conditions/condition" group-by="@type">
                   <xsl:variable name="ctype" select="current-grouping-key()"/>
                   <xsl:for-each-group select="current-group()" group-by="narrative">
-                      <condition type="{$ctype}">
-                        <!-- TODO add language -->
-                        <narrative>{current-grouping-key()}</narrative>
-                      </condition>
+                    <condition type="{$ctype}">
+                      <!-- TODO add language -->
+                      <narrative>{current-grouping-key()}</narrative>
+                    </condition>
                   </xsl:for-each-group>
                 </xsl:for-each-group>
               </conditions>
@@ -258,8 +261,6 @@
                           <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each-group>
                       </xsl:for-each-group>
-                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
-                      <!-- <xsl:apply-templates select="current-group()/reference"/> -->
                       <xsl:for-each-group select="current-group()/baseline" group-by="@merge:id">
                         <baseline>
                           <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
@@ -274,11 +275,6 @@
                       <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]">
                         <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
                       </xsl:apply-templates>
-                      <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
-                      <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
-<!--                      <xsl:apply-templates select="current-group()/*">
-                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-                      </xsl:apply-templates> -->
                     </indicator>
                   </xsl:for-each-group>
                 </result>
@@ -337,13 +333,4 @@
   <xsl:template match="feature-designation[@code='']"/>
 
   <xsl:template match="related-activity[@ref='']"/>
-
-  <!-- TODO: commented out code: What does it do, why is it commented out, will we need it in the future? If not, feel free to remove. -->
-  <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
-  <!-- <xsl:template match="collaboration-type">
-    <collaboration-type code="{@code}">
-      <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
-    </collaboration-type>
-  </xsl:template> -->
-
 </xsl:stylesheet>
