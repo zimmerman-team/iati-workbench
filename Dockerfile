@@ -31,7 +31,11 @@ RUN groupadd -g $GID -o $UNAME && \
   useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
 
 RUN apt-get update && \
-  # to remove basex warnings: libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java
+  # installing: Ant, Saxon, BaseX the for main functionality; \
+  # LibreOffice to convert Excel en ODF files; \
+  # XmlStarlet to generate directory listings in XML; \
+  # Locales to generate an English-language European formats environment; \
+  # And to remove basex warnings: libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java \
   apt-get -y install --no-install-recommends ant xmlstarlet libreoffice-calc-nogui libreoffice-java-common \
     libsaxonhe-java basex libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java locales && \
   # enable and generate the locale we want:
