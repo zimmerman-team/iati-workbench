@@ -1,11 +1,14 @@
-<codelist name="BudgetIdentifier" xml:lang="en" category-codelist="BudgetIdentifierSector" complete="1">
+<codelist name="BudgetIdentifier" xml:lang="en" category-codelist="BudgetIdentifierSector" complete="1" embedded="0">
     <metadata>
         <name>
             <narrative>Budget Identifier</narrative>
         </name>
         <description>
-            <narrative>IATI Functional and Administrative Common Code : One of several possible Budget Identifier Vocabularies</narrative>
+            <narrative>IATI Functional and Administrative Common Code : One of several possible Budget Identifier Vocabularies. As of version 2.03 this codelist has been deprecated.</narrative>
         </description>
+        <category>
+            <narrative>Non-Core</narrative>
+        </category>
     </metadata>
     <codelist-items>
         <codelist-item>
@@ -193,14 +196,7 @@
         <codelist-item>
             <code>2.1.2</code>
             <name>
-                <narrative>Justice, Law and Order - police</narrative>
-            </name>
-            <category>2.1</category>
-        </codelist-item>
-        <codelist-item>
-            <code>2.1.2</code>
-            <name>
-                <narrative>Justice, Law and Order - fire</narrative>
+                <narrative>Justice, Law and Order - fire or police</narrative>
             </name>
             <category>2.1</category>
         </codelist-item>

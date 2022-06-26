@@ -1,0 +1,24 @@
+= IATI files in the engine
+
+The convertor has a copy of the IATI codelist files.
+These can be used to look up code values for text strings.
+
+To use this feature, add a call to `merge:get-code-from-list()`
+defined in `lib/iati.me/csvxml-s2i.xslt` for an input value.
+
+[source, xslt]
+----
+merge:get-code-from-list('ActivityStatus', 'implementation')
+<!-- returns '2' -->
+
+merge:get-code-from-list('ActivityStatus', '3')
+<!-- returns '3' -->
+----
+
+== Updating the code list files
+
+The codelist files are stored in a single directory.
+
+To update them, copy new versions of the files from the `xml` directories of the
+https://github.com/IATI/IATI-Codelists and
+https://github.com/IATI/IATI-Codelists-NonEmbedded IATI repositories.

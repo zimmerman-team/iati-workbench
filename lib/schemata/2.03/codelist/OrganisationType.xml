@@ -1,8 +1,11 @@
-<codelist name="OrganisationType" xml:lang="en" complete="1">
+<codelist name="OrganisationType" xml:lang="en" complete="1" embedded="0">
     <metadata>
         <name>
             <narrative>Organisation Type</narrative>
         </name>
+        <category>
+            <narrative>Non-Core</narrative>
+        </category>
     </metadata>
     <codelist-items>
         <codelist-item>
@@ -11,6 +14,15 @@
                 <narrative>Government</narrative>
                 <narrative xml:lang="fr">Gouvernement</narrative>
             </name>
+        </codelist-item>
+        <codelist-item>
+            <code>11</code>
+            <name>
+                <narrative>Local Government</narrative>
+            </name>
+            <description>
+                <narrative>Any local (sub national) government organisation in either donor or recipient country.</narrative>
+            </description>
         </codelist-item>
         <codelist-item>
             <code>15</code>
@@ -41,6 +53,15 @@
             </name>
         </codelist-item>
         <codelist-item>
+            <code>24</code>
+            <name>
+                <narrative>Partner Country based NGO</narrative>
+            </name>
+            <description>
+                <narrative>Local and National NGO / CSO based in aid/assistance recipient country</narrative>
+            </description>
+        </codelist-item>
+        <codelist-item>
             <code>30</code>
             <name>
                 <narrative>Public Private Partnership</narrative>
@@ -69,10 +90,43 @@
             </name>
         </codelist-item>
         <codelist-item>
+            <code>71</code>
+            <name>
+                <narrative>Private Sector in Provider Country</narrative>
+            </name>
+            <description>
+                <narrative>Is in provider / donor country.</narrative>
+            </description>
+        </codelist-item>
+        <codelist-item>
+            <code>72</code>
+            <name>
+                <narrative>Private Sector in Aid Recipient Country</narrative>
+            </name>
+            <description>
+                <narrative>Is in aid recipient country.</narrative>
+            </description>
+        </codelist-item>
+        <codelist-item>
+            <code>73</code>
+            <name>
+                <narrative>Private Sector in Third Country</narrative>
+            </name>
+            <description>
+                <narrative>Is not in either a donor or aid recipient country.</narrative>
+            </description>
+        </codelist-item>
+        <codelist-item>
             <code>80</code>
             <name>
                 <narrative>Academic, Training and Research</narrative>
                 <narrative xml:lang="fr">Universitaire, formation et recherche</narrative>
+            </name>
+        </codelist-item>
+        <codelist-item>
+            <code>90</code>
+            <name>
+                <narrative>Other</narrative>
             </name>
         </codelist-item>
     </codelist-items>

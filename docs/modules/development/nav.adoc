@@ -2,3 +2,4 @@
 ** xref:testing.adoc[]
 ** xref:documentation.adoc[]
 ** xref:version-release.adoc[]
+** xref:iati.adoc[]
