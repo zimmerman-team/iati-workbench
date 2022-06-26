@@ -266,10 +266,10 @@
    This requires up-to-date IATI codelists in `lib/schemata/2.03/codelists` -->
   <xsl:function name="merge:get-code-from-list">
     <xsl:param name="list"/>
-    <xsl:param name="default"/>
+    <xsl:param name="text"/>
     <!--  TODO: refactor IATI version for codelists into configuration  -->
     <xsl:variable name="codelist" select="doc(concat('../schemata/2.03/codelist/', $list, '.xml' ))"/>
     <xsl:text>{($codelist//codelist-item[some $name in name/narrative satisfies (lower-case($name)=lower-case($text))]/code,
-      $default)[1]}</xsl:text>
+      $text)[1]}</xsl:text>
   </xsl:function>
 </xsl:stylesheet>
