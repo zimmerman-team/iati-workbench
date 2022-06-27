@@ -22,7 +22,7 @@
   Do we include all possible fields from the IATI Standard, and do we produce in the same order as https://iatistandard.org/en/iati-standard/203/organisation-standard/summary-table/
   Of course not necessary but if not, why are we skipping certain fields, and why are we producing them in a different order?
 -->
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://aida.tools/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="#all">
