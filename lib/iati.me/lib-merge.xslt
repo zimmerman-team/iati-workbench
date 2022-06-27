@@ -15,9 +15,10 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- TODO: A general description of the functional content of this file. for example
-  XSLT Stylesheet responsible for...
-  Specific design choices here were...
+<!--
+  This styleheet contains generic templates to merge partial IATI files.
+
+  The main part is dealing with narratives in multiple languages as an XSLT mode.
 -->
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://aida.tools/merge"

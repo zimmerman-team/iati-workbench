@@ -15,6 +15,17 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<!--
+  This styleheet merges IATI elements into a predictable sequence:
+  it follows the IATI Standard, and sort activities and elements within activities.
+  This should make standard file versioning more useful when inspecting the results.
+  See the detailed remarks for more information.
+
+  It also does some deduplication of elements based on "best effort":
+  * Repeated elements will not be included.
+  * Attributes with empty values will not be included.
+
+-->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:merge="http://aida.tools/merge"
@@ -30,12 +41,14 @@
     <iati-activities version="2.03" generated-datetime="{current-dateTime()}"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://iatistandard.org/203/schema/downloads/iati-activities-schema.xsd">
+      <!-- Gather all elements per activity, and sort them by identifier -->
       <xsl:for-each-group select="$input-activities" group-by="functx:trim(@merge:id)">
         <xsl:sort select="current-grouping-key()"/>
 
-        <!-- select default language attribute -->
+        <!-- select the first default language attribute -->
         <xsl:variable name="default-lang" select="(current-group()/@xml:lang, 'en')[1]"/>
 
+        <!-- if the activity is not excluded -->
         <xsl:if test="not(current-group()/@merge:exclude='true')">
           <xsl:call-template name="merge-activity">
             <xsl:with-param name="input-activities" select="current-group()"/>
