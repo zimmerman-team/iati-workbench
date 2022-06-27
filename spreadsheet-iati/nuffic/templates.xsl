@@ -18,8 +18,8 @@
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:functx="http://www.functx.com"
-  xmlns:merge="http://iati.me/merge"
-  xmlns:nuffic="http://iati.me/nuffic"
+  xmlns:merge="http://aida.tools/merge"
+  xmlns:nuffic="http://aida.tools/nuffic"
   exclude-result-prefixes="xs functx nuffic"
   expand-text="yes">
 

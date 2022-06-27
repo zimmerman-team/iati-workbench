@@ -17,7 +17,7 @@
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-               xmlns:merge="http://iati.me/merge"
+               xmlns:merge="http://aida.tools/merge"
                stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
 
     <x:scenario label="Results: reference vocabulary code, URI for results">
@@ -66,12 +66,12 @@
                     <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
                     <entry name="Result reference">DD1</entry>
                     <entry name="Result reference vocabulary">1</entry>
-                    <entry name="Result reference URI">http://iati.me/aida</entry>
+                    <entry name="Result reference URI">http://aida.tools/aida</entry>
                 </record>
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@vocabulary-uri." test="//result/reference/@vocabulary-uri='http://iati.me/aida'
+            <x:expect label="it should produce the indicated reference/@vocabulary-uri." test="//result/reference/@vocabulary-uri='http://aida.tools/aida'
 "/>
         </x:scenario>
     </x:scenario>
@@ -122,12 +122,12 @@
                     <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
                     <entry name="Indicator reference">DD1</entry>
                     <entry name="Indicator reference vocabulary">1</entry>
-                    <entry name="Indicator reference URI">http://iati.me/aida</entry>
+                    <entry name="Indicator reference URI">http://aida.tools/aida</entry>
                 </record>
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@indicator-uri." test="//indicator/reference/@indicator-uri='http://iati.me/aida'
+            <x:expect label="it should produce the indicated reference/@indicator-uri." test="//indicator/reference/@indicator-uri='http://aida.tools/aida'
 "/>
         </x:scenario>
 

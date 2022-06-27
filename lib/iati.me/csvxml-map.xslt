@@ -22,9 +22,8 @@
 -->
 <xsl:stylesheet version='3.0' expand-text="yes" xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:export="http://iati.me/export"
+  xmlns:export="http://aida.tools/export"
   xmlns:functx="http://www.functx.com">
-  
   <xsl:output method="text"/>
 
   <xsl:import href="../functx.xslt"/>

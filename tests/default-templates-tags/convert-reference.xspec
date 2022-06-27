@@ -17,7 +17,7 @@
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-               xmlns:merge="http://iati.me/merge"
+               xmlns:merge="http://aida.tools/merge"
                stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
 
     <x:scenario label="Tags: vocabulary code and URI for tags">
@@ -52,12 +52,12 @@
                 <record>
                     <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
                     <entry name="Tag vocabulary">2</entry>
-                    <entry name="Tag vocabulary URI">http://iati.me/aida</entry>
+                    <entry name="Tag vocabulary URI">http://aida.tools/aida</entry>
                     <entry name="Tag code">123</entry>
                 </record>
             </x:context>
             <x:expect label="it should produce that tag/@vocabulary code." test="//tag/@vocabulary='2'"/>
-            <x:expect label="it should produce that tag/@vocabulary-URI." test="//tag/@vocabulary-uri='http://iati.me/aida'"/>
+            <x:expect label="it should produce that tag/@vocabulary-URI." test="//tag/@vocabulary-uri='http://aida.tools/aida'"/>
         </x:scenario>
 
     </x:scenario>

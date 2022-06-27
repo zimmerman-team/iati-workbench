@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->  
 <xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:merge="http://iati.me/merge"
+  xmlns:merge="http://aida.tools/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="#all">
 
