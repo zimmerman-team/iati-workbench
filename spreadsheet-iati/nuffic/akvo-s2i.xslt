@@ -19,8 +19,8 @@
 <!-- Nuffic-specific transformation of Akvo IATI to S2I IATI -->
 
 <xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:merge="http://iati.me/merge"
-  xmlns:nuffic="http://iati.me/nuffic"
+  xmlns:merge="http://aida.tools/merge"
+  xmlns:nuffic="http://aida.tools/nuffic"
   xmlns:akvo="http://akvo.org/iati-activities"
   exclude-result-prefixes="akvo"
   expand-text="yes">

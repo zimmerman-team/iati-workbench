@@ -15,8 +15,13 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<xsl:stylesheet version='2.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-  xmlns:merge="http://iati.me/merge"
+<!--
+  This styleheet contains generic templates to merge partial IATI files.
+
+  The main part is dealing with narratives in multiple languages as an XSLT mode.
+-->
+<xsl:stylesheet version='3.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+  xmlns:merge="http://aida.tools/merge"
   xmlns:functx="http://www.functx.com"
   exclude-result-prefixes="#all"
   expand-text="yes">
@@ -65,5 +70,5 @@
       <xsl:apply-templates/>
     </xsl:copy>
   </xsl:template>
-  
+
 </xsl:stylesheet>

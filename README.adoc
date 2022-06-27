@@ -20,3 +20,6 @@ This includes setting up a demo workspace with example templates.
 === Acknowledgements
 
 First inspiration came from https://github.com/KitWallace/AIDVIEW-DB[Kit Wallace's Aidview DB (working with eXist)]
+
+TODO: in the root directory, aida-s2i is a symlink to iati-workbench, do they still both have value? If the only use is for you locally, maybe it could be a local thing for you, rather than for the remote repository.
+TODO: Continuing on testing, would it be helpful for the testing setup to include some kind of CI/CD steps? Like having the tests run whenever you push and perhaps integrating some test coverage interface? @stefanos perhaps you could elaborate?

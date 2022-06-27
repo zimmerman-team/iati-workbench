@@ -17,7 +17,7 @@
 -->
 <x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-               xmlns:merge="http://iati.me/merge"
+               xmlns:merge="http://aida.tools/merge"
                stylesheet="../../spreadsheet-iati/csvxml-s2i.xslt">
 
     <x:scenario label="Related activities: parent and child relations">
