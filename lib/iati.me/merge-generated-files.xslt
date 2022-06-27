@@ -14,7 +14,12 @@
   
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->  
+-->
+<!--
+  This stylesheet takes a directory listing in XML format as input,
+  selects the generated partial IATI files,
+  and creates two IATI files (activities and organisations).
+-->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:functx="http://www.functx.com"

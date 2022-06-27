@@ -25,6 +25,9 @@
   * Repeated elements will not be included.
   * Attributes with empty values will not be included.
 
+  There still are some open to do's: the code works for existing clients,
+  but deduplication is not always fully defined, and it is possible to construct
+  inputs where it won't work.
 -->
 <xsl:stylesheet version='3.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
@@ -68,9 +71,6 @@
     <iati-activity>
       <xsl:copy-of select="$input-activities/@*[.!='' and not(name(.)=('merge:id', 'merge:exclude', 'xml:lang'))]" />
       <xsl:attribute name="xml:lang" select="$default-lang"/>
-      <!-- <xsl:for-each-group select="current-group()/@*[.!='' and name(.)!='merge:id']" group-by="name(.)">
-        <xsl:copy-of select=".[1]" />
-      </xsl:for-each-group> -->
       <iati-identifier>{$iati-identifier}</iati-identifier>
       <xsl:apply-templates select="($input-activities/reporting-org)[1]"/>
 
@@ -204,7 +204,6 @@
 
             <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
               <indicator>
-                <!-- <xsl:copy-of select="@*[.!='' and name(.)!='merge:id']" /> -->
                 <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
                 <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                 <xsl:apply-templates select="(current-group()/title)[1]"/>
@@ -214,7 +213,6 @@
                     <xsl:copy-of select="." copy-namespaces="no"/>
                   </xsl:for-each-group>
                 </xsl:for-each-group>
-                <!-- <xsl:apply-templates select="current-group()/reference"/> -->
                 <xsl:for-each-group select="current-group()/baseline" group-by="@merge:id">
                   <baseline>
                     <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
@@ -223,10 +221,6 @@
                   </baseline>
                 </xsl:for-each-group>
                 <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'baseline', 'reference'))]"/>
-                <!-- <xsl:copy-of select="current-group()/*[not(name()=('title', 'description', 'baseline'))]" copy-namespaces="no"/> -->
-                <!--                      <xsl:apply-templates select="current-group()/*">
-                                        <xsl:with-param name="default-lang" select="$default-lang" tunnel="yes"/>
-                                      </xsl:apply-templates> -->
               </indicator>
             </xsl:for-each-group>
           </result>
@@ -276,12 +270,4 @@
   <xsl:template match="feature-designation[@code='']"/>
 
   <xsl:template match="related-activity[@ref='']"/>
-
-  <!-- <xsl:template match="collaboration-type   [@code=(parent::collaboration-type/@code)]"/> -->
-  <!-- <xsl:template match="collaboration-type">
-    <collaboration-type code="{@code}">
-      <xsl:copy-of select="parent::*[name()='collaboration-type']"/>
-    </collaboration-type>
-  </xsl:template> -->
-
 </xsl:stylesheet>
