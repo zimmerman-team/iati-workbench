@@ -1,1 +1,71 @@
-../../../../README.adoc
+= Introduction
+
+The IATI Workbench provides a platform with tools to work with IATI data.
+
+This version contains a Spreadsheets2IATI convertor.
+
+* This section describes the general setup and structure.
+
+* The xref:development:index.adoc[] section contains developer-specific tools and backgrounds.
+
+* The xref:spreadsheets2iati:index.adoc[] section deals with the setup of the convertor
+to turn spreadsheets and existing IATI files into new IATI data files.
+
+== Running the workbench
+
+The workbench uses two approaches to working with IATI data:
+
+Run as a Docker container::
+It runs all the necessary software within an isolated environment.
+
+Run as a software build tool::
+It transforms input _source files_ into output _compiled files_,
+via one or more _targets_.
+
+=== Run as a Docker container
+
+The main code is intended to be used as Docker container.
+This container should have a _workspace directory_ mounted,
+where data and configuration files are stored.
+
+. The container can be used as command-line tool, using a helper script.
++
+In this case, you will build your own container image,
+and use it within a directory on your local machine via a helper script.
+
+. It can also be used in a cloud environment, with an appropriate sidecar or wrapper.
++
+In this case, you will need to add an appropriate API, and file and process handling yourself.
+
+This documentation describes the first scenario.
+
+=== Run as software build tool
+
+The tools are split into steps of a "compilation pipeline".
+The steps in the pipeline are typically small scripts and XSLT transformations.
+
+We use Ant as orchestration tool.
+Other orchestration systems would be possible too.
+
+== Quick start on a local machine
+
+For now, you need to follow the steps for xref:development:index.adoc#_setting_up_a_development_environment[Setting up a development environment].
+This will create a local Docker container image,
+and make the helper script available.
+
+You can then run the engine in a container on your local machine,
+using the helper script.
+
+. Create a test workspace directory and go into that directory
++
+  $ mkdir ~/test-workspace && cd ~/test-workspace
+
+. Create the structure of workspace directories, and add the demo spreadsheet templates.
++
+  $ aida-s2i add-templates
+
+. Run your first conversion
++
+  $ aida-s2i spreadsheet-iati
+
+The generated IATI files will be placed in the `src/` directory in your workspace.

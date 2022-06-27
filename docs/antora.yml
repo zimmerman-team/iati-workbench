@@ -3,4 +3,5 @@ title: IATI Workbench
 version: '1.8.2'
 nav:
 - modules/ROOT/nav.adoc
+- modules/development/nav.adoc
 - modules/spreadsheets2iati/nav.adoc

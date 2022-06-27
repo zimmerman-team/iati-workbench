@@ -140,4 +140,10 @@
   <!-- can  be overridden to do something with the IATI files before publishing -->
   <target name="postprocess-iati"/>
 
+  <target name="add-templates" depends="init" description="Add spreadsheet templates and a sample config to the workspace">
+    <copy file="workspace/config/csvxml-iati.xslt" todir="${ws}/config"/>
+    <copy todir="${ws}/input">
+      <fileset dir="workspace/input"/>
+    </copy>
+  </target>
 </project>

@@ -59,6 +59,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Improvements
 
+* attribute is called indicator-uri rather than vocabulary-uri ([5bfe012](https://github.com/data4development/iati-workbench/commit/5bfe012306f81e5b552359355efd34aaab80b2ff))
 * handle ambiguous filenames containing 'projects" ([e34b05c](https://github.com/data4development/iati-workbench/commit/e34b05c65094d553db6fa884d6021f2e2f106827))
 * return monetary values as strings rather than xs:decimal ([ffe3fc3](https://github.com/data4development/iati-workbench/commit/ffe3fc32c5c9677df3e0c53abce1be602d702f18))
 

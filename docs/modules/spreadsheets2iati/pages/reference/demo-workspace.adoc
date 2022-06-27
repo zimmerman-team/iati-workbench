@@ -1,0 +1,34 @@
+= Demo workspace files
+
+The tool contains a set of templates for a demo workspace,
+in the directory `workspace/`.
+
+* The publisher information is stored in `workspace/config/csvxml-iati.xml`.
+The convertor will only consider input data for activities with an identifier
+that starts with the reporting-org defined here.
+
+* The spreadsheet templates are stored under `workspace/input/`, as Excel sheets.
+These contain the column names and some demonstration data.
+
+== Updating the templates
+
+The repository also contains an overview of the templates and column names.
+This is stored as a CSV file in `workspace/output/csv-map.csv`.
+
+Whenever the Excel templates are updated,
+add the new version to the `workspace/input` directory.
+
+Then, inside that workspace directory, update the column map.
+
+  $ cd workspace && aida-s2i spreadsheet-map && cd ..
+
+You can then use `git` to check the result:
+
+* When no changes to column names have been made,
+the file should be unchanged.
+
+* When column names have been updated, or new columns added,
+this will show up as a changes.
+
+CAUTION: The updated templates now may overwrite existing files in a workspace
+when using the `aida-s2i add-templates` command.

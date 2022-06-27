@@ -1,12 +1,19 @@
 = Workspace location
 
-When running within a Docker container, the scripts use the directory
+Within the Docker container, the scripts use the directory
 
   /workspace/
 
-as the starting point for all subdirectories.
+as the starting point for all subdirectories with data.
 
-To use a subdirectory, the environment property `workspace` should be set.
+[NOTE]
+====
+When running via the helper script,
+the current directory is mounted into this location.
+====
+
+To use a subdirectory in the workspace,
+the environment property `workspace` should be set.
 
 When running within the container:
 
@@ -25,22 +32,20 @@ Consider you have a local machine set up with a directory structure:
 [source, treeview]
 ----
 ~/workspaces
-├── s2i
-│   ├── clientA
-│   │   ├── config
-│   │   ├── dest
-│   │   ├── input
-│   │   ├── output
-│   │   ├── reports
-│   │   ├── src
-│   │   ├── tmp
-│   │   ├── build.xml
-│   │   ├── .gitignore
-│   │   └── README.md
-│   ├── clientB
-│   │   └── ...workspace dirs...
-│   └── ...other clients...
-└── README.md
+├── clientA
+│   ├── config
+│   ├── dest
+│   ├── input
+│   ├── output
+│   ├── reports
+│   ├── src
+│   ├── tmp
+│   ├── build.xml
+│   ├── .gitignore
+│   └── README.adoc
+├── clientB
+│   └── ...workspace dirs...
+└── ...other clients...
 ----
 
 === Option 1: go into each client directory and run aida-s2i there
@@ -48,6 +53,7 @@ Consider you have a local machine set up with a directory structure:
   $ cd ~/workspaces/clientA
   $ aida-s2i ...
 
-=== Option 2: run aida-s2i with -w
+=== Option 2: run aida-s2i with -w from the main workspaces directory
 
+  $ cd ~/workspaces
   $ aida-s2i -w s2i/clientA ...

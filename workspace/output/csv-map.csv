@@ -1,0 +1,214 @@
+File,Column
+Budgets_Template,IATI activity identifier
+Budgets_Template,Activity name
+Budgets_Template,Budget start date
+Budgets_Template,Budget end date
+Budgets_Template,Currency
+Budgets_Template,Budget
+Budgets_Template,Value date
+Budgets_Template,
+Budgets_Template,Legend
+Countries and regions_Template,IATI activity identifier
+Countries and regions_Template,Activity name
+Countries and regions_Template,Country name
+Countries and regions_Template,Country code
+Countries and regions_Template,Region name
+Countries and regions_Template,Region code
+Countries and regions_Template,Region vocabulary
+Countries and regions_Template,Region vocabulary URI
+Countries and regions_Template,Budget percentage
+Countries and regions_Template,
+Countries and regions_Template,Legend
+Documents_Template,IATI activity identifier
+Documents_Template,Activity name
+Documents_Template,Web address
+Documents_Template,Format
+Documents_Template,Document title
+Documents_Template,Document description
+Documents_Template,Category
+Documents_Template,Document language
+Documents_Template,Document date
+Documents_Template,
+Documents_Template,Legend
+Humanitarian_Template (optional),IATI activity identifier
+Humanitarian_Template (optional),Activity name
+Humanitarian_Template (optional),Humanitarian activity
+Humanitarian_Template (optional),Humanitarian scope type 1
+Humanitarian_Template (optional),Humanitarian vocabulary 1
+Humanitarian_Template (optional),Humanitarian code 1
+Humanitarian_Template (optional),Humanitarian scope type 2
+Humanitarian_Template (optional),Humanitarian vocabulary 2
+Humanitarian_Template (optional),Humanitarian code 2
+Humanitarian_Template (optional),
+Humanitarian_Template (optional),Legend
+Location_template (optional),IATI activity identifier
+Location_template (optional),Activity name
+Location_template (optional),Location name
+Location_template (optional),Location description
+Location_template (optional),Activity description
+Location_template (optional),Location reference
+Location_template (optional),Latitude
+Location_template (optional),Longitude
+Location_template (optional),Reach
+Location_template (optional),Exactness
+Location_template (optional),Location id vocabulary
+Location_template (optional),Location id code
+Location_template (optional),Location type code
+Location_template (optional),Administrative level vocabulary
+Location_template (optional),Administrative level code
+Location_template (optional),Administrative level
+Location_template (optional),
+Location_template (optional),Legend
+Organisation-Budgets_Template,IATI organisation identifier
+Organisation-Budgets_Template,Budget status
+Organisation-Budgets_Template,Budget start date
+Organisation-Budgets_Template,Budget end date
+Organisation-Budgets_Template,Currency
+Organisation-Budgets_Template,Budget
+Organisation-Budgets_Template,Value date
+Organisation-Budgets_Template,Country code
+Organisation-Budgets_Template,Region code
+Organisation-Budgets_Template,Region name
+Organisation-Budgets_Template,Region vocabulary
+Organisation-Budgets_Template,Recipient organisation identifier
+Organisation-Budgets_Template,Recipient organisation name
+Organisation-Documents_Template,IATI organisation identifier
+Organisation-Documents_Template,Country code
+Organisation-Documents_Template,Document title
+Organisation-Documents_Template,Document description
+Organisation-Documents_Template,Document language
+Organisation-Documents_Template,Document date
+Organisation-Documents_Template,Category
+Organisation-Documents_Template,Web address
+Organisation-Documents_Template,Format
+Organisation-Expenditure,IATI organisation identifier
+Organisation-Expenditure,Period start date
+Organisation-Expenditure,Period end date
+Organisation-Expenditure,Currency
+Organisation-Expenditure,Expenditure
+Organisation-Expenditure,Value date
+Organization_file_template,Publisher identifier
+Organization_file_template,Publisher name
+Organization_file_template,license
+Organization_file_template,language
+Organization_file_template,recipient country
+Organization_file_template,publisher type
+Organization_file_template,publisher organisation type
+Organization_file_template,publisher country
+Organization_file_template,IATI version
+Participating-orgs_Template,IATI activity identifier
+Participating-orgs_Template,Activity name
+Participating-orgs_Template,Role
+Participating-orgs_Template,Type
+Participating-orgs_Template,Organisation name
+Participating-orgs_Template,Organisation identifier
+Participating-orgs_Template,Activity identifier
+Participating-orgs_Template,
+Participating-orgs_Template,Legend
+Policy Markers_Template,IATI activity identifier
+Policy Markers_Template,Activity name
+Policy Markers_Template,Policy
+Policy Markers_Template,Policy marker
+Policy Markers_Template,Policy significance
+Policy Markers_Template,Policy marker vocabulary
+Policy Markers_Template,Policy marker vocabulary URI
+Policy Markers_Template,
+Policy Markers_Template,Legend
+Projects_Template,IATI activity identifier
+Projects_Template,Activity name
+Projects_Template,Parent activity name
+Projects_Template,IATI parent activity identifier
+Projects_Template,Activity status
+Projects_Template,Planned start date
+Projects_Template,Actual start date
+Projects_Template,Planned end date
+Projects_Template,Actual end date
+Projects_Template,General description
+Projects_Template,Main objectives and outcomes
+Projects_Template,Target group or reach
+Projects_Template,Background
+Projects_Template,Language
+Projects_Template,Currency
+Projects_Template,Exclusion applies?
+Projects_Template,Collaboration type
+Projects_Template,Default flow type
+Projects_Template,Default finance type
+Projects_Template,Default aid type
+Projects_Template,Default tied status
+Projects_Template,Contact info type
+Projects_Template,Contact info organisation
+Projects_Template,Contact email
+Projects_Template,Contact website
+Projects_Template,Contact mailing address
+Projects_Template,
+Projects_Template,Legend
+Related activities_Template (optional),From IATI activity identifier
+Related activities_Template (optional),Title
+Related activities_Template (optional),To IATI activity identifier
+Related activities_Template (optional),Related activity type
+Related activities_Template (optional),Other identifier type
+Related activities_Template (optional),
+Related activities_Template (optional),Legend
+Results_Template,IATI activity identifier
+Results_Template,Activity name
+Results_Template,Result title
+Results_Template,Result description
+Results_Template,Result type
+Results_Template,Aggregation status
+Results_Template,Indicator measure
+Results_Template,Indicator reference
+Results_Template,Indicator title
+Results_Template,Indicator description
+Results_Template,Ascending
+Results_Template,Baseline year
+Results_Template,Baseline
+Results_Template,Baseline comment
+Results_Template,Start date
+Results_Template,End date
+Results_Template,Dimension 1 name
+Results_Template,Dimension 1 value
+Results_Template,Dimension 2 name
+Results_Template,Dimension 2 value
+Results_Template,Target
+Results_Template,Target comment
+Results_Template,Actual
+Results_Template,Actual comment
+Results_Template,Location reference
+Results_Template,
+Results_Template,Legend
+Sectors_Template,IATI activity identifier
+Sectors_Template,Activity name
+Sectors_Template,Sector name
+Sectors_Template,Sector vocabulary
+Sectors_Template,Sector vocabulary URI
+Sectors_Template,Sector code
+Sectors_Template,Budget percentage
+Sectors_Template,
+Sectors_Template,Legend
+Tags_Template,IATI activity identifier
+Tags_Template,Activity name
+Tags_Template,Tag name
+Tags_Template,Tag vocabulary
+Tags_Template,Tag vocabulary URI
+Tags_Template,Tag code
+Tags_Template,
+Tags_Template,Legend
+Transactions_Template,IATI activity identifier
+Transactions_Template,Activity name
+Transactions_Template,Type
+Transactions_Template,Date
+Transactions_Template,Currency
+Transactions_Template,Amount
+Transactions_Template,Value date
+Transactions_Template,Reference
+Transactions_Template,Description
+Transactions_Template,Provider organisation
+Transactions_Template,Provider organisation type
+Transactions_Template,Provider organisation identifier
+Transactions_Template,Provider activity identifier
+Transactions_Template,Receiver organisation
+Transactions_Template,Receiver organisation type
+Transactions_Template,Receiver organisation identifier
+Transactions_Template,Receiver activity identifier
+Transactions_Template,
+Transactions_Template,Legend

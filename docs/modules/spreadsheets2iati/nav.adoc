@@ -1,5 +1,6 @@
 * xref:index.adoc[]
 
 ** Reference
+*** xref:reference/demo-workspace.adoc[]
 *** xref:reference/date-formats.adoc[]
 *** xref:reference/client-configuration.adoc[]

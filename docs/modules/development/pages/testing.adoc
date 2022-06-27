@@ -1,0 +1,66 @@
+= Xspec tests
+
+The XSLT transformations can be unit tested with the https://xspec.io/[Xspec framework^].
+The Xspec library is included as git submodule under `lib/xspec`.
+
+== Test setup
+
+The main test scenarios are organised under `tests/`.
+
+Each main scenario includes smaller subsets in subfolders.
+
+The main  `build.xml` file contains calls to test each of the main scenarios.
+
+To run all tests:
+
+  $ aida-s2i tests
+
+It is also possible to run the tests in "silent mode".
+This will only show the totals for the test results.
+
+  $ aida-s2i -S tests
+
+.Typical output of a silent run of the tests
+[source]
+----
+Running /home/username/bin/aida-s2i -S tests
+
+Buildfile: /home/iati-workbench/build.xml
+Testing lib-csvxml-s2i.xspec [t]
+
+passed: 32 / pending: 4 / failed: 0 / total: 36
+Testing merge-activities.xspec [t]
+
+passed: 23 / pending: 0 / failed: 0 / total: 23
+Testing default-templates.xspec [t]
+
+passed: 65 / pending: 0 / failed: 0 / total: 65
+Xspec result files: tmp/csvxml-s2i-result.html;tmp/default-templates-result.html;tmp/lib-csvxml-s2i-result.html;tmp/merge-activities-result.html;tmp/merge-generated-files-result.html
+----
+
+== Test reports
+
+The HTML reports of the test results are copied into the `tmp/` directory of the workspace.
+
+== Scenarios
+
+The https://github.com/xspec/xspec/wiki[Xspec wiki] has documentation about writing scenarios.
+
+[NOTE]
+====
+The `default-templates.xspec` scenario imports tests for all different input files.
+
+This requires setting the proper filename as XSLT parameter for each type of input file.
+
+To do this, we add the `<x:param>` in each scenario,
+but also have to include the attribute `run-as="external"` in the main scenario.
+====
+
+[NOTE]
+====
+An Xspec test scenario can only process test one XSLT file.
+This file is specified in the `<x:description stylesheet="...">` attribute of that scenario.
+
+Xspec files imported in a main scenario have their own stylesheet attribute.
+However, these are ignored when running the main scenario.
+====
