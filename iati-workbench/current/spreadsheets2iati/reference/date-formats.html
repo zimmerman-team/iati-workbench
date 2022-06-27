@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Date formats :: IATI workbench</title>
+    <link rel="prev" href="demo-workspace.html">
+    <link rel="next" href="client-configuration.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script>var uiRootPath = '../../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../../..">IATI workbench</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="iati-workbench" data-version="1.9.0-0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">IATI Workbench</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../workspace.html">Workspaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../ant-results.html">Ant results</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../development/index.html">Development</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../development/testing.html">Xspec tests</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../development/documentation.html">Antora and Asciidoc documentation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../development/version-release.html">Version releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../development/iati.html">IATI files in the engine</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Spreadsheets2IATI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="demo-workspace.html">Demo workspace files</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="date-formats.html">Date formats</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="client-configuration.html">Client configuration</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">IATI Workbench</span>
+    <span class="version">1.9.0-0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../../index.html">IATI Workbench</a>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../next/index.html">next</a>
+        </li>
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.9.0-0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">IATI Workbench</a></li>
+    <li><a href="../index.html">Spreadsheets2IATI</a></li>
+    <li>Reference</li>
+    <li><a href="date-formats.html">Date formats</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">1.9.0-0</button>
+  <div class="version-menu">
+    <a class="version" href="../../../next/spreadsheets2iati/reference/date-formats.html">next</a>
+    <a class="version is-current" href="date-formats.html">1.9.0-0</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/zimmerman-team/iati-workbench/edit/main/docs/modules/spreadsheets2iati/pages/reference/date-formats.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Date formats</h1>
+<div class="paragraph">
+<p>The spreadsheet convertor makes an effort to process dates properly.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Google Sheets, Excel, and LibreOffice (soffice) all do different things to recognise date formats.</p>
+</li>
+<li>
+<p>When downloading a Google Sheet with rclone, it will be converted into Excel, with sometimes unexpected conversions.</p>
+</li>
+<li>
+<p>When using soffice to convert to CSV, separate flag can indicate whether to use the <em>shown value</em> or the <em>typed value</em>.
+This improves the ability to convert.</p>
+</li>
+<li>
+<p>For some US-formatted dates (<em>mm/dd/yyyy</em>) it would be possible to detect its use (for days above 12, which cannot be months).
+This is not implemented.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An overview of various formats in Google Sheets and the resulting value used for conversion.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Icons used in Table 2.</caption>
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 90.9091%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A value format that is recognised and interpreted.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Short years: values up to 70 will be considered to be in the 21st century, <em>20xx</em>,
+from 70 onwards to be 20th century, <em>19xx</em>).
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A value that will either be interpreted incorrectly, or result in a date error.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+US-formatted days up to 12 will be converted without warning, and the month and day will be reversed.
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A value that will result in a date error.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A value that will be correctly processed.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Date format conversions</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 18.75%;">
+<col style="width: 18.75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Google sheets version date input</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">soffice format after download with rclone</th>
+<th class="tableblock halign-left valign-top">soffice export with "Save cell contents as shown" default true</th>
+<th class="tableblock halign-left valign-top">soffice export when using "Save cell contents as shown" false</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">generic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd&#8212;&#8203;mm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 28-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16/05/2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 16/05/2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 16/05/2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17/05/2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">copy of above, edited to 17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 17/05/2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 17/05/2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28-10-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">short year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd&#8212;&#8203;mm-yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️ 28-10-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28-10-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd-mm-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28-10-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US, default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10-28-2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US, formatted as date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10-28-2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12-10-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US, ambiguous date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 12/10/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 10/12/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28/10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date with slash, day+month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd/mm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 28/10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28/10/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date with slash, short year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd/mm/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️ 28/10/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28/10/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date with slash, long year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/10/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, day+month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, short year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10/28/21</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, long year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10/28/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, day+month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, short year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10/28/21</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10/28/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">US with slash, long year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 10/28/2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 10/28/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28-7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">short month (no leading 0)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd&#8212;&#8203;mm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 28-7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 28/07/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7-28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">short month, US</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 7-28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 7-28</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">short month + year, US</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 7-28-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️⛔️ 7-28-2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5-6-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error prone: can be US or not, here: not</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd-mm-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 5-6-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 05/06/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6-5-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error prone: can be US or not, here: US</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format mm-dd-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 6-5-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅️ 05/06/2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31-6-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">date, format dd-mm-yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 31-6-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 31-6-2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">29-2-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false leap year date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number, general</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 29-2-2021</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⛔️ 29-2-2021</p></td>
+</tr>
+</tbody>
+</table>
+<nav class="pagination">
+  <span class="prev"><a href="demo-workspace.html">Demo workspace files</a></span>
+  <span class="next"><a href="client-configuration.html">Client configuration</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+  </body>
+</html>

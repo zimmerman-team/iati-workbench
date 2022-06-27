@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Development :: IATI workbench</title>
+    <link rel="prev" href="../ant-results.html">
+    <link rel="next" href="testing.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">IATI workbench</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="iati-workbench" data-version="1.9.0-0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">IATI Workbench</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../workspace.html">Workspaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ant-results.html">Ant results</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Development</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="testing.html">Xspec tests</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="documentation.html">Antora and Asciidoc documentation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="version-release.html">Version releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="iati.html">IATI files in the engine</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../spreadsheets2iati/index.html">Spreadsheets2IATI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../spreadsheets2iati/reference/demo-workspace.html">Demo workspace files</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../spreadsheets2iati/reference/date-formats.html">Date formats</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../spreadsheets2iati/reference/client-configuration.html">Client configuration</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">IATI Workbench</span>
+    <span class="version">1.9.0-0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">IATI Workbench</a>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../next/index.html">next</a>
+        </li>
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.9.0-0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">IATI Workbench</a></li>
+    <li><a href="index.html">Development</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">1.9.0-0</button>
+  <div class="version-menu">
+    <a class="version" href="../../next/development/index.html">next</a>
+    <a class="version is-current" href="index.html">1.9.0-0</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/zimmerman-team/iati-workbench/edit/main/docs/modules/development/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Development</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The library uses a mix of technologies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Docker containers</p>
+</li>
+<li>
+<p>Npm modules</p>
+</li>
+<li>
+<p>XML tools</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setting_up_a_development_environment"><a class="anchor" href="#_setting_up_a_development_environment"></a>Setting up a development environment</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Check out the source repository from Github.</p>
+</li>
+<li>
+<p>Install XML dependencies:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ git submodule update --init --recursive</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install npm development dependencies:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ npm i</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Optional: put the <code>aida-s2i</code> script in your path, for instance as a symlink:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ ln -s ${PWD}/aida-s2i ~/bin/aida-s2i</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a workspace directory outside the source repository, for instance:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ mkdir ~/workspace &amp;&amp; cd /workspace</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build a local container image:</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ aida-s2i -d build</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When building the Docker container image via the helper script,
+it will run processes inside the container under the same user id that does the build operation.</p>
+</div>
+<div class="paragraph">
+<p>This way, when that user runs the helper script, and mounts a local directory,
+all generated files and directories will also be owned by that current user.</p>
+</div>
+<div class="paragraph">
+<p>It also means that the Docker image is only portable to other machines
+if it can run under the same user id.</p>
+</div>
+<div class="paragraph">
+<p>The <em>user id</em> is not the same as the <em>user name</em>!
+Typically, a Linux system will start regular user ids at 1000 or 1001.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_developing_and_testing"><a class="anchor" href="#_developing_and_testing"></a>Developing and testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are two modes to work on the codebase.</p>
+</div>
+<div class="sect2">
+<h3 id="_work_within_the_source_directory"><a class="anchor" href="#_work_within_the_source_directory"></a>Work within the source directory</h3>
+<div class="paragraph">
+<p>Within the source directory, the targets in the Ant build file
+and the scripts in the npm package file are available.</p>
+</div>
+<div class="paragraph">
+<p>To run Ant requires a local installation of <code>ant</code>
+and the Saxon library available for Ant.</p>
+</div>
+<div class="paragraph">
+<p>You can then run the test suites using:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ant tests</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_work_in_a_workspace_directory_with_the_source_directory_mounted_into_a_container"><a class="anchor" href="#_work_in_a_workspace_directory_with_the_source_directory_mounted_into_a_container"></a>Work in a workspace directory, with the source directory mounted into a container</h3>
+<div class="paragraph">
+<p>Once you have a local Docker image, the <code>aida-s2i</code> script can use this.
+This eliminates the need to install Ant or Saxon on your machine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>-d</code> flag to mount the source directory into the container,
+to test things without building a new container image:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ aida-s2i -d tests</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tag_container_image_versions"><a class="anchor" href="#_tag_container_image_versions"></a>Tag container image versions</h3>
+<div class="paragraph">
+<p>You can build and run different versions of the Docker container image
+using the <code>-t</code> parameter:</p>
+</div>
+<div class="literalblock">
+<div class="title">Build a test version container image</div>
+<div class="content">
+<pre>$ aida-s2i -d -t v1.8.0-test1 build</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Run a conversion with the test version</div>
+<div class="content">
+<pre>$ aida-s2i -t v1.8.0-test1 spreadsheet-iati</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../ant-results.html">Ant results</a></span>
+  <span class="next"><a href="testing.html">Xspec tests</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>
