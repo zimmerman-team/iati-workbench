@@ -164,7 +164,7 @@
       </xsl:for-each-group>
 
       <xsl:for-each-group select="$input-activities/budget" group-by="@type">
-        <!-- TODO split by @status as well -->
+        <!-- TODO: split by @status as well -->
         <xsl:apply-templates select="current-group()"/>
       </xsl:for-each-group>
 
@@ -185,7 +185,7 @@
             <xsl:variable name="ctype" select="current-grouping-key()"/>
             <xsl:for-each-group select="current-group()" group-by="narrative">
               <condition type="{$ctype}">
-                <!-- TODO add language -->
+                <!-- TODO: add language -->
                 <narrative>{current-grouping-key()}</narrative>
               </condition>
             </xsl:for-each-group>
@@ -197,7 +197,7 @@
         <xsl:if test="current-group()/indicator/title/narrative/text() and current-group()/@type">
           <result>
             <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']" />
-            <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions -->
+            <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions -->
             <xsl:apply-templates select="(current-group()/title)[1]"/>
             <xsl:apply-templates select="(current-group()/description)[1]"/>
             <xsl:apply-templates select="current-group()/*[not(name()=('title', 'description', 'indicator'))]"/>
@@ -205,7 +205,7 @@
             <xsl:for-each-group select="current-group()/indicator" group-by="@merge:id">
               <indicator>
                 <xsl:copy-of select="current-group()/@*[.!='' and name(.)!='merge:id']"/>
-                <!-- TODO find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
+                <!-- TODO: find the proper way to avoid duplicates... this may eliminate multiple language versions, and multiple baselines versions -->
                 <xsl:apply-templates select="(current-group()/title)[1]"/>
                 <xsl:apply-templates select="(current-group()/description)[1]"/>
                 <xsl:for-each-group select="current-group()/reference" group-by="@vocabulary">
