@@ -34,9 +34,10 @@ RUN apt-get update && \
   # installing: Ant, Saxon, BaseX the for main functionality; \
   # LibreOffice to convert Excel en ODF files; \
   # XmlStarlet to generate directory listings in XML; \
+  # libxml2-utils to have xmllint available; \
   # Locales to generate an English-language European formats environment; \
   # And to remove basex warnings: libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java \
-  apt-get -y install --no-install-recommends ant xmlstarlet libreoffice-calc-nogui libreoffice-java-common \
+  apt-get -y install --no-install-recommends ant xmlstarlet libxml2-utils libreoffice-calc-nogui libreoffice-java-common \
     libsaxonhe-java basex libjline2-java libjing-java libtagsoup-java libxml-commons-resolver1.1-java locales && \
   # enable and generate the locale we want: \
   sed -i '/en_IE.UTF-8/s/^# //g' /etc/locale.gen && \
