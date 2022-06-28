@@ -37,7 +37,7 @@
 
   <extension-point name="create-iati-output"
     description="Merge IATI partial activities, validate, create clean output"
-    depends="merge-iati"/>
+    depends="merge-iati, xmllint-format"/>
 
   <!--Merge activities from *.generated.xml into one file.-->
   <target name="merge-iati"
@@ -49,6 +49,32 @@
       out="${ws}/src/ls.xml"
       style="lib/iati.me/merge-generated-files.xslt"
     />
+  </target>
+
+  <target name="xmllint-format">
+    <!-- workaround: make sure line numbers reported by the IATI Validator match
+    with lines in the source file.
+
+    The Validator runs `xmllint --recover` on input files, to make sure they are
+    valid XML. That reformats the data, usually leading to different line breaks.
+    By doing the xmllint ourselves, the reformat will not change the data.
+    -->
+    <move file="${ws}/src/iati-activities.xml" tofile="${ws}/src/iati-activities-raw.xml"/>
+    <move file="${ws}/src/iati-organisations.xml" tofile="${ws}/src/iati-organisations-raw.xml"/>
+    <exec executable="xmllint">
+      <arg value="--recover"/>
+      <arg value="${ws}/src/iati-activities-raw.xml"/>
+      <arg value="-o"/>
+      <arg value="${ws}/src/iati-activities.xml"/>
+    </exec>
+    <exec executable="xmllint">
+      <arg value="--recover"/>
+      <arg value="${ws}/src/iati-organisations-raw.xml"/>
+      <arg value="-o"/>
+      <arg value="${ws}/src/iati-organisations.xml"/>
+    </exec>
+    <delete file="${ws}/src/iati-activities-raw.xml"/>
+    <delete file="${ws}/src/iati-organisations-raw.xml"/>
   </target>
 
   <!--Copy CSV files from the input folder-->
