@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-1](https://github.com/data4development/iati-workbench/compare/v1.9.0-0...v1.9.0-1) (2022-06-28)
+
+
+### Improvements
+
+* do xmllint reformatting to have Validator lines match ([6f35075](https://github.com/data4development/iati-workbench/commit/6f35075f8a3ea849ce2a473f07ef9e273d9d8630))
+
 ## [1.9.0-0](https://github.com/data4development/iati-workbench/compare/v1.8.2...v1.9.0-0) (2022-06-27)
 
 
