@@ -11,11 +11,61 @@ ifndef::env-github[]
 :icons: font
 endif::[]
 
-Scripts to transform a set of input files (spreadsheets, IATI) into a combined IATI file.
+Tool to transform a set of input files (spreadsheets, IATI) into a combined IATI file.
 
-See https://developer.data4development.nl/iati-workbench/[the developer documentation website] for further details.
+See https://developer.data4development.nl/iati-workbench/[the developer documentation website]
+for further information on how the conversion tool works.
 
-This includes setting up a demo workspace with example templates.
+== Getting started
+
+[IMPORTANT]
+====
+The scripts are tested on Ubuntu.
+
+A known issue is that the iati-workbench script uses GNU's `readlink -f` feature.
+
+For Mac: the `-f` option apparently has been added in macOS 12.3.
+
+For earlier versions, an option is to install `coreutils`,
+and change the script to use `greadlink`.
+https://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac[See this StackOverflow question.]
+====
+
+=== Set up a development environment
+
+. Clone the repository, make sure to include the submodules:
++
+  $ git submodule update --init --recursive
+
+. Optional: put the `aida-s2i` script in your path, for instance as a symlink:
++
+  $ ln -s ${PWD}/aida-s2i ~/bin/aida-s2i
+
+. Optional: create a local version of the documentation:
++
+  $ npm i
++
+  $ npm run docs:local
++
+Open the file `build/site/index.html` in a browser.
+
+=== Set up a workspace and run a demo conversion
+
+. Create a workspace directory outside the source repository, for instance:
++
+  $ mkdir ~/workspace && cd ~/workspace
+
+. Build a local container image from within the workspace directory:
++
+  $ aida-s2i -d build
+
+. Create the structure of workspace directories, and add the demo spreadsheet templates.
++
+  $ aida-s2i add-templates
+
+. Run your first conversion
++
+  $ aida-s2i spreadsheet-iati
 
 === Acknowledgements
 

@@ -16,6 +16,8 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# MY_PATH is pointing to the actual directory where this script is stored.
+# It dereferences symlinks using GNU readlink -f.
 MY_PATH=$(dirname `readlink -f "$0"`)
 
 if [ "$1." = "-d." ]; then
