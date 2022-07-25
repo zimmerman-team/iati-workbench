@@ -1,0 +1,319 @@
+= Client-specific templates
+
+In very rare cases, we will add client-specific templates to the engine.
+
+This should only happen if converting the available exports of source data
+into our template formats would be prohibitively difficult and time-consuming.
+
+== Adding client-specific templates
+
+The templates work on tabular data in the same way as our standard templates.
+
+They are implemented using an XSLT `mode` parameter
+in the XSLT stylesheet templates.
+
+The file `spreadsheet-iati/csvxml-s2i.xslt` is amended to include these
+additional templates.
+It will then override the generic template to process a `csv` record,
+and implement its own version.
+
+.Generic example of including client-specific templates for two clients
+[source, xml]
+----
+<!-- ... -->
+
+<!-- add generic templates -->
+<xsl:include href="default-templates-act.xsl"/>
+<xsl:include href="default-templates-org.xsl"/>
+<xsl:import href="../lib/iati.me/csvxml-s2i.xslt"/>
+
+<!-- include client-specific templates for two clients -->
+<xsl:include href="clientA/templates.xsl"/>
+<xsl:include href="clientB/templates.xsl"/>
+
+<!-- override the generic `csv` template -->
+<xsl:template match="csv">
+<iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
+  <xsl:choose>
+    <xsl:when test="$reporting-org='XE-IATI-CLIENTA'">
+      <xsl:apply-templates select="record" mode="clientA"/>
+    </xsl:when>
+    <xsl:when test="$reporting-org='XE-IATI-CLIENTB'">
+      <xsl:apply-templates select="record" mode="clientB"/>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:apply-templates select="record"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</iati-activities>
+</xsl:template>
+----
+
+== Case: Nuffic
+
+We convert data for two programmes.
+
+* The OKP programme is where we use a custom configuration.
+* The StuNed programme uses our regular spreadsheet templates,
+and is included in the conversion.
+
+=== Structure of the OKP programme
+
+The IATI activity structure for the whole OKP programme
+consists of four main pillars.
+Each pillar can have a subdivision,
+and underneath that the many individual projects
+that typically are split by funding round and country.
+
+[plantuml]
+----
+@startwbs
+* OKP
+ * IS:\nIndividual\nScholarships
+  * Masters
+   *_ MA activities\n(per institution contract)
+  * Short Courses
+   *_ SC activities\n(per institution contract)
+ * GT:\nGroup\nTrainings
+  * TMT: Tailor Made Trainings
+   *_ TMT activities
+  * TMT+: Tailor Made Trainings Plus
+   *_ TMT+ activities
+  * RC: Refresher Courses
+   *_ RC activities
+ * ICP:\nInstitutional\nCollaboration\nProjects
+  *_ ICP activities
+ * Alumni
+@endwbs
+----
+
+In the case of Nuffic, we have a complex mix of input sources:
+
+IATI data exported from Akvo for some programmes::
+This data contains general information and results of a few programmes.
+However, we filter out certain IATI fields that contain too many errors in the Akvo source.
+
+Data in Spreadsheet2IATI templates::
+The top-level activities of the OKP programme are not available as Akvo data.
+Information for these activities is added manually via our regular templates.
++
+Also, the result baselines for several projects are not included in Akvo,
+and are therefore added manually via our results template.
++
+In addition, we manually compiled a countries and regions overview of historical projects.
++
+To conclude, at least one other programme with embassy funding maintains
+their own set of spreadsheets in our regular template format.
+
+Exports from an older (Atlas) and newer (Delta) project management system::
+These exports contain additional information about some OKP programmes,
+and require special logic to construct identifiers from one or more input columns.
++
+The Atlas data is only for historical purposes and should not be updated any further.
+The Delta data is for newer programmes and projects.
+
+Export from the financial system (Businessworld)::
+This export contains transaction data.
+Again, we use specific logic to construct identifiers.
+
+.General overview of the input sources, and four main process flows.
+[plantuml]
+----
+!$i=$important_color
+start
+partition "input files" {
+  split
+    note: manually compiled\nusing S2I templates
+    $i:Nuffic S2I sheets<
+    note right: 1st, 2nd, 3rd level\nactivities
+    $i:results.baselines_OKP<
+    note right: additional\nbaseline data
+    $i:countries and regions_OKP<
+    note right: aggregated countries\nbased on Atlas data
+  split again
+    note: OKP exports from systems
+    $i:Akvo XML<
+    note right: info for\nTMT/TMT+/RC
+    $i:BusinessWorld\ntransactions<
+    note right: all transactions
+    $i:Projects OKP-IS Atlas<
+    note right: IS activities 2017-2019
+    $i:Projects OKP-IS Delta<
+    note right: IS activities 2020+
+  split again
+    note: Neso Indonesia\nusing S2I templates
+    $i:StuNed S2I sheets<
+  end split
+}
+fork
+  :process\nmain structure;
+fork again
+  :process\nIS data;
+fork again
+  :process\nGT data;
+fork again
+  :process\nICP data;
+end fork
+:merge;
+$i:IATI file>
+----
+
+To handle this mix of standard and client-specific templates,
+the code processes the CSV data in both the normal way,
+as well as in mode `nuffic`.
+
+[source, xml]
+----
+<xsl:include href="nuffic/templates.xsl"/>
+
+<xsl:template match="csv">
+<iati-activities version="2.03" generated-datetime="{current-dateTime()}" xml:lang="en">
+  <xsl:apply-templates select="record"/>
+  <xsl:choose>
+    <xsl:when test="$reporting-org='NL-KVK-41150085'">
+      <xsl:apply-templates select="record" mode="nuffic"/>
+    </xsl:when>
+  </xsl:choose>
+</iati-activities>
+</xsl:template>
+----
+
+=== Processing
+
+This section provides more details about the four main process flows (in blue)
+for the OKP programme in the diagram above.
+
+==== Top-level IATI activities (process main structure)
+
+This information is provided in either our standard templates,
+or in the Akvo export.
+
+[plantuml]
+----
+!$i=$important_color
+start
+fork
+  $i:Nuffic S2I sheets<
+  :S2I;
+fork again
+  $i:Akvo XML<
+  :Akvo-S2I;
+end fork
+:merge;
+$i:IATI file>
+----
+
+==== Individual Scholarships activities (process IS data)
+
+For IS activities, we don't use the Akvo data.
+We do select specific columns to construct an IATI identifier
+that is consistent across the various exports.
+
+[plantuml]
+----
+!$i=$important_color
+start
+fork
+  $i:BusinessWorld\ntransactions<
+  :custom S2I based on
+  column Subprogram (T);
+  if (is the line\nfor MA, SC?) then (yes)
+    :for the identifier use:
+    <u>External grant nu.</u>;
+    :prepend NL-KVK-... to identifier
+    and generate transaction;
+  endif
+fork again
+  $i:countries and regions_OKP<
+  $i:results.baselines_OKP<
+  :S2I;
+fork again
+  $i:Projects OKP-IS Atlas<
+  :Atlas S2I;
+  :add as participating:
+  <u>Organisation name</u>
+  (role 4, type 80);
+  :add start and end dates,
+  recipient country, parent activity,
+  budget, sector <u>11420</u>;
+fork again
+  $i:Projects OKP-IS Delta<
+  :Delta S2I;
+  :add as participating:
+  <u>Organisation name</u>
+  (role 4, type 80);
+  :add start and end dates,
+  recipient country, parent activity,
+  budget, sector <u>11420</u>;
+end fork
+:merge;
+$i:IATI file>
+----
+
+==== Group Training activities (process GT data)
+
+For GT activities, we use different columns to construct the IATI identifier,
+and combine it with data from the Akvo export.
+
+[plantuml]
+----
+!$i=$important_color
+start
+fork
+  $i:BusinessWorld\ntransactions<
+  :custom S2I based on
+  column Subprogram (T);
+  if (is the line\nfor TMT, TMT+?) then (yes)
+    :for the identifier use:
+    <u>Grant (T)</u>;
+  elseif (is the line\nfor RC?) then (yes)
+    :(not processed);
+    kill
+  endif
+  :prepend NL-KVK-... to identifier
+  and generate transaction;
+fork again
+  $i:results.baselines_OKP<
+  :S2I;
+fork again
+  $i:Akvo XML<
+  :Akvo-S2I;
+end fork
+:merge;
+$i:IATI file>
+----
+
+==== Institutional Collaboration Projects (process ICP data)
+
+For ICP activities, we again use different columns to construct the IATI identifier,
+and combine it with data from the Akvo export.
+
+[plantuml]
+----
+!$i=$important_color
+start
+fork
+  $i:BusinessWorld\ntransactions<
+  :custom S2I based on
+  column Subprogram (T);
+  if (is the line\nfor ICP?) then (yes)
+    :for the identifier use:
+    <b>OKP-ICP-</b><u>External grant nu.</u>;
+    :prepend NL-KVK-... to identifier
+    and generate transaction;
+  endif
+fork again
+  $i:results.baselines_OKP<
+  :S2I;
+fork again
+  $i:Akvo XML<
+  :Akvo-S2I;
+end fork
+:merge;
+$i:IATI file>
+----
+
+==== Merge the data
+
+This is a regular merge of all produced partial data.
+It includes the StuNed data as well.
