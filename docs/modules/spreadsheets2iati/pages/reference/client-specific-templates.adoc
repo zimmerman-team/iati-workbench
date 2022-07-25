@@ -145,6 +145,7 @@ partition "input files" {
     $i:StuNed S2I sheets<
   end split
 }
+(1)
 fork
   :process\nmain structure;
 fork again
@@ -154,8 +155,10 @@ fork again
 fork again
   :process\nICP data;
 end fork
+(2)
 :merge;
 $i:IATI file>
+stop
 ----
 
 To handle this mix of standard and client-specific templates,
@@ -191,7 +194,7 @@ or in the Akvo export.
 [plantuml]
 ----
 !$i=$important_color
-start
+(1)
 fork
   $i:Nuffic S2I sheets<
   :S2I;
@@ -199,8 +202,7 @@ fork again
   $i:Akvo XML<
   :Akvo-S2I;
 end fork
-:merge;
-$i:IATI file>
+(2)
 ----
 
 ==== Individual Scholarships activities (process IS data)
@@ -212,7 +214,7 @@ that is consistent across the various exports.
 [plantuml]
 ----
 !$i=$important_color
-start
+(1)
 fork
   $i:BusinessWorld\ntransactions<
   :custom S2I based on
@@ -246,8 +248,7 @@ fork again
   recipient country, parent activity,
   budget, sector <u>11420</u>;
 end fork
-:merge;
-$i:IATI file>
+(2)
 ----
 
 ==== Group Training activities (process GT data)
@@ -258,7 +259,7 @@ and combine it with data from the Akvo export.
 [plantuml]
 ----
 !$i=$important_color
-start
+(1)
 fork
   $i:BusinessWorld\ntransactions<
   :custom S2I based on
@@ -279,8 +280,7 @@ fork again
   $i:Akvo XML<
   :Akvo-S2I;
 end fork
-:merge;
-$i:IATI file>
+(2)
 ----
 
 ==== Institutional Collaboration Projects (process ICP data)
@@ -291,7 +291,7 @@ and combine it with data from the Akvo export.
 [plantuml]
 ----
 !$i=$important_color
-start
+(1)
 fork
   $i:BusinessWorld\ntransactions<
   :custom S2I based on
@@ -309,11 +309,19 @@ fork again
   $i:Akvo XML<
   :Akvo-S2I;
 end fork
-:merge;
-$i:IATI file>
+(2)
 ----
 
 ==== Merge the data
 
 This is a regular merge of all produced partial data.
 It includes the StuNed data as well.
+
+[plantuml]
+----
+!$i=$important_color
+(2)
+:merge;
+$i:IATI file>
+stop
+----
