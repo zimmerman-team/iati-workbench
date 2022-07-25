@@ -227,7 +227,7 @@
         </xsl:if>
       </xsl:for-each-group>
 
-      <xsl:apply-templates select="$input-activities/resultcrs-add"/>
+      <xsl:apply-templates select="$input-activities/crs-add"/>
       <xsl:apply-templates select="$input-activities/fss"/>
 
       <xsl:apply-templates select="current-group()/*[namespace-uri()]"/>
