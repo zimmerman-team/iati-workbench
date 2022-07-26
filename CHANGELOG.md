@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/data4development/iati-workbench/compare/v1.9.0-1...v1.9.0) (2022-07-26)
+
+
+### Debts
+
+* add note about symlinked aida-s2i ([57e9b4f](https://github.com/data4development/iati-workbench/commit/57e9b4f033198d196c47ae4902d1b5dae588f537))
+* update README with quick start instructions ([770dd75](https://github.com/data4development/iati-workbench/commit/770dd75e3ae8fceda02f6dcccace97f6d8facaed))
+
+
+### Documentation
+
+* add client-specific template documentation ([6e1a04d](https://github.com/data4development/iati-workbench/commit/6e1a04dd93f0d7ae29cf845baa22b29d1ab6ac91))
+
+
+### Improvements
+
+* merge crs-add instead of resultcrs-add ([b85baa8](https://github.com/data4development/iati-workbench/commit/b85baa8ef6cae2b57b24d112694af177a751b2e2))
+
 ## [1.9.0-1](https://github.com/data4development/iati-workbench/compare/v1.9.0-0...v1.9.0-1) (2022-06-28)
 
 
