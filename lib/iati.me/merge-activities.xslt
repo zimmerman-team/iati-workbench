@@ -227,16 +227,14 @@
         </xsl:if>
       </xsl:for-each-group>
 
-      <xsl:apply-templates select="$input-activities/resultcrs-add"/>
+      <xsl:apply-templates select="$input-activities/crs-add"/>
       <xsl:apply-templates select="$input-activities/fss"/>
 
       <xsl:apply-templates select="current-group()/*[namespace-uri()]"/>
     </iati-activity>
   </xsl:template>
 
-  <!-- ignore these elements: -->
-
-  <!-- text elements without any narrative element with actual content -->
+  <!-- ignore text elements without any narrative element with actual content -->
   <xsl:template match="title                [not(narrative[.!=''])]"/>
   <xsl:template match="description          [not(narrative[.!=''])]"/>
   <xsl:template match="comment              [not(narrative[.!=''])]"/>
@@ -256,11 +254,11 @@
 
   <xsl:template match="period[not(target) and not(actual)]"/>
 
-  <!-- targets or actuals without values -->
+  <!-- ignore targets or actuals without values -->
   <xsl:template match="target[not(@value) or @value='']"/>
   <xsl:template match="actual[not(@value) or @value='']"/>
 
-  <!-- other empty elements -->
+  <!-- ignore other empty elements -->
   <xsl:template match="policy-marker[@code='']"/>
   <xsl:template match="point[normalize-space(pos)='']"/>
   <xsl:template match="location-reach[@code='']"/>

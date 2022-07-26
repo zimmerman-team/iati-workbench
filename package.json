@@ -6,7 +6,7 @@
   "private": true,
   "devDependencies": {
     "@antora/lunr-extension": "^1.0.0-alpha.8",
-    "antora": "^3.0.1",
+    "antora": "^3.0.3",
     "asciidoctor-kroki": "^0.15.4",
     "standard-version": "^9.3.2"
   },
