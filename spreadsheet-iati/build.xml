@@ -55,7 +55,7 @@
     <!-- workaround: make sure line numbers reported by the IATI Validator match
     with lines in the source file.
 
-    The Validator runs `xmllint --recover` on input files, to make sure they are
+    The Validator runs `xmllint - -recover` on input files, to make sure they are
     valid XML. That reformats the data, usually leading to different line breaks.
     By doing the xmllint ourselves, the reformat will not change the data.
     -->
