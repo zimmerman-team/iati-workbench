@@ -41,6 +41,7 @@
   <xsl:template match="indicator">
     <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*"/>
+      <!-- Should this merge ID not be on the @measure attribute of the indicator, which has a 1..1 relationship to each indicator? -->
       <xsl:attribute name="merge:id" select="(reference/@code,title/narrative)[1]"/>
       <xsl:apply-templates/>
     </xsl:copy>
