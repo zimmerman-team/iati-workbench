@@ -256,7 +256,11 @@
         <result
           type="{merge:entry(., 'Result type')}"
           merge:id="{merge:entry(., 'Result reference')}---{merge:entry(., 'Result title')}">
-          <xsl:if test="merge:entry(., 'Aggregation status') != ''"><xsl:attribute name="aggregation-status">{merge:boolean(merge:entry(., 'Aggregation status'))}</xsl:attribute></xsl:if>
+          <!-- Introduced a choice between Aggregation status and the new Result aggregation status field to maintain backwards compatibility with older result template files. -->
+          <xsl:choose>
+            <xsl:when test="merge:entry(., 'Result aggregation status') != ''"><xsl:attribute name="aggregation-status">{merge:boolean(merge:entry(., 'Result aggregation status'))}</xsl:attribute></xsl:when>
+            <xsl:when test="merge:entry(., 'Aggregation status') != ''"><xsl:attribute name="aggregation-status">{merge:boolean(merge:entry(., 'Aggregation status'))}</xsl:attribute></xsl:when>
+          </xsl:choose>
           <title>
             <narrative>{merge:entry(., 'Result title')}</narrative>
           </title>
@@ -276,6 +280,7 @@
           <indicator
             merge:id="{merge:entry(., 'Indicator reference')}---{merge:entry(., 'Indicator title')}"
             measure="{merge:entry(., 'Indicator measure')}">
+            <xsl:if test="merge:entry(., 'Indicator aggregation status') != ''"><xsl:attribute name="aggregation-status">{merge:boolean(merge:entry(., 'Indicator aggregation status'))}</xsl:attribute></xsl:if>
             <xsl:if test="merge:entryExists(., 'Ascending')">
               <xsl:attribute name="ascending" select="merge:boolean(merge:entry(., 'Ascending'))"/>
             </xsl:if>

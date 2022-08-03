@@ -35,6 +35,16 @@
             <x:expect label="it should not produce an reference/@vocabulary-uri." test="not(//result/reference/@vocabulary-uri)"/>
         </x:scenario>
 
+        <x:scenario label="When a result has a positive aggregation status">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Result aggregation status">Y</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce a true boolean in result/@aggregation-status." test="//result/@aggregation-status='true'"/>
+        </x:scenario>
+
         <x:scenario label="When a result has a reference code with column name 'Result reference code'">
             <x:context>
                 <record>
@@ -71,13 +81,22 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//result/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//result/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@vocabulary-uri." test="//result/reference/@vocabulary-uri='http://aida.tools/aida'
-"/>
+            <x:expect label="it should produce the indicated reference/@vocabulary-uri." test="//result/reference/@vocabulary-uri='http://aida.tools/aida'"/>
         </x:scenario>
     </x:scenario>
 
     <x:scenario label="Indicators: reference vocabulary code, URI for indicators">
         <x:param name="file" select="'results'"/>
+
+        <x:scenario label="When an indicator has a negative aggregation status">
+            <x:context>
+                <record>
+                    <entry name="IATI activity identifier">XE-EXAMPLE-AIDA-1234-ABC</entry>
+                    <entry name="Indicator aggregation status">N</entry>
+                </record>
+            </x:context>
+            <x:expect label="it should produce a false boolean in indicator/@aggregation-status." test="//indicator/@aggregation-status='false'"/>
+        </x:scenario>
 
         <x:scenario label="When an indicator has a reference code">
             <x:context>
@@ -127,8 +146,7 @@
             </x:context>
             <x:expect label="it should produce the reference code in reference/@code." test="//indicator/reference/@code='DD1'"/>
             <x:expect label="it should produce the indicated reference/@vocabulary." test="//indicator/reference/@vocabulary='1'"/>
-            <x:expect label="it should produce the indicated reference/@indicator-uri." test="//indicator/reference/@indicator-uri='http://aida.tools/aida'
-"/>
+            <x:expect label="it should produce the indicated reference/@indicator-uri." test="//indicator/reference/@indicator-uri='http://aida.tools/aida'"/>
         </x:scenario>
 
     </x:scenario>

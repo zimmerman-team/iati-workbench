@@ -154,11 +154,12 @@ Results_Template,Activity name
 Results_Template,Result title
 Results_Template,Result description
 Results_Template,Result type
-Results_Template,Aggregation status
+Results_Template,Result aggregation status
 Results_Template,Indicator measure
 Results_Template,Indicator reference
 Results_Template,Indicator title
 Results_Template,Indicator description
+Results_Template,Indicator aggregation status
 Results_Template,Ascending
 Results_Template,Baseline year
 Results_Template,Baseline
