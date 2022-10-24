@@ -29,127 +29,132 @@
 
   <!--Activities: -->
   <xsl:template match="record[contains(lower-case($file), 'projects')]" priority="-1">
-    <xsl:if test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
-      <xsl:variable name="lang" select="lower-case(merge:entry(., 'Language', 'en'))"/>
-      <iati-activity default-currency="{merge:entry(., 'Currency')}"
-        last-updated-datetime="{current-dateTime()}"
-        xml:lang="{$lang}"
-        merge:id="{merge:entry(., 'IATI activity identifier')}">
-        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian activity'))!=''">
-          <xsl:attribute name="humanitarian" select="merge:boolean(merge:entry(., 'Humanitarian activity'))"/>
-        </xsl:if>
-        <iati-identifier>{merge:entry(., 'IATI activity identifier')}</iati-identifier>
-        <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
-          <narrative xml:lang="{$lang}">{$reporting-org-name}</narrative>
-        </reporting-org>
-        <contact-info type="{merge:entry(., 'Contact info type')}">
-          <organisation>
-            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact info organisation')}</narrative>
-          </organisation>
-          <department>
-            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact department')}</narrative>
-          </department>
-          <person-name>
-            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact person')}</narrative>
-          </person-name>
-          <job-title>
-            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact job title')}</narrative>
-          </job-title>
-          <telephone>{merge:entry(., 'Contact telephone')}</telephone>
-          <email>{merge:entry(., 'Contact email')}</email>
-          <website>{merge:entry(., 'Contact website')}</website>
-          <mailing-address>
-            <narrative xml:lang="{$lang}">{merge:entry(., 'Contact mailing address')}</narrative>
-          </mailing-address>
-        </contact-info>
-
-        <title>
-          <narrative xml:lang="{$lang}">{merge:entry(., 'Activity name')}</narrative>
-        </title>
-
-        <description type="1">
-          <narrative xml:lang="{$lang}">{merge:entry(., 'General description', 'n/a')}</narrative>
-        </description>
-        <description type="2">
-          <narrative xml:lang="{$lang}">{merge:entry(., 'Main objectives and outcomes')}</narrative>
-        </description>
-        <description type="3">
-          <narrative xml:lang="{$lang}">{merge:entry(., ('Target group or reach', 'Targetgroup or reach'))}</narrative>
-        </description>
-        <description type="4">
-          <narrative xml:lang="{$lang}">{merge:entry(., 'Background')}</narrative>
-        </description>
-
-        <xsl:if test="$include-reporting-org-as-role=('1', '2', '3', '4')">
-          <participating-org role="{$include-reporting-org-as-role}"
-            type="{$reporting-org-type}"
-            ref="{$reporting-org}">
+    <xsl:choose>
+      <xsl:when test="starts-with(merge:entry(., 'IATI Activity Identifier'), $reporting-org) and not(merge:boolean(merge:entry(., 'Exclusion applies?')))">
+        <xsl:variable name="lang" select="lower-case(merge:entry(., 'Language', 'en'))"/>
+        <iati-activity default-currency="{merge:entry(., 'Currency')}"
+          last-updated-datetime="{current-dateTime()}"
+          xml:lang="{$lang}"
+          merge:id="{merge:entry(., 'IATI activity identifier')}">
+          <xsl:if test="functx:trim(merge:entry(., 'Humanitarian activity'))!=''">
+            <xsl:attribute name="humanitarian" select="merge:boolean(merge:entry(., 'Humanitarian activity'))"/>
+          </xsl:if>
+          <iati-identifier>{merge:entry(., 'IATI activity identifier')}</iati-identifier>
+          <reporting-org ref="{$reporting-org}" type="{$reporting-org-type}">
             <narrative xml:lang="{$lang}">{$reporting-org-name}</narrative>
-          </participating-org>
-        </xsl:if>
+          </reporting-org>
+          <contact-info type="{merge:entry(., 'Contact info type')}">
+            <organisation>
+              <narrative xml:lang="{$lang}">{merge:entry(., 'Contact info organisation')}</narrative>
+            </organisation>
+            <department>
+              <narrative xml:lang="{$lang}">{merge:entry(., 'Contact department')}</narrative>
+            </department>
+            <person-name>
+              <narrative xml:lang="{$lang}">{merge:entry(., 'Contact person')}</narrative>
+            </person-name>
+            <job-title>
+              <narrative xml:lang="{$lang}">{merge:entry(., 'Contact job title')}</narrative>
+            </job-title>
+            <telephone>{merge:entry(., 'Contact telephone')}</telephone>
+            <email>{merge:entry(., 'Contact email')}</email>
+            <website>{merge:entry(., 'Contact website')}</website>
+            <mailing-address>
+              <narrative xml:lang="{$lang}">{merge:entry(., 'Contact mailing address')}</narrative>
+            </mailing-address>
+          </contact-info>
 
-        <activity-status code="{(
-          merge:entry(., 'Activity status code')[not(.='')],
-          merge:get-code-from-list('ActivityStatus', merge:entry(., 'Activity status')),
-          '2')[1]}"/>
-        <activity-date type="1" iso-date="{merge:date(merge:entry(., 'Planned start date', ''))}"/>
-        <activity-date type="2" iso-date="{merge:date(merge:entry(., 'Actual start date', ''))}"/>
-        <activity-date type="3" iso-date="{merge:date(merge:entry(., 'Planned end date', ''))}"/>
-        <activity-date type="4" iso-date="{merge:date(merge:entry(., 'Actual end date', ''))}"/>
+          <title>
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Activity name')}</narrative>
+          </title>
 
-        <activity-scope code="{merge:entry(., 'Activity scope')}"/>
+          <description type="1">
+            <narrative xml:lang="{$lang}">{merge:entry(., 'General description', 'n/a')}</narrative>
+          </description>
+          <description type="2">
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Main objectives and outcomes')}</narrative>
+          </description>
+          <description type="3">
+            <narrative xml:lang="{$lang}">{merge:entry(., ('Target group or reach', 'Targetgroup or reach'))}</narrative>
+          </description>
+          <description type="4">
+            <narrative xml:lang="{$lang}">{merge:entry(., 'Background')}</narrative>
+          </description>
 
-        <!-- Budget may be in the project file -->
-        <xsl:if test="merge:entry(., ('Budget', 'Total Budget')) != ''">
-          <budget status="{merge:entry(., 'Budget status', '1')}" type="{merge:entry(., 'Budget type', '1')}">
-            <xsl:variable name="start-date">
-              <xsl:choose>
-                <xsl:when test="merge:entry(., 'Budget start date')!=''">{merge:entry(., 'Budget start date')}</xsl:when>
-                <xsl:when test="merge:entry(., 'Actual start date')!=''">{merge:entry(., 'Actual start date')}</xsl:when>
-                <xsl:otherwise>{merge:entry(., 'Planned start date')}</xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-            <xsl:variable name="end-date">
-              <xsl:choose>
-                <xsl:when test="merge:entry(., 'Budget end date')!=''">{merge:entry(., 'Budget end date')}</xsl:when>
-                <xsl:when test="merge:entry(., 'Actual end date')!=''">{merge:entry(., 'Actual end date')}</xsl:when>
-                <xsl:otherwise>{merge:entry(., 'Planned end date')}</xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-            <period-start iso-date="{merge:date($start-date)}"/>
-            <period-end iso-date="{merge:date($end-date)}"/>
-            <value value-date="{merge:date($start-date)}" currency="{(merge:entry(., 'Currency'), merge:currency-symbol(merge:entry(., 'Amount')), 'EUR')[1]}">{merge:currency-value(merge:entry(., ('Budget', 'Total Budget')))}</value>
-          </budget>
-        </xsl:if>
+          <xsl:if test="$include-reporting-org-as-role=('1', '2', '3', '4')">
+            <participating-org role="{$include-reporting-org-as-role}"
+              type="{$reporting-org-type}"
+              ref="{$reporting-org}">
+              <narrative xml:lang="{$lang}">{$reporting-org-name}</narrative>
+            </participating-org>
+          </xsl:if>
 
-        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 1'))!=''">
-          <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 1'))}"
-            vocabulary="{merge:entry(., 'Humanitarian vocabulary 1')}"
-            code="{merge:entry(., 'Humanitarian code 1')}"/>
-        </xsl:if>
+          <activity-status code="{(
+            merge:entry(., 'Activity status code')[not(.='')],
+            merge:get-code-from-list('ActivityStatus', merge:entry(., 'Activity status')),
+            '2')[1]}"/>
+          <activity-date type="1" iso-date="{merge:date(merge:entry(., 'Planned start date', ''))}"/>
+          <activity-date type="2" iso-date="{merge:date(merge:entry(., 'Actual start date', ''))}"/>
+          <activity-date type="3" iso-date="{merge:date(merge:entry(., 'Planned end date', ''))}"/>
+          <activity-date type="4" iso-date="{merge:date(merge:entry(., 'Actual end date', ''))}"/>
 
-        <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 2'))!=''">
-          <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 2'))}"
-            vocabulary="{merge:entry(., 'Humanitarian vocabulary 2')}"
-            code="{merge:entry(., 'Humanitarian code 2')}"/>
-        </xsl:if>
+          <activity-scope code="{merge:entry(., 'Activity scope')}"/>
 
-        <!-- Policy marker may be in the project file -->
-        <xsl:if test="merge:entry(., 'Policy marker') != ''">
-          <policy-marker significance="{merge:entry(., ('Policy significance', 'Significance'))}"
-            code="{merge:entry(., 'Policy marker')}"
-            vocabulary="1"/>
-        </xsl:if>
+          <!-- Budget may be in the project file -->
+          <xsl:if test="merge:entry(., ('Budget', 'Total Budget')) != ''">
+            <budget status="{merge:entry(., 'Budget status', '1')}" type="{merge:entry(., 'Budget type', '1')}">
+              <xsl:variable name="start-date">
+                <xsl:choose>
+                  <xsl:when test="merge:entry(., 'Budget start date')!=''">{merge:entry(., 'Budget start date')}</xsl:when>
+                  <xsl:when test="merge:entry(., 'Actual start date')!=''">{merge:entry(., 'Actual start date')}</xsl:when>
+                  <xsl:otherwise>{merge:entry(., 'Planned start date')}</xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <xsl:variable name="end-date">
+                <xsl:choose>
+                  <xsl:when test="merge:entry(., 'Budget end date')!=''">{merge:entry(., 'Budget end date')}</xsl:when>
+                  <xsl:when test="merge:entry(., 'Actual end date')!=''">{merge:entry(., 'Actual end date')}</xsl:when>
+                  <xsl:otherwise>{merge:entry(., 'Planned end date')}</xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <period-start iso-date="{merge:date($start-date)}"/>
+              <period-end iso-date="{merge:date($end-date)}"/>
+              <value value-date="{merge:date($start-date)}" currency="{(merge:entry(., 'Currency'), merge:currency-symbol(merge:entry(., 'Amount')), 'EUR')[1]}">{merge:currency-value(merge:entry(., ('Budget', 'Total Budget')))}</value>
+            </budget>
+          </xsl:if>
 
-        <related-activity ref="{merge:entry(., 'IATI parent activity identifier')}" type="1"/>
+          <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 1'))!=''">
+            <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 1'))}"
+              vocabulary="{merge:entry(., 'Humanitarian vocabulary 1')}"
+              code="{merge:entry(., 'Humanitarian code 1')}"/>
+          </xsl:if>
 
-        <collaboration-type code="{merge:entry(., 'Collaboration type')}"/>
-        <default-flow-type code="{merge:entry(., 'Default flow type')}"/>
-        <default-finance-type code="{merge:entry(., 'Default finance type')}"/>
-        <default-aid-type code="{merge:entry(., 'Default aid type')}"/>
-        <default-tied-status code="{merge:entry(., 'Default tied status')}"/>
-      </iati-activity>
-    </xsl:if>
+          <xsl:if test="functx:trim(merge:entry(., 'Humanitarian scope type 2'))!=''">
+            <humanitarian-scope type="{functx:trim(merge:entry(., 'Humanitarian scope type 2'))}"
+              vocabulary="{merge:entry(., 'Humanitarian vocabulary 2')}"
+              code="{merge:entry(., 'Humanitarian code 2')}"/>
+          </xsl:if>
+
+          <!-- Policy marker may be in the project file -->
+          <xsl:if test="merge:entry(., 'Policy marker') != ''">
+            <policy-marker significance="{merge:entry(., ('Policy significance', 'Significance'))}"
+              code="{merge:entry(., 'Policy marker')}"
+              vocabulary="1"/>
+          </xsl:if>
+
+          <related-activity ref="{merge:entry(., 'IATI parent activity identifier')}" type="1"/>
+
+          <collaboration-type code="{merge:entry(., 'Collaboration type')}"/>
+          <default-flow-type code="{merge:entry(., 'Default flow type')}"/>
+          <default-finance-type code="{merge:entry(., 'Default finance type')}"/>
+          <default-aid-type code="{merge:entry(., 'Default aid type')}"/>
+          <default-tied-status code="{merge:entry(., 'Default tied status')}"/>
+        </iati-activity>
+      </xsl:when>
+      <xsl:otherwise>
+        <iati-activity merge:id="{merge:entry(., 'IATI activity identifier')}" merge:exclude="true"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--  Budgets: -->
