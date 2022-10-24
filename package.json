@@ -1,6 +1,6 @@
 {
   "name": "Spreadsheets2IATI",
-  "version": "1.9.1",
+  "version": "next",
   "repository": "github:data4development/iati-workbench",
   "license": "AGPL-3.0-or-later",
   "private": true,
@@ -11,8 +11,6 @@
     "standard-version": "^9.3.2"
   },
   "scripts": {
-    "release:preview": "standard-version -p",
-    "release:main": "standard-version",
     "predocs:local": "docker-compose -p antora up -d",
     "docs:local": "antora --attribute kroki-server-url=http://localhost:8000 antora/playbook.yml",
     "docs": "antora antora/playbook.yml"
